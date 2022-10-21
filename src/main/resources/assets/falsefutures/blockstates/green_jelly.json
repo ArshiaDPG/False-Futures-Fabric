@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "halved=false": {
+      "model": "falsefutures:block/green_jelly"
+    },
+    "halved=true": {
+      "model": "falsefutures:block/green_jelly_half"
+    }
+  }
+}

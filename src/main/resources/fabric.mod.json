@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "falsefutures",
+  "version": "${version}",
+
+  "name": "False Futures",
+  "description": "Futures that were never meant to be.",
+  "authors": [
+    "Rowan"
+  ],
+  "contact": {},
+
+  "license": "Apache-2.0",
+  "icon": "assets/falsefutures/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.digitalpear.falsefutures.client.FalseFuturesClient"
+    ],
+    "main": [
+      "net.digitalpear.falsefutures.FalseFutures"
+    ]
+  },
+
+          "mixins": [
+        "falsefutures.mixins.json"
+      ],
+    
+  "depends": {
+    "fabricloader": ">=0.14.9",
+              "fabric": "*",
+          "minecraft": "1.19.2"
+  }
+}

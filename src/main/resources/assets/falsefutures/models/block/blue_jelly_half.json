@@ -1,0 +1,9 @@
+{
+  "parent": "falsefutures:block/jelly_half",
+  "textures": {
+    "bottom": "falsefutures:block/blue_jelly_bottom",
+    "side": "falsefutures:block/blue_jelly_side",
+    "inside": "falsefutures:block/blue_jelly_inside",
+    "top": "falsefutures:block/blue_jelly_top"
+  }
+}

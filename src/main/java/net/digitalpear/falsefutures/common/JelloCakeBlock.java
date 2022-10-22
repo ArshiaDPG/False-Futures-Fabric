@@ -9,6 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
@@ -25,12 +27,12 @@ public class JelloCakeBlock extends Block {
     public static final BooleanProperty HALVED = BooleanProperty.of("halved");
     int FOOD_LEVEL = 8;
     float SATURATION = 1.0f;
-    protected static final VoxelShape FULL_SHAPE = VoxelShapes.union(Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D));
-    protected static final VoxelShape HALF_SHAPE = VoxelShapes.union(Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D));
+    protected static final VoxelShape FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape HALF_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 
 
     /*
-        Much of this block's code has been taken from slime blocks, I will comment on all custom methods describing what they do
+        -Much of this block's code has been taken from slime blocks, I will comment on all custom methods describing what they do
      */
     public JelloCakeBlock(Settings settings) {
         super(settings);
@@ -46,8 +48,10 @@ public class JelloCakeBlock extends Block {
     }
 
 
-    //If the player is able to eat, eat half the block (Changes outline shape and piston behavior)
-    //If half the block has already been eaten, then remove the block
+    /*
+        -If the player is able to eat, eat half the block (Changes outline shape and piston behavior).
+        -If half the block has already been eaten, then remove the block.
+     */
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
@@ -57,8 +61,12 @@ public class JelloCakeBlock extends Block {
             } else {
                 player.getHungerManager().add(FOOD_LEVEL, SATURATION);
             }
+
+            world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            player.swingHand(hand);
+
             if (state.get(HALVED)) {
-                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
             }
             else{
                 world.setBlockState(pos, this.getDefaultState().with(HALVED, true));

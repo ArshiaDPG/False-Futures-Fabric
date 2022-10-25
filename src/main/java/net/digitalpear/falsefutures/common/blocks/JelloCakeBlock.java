@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.common;
+package net.digitalpear.falsefutures.common.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,14 +19,13 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class JelloCakeBlock extends Block {
     public static final BooleanProperty HALVED = BooleanProperty.of("halved");
-    int FOOD_LEVEL = 8;
-    float SATURATION = 1.0f;
+    int FOOD_LEVEL = 2;
+    float SATURATION = 0.8f;
     protected static final VoxelShape FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape HALF_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 
@@ -52,15 +51,13 @@ public class JelloCakeBlock extends Block {
         -If the player is able to eat, eat half the block (Changes outline shape and piston behavior).
         -If half the block has already been eaten, then remove the block.
      */
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
-            if (player.getHungerManager().getFoodLevel() + FOOD_LEVEL > 20) {
-                player.getHungerManager().setFoodLevel(20);
-                player.getHungerManager().setSaturationLevel(SATURATION);
-            } else {
-                player.getHungerManager().add(FOOD_LEVEL, SATURATION);
-            }
+
+            //Add food levels
+            player.getHungerManager().add(FOOD_LEVEL, SATURATION);
 
             world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f);
             player.swingHand(hand);
@@ -69,7 +66,7 @@ public class JelloCakeBlock extends Block {
                 world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
             }
             else{
-                world.setBlockState(pos, this.getDefaultState().with(HALVED, true));
+                world.setBlockState(pos, this.getDefaultState().with(HALVED, true), 2);
             }
             return ActionResult.SUCCESS;
         }

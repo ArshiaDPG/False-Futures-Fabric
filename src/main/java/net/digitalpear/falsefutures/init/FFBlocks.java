@@ -1,8 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
-import com.sun.jna.platform.win32.WinBase;
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.JelloCakeBlock;
+import net.digitalpear.falsefutures.common.blocks.JelloCakeBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;

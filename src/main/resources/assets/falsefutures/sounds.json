@@ -1,0 +1,11 @@
+{
+  "entity.falsefutures.gipple_ambient": {
+    "category": "neutral",
+	"subtitle": "subtitles.falsefutures.gipple_ambient",
+    "sounds": [
+      "falsefutures:entity/gipple/ambient1",
+	  "falsefutures:entity/gipple/ambient2",
+	  "falsefutures:entity/gipple/ambient3"
+    ]
+  }
+}

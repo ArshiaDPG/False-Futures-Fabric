@@ -7,5 +7,23 @@
 	  "falsefutures:entity/gipple/ambient2",
 	  "falsefutures:entity/gipple/ambient3"
     ]
+  },
+  "entity.falsefutures.gipple_hurt": {
+      "category": "neutral",
+  	"subtitle": "subtitles.falsefutures.gipple_hurt",
+      "sounds": [
+        "falsefutures:entity/gipple/hurt1",
+  	    "falsefutures:entity/gipple/hurt2",
+  	    "falsefutures:entity/gipple/hurt3"
+    ]
+  },
+     "entity.falsefutures.gipple_death": {
+     "category": "neutral",
+     "subtitle": "subtitles.falsefutures.gipple_death",
+       "sounds": [
+        "falsefutures:entity/gipple/death1",
+     	"falsefutures:entity/gipple/death2"
+     ]
   }
+
 }

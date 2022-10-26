@@ -29,7 +29,7 @@ public class GippleEntityModel extends AnimatedTickingGeoModel<GippleEntity> {
         IBone head = this.getAnimationProcessor().getBone("head");
 
 
-        if (entity.isBloated()){
+        if (entity.isDigesting()){
             head.setScaleX(BLOATED_SCALE);
             head.setScaleY(BLOATED_SCALE);
             head.setScaleZ(BLOATED_SCALE);

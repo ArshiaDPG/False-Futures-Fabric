@@ -234,6 +234,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             }
             this.discard();
     }
+    /*
+        i only determines rotation, if that doesn't matter then enter any number.
+     */
     public void spawnSomething(int i){
         SomethingEntity something = FFEntities.SOMETHING.create(world);
         if (this.isPersistent()) {

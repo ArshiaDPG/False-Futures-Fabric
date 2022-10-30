@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
+import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
@@ -29,7 +30,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -37,6 +40,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
@@ -56,6 +60,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private int digestingCooldown = 300;
     private float floatOnWaterDistance = 0.5f;
     private int blocksToCheckForWater = 10;
+    int chanceOfEating = 20;
+    int eatingCooldownRange = 200;
+    int eatingCooldown;
     private AnimationFactory factory = new AnimationFactory(this);
 
 
@@ -65,6 +72,17 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         this.moveControl = new GippleMoveControl(this, 20, true);
         this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
         this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
+        eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldown * 0.8), eatingCooldown);
+    }
+    protected void initGoals() {
+        this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
+        this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
     @Override
@@ -78,9 +96,17 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 digestingCooldown--;
             }
         }
+        else{
+            if (eatingCooldown > 0) {
+                eatingCooldown--;
+            }
+        }
         super.tick();
     }
 
+    /*
+        Code to stay slightly above water
+     */
     public void floatOnWater(){
         for (int i = 0; i <= blocksToCheckForWater; i++){
             if (world.getBlockState(this.getBlockPos().down(i)).isAir()) {
@@ -101,26 +127,30 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             }
         }
     }
+    /*
+        Code to eat lichen
+     */
+    public void eatLichen(){
+        if (world.getBlockState(this.getBlockPos()).isOf(Blocks.GLOW_LICHEN) && !isDigesting()){
+            if ((random.nextFloat() > (1 - (chanceOfEating / 10))) && eatingCooldown <= 0){
+                world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+                setDigesting(true);
+                eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
+            }
+        }
+    }
 
 
 
     @Override
     public void tickMovement() {
         floatOnWater();
+        eatLichen();
         super.tickMovement();
     }
 
 
-    protected void initGoals() {
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
-        this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
-        this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-    }
+
 
     public static DefaultAttributeContainer.Builder createGippleAttributes() {
         return MobEntity.createMobAttributes()
@@ -166,54 +196,66 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             if (!this.world.isClient) {
                 if (this.isDigesting()){
                     mitosis();
+                    stack.decrement(1);
+                    return ActionResult.SUCCESS;
                 }
-                else{
-                    this.setDigesting(true);
-                }
+//                else{
+//                    this.setDigesting(true);
+//                }
             }
-            stack.decrement(1);
-            return ActionResult.SUCCESS;
         }
         return ActionResult.FAIL;
     }
 
     //Spawn two gipples with a rare chance of 3
-    //5% chance to spawn a mega gipple
+    //Chance to spawn a something instead of a gipple
     public void mitosis(){
             int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
+            boolean spawnGippleNotSomething;
             for (int i = 0; i <gippleNumber; i++) {
-                if (random.nextFloat() < 0.9) {
-                    GippleEntity gipples = FFEntities.GIPPLE.create(this.world);
 
-                    if (this.isPersistent()) {
-                        gipples.setPersistent();
-                    }
+                /*
+                    Spawning of something is more likely on higher difficulties
+                 */
+                spawnGippleNotSomething = random.nextFloat() < 0.9 - (world.getDifficulty().getId() / 10);
 
-                    gipples.setCustomName(this.getCustomName());
-                    gipples.setAiDisabled(this.isAiDisabled());
-                    gipples.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.5D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
-                    world.spawnEntity(gipples);
-                } else {
-//                    SomethingEntity gipples = Gipple.MEGA_GIPPLE.create(world);
-//                    if (this.isPersistent()) {
-//                        gipples.setPersistent();
-//                    }
-//                    gipples.setCustomName(this.getCustomName());
-//                    gipples.setAiDisabled(this.isAiDisabled());
-//                    gipples.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.7D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
-//                    world.spawnEntity(gipples);
-                    explode();
+                /*
+                    If chance rolls on something then check gamemode if it is peaceful then just spawn a gipple.
+                 */
+                if (spawnGippleNotSomething) {
+                    spawnGipple(i);
+                } else if (world.getDifficulty() != Difficulty.PEACEFUL){
+//                    spawnSomething(i);
+                    spawnGipple(i);
+                }
+                else{
+                    spawnGipple(i);
                 }
             }
             this.discard();
     }
-    private void explode() {
-        if (!this.world.isClient) {
-            this.dead = true;
-            this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), 3f, Explosion.DestructionType.NONE);
-            this.discard();
+    public void spawnSomething(int i){
+        SomethingEntity something = FFEntities.SOMETHING.create(world);
+        if (this.isPersistent()) {
+            something.setPersistent();
         }
+        something.setCustomName(this.getCustomName());
+        something.setAiDisabled(this.isAiDisabled());
+        something.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.7D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
+        world.spawnEntity(something);
     }
+    public void spawnGipple(int i){
+        GippleEntity gipple = FFEntities.GIPPLE.create(this.world);
+
+        if (this.isPersistent()) {
+            gipple.setPersistent();
+        }
+        gipple.setCustomName(this.getCustomName());
+        gipple.setAiDisabled(this.isAiDisabled());
+        gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
+        world.spawnEntity(gipple);
+    }
+
 
     /*
             Sounds

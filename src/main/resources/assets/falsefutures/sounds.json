@@ -24,6 +24,14 @@
         "falsefutures:entity/gipple/death1",
      	"falsefutures:entity/gipple/death2"
      ]
+  },
+  "music.record.gipplecore": {
+      "category": "master",
+      "sounds": [
+        {
+          "name": "falsefutures:record/gipplecore",
+          "stream": true
+      }
+    ]
   }
-
 }

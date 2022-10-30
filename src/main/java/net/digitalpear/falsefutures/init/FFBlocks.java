@@ -27,21 +27,18 @@ public class FFBlocks {
         return Registry.register(Registry.BLOCK, new Identifier(FalseFutures.MOD_ID, blockID), block);
     }
 
-    //Jello Stuff
-    public static Block jelloCakeSettings(MapColor color){
-        return new JelloCakeBlock(AbstractBlock.Settings.of(Material.CAKE, color).strength(0.1f, 0.2f).sounds(BlockSoundGroup.SLIME));
-    }
     public static Block jelloCakeRegistry(String color_name,MapColor color){
-        return createBlockWithItem(color_name + "_jelly", jelloCakeSettings(color), ItemGroup.FOOD);
+        return createBlockWithItem(color_name + "_jelly", new JelloCakeBlock(AbstractBlock.Settings.of(Material.CAKE, color)
+                .strength(0.1f, 0.2f).sounds(BlockSoundGroup.SLIME)), ItemGroup.FOOD);
     }
 
-    public static final Block BLUE_JELLO_CAKE = jelloCakeRegistry("plain", MapColor.LIGHT_BLUE);
-    public static final Block GREEN_JELLO_CAKE = jelloCakeRegistry("weird", MapColor.LIME);
-    public static final Block WHITE_JELLO_CAKE = jelloCakeRegistry("milky", MapColor.WHITE);
-    public static final Block YELLOW_JELLO_CAKE = jelloCakeRegistry("floral", MapColor.YELLOW);
-    public static final Block PURPLE_JELLO_CAKE = jelloCakeRegistry("symphonic", MapColor.PURPLE);
-    public static final Block PINK_JELLO_CAKE = jelloCakeRegistry("sweet", MapColor.PINK);
-    public static final Block RED_JELLO_CAKE = jelloCakeRegistry("fruity", MapColor.BRIGHT_RED);
+    public static final Block PLAIN_JELLO_CAKE = jelloCakeRegistry("plain", MapColor.LIGHT_BLUE);
+    public static final Block WEIRD_JELLO_CAKE = jelloCakeRegistry("weird", MapColor.LIME);
+    public static final Block MILKY_JELLO_CAKE = jelloCakeRegistry("milky", MapColor.WHITE);
+    public static final Block FLORAL_JELLO_CAKE = jelloCakeRegistry("floral", MapColor.YELLOW);
+    public static final Block SYMPHONIC_JELLO_CAKE = jelloCakeRegistry("symphonic", MapColor.PURPLE);
+    public static final Block SWEET_JELLO_CAKE = jelloCakeRegistry("sweet", MapColor.PINK);
+    public static final Block FRUITY_JELLO_CAKE = jelloCakeRegistry("fruity", MapColor.BRIGHT_RED);
 
 
     public static void init(){}

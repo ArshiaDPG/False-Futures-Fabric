@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.client;
 
 import net.digitalpear.falsefutures.common.entities.gipple.GippleEntityRenderer;
+import net.digitalpear.falsefutures.common.entities.something.SomethingEntityRenderer;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -12,6 +13,7 @@ public class FalseFuturesClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry.register(FFEntities.GIPPLE, GippleEntityRenderer::new);
+        EntityRendererRegistry.register(FFEntities.SOMETHING, SomethingEntityRenderer::new);
 
     }
 }

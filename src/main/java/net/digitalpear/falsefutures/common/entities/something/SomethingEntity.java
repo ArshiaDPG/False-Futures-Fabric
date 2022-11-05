@@ -41,7 +41,8 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0D)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.4)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3);
     }
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.8F;

@@ -2,6 +2,7 @@ package net.digitalpear.falsefutures.common.entities.gipple;
 
 import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
+import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
@@ -25,9 +26,11 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.mob.ZoglinEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -41,8 +44,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -55,8 +59,9 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Iterator;
 
-public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable, IAnimationTickable {
+public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable, IAnimationTickable, Bucketable  {
     private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private int digestingCooldown = 300;
     private float floatOnWaterDistance = 0.5f;
     private int blocksToCheckForWater = 10;
@@ -78,11 +83,20 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(1, new FleeEntityGoal(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        if (spawnReason.equals(SpawnReason.BUCKET)){
+            this.setPersistent();
+            this.setFromBucket(true);
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     @Override
@@ -174,34 +188,59 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(DIGESTING, false);
+        this.dataTracker.startTracking(FROM_BUCKET, false);
     }
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Digesting", this.isDigesting());
+        nbt.putBoolean("FromBucket", this.isFromBucket());
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setDigesting(nbt.getBoolean("Digesting"));
+        this.setFromBucket(nbt.getBoolean("FromBucket"));
+    }
+
+    /*
+        IF digesting drop gelatin when hit.
+     */
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (isDigesting()){
+            int i = 1 + this.random.nextInt(3);
+
+            for(int j = 0; j < i; ++j) {
+                ItemEntity itemEntity = this.dropItem(FFItems.GELATIN, 1);
+                if (itemEntity != null) {
+                    itemEntity.setVelocity(itemEntity.getVelocity().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
+                }
+            }
+        }
+        return super.damage(source, amount);
     }
     /*
-        Feed it
+        Overfeeding code.
      */
-
-
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        if (stack.isIn(FFItemTags.GIPPLE_FOOD)) {
+        /*
+            Go in bucket
+         */
+        if (stack.isOf(Items.BUCKET)){
+            Bucketable.tryBucket(player, hand, this);
+        }
+        /*
+            Eat lichen and multiply
+         */
+        else if (stack.isIn(FFItemTags.GIPPLE_FOOD)) {
             if (!this.world.isClient) {
                 if (this.isDigesting()){
                     mitosis();
                     stack.decrement(1);
                     return ActionResult.SUCCESS;
                 }
-//                else{
-//                    this.setDigesting(true);
-//                }
             }
         }
         return ActionResult.FAIL;
@@ -340,6 +379,36 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public AnimationFactory getFactory() {
         return this.factory;
+    }
+
+    /*
+        Bucket stuff
+     */
+    @Override
+    public boolean isFromBucket() {
+        return dataTracker.get(FROM_BUCKET);
+    }
+
+    @Override
+    public void setFromBucket(boolean fromBucket) {
+        dataTracker.set(FROM_BUCKET, fromBucket);
+    }
+
+    public void copyDataToStack(ItemStack stack) {
+        Bucketable.copyDataToStack(this, stack);
+    }
+
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+    }
+
+    public SoundEvent getBucketFillSound() {
+        return SoundEvents.ITEM_BUCKET_FILL_FISH;
+    }
+
+    @Override
+    public ItemStack getBucketItem() {
+        return new ItemStack(FFItems.GIPPLE_BUCKET);
     }
 
     /*

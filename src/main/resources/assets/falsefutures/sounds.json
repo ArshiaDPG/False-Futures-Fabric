@@ -5,7 +5,8 @@
     "sounds": [
       "falsefutures:entity/gipple/ambient1",
 	  "falsefutures:entity/gipple/ambient2",
-	  "falsefutures:entity/gipple/ambient3"
+	  "falsefutures:entity/gipple/ambient3",
+	  "falsefutures:entity/gipple/ambient4"
     ]
   },
   "entity.falsefutures.gipple_hurt": {

@@ -41,6 +41,9 @@ public class JelloCakeBlock extends Block {
         builder.add(HALVED);
     }
 
+    /*
+        -If half block, then destroy instead of push.
+     */
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
         return state.get(HALVED) ? PistonBehavior.DESTROY : PistonBehavior.NORMAL;

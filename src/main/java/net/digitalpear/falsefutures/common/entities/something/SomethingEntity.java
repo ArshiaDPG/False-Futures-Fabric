@@ -1,16 +1,22 @@
 package net.digitalpear.falsefutures.common.entities.something;
 
+import net.digitalpear.falsefutures.init.FFEntities;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.BirdNavigation;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -32,13 +38,16 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         this.experiencePoints = 20;
     }
     protected void initGoals() {
-        this.goalSelector.add(0, new SomethingAttackGoal(this, 1.0D, true));
+        this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(1, new SomethingAttackGoal(this, 1.0D, true));
         this.targetSelector.add(1, new ActiveTargetGoal(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal(this, LivingEntity.class, false));
     }
     public static DefaultAttributeContainer.Builder createSomethingAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.4)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0)
@@ -47,10 +56,31 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.8F;
     }
+    /*
+        Flying code.
+     */
+
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
+    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
+    }
+
+    protected EntityNavigation createNavigation(World world) {
+        BirdNavigation birdNavigation = new BirdNavigation(this, world);
+        birdNavigation.setCanPathThroughDoors(false);
+        birdNavigation.setCanSwim(true);
+        birdNavigation.setCanEnterOpenDoors(true);
+        return birdNavigation;
+    }
+
     @Override
     public boolean isInAir() {
-        return !isOnGround();
+        return !this.isOnGround();
     }
+
 
 
     /*
@@ -62,7 +92,7 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.float", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.swim", true));
         return PlayState.CONTINUE;
     }
 
@@ -97,8 +127,8 @@ class SomethingAttackGoal extends MeleeAttackGoal {
     }
 
     public void tick() {
-        super.tick();
         ++this.ticks;
         this.gipple.setAttacking(this.ticks >= 5 && this.getCooldown() < this.getMaxCooldown() / 2);
+        super.tick();
     }
 }

@@ -66,7 +66,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private float floatOnWaterDistance = 0.5f;
     private int blocksToCheckForWater = 10;
     int chanceOfEating = 20;
-    int eatingCooldownRange = 200;
+    int eatingCooldownRange = 1000;
     int eatingCooldown;
     private AnimationFactory factory = new AnimationFactory(this);
 
@@ -102,6 +102,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public void tick() {
         if (isDigesting()){
+            setGlowing(true);
             if (digestingCooldown <= 0){
                 digestingCooldown = 300;
                 setDigesting(false);
@@ -111,6 +112,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             }
         }
         else{
+            setGlowing(false);
             if (eatingCooldown > 0) {
                 eatingCooldown--;
             }
@@ -216,6 +218,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                     itemEntity.setVelocity(itemEntity.getVelocity().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
                 }
             }
+            setDigesting(false);
         }
         return super.damage(source, amount);
     }
@@ -228,7 +231,8 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         /*
             Go in bucket
          */
-        if (stack.isOf(Items.BUCKET)){
+        if (stack.isOf(Items.WATER_BUCKET)){
+            player.swingHand(hand);
             Bucketable.tryBucket(player, hand, this);
         }
         /*
@@ -264,8 +268,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 if (spawnGippleNotSomething) {
                     spawnGipple(i);
                 } else if (world.getDifficulty() != Difficulty.PEACEFUL){
-//                    spawnSomething(i);
-                    spawnGipple(i);
+                    spawnSomething(i);
                 }
                 else{
                     spawnGipple(i);
@@ -325,12 +328,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     /*
         Flying code.
      */
-
-    @Override
-    public boolean hasNoGravity() {
-        return !this.isSubmergedInWater();
-    }
-
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }

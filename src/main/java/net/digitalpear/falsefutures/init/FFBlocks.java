@@ -1,8 +1,10 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.JelloCakeBlock;
-import net.digitalpear.falsefutures.init.tags.FFBlockTags;
+import net.digitalpear.falsefutures.common.blocks.FloralJellyBlock;
+import net.digitalpear.falsefutures.common.blocks.JellyBlock;
+import net.digitalpear.falsefutures.common.blocks.MilkyJellyBlock;
+import net.digitalpear.falsefutures.common.blocks.SymphonicJellyBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -27,19 +29,21 @@ public class FFBlocks {
     public static Block createBlockWithoutItem(String blockID, Block block){
         return Registry.register(Registry.BLOCK, new Identifier(FalseFutures.MOD_ID, blockID), block);
     }
-
-    public static Block jelloCakeRegistry(String color_name,MapColor color){
-        return createBlockWithItem(color_name + "_jelly", new JelloCakeBlock(AbstractBlock.Settings.of(Material.CAKE, color)
-                .strength(0.1f, 0.2f).sounds(BlockSoundGroup.SLIME)), ItemGroup.FOOD);
+    public static AbstractBlock.Settings jellySettings(MapColor color){
+        return AbstractBlock.Settings.of(Material.CAKE, color).strength(0.1f, 0.2f).sounds(BlockSoundGroup.SLIME);
     }
 
-    public static final Block PLAIN_JELLO_CAKE = jelloCakeRegistry("plain", MapColor.LIGHT_BLUE);
-    public static final Block WEIRD_JELLO_CAKE = jelloCakeRegistry("weird", MapColor.LIME);
-    public static final Block MILKY_JELLO_CAKE = jelloCakeRegistry("milky", MapColor.WHITE);
-    public static final Block FLORAL_JELLO_CAKE = jelloCakeRegistry("floral", MapColor.YELLOW);
-    public static final Block SYMPHONIC_JELLO_CAKE = jelloCakeRegistry("symphonic", MapColor.PURPLE);
-    public static final Block SWEET_JELLO_CAKE = jelloCakeRegistry("sweet", MapColor.PINK);
-    public static final Block FRUITY_JELLO_CAKE = jelloCakeRegistry("fruity", MapColor.BRIGHT_RED);
+    public static Block jelloRegistry(String color_name, MapColor color){
+        return createBlockWithItem(color_name + "_jelly", new JellyBlock(jellySettings(color)), ItemGroup.FOOD);
+    }
+
+    public static final Block PLAIN_JELLY = jelloRegistry("plain", MapColor.LIGHT_BLUE);
+    public static final Block WEIRD_JELLY = jelloRegistry("weird", MapColor.LIME);
+    public static final Block MILKY_JELLY = createBlockWithItem("milky_jelly", new MilkyJellyBlock(jellySettings(MapColor.WHITE)), ItemGroup.FOOD);
+    public static final Block FLORAL_JELLY = createBlockWithItem("floral_jelly", new FloralJellyBlock(jellySettings(MapColor.YELLOW)), ItemGroup.FOOD);
+    public static final Block SYMPHONIC_JELLY = createBlockWithItem("symphonic_jelly", new SymphonicJellyBlock(jellySettings(MapColor.PURPLE)), ItemGroup.FOOD);
+    public static final Block SWEET_JELLY = jelloRegistry("sweet", MapColor.PINK);
+    public static final Block FRUITY_JELLY = jelloRegistry("fruity", MapColor.BRIGHT_RED);
 
 
     public static void init(){

@@ -1,9 +1,7 @@
 package net.digitalpear.falsefutures.common.entities.something;
 
-import net.digitalpear.falsefutures.init.FFEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.goal.*;
@@ -40,6 +38,7 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(1, new FlyGoal(this, 20.0D));
         this.goalSelector.add(1, new SomethingAttackGoal(this, 1.0D, true));
         this.targetSelector.add(1, new ActiveTargetGoal(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal(this, LivingEntity.class, false));

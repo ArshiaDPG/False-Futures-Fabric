@@ -22,7 +22,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class JelloCakeBlock extends Block {
+public class JellyBlock extends Block {
     public static final BooleanProperty HALVED = BooleanProperty.of("halved");
     int FOOD_LEVEL = 2;
     float SATURATION = 0.8f;
@@ -33,7 +33,7 @@ public class JelloCakeBlock extends Block {
     /*
         -Much of this block's code has been taken from slime blocks, I will comment on all custom methods describing what they do
      */
-    public JelloCakeBlock(Settings settings) {
+    public JellyBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(HALVED, false));
     }

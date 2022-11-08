@@ -20,6 +20,9 @@
     ],
     "main": [
       "net.digitalpear.falsefutures.FalseFutures"
+    ],
+    "fabric-datagen": [
+      "net.digitalpear.falsefutures.FFDatagens"
     ]
   },
 

@@ -2,6 +2,7 @@ package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.blocks.JelloCakeBlock;
+import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -41,5 +42,7 @@ public class FFBlocks {
     public static final Block FRUITY_JELLO_CAKE = jelloCakeRegistry("fruity", MapColor.BRIGHT_RED);
 
 
-    public static void init(){}
+    public static void init(){
+
+    }
 }

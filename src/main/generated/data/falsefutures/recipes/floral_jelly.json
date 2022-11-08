@@ -3,7 +3,7 @@
   "group": "jelly",
   "key": {
     "#": {
-      "item": "minecraft:sunflower"
+      "item": "minecraft:honey_bottle"
     },
     "X": {
       "item": "falsefutures:gelatin"
@@ -15,6 +15,7 @@
     "###"
   ],
   "result": {
+    "count": 3,
     "item": "falsefutures:floral_jelly"
   }
 }

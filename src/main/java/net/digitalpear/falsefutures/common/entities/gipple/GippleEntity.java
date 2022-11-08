@@ -4,6 +4,7 @@ import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
+import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -64,7 +65,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private int digestingCooldown = 300;
     private float floatOnWaterDistance = 0.5f;
-    private int blocksToCheckForWater = 10;
+    private int blocksToCheckForWater = 2;
     int chanceOfEating = 20;
     int eatingCooldownRange = 1000;
     int eatingCooldown;
@@ -77,7 +78,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         this.moveControl = new GippleMoveControl(this, 20, true);
         this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
         this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
-        eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldown * 0.8), eatingCooldown);
+        eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
     }
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
@@ -451,7 +452,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 } while(blockPos.equals(blockPos2));
 
                 BlockState blockState = this.mob.world.getBlockState(mutable2.set(blockPos2, Direction.DOWN));
-                bl = blockState.getBlock() instanceof GlowLichenBlock || blockState.isIn(BlockTags.BASE_STONE_OVERWORLD);
+                bl = blockState.getBlock() instanceof GlowLichenBlock || blockState.isIn(BlockTags.BASE_STONE_OVERWORLD) || blockState.isIn(FFBlockTags.GIPPLE_FOOD);
             } while(!bl || !this.mob.world.isAir(blockPos2) || !this.mob.world.isAir(mutable.set(blockPos2, Direction.UP)));
 
             return Vec3d.ofBottomCenter(blockPos2);

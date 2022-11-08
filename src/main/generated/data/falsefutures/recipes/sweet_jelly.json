@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "jelly",
+  "group": "jellies",
   "key": {
     "#": {
-      "item": "minecraft:melon_slice"
+      "item": "minecraft:sweet_berries"
     },
     "X": {
       "item": "falsefutures:gelatin"

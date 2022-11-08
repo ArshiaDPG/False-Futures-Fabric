@@ -15,6 +15,11 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class FFRecipeGeneration extends FabricRecipeProvider {
+
+
+    /*
+        This map is used to generate the recipes and English translations of all Jellys.
+     */
     public static final Map<Item, Item> JELLY = new HashMap<>();
     public FFRecipeGeneration(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
@@ -24,9 +29,8 @@ public class FFRecipeGeneration extends FabricRecipeProvider {
         JELLY.put(FFBlocks.FLORAL_JELLY.asItem(), Items.HONEY_BOTTLE);
         JELLY.put(FFBlocks.FRUITY_JELLY.asItem(), Items.MELON_SLICE);
         JELLY.put(FFBlocks.MILKY_JELLY.asItem(), Items.MILK_BUCKET);
-        JELLY.put(FFBlocks.SWEET_JELLY.asItem(), Items.MELON_SLICE);
+        JELLY.put(FFBlocks.SWEET_JELLY.asItem(), Items.SWEET_BERRIES);
         JELLY.put(FFBlocks.SYMPHONIC_JELLY.asItem(), Items.CHORUS_FRUIT);
-
     }
 
     @Override
@@ -42,7 +46,7 @@ public class FFRecipeGeneration extends FabricRecipeProvider {
                 .pattern("###")
                 .pattern("#X#")
                 .pattern("###")
-                .group("jelly")
+                .group("jellies")
                 .criterion("has_gelatin",
                         conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
     }

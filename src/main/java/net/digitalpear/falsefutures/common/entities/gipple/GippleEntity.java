@@ -33,6 +33,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -247,6 +248,13 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                     return ActionResult.SUCCESS;
                 }
             }
+        }
+        else if (stack.isEmpty()){
+            this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            double d = this.random.nextGaussian() * 0.02D;
+            double e = this.random.nextGaussian() * 0.02D;
+            double f = this.random.nextGaussian() * 0.02D;
+            this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), d, e, f);
         }
         return ActionResult.FAIL;
     }

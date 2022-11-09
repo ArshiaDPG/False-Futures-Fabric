@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.common.blocks;
+package net.digitalpear.falsefutures.common.blocks.jelly;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

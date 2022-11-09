@@ -47,7 +47,6 @@ public class FFRecipeGeneration extends FabricRecipeProvider {
                 .pattern("#X#")
                 .pattern("###")
                 .group("jellies")
-                .criterion("has_gelatin",
-                        conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
+                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
     }
 }

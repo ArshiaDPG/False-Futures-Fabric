@@ -1,10 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.FloralJellyBlock;
-import net.digitalpear.falsefutures.common.blocks.JellyBlock;
-import net.digitalpear.falsefutures.common.blocks.MilkyJellyBlock;
-import net.digitalpear.falsefutures.common.blocks.SymphonicJellyBlock;
+import net.digitalpear.falsefutures.common.blocks.jelly.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -33,17 +30,13 @@ public class FFBlocks {
         return AbstractBlock.Settings.of(Material.CAKE, color).strength(0.1f, 0.2f).sounds(BlockSoundGroup.SLIME);
     }
 
-    public static Block jelloRegistry(String color_name, MapColor color){
-        return createBlockWithItem(color_name + "_jelly", new JellyBlock(jellySettings(color)), ItemGroup.FOOD);
-    }
-
-    public static final Block PLAIN_JELLY = jelloRegistry("plain", MapColor.LIGHT_BLUE);
-    public static final Block WEIRD_JELLY = jelloRegistry("weird", MapColor.LIME);
+    public static final Block PLAIN_JELLY = createBlockWithItem( "plain_jelly", new JellyBlock(jellySettings(MapColor.LIGHT_BLUE)), ItemGroup.FOOD);
+    public static final Block WEIRD_JELLY = createBlockWithItem("weird_jelly", new WeirdJellyBlock(jellySettings(MapColor.LIME)), ItemGroup.FOOD);
     public static final Block MILKY_JELLY = createBlockWithItem("milky_jelly", new MilkyJellyBlock(jellySettings(MapColor.WHITE)), ItemGroup.FOOD);
     public static final Block FLORAL_JELLY = createBlockWithItem("floral_jelly", new FloralJellyBlock(jellySettings(MapColor.YELLOW)), ItemGroup.FOOD);
     public static final Block SYMPHONIC_JELLY = createBlockWithItem("symphonic_jelly", new SymphonicJellyBlock(jellySettings(MapColor.PURPLE)), ItemGroup.FOOD);
-    public static final Block SWEET_JELLY = jelloRegistry("sweet", MapColor.PINK);
-    public static final Block FRUITY_JELLY = jelloRegistry("fruity", MapColor.BRIGHT_RED);
+    public static final Block SWEET_JELLY = createBlockWithItem("sweet_jelly", new SweetJellyBlock(jellySettings(MapColor.PINK)), ItemGroup.FOOD);
+    public static final Block FRUITY_JELLY = createBlockWithItem("fruity_jelly", new SweetJellyBlock(jellySettings(MapColor.BRIGHT_RED)), ItemGroup.FOOD);
 
 
     public static void init(){

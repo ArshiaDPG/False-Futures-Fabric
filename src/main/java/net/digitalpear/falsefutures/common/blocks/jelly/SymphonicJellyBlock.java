@@ -1,7 +1,6 @@
-package net.digitalpear.falsefutures.common.blocks;
+package net.digitalpear.falsefutures.common.blocks.jelly;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;

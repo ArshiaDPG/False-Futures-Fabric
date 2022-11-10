@@ -18,7 +18,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        FFRecipeGeneration.JELLY.forEach((item, item2) -> {
+        FFRecipeGen.JELLY.forEach((item, item2) -> {
             translationBuilder.add(item, capitalize(item.getTranslationKey().split("\\.")[2]).split("_")[0] + " Jelly");
         });
 
@@ -37,6 +37,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         makeTranslation(translationBuilder, FFEntities.SOMETHING);
 
         translationBuilder.add(FFBlocks.GILY_PAD, "Gily Pad");
+        translationBuilder.add(FFItems.GILY_PAD.getTranslationKey() + ".desc", "It was Sawlf's idea!");
 
 
         try {

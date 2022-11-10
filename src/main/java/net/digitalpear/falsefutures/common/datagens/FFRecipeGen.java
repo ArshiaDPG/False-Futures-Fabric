@@ -14,14 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class FFRecipeGeneration extends FabricRecipeProvider {
+public class FFRecipeGen extends FabricRecipeProvider {
 
 
     /*
         This map is used to generate the recipes and English translations of all Jellys.
      */
     public static final Map<Item, Item> JELLY = new HashMap<>();
-    public FFRecipeGeneration(FabricDataGenerator dataGenerator) {
+    public FFRecipeGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
         JELLY.put(FFBlocks.FRUITY_JELLY.asItem(), Items.MELON_SLICE);
         JELLY.put(FFBlocks.WEIRD_JELLY.asItem(), Items.SLIME_BALL);
@@ -35,8 +35,8 @@ public class FFRecipeGeneration extends FabricRecipeProvider {
 
     @Override
     protected void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
-        JELLY.forEach((jelly, item) -> {
-            offerJellyRecipe(exporter, jelly, item);
+        JELLY.forEach((jelly, ingredient) -> {
+            offerJellyRecipe(exporter, jelly, ingredient);
         });
     }
     public static void offerJellyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {

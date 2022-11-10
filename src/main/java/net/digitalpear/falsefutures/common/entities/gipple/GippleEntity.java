@@ -228,31 +228,33 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        /*
-            Go in bucket
-         */
-        if (stack.isOf(Items.WATER_BUCKET)){
-            player.swingHand(hand);
-            Bucketable.tryBucket(player, hand, this);
-        }
-        /*
-            Eat lichen and multiply
-         */
-        else if (stack.isIn(FFItemTags.GIPPLE_FOOD)) {
-            if (!this.world.isClient) {
-                if (this.isDigesting()){
-                    mitosis();
-                    stack.decrement(1);
-                    return ActionResult.SUCCESS;
-                }
+        if (!this.world.isClient) {
+            /*
+                Go in bucket
+             */
+            if (stack.isOf(Items.WATER_BUCKET)) {
+                player.swingHand(hand);
+                Bucketable.tryBucket(player, hand, this);
             }
-        }
-        else if (stack.isEmpty()){
-            this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-            double d = this.random.nextGaussian() * 0.02D;
-            double e = this.random.nextGaussian() * 0.02D;
-            double f = this.random.nextGaussian() * 0.02D;
-            this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), d, e, f);
+            /*
+                Eat lichen and multiply
+             */
+            else if (stack.isIn(FFItemTags.GIPPLE_FOOD) && this.isDigesting()) {
+                mitosis();
+                stack.decrement(1);
+                return ActionResult.SUCCESS;
+            }
+            /*
+                Pet the gipple
+             */
+            else {
+                this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+                double d = this.random.nextGaussian() * 0.02D;
+                double e = this.random.nextGaussian() * 0.02D;
+                double f = this.random.nextGaussian() * 0.02D;
+                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), d, e, f);
+                return ActionResult.SUCCESS;
+            }
         }
         return ActionResult.FAIL;
     }
@@ -267,7 +269,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 /*
                     Spawning of something is more likely on higher difficulties
                  */
-                spawnGippleNotSomething = random.nextFloat() < 0.9 - (world.getDifficulty().getId() / 10);
+                spawnGippleNotSomething = random.nextFloat() > (0.9 - (world.getDifficulty().getId() / 100));
 
                 /*
                     If chance rolls on something then check gamemode if it is peaceful then just spawn a gipple.

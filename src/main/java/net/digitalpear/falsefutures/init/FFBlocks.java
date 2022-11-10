@@ -37,7 +37,8 @@ public class FFBlocks {
     public static final Block SWEET_JELLY = createBlockWithItem("sweet_jelly", new SweetJellyBlock(jellySettings(MapColor.PINK)), ItemGroup.FOOD);
     public static final Block FRUITY_JELLY = createBlockWithItem("fruity_jelly", new SweetJellyBlock(jellySettings(MapColor.BRIGHT_RED)), ItemGroup.FOOD);
 
-    public static final Block GILY_PAD = createBlockWithoutItem("gily_pad", new LilyPadBlock(AbstractBlock.Settings.of(Material.PLANT, MapColor.PALE_PURPLE).breakInstantly().sounds(BlockSoundGroup.LILY_PAD).nonOpaque()));
+    public static final Block GILY_PAD = createBlockWithoutItem("gily_pad", new LilyPadBlock(AbstractBlock.Settings.of(Material.PLANT,
+            MapColor.PALE_PURPLE).breakInstantly().sounds(BlockSoundGroup.LILY_PAD).nonOpaque()));
 
 
     public static void init(){

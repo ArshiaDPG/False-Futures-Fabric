@@ -7,8 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 
-public class FFItemTagGeneration extends FabricTagProvider<Item> {
-    public FFItemTagGeneration(FabricDataGenerator dataGenerator) {
+public class FFItemTagGen extends FabricTagProvider<Item> {
+    public FFItemTagGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator, Registry.ITEM);
     }
 

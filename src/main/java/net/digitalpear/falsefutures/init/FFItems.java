@@ -35,7 +35,7 @@ public class FFItems {
 
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);
 
-    public static final Item GILY_PAD = register("gily_pad", new PlaceableOnWaterItem(FFBlocks.GILY_PAD, (new Item.Settings()).group(ItemGroup.DECORATIONS)));
+    public static final Item GILY_PAD = register("gily_pad", new PlaceableOnWaterItem(FFBlocks.GILY_PAD, new Item.Settings()));
 
 
     public static void init(){

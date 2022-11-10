@@ -8,8 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.Registry;
 
-public class FFBlockTagGeneration extends FabricTagProvider<Block> {
-    public FFBlockTagGeneration(FabricDataGenerator dataGenerator) {
+public class FFBlockTagGen extends FabricTagProvider<Block> {
+    public FFBlockTagGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator, Registry.BLOCK);
     }
 

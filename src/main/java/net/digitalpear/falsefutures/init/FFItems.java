@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.Fluids;
@@ -27,11 +28,16 @@ public class FFItems {
     }
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(FFEntities.GIPPLE, 13558777, 11642584);
     public static final Item SOMETHING_SPAWN_EGG = createSpawnEgg(FFEntities.SOMETHING, 13558777, 9669861);
+
     public static final Item GELATIN = register("gelatin", new Item(new Item.Settings().food(FFFoodComponents.GELATIN).group(ItemGroup.FOOD)));
+
     public static final Item MUSIC_DISC_GIPPLECORE = createDisc("gipplecore", 13, FFSoundEvents.MUSIC_DISC_GIPPLECORE, 113);
+
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);
 
+    public static final Item GILY_PAD = register("gily_pad", new PlaceableOnWaterItem(FFBlocks.GILY_PAD, (new Item.Settings()).group(ItemGroup.DECORATIONS)));
 
 
-    public static void init(){}
+    public static void init(){
+    }
 }

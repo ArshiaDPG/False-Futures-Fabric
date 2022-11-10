@@ -1,9 +1,13 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.init.FFBlocks;
+import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 
 import java.nio.file.Path;
 
@@ -19,7 +23,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         });
 
 
-        translationBuilder.add(FFItems.GELATIN, capitalize(FFItems.GELATIN.getTranslationKey().split("\\.")[2]));
+        makeTranslation(translationBuilder, FFItems.GELATIN);
 
         translationBuilder.add(FFItems.GIPPLE_BUCKET, "Bucket of Gipple");
 
@@ -29,6 +33,11 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
 
+        makeTranslation(translationBuilder, FFEntities.GIPPLE);
+        makeTranslation(translationBuilder, FFEntities.SOMETHING);
+
+        translationBuilder.add(FFBlocks.GILY_PAD, "Gily Pad");
+
 
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
@@ -36,6 +45,12 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         } catch (Exception e) {
             throw new RuntimeException("Failed to add existing language file!", e);
         }
+    }
+    public static void makeTranslation(TranslationBuilder translationBuilder, Item item){
+        translationBuilder.add(item, capitalize(item.getTranslationKey().split("\\.")[2]));
+    }
+    public static void makeTranslation(TranslationBuilder translationBuilder, EntityType<?> entityType){
+        translationBuilder.add(entityType, capitalize(entityType.getTranslationKey().split("\\.")[2]));
     }
 
     public static String capitalize(String inputString) {

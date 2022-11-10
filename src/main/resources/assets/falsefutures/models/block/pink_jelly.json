@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "falsefutures:block/pink_jelly_bottom",
-    "side": "falsefutures:block/pink_jelly_side",
-    "top": "falsefutures:block/pink_jelly_top"
-  }
-}

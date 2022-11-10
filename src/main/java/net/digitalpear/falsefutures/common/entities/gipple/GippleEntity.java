@@ -104,7 +104,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public void tick() {
         if (isDigesting()){
-            setGlowing(true);
             if (digestingCooldown <= 0){
                 digestingCooldown = 300;
                 setDigesting(false);
@@ -114,7 +113,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             }
         }
         else{
-            setGlowing(false);
             if (eatingCooldown > 0) {
                 eatingCooldown--;
             }

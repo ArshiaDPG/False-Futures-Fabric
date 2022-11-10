@@ -1,7 +1,6 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.Fluids;
@@ -35,7 +34,7 @@ public class FFItems {
 
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);
 
-    public static final Item GILY_PAD = register("gily_pad", new PlaceableOnWaterItem(FFBlocks.GILY_PAD, new Item.Settings()));
+    public static final Item GIPPLEPAD = register("gipplepad", new PlaceableOnWaterItem(FFBlocks.GIPPLEPAD, new Item.Settings()));
 
 
     public static void init(){

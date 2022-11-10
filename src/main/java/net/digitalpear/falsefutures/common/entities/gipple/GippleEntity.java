@@ -228,7 +228,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        if (!this.world.isClient) {
             /*
                 Go in bucket
              */
@@ -240,9 +239,11 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 Eat lichen and multiply
              */
             else if (stack.isIn(FFItemTags.GIPPLE_FOOD) && this.isDigesting()) {
-                mitosis();
-                stack.decrement(1);
-                return ActionResult.SUCCESS;
+//                if (!this.world.isClient) {
+                    mitosis();
+                    stack.decrement(1);
+                    return ActionResult.SUCCESS;
+//                }
             }
             /*
                 Pet the gipple
@@ -255,7 +256,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), d, e, f);
                 return ActionResult.SUCCESS;
             }
-        }
         return ActionResult.FAIL;
     }
 
@@ -269,7 +269,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 /*
                     Spawning of something is more likely on higher difficulties
                  */
-                spawnGippleNotSomething = random.nextFloat() > (0.9 - (world.getDifficulty().getId() / 100));
+                spawnGippleNotSomething = random.nextFloat() < (0.9 - (world.getDifficulty().getId() / 50));
 
                 /*
                     If chance rolls on something then check gamemode if it is peaceful then just spawn a gipple.

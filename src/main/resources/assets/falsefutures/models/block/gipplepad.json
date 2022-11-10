@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "falsefutures:block/gily_pad",
-        "texture": "falsefutures:block/gily_pad"
+        "particle": "falsefutures:block/gipplepad",
+        "texture": "falsefutures:block/gipplepad"
     },
     "elements": [
         {   "from": [  0, 0.25,  0 ],

@@ -36,8 +36,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         makeTranslation(translationBuilder, FFEntities.GIPPLE);
         makeTranslation(translationBuilder, FFEntities.SOMETHING);
 
-        translationBuilder.add(FFBlocks.GILY_PAD, "Gily Pad");
-        translationBuilder.add(FFItems.GILY_PAD.getTranslationKey() + ".desc", "It was Sawlf's idea!");
+        translationBuilder.add(FFBlocks.GIPPLEPAD, "Gipplepad");
 
 
         try {

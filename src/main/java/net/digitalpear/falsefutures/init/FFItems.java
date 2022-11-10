@@ -23,7 +23,7 @@ public class FFItems {
         return register("music_disc_" + name, new MusicDiscItem(output, sound, new Item.Settings().rarity(Rarity.RARE).maxCount(1).group(ItemGroup.MISC), length));
     }
     public static Item createBucketedMob(EntityType<?> type){
-        return register(type.getTranslationKey().split("\\.")[2] + "_bucket", new EntityBucketItem(type, Fluids.FLOWING_WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
+        return register(type.getTranslationKey().split("\\.")[2] + "_bucket", new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
     }
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(FFEntities.GIPPLE, 13558777, 11642584);
     public static final Item SOMETHING_SPAWN_EGG = createSpawnEgg(FFEntities.SOMETHING, 13558777, 9669861);

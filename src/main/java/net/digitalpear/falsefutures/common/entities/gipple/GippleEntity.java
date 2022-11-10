@@ -269,7 +269,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 /*
                     Spawning of something is more likely on higher difficulties
                  */
-                spawnGippleNotSomething = random.nextFloat() < (0.9 - (world.getDifficulty().getId() / 50));
+                spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) > random.nextFloat();
 
                 /*
                     If chance rolls on something then check gamemode if it is peaceful then just spawn a gipple.

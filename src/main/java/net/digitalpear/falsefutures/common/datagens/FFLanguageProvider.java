@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
 
@@ -37,6 +38,9 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         makeTranslation(translationBuilder, FFEntities.SOMETHING);
 
         translationBuilder.add(FFBlocks.GIPPLEPAD, "Gipplepad");
+
+        translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
+        translationBuilder.add("advancements.husbandry.jellies.description", "Collect one of all jelly flavours.");
 
 
         try {

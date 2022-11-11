@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:dripstone_caves",
+    "minecraft:lush_caves",
+    {
+      "id": "galosphere:lichen_caves",
+      "required": false
+    }
+  ]
+}

@@ -40,9 +40,9 @@ public class FFRecipeGen extends FabricRecipeProvider {
         });
     }
     public static void offerJellyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        ShapedRecipeJsonBuilder.create(output, 3)
-                .input('#', input)
-                .input('X', FFItems.GELATIN)
+        ShapedRecipeJsonBuilder.create(output, 2)
+                .input('X', input)
+                .input('#', FFItems.GELATIN)
                 .pattern("###")
                 .pattern("#X#")
                 .pattern("###")

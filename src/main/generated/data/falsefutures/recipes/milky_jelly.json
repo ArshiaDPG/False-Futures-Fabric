@@ -3,10 +3,10 @@
   "group": "jellies",
   "key": {
     "#": {
-      "item": "minecraft:milk_bucket"
+      "item": "falsefutures:gelatin"
     },
     "X": {
-      "item": "falsefutures:gelatin"
+      "item": "minecraft:milk_bucket"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "###"
   ],
   "result": {
-    "count": 3,
+    "count": 2,
     "item": "falsefutures:milky_jelly"
   }
 }

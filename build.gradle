@@ -8,6 +8,8 @@ group = project.maven_group
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
 }
 
 dependencies {
@@ -19,7 +21,11 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.21'
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib}"
+
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 processResources {

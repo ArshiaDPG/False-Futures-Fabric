@@ -3,10 +3,10 @@
   "group": "jellies",
   "key": {
     "#": {
-      "item": "minecraft:sweet_berries"
+      "item": "falsefutures:gelatin"
     },
     "X": {
-      "item": "falsefutures:gelatin"
+      "item": "minecraft:sweet_berries"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "###"
   ],
   "result": {
-    "count": 3,
+    "count": 2,
     "item": "falsefutures:sweet_jelly"
   }
 }

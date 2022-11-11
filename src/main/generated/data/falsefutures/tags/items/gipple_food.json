@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:glow_lichen"
+    "minecraft:glow_lichen",
+    {
+      "id": "galosphere:lichen_cordyceps",
+      "required": false
+    }
   ]
 }

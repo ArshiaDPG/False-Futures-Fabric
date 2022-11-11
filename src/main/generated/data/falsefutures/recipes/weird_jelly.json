@@ -3,10 +3,10 @@
   "group": "jellies",
   "key": {
     "#": {
-      "item": "minecraft:slime_ball"
+      "item": "falsefutures:gelatin"
     },
     "X": {
-      "item": "falsefutures:gelatin"
+      "item": "minecraft:slime_ball"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "###"
   ],
   "result": {
-    "count": 3,
+    "count": 2,
     "item": "falsefutures:weird_jelly"
   }
 }

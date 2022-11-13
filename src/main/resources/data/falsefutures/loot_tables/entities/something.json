@@ -44,7 +44,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "killer",
           "predicate": {
-            "type": "#minecraft:skeletons"
+            "type": "falsefutures:something"
           }
         }
       ]

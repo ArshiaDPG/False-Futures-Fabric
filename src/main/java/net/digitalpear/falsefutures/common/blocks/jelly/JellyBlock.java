@@ -21,6 +21,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Level;
 
 public class JellyBlock extends Block {
     public static final BooleanProperty HALVED = BooleanProperty.of("halved");
@@ -28,7 +29,6 @@ public class JellyBlock extends Block {
     float SATURATION = 0.8f;
     protected static final VoxelShape FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape HALF_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-
 
     /*
         -Much of this block's code has been taken from slime blocks, I will comment on all custom methods describing what they do
@@ -77,6 +77,7 @@ public class JellyBlock extends Block {
             return ActionResult.PASS;
         }
     }
+
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return state.get(HALVED) ? HALF_SHAPE : FULL_SHAPE;
     }
@@ -90,11 +91,6 @@ public class JellyBlock extends Block {
 
     }
 
-    @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-//        bounceSide(entity);
-        super.onEntityCollision(state, world, pos, entity);
-    }
 
 
 
@@ -147,5 +143,43 @@ public class JellyBlock extends Block {
         }
 
         super.onSteppedOn(world, pos, state, entity);
+    }
+    /*
+        Taken from Tinker's slime block code
+     */
+
+    @Override
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (!worldIn.isClient() && !entityIn.bypassesLandingEffects()) {
+            Vec3d entityPosition = entityIn.getPos();
+            Vec3d direction = entityPosition.subtract(pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f);
+            // only bounce if within the block height, prevents bouncing on top or from two blocks vertically
+            if (direction.y < 0.9365 && direction.y >= -0.0625) {
+                // bounce the current speed, slightly smaller to prevent infinite bounce
+                double velocity = entityPosition.subtract(entityIn.getX(), entityIn.getY(), entityIn.getZ()).length() * 0.95;
+                // determine whether we bounce in the X or the Z direction, we want whichever is bigger
+                Vec3d motion = entityIn.getVelocity();
+                double absX = Math.abs(direction.x);
+                double absZ = Math.abs(direction.z);
+                if (absX > absZ) {
+                    // but don't bounce past the halfway point in the block, to avoid bouncing twice
+                    if (absZ < 0.495) {
+                        entityIn.setVelocity(new Vec3d(velocity * Math.signum(direction.x), motion.y, motion.z));
+                        entityIn.velocityModified = true;
+                        if (velocity > 0.1) {
+                            worldIn.playSound(null, pos, getSoundGroup(state).getStepSound(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+                        }
+                    }
+                } else {
+                    if (absX < 0.495) {
+                        entityIn.setVelocity(new Vec3d(motion.x, motion.y, velocity * Math.signum(direction.z)));
+                        entityIn.velocityModified = true;
+                        if (velocity > 0.1) {
+                            worldIn.playSound(null, pos, getSoundGroup(state).getStepSound(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

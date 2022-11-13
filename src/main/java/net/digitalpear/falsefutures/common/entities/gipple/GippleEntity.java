@@ -161,7 +161,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public void tickMovement() {
         floatOnWater();
-        eatLichen();
+        if (this.isBaby()) {
+            eatLichen();
+        }
         super.tickMovement();
     }
 
@@ -306,6 +308,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         gipple.setCustomName(this.getCustomName());
         gipple.setAiDisabled(this.isAiDisabled());
+        gipple.setBaby(true);
         gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
         world.spawnEntity(gipple);
     }
@@ -360,8 +363,8 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
 
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return null;
+    public GippleEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return FFEntities.GIPPLE.create(world);
     }
 
 
@@ -420,7 +423,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     /*
         Flying Goal
      */
-
     private static class FlyOntoLichenGoal extends FlyGoal {
         public FlyOntoLichenGoal(PathAwareEntity pathAwareEntity, double d) {
             super(pathAwareEntity, d);

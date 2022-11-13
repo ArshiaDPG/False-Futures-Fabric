@@ -34,6 +34,11 @@ public class GippleEntityModel extends AnimatedTickingGeoModel<GippleEntity> {
             head.setScaleY(BLOATED_SCALE);
             head.setScaleZ(BLOATED_SCALE);
         }
+        else if(entity.isBaby()){
+            head.setScaleX(0.5f);
+            head.setScaleY(0.5f);
+            head.setScaleZ(0.5f);
+        }
     }
 
 }

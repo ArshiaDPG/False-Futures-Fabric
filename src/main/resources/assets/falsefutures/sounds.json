@@ -14,8 +14,7 @@
   	"subtitle": "subtitles.falsefutures.gipple_hurt",
       "sounds": [
         "falsefutures:entity/gipple/hurt1",
-  	    "falsefutures:entity/gipple/hurt2",
-  	    "falsefutures:entity/gipple/hurt3"
+  	    "falsefutures:entity/gipple/hurt2"
     ]
   },
      "entity.falsefutures.gipple_death": {

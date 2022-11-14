@@ -67,7 +67,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private int digestingCooldown = 300;
     private float floatOnWaterDistance = 0.5f;
     private int blocksToCheckForWater = 2;
-    int chanceOfEating = 20;
     int eatingCooldownRange = 1000;
     int eatingCooldown;
     private AnimationFactory factory = new AnimationFactory(this);
@@ -148,8 +147,8 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
      */
     public void eatLichen(){
         if (world.getBlockState(this.getBlockPos()).isOf(Blocks.GLOW_LICHEN) && !isDigesting()){
-            if ((random.nextFloat() > (1 - (chanceOfEating / 10))) && eatingCooldown <= 0){
-                world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
+                world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 setDigesting(true);
                 eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
             }

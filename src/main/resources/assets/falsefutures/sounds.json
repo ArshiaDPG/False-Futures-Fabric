@@ -9,6 +9,13 @@
 	  "falsefutures:entity/gipple/ambient4"
     ]
   },
+  "entity.falsefutures.gipple_burp": {
+    "category": "neutral",
+	"subtitle": "subtitles.falsefutures.gipple_burp",
+    "sounds": [
+      "falsefutures:entity/gipple/burp"
+    ]
+  },
   "entity.falsefutures.gipple_hurt": {
       "category": "neutral",
   	"subtitle": "subtitles.falsefutures.gipple_hurt",

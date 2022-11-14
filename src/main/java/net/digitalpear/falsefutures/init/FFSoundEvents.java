@@ -9,6 +9,7 @@ public class FFSoundEvents {
     public static final SoundEvent ENTITY_GIPPLE_AMBIENT = register("entity.falsefutures.gipple_ambient");
     public static final SoundEvent ENTITY_GIPPLE_HURT = register("entity.falsefutures.gipple_hurt");
     public static final SoundEvent ENTITY_GIPPLE_DEATH = register("entity.falsefutures.gipple_death");
+    public static final SoundEvent ENTITY_GIPPLE_BURP = register("entity.falsefutures.gipple_burp");
     public static final SoundEvent MUSIC_DISC_GIPPLECORE = register("music.record.gipplecore");
 
     private static SoundEvent register(String id) {

@@ -92,7 +92,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
+        this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+
     }
 
     @Override
@@ -319,7 +321,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
         world.spawnEntity(gipple);
     }
-
 
     /*
             Sounds

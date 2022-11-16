@@ -44,7 +44,7 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
 
     public static DefaultAttributeContainer.Builder createSomethingAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.5D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.4)

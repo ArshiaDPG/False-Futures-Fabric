@@ -6,6 +6,7 @@ import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GlowLichenBlock;
@@ -30,10 +31,12 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -64,6 +67,7 @@ import java.util.Iterator;
 public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable, IAnimationTickable, Bucketable  {
     private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
     private int digestingCooldown = 300;
     private float floatOnWaterDistance = 0.5f;
     private int blocksToCheckForWater = 2;
@@ -146,9 +150,10 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         Code to eat lichen
      */
     public void eatLichen(){
-        if (world.getBlockState(this.getBlockPos()).isOf(Blocks.GLOW_LICHEN) && !isDigesting()){
+        if (world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) && !isDigesting()){
             if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
                 world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+                this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
                 setDigesting(true);
                 eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
             }
@@ -160,7 +165,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public void tickMovement() {
         floatOnWater();
-        if (this.isBaby()) {
+        if (!this.isBaby()) {
             eatLichen();
         }
         super.tickMovement();
@@ -239,7 +244,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             /*
                 Eat lichen and multiply
              */
-            else if (stack.isIn(FFItemTags.GIPPLE_FOOD) && this.isDigesting()) {
+            else if (GIPPLE_FOOD.test(stack) && this.isDigesting()) {
 //                if (!this.world.isClient) {
                     mitosis();
                     stack.decrement(1);
@@ -260,45 +265,48 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         return ActionResult.FAIL;
     }
 
-    //Spawn two gipples with a rare chance of 3
-    //Chance to spawn a something instead of a gipple
+
+
     public void mitosis(){
+        //Chance to spawn a something instead of gipples
+
+        boolean spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) > random.nextFloat();
+
+        if (spawnGippleNotSomething){
+            spawnSomething();
+        }
+        else{
+            //Spawn two gipples with a rare chance of
+
             int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
-            boolean spawnGippleNotSomething;
-            for (int i = 0; i <gippleNumber; i++) {
-
-                /*
-                    Spawning of something is more likely on higher difficulties
-                 */
-                spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) > random.nextFloat();
-
-                /*
-                    If chance rolls on something then check gamemode if it is peaceful then just spawn a gipple.
-                 */
-                if (spawnGippleNotSomething) {
-                    spawnGipple(i);
-                } else if (world.getDifficulty() != Difficulty.PEACEFUL){
-                    spawnSomething(i);
-                }
-                else{
-                    spawnGipple(i);
-                }
+            int i = 0;
+            while (i != gippleNumber){
+                spawnGipple(i);
+                i++;
             }
-            this.discard();
+        }
+        this.discard();
     }
     /*
-        i only determines rotation, if that doesn't matter then enter any number.
+        Disables breeding
      */
-    public void spawnSomething(int i){
+    @Override
+    public void breed(ServerWorld world, AnimalEntity other) {
+    }
+
+    public void spawnSomething(){
         SomethingEntity something = FFEntities.SOMETHING.create(world);
         if (this.isPersistent()) {
             something.setPersistent();
         }
         something.setCustomName(this.getCustomName());
         something.setAiDisabled(this.isAiDisabled());
-        something.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.7D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
+        something.refreshPositionAndAngles(this.getX() + this.getY() + 1.5D, this.getY() + 0.7D, this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
         world.spawnEntity(something);
     }
+    /*
+        i only determines rotation and relative z position, if that doesn't matter then enter any number.
+     */
     public void spawnGipple(int i){
         GippleEntity gipple = FFEntities.GIPPLE.create(this.world);
 

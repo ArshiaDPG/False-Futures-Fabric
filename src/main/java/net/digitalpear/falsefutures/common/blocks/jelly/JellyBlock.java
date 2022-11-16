@@ -144,42 +144,4 @@ public class JellyBlock extends Block {
 
         super.onSteppedOn(world, pos, state, entity);
     }
-    /*
-        Taken from Tinker's slime block code
-     */
-
-    @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isClient() && !entityIn.bypassesLandingEffects()) {
-            Vec3d entityPosition = entityIn.getPos();
-            Vec3d direction = entityPosition.subtract(pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f);
-            // only bounce if within the block height, prevents bouncing on top or from two blocks vertically
-            if (direction.y < 0.9365 && direction.y >= -0.0625) {
-                // bounce the current speed, slightly smaller to prevent infinite bounce
-                double velocity = entityPosition.subtract(entityIn.getX(), entityIn.getY(), entityIn.getZ()).length() * 0.95;
-                // determine whether we bounce in the X or the Z direction, we want whichever is bigger
-                Vec3d motion = entityIn.getVelocity();
-                double absX = Math.abs(direction.x);
-                double absZ = Math.abs(direction.z);
-                if (absX > absZ) {
-                    // but don't bounce past the halfway point in the block, to avoid bouncing twice
-                    if (absZ < 0.495) {
-                        entityIn.setVelocity(new Vec3d(velocity * Math.signum(direction.x), motion.y, motion.z));
-                        entityIn.velocityModified = true;
-                        if (velocity > 0.1) {
-                            worldIn.playSound(null, pos, getSoundGroup(state).getStepSound(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-                        }
-                    }
-                } else {
-                    if (absX < 0.495) {
-                        entityIn.setVelocity(new Vec3d(motion.x, motion.y, velocity * Math.signum(direction.z)));
-                        entityIn.velocityModified = true;
-                        if (velocity > 0.1) {
-                            worldIn.playSound(null, pos, getSoundGroup(state).getStepSound(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

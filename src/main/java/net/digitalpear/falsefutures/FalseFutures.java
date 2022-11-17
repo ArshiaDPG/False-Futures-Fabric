@@ -1,6 +1,5 @@
 package net.digitalpear.falsefutures;
 
-import com.kyanite.paragon.Paragon;
 import com.kyanite.paragon.api.ConfigRegistry;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
@@ -10,7 +9,6 @@ import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.SpawnGroup;
 
 public class FalseFutures implements ModInitializer {

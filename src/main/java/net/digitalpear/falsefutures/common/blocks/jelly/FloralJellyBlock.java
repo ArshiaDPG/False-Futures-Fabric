@@ -20,4 +20,5 @@ public class FloralJellyBlock extends JellyBlock{
             player.removeStatusEffect(StatusEffects.POISON);
         }
     }
+
 }

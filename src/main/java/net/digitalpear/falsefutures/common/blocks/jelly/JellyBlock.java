@@ -50,13 +50,15 @@ public class JellyBlock extends Block {
 
 
     /*
-        -If the player is able to eat, eat half the block (Changes outline shape and piston behavior).
-        -If half the block has already been eaten, then remove the block.
+        -Special effect for eating the jelly (is set in other classes.)
      */
     public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
 
     }
-
+    /*
+        -If the player is able to eat, eat half the block (Changes outline shape and piston behavior).
+        -If half the block has already been eaten, then remove the block.
+    */
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
@@ -98,33 +100,8 @@ public class JellyBlock extends Block {
 
 
 
-
-
     /*
-        Meant to bounce player off the side of the block
-     */
-    private void bounceSide(Entity entity){
-        double x = entity.getVelocity().x;
-        double y = entity.getVelocity().y;
-        double z = entity.getVelocity().z;
-
-
-        if (Math.abs(x) > 0){
-            x = -1;
-        }
-        if (Math.abs(y) > 0){
-            y = -1;
-        }
-        if (Math.abs(z) > 0){
-            z = -1;
-        }
-
-
-        entity.setVelocity(entity.getVelocity().multiply(x, y, z));
-    }
-
-    /*
-        Meathods brought in from the slime block code
+        Methods brought in from the slime block code
      */
     public void onEntityLand(BlockView world, Entity entity) {
         if (entity.bypassesLandingEffects()) {

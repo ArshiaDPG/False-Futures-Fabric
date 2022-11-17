@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.blocks.jelly;
 
+import net.digitalpear.falsefutures.FalseFuturesConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,8 +26,6 @@ import org.apache.logging.log4j.Level;
 
 public class JellyBlock extends Block {
     public static final BooleanProperty HALVED = BooleanProperty.of("halved");
-    int FOOD_LEVEL = 2;
-    float SATURATION = 0.8f;
     protected static final VoxelShape FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape HALF_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 
@@ -54,13 +53,16 @@ public class JellyBlock extends Block {
         -If the player is able to eat, eat half the block (Changes outline shape and piston behavior).
         -If half the block has already been eaten, then remove the block.
      */
+    public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+
+    }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
 
             //Add food levels
-            player.getHungerManager().add(FOOD_LEVEL, SATURATION);
+            player.getHungerManager().add(FalseFuturesConfig.JELLY_FOOD_VALUE.get(), FalseFuturesConfig.JELLY_SATURATION_VALUE.get());
 
             world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f);
             player.swingHand(hand);
@@ -70,6 +72,9 @@ public class JellyBlock extends Block {
             }
             else{
                 world.setBlockState(pos, this.getDefaultState().with(HALVED, true), 2);
+            }
+            if (FalseFuturesConfig.JELLY_SPECIAL_EFFECTS.get()) {
+                specialEffects(state, world, pos, player, hand, hit);
             }
             return ActionResult.SUCCESS;
         }

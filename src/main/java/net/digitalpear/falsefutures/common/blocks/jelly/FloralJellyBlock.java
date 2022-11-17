@@ -15,10 +15,9 @@ public class FloralJellyBlock extends JellyBlock{
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             player.removeStatusEffect(StatusEffects.POISON);
         }
-        return super.onUse(state, world, pos, player, hand, hit);
     }
 }

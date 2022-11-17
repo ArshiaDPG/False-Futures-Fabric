@@ -22,7 +22,7 @@ public class SymphonicJellyBlock extends JellyBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             double d = player.getX();
             double e = player.getY();
@@ -50,7 +50,7 @@ public class SymphonicJellyBlock extends JellyBlock {
                 player.getItemCooldownManager().set(Item.fromBlock(this), 20);
             }
         }
-
-        return super.onUse(state, world, pos, player, hand, hit);
     }
+
+
 }

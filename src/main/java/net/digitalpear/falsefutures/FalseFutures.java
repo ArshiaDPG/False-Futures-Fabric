@@ -1,5 +1,7 @@
 package net.digitalpear.falsefutures;
 
+import com.kyanite.paragon.Paragon;
+import com.kyanite.paragon.api.ConfigRegistry;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -20,6 +22,8 @@ public class FalseFutures implements ModInitializer {
         FFBlocks.init();
         FFEntities.init();
         FFSoundEvents.init();
+
+        ConfigRegistry.register(new FalseFuturesConfig());
 
         BiomeModifications.addSpawn(BiomeSelectors.tag(FFBiomeTags.GIPPLE_HABITATS),
                 SpawnGroup.UNDERGROUND_WATER_CREATURE, FFEntities.GIPPLE, 2, 1, 3);

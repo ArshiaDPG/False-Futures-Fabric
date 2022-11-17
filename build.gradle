@@ -8,6 +8,14 @@ group = project.maven_group
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 dependencies {
@@ -20,6 +28,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib}"
+
+    include modImplementation("maven.modrinth:paragon:${project.paragon}")
 }
 
 processResources {

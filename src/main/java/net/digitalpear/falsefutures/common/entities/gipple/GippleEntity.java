@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
+import net.digitalpear.falsefutures.FalseFuturesConfig;
 import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -256,7 +257,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             /*
                 Pet the gipple
              */
-            else {
+            else if (FalseFuturesConfig.CAN_PET_GIPPLE.get()){
                 this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 double d = this.random.nextGaussian() * 0.02D;
                 double e = this.random.nextGaussian() * 0.02D;

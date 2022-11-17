@@ -10,6 +10,7 @@ import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.SpawnGroup;
 
 public class FalseFutures implements ModInitializer {
@@ -26,6 +27,6 @@ public class FalseFutures implements ModInitializer {
         ConfigRegistry.register(new FalseFuturesConfig());
 
         BiomeModifications.addSpawn(BiomeSelectors.tag(FFBiomeTags.GIPPLE_HABITATS),
-                SpawnGroup.UNDERGROUND_WATER_CREATURE, FFEntities.GIPPLE, 2, 1, 3);
+                SpawnGroup.UNDERGROUND_WATER_CREATURE, FFEntities.GIPPLE, FalseFuturesConfig.GIPPLE_SPAWNING_WEIGHT.get(), 1, 3);
     }
 }

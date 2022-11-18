@@ -12,8 +12,8 @@ public class FalseFuturesConfig implements JSONModConfig {
     public static final ConfigOption<Integer> JELLY_FOOD_VALUE = new ConfigOption<>("jelly_food_value", "How much food is restored. [Larger than 20 is redundant.]", 2);
     public static final ConfigOption<Float> JELLY_SATURATION_VALUE = new ConfigOption<>("jelly_saturation_value", "How much saturation is restored. [Larger than 1 is redundant.]", 0.8f);
 
-    public static final ConfigGroup GIPPLES = new ConfigGroup("gipples", CAN_PET_GIPPLE, GIPPLE_SPAWNING_WEIGHT);
-    public static final ConfigGroup JELLY = new ConfigGroup("jelly", JELLY_SPECIAL_EFFECTS, JELLY_FOOD_VALUE, JELLY_SATURATION_VALUE);
+//    public static final ConfigGroup GIPPLES = new ConfigGroup("gipples", CAN_PET_GIPPLE, GIPPLE_SPAWNING_WEIGHT);
+//    public static final ConfigGroup JELLY = new ConfigGroup("jelly", JELLY_SPECIAL_EFFECTS, JELLY_FOOD_VALUE, JELLY_SATURATION_VALUE);
 
 
     @Override

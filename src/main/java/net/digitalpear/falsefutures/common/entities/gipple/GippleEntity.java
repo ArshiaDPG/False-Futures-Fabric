@@ -45,10 +45,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -95,7 +92,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-
     }
 
     @Override
@@ -105,6 +101,14 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             this.setFromBucket(true);
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    protected Box calculateBoundingBox() {
+        if (this.isBaby()){
+            return super.calculateBoundingBox().contract(0.1);
+        }
+        return super.calculateBoundingBox();
     }
 
     @Override
@@ -186,6 +190,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     }
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        if (this.isBaby()){
+            return dimensions.height * 0.4F;
+        }
         return dimensions.height * 0.8F;
     }
 

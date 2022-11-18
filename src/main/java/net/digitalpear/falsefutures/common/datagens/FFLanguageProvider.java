@@ -40,7 +40,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFBlocks.GIPPLEPAD, "Gipplepad");
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
-        translationBuilder.add("advancements.husbandry.jellies.description", "Collect one of all jelly flavours.");
+        translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
 
 
         try {

@@ -16,7 +16,7 @@
   },
   "parent": "minecraft:husbandry/root",
   "criteria": {
-    "froglights": {
+    "jellies": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

@@ -45,9 +45,12 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -104,7 +107,16 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             this.setPersistent();
             this.setFromBucket(true);
         }
+        this.setVelocity(0, 0, 0);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    /*
+        Make smol
+     */
+    @Override
+    public EntityDimensions getDimensions(EntityPose pose) {
+        return super.getDimensions(pose).scaled(0.6f);
     }
 
     @Override
@@ -114,6 +126,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         return super.calculateBoundingBox();
     }
+
 
     @Override
     public void tick() {
@@ -168,6 +181,12 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     /*
         Code to eat lichen
      */
+
+    @Override
+    public float getPathfindingFavor(BlockPos pos, WorldView world) {
+        return world.getBlockState(pos.down()).isOf(Blocks.GLOW_LICHEN) ? 10.0F : world.getPhototaxisFavor(pos);
+    }
+
     public void eatLichen(){
         if (world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) && !isDigesting()){
             if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
@@ -182,10 +201,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
     }
 
-    public void setNearbySongPlaying(BlockPos songPosition, boolean playing) {
-        this.songSource = songPosition;
-        this.songPlaying = playing;
-    }
 
     public boolean isSongPlaying() {
         return this.songPlaying;
@@ -194,9 +209,8 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     @Override
     public void tickMovement() {
         if (this.songSource == null || !this.songSource.isWithinDistance(this.getPos(), 3.46D) || !this.world.getBlockState(this.songSource).isOf(Blocks.JUKEBOX)) {
-//            this.songPlaying = false;
-//            this.songSource = null;
-            setNearbySongPlaying(null, false);
+            this.songPlaying = false;
+            this.songSource = null;
         }
         floatOnWater();
         if (!this.isBaby()) {
@@ -217,10 +231,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     }
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if (this.isBaby()){
-            return dimensions.height * 0.4F;
-        }
-        return dimensions.height * 0.8F;
+        return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
     }
 
     public boolean isDigesting(){
@@ -307,7 +318,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     public void mitosis(){
         //Chance to spawn a something instead of gipples
 
-        boolean spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) > random.nextFloat();
+        boolean spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) < random.nextFloat();
 
         if (spawnGippleNotSomething){
             spawnSomething();
@@ -338,11 +349,11 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         something.setCustomName(this.getCustomName());
         something.setAiDisabled(this.isAiDisabled());
-        something.refreshPositionAndAngles(this.getX() + this.getY() + 1.5D, this.getY() + 0.7D, this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
+        something.refreshPositionAndAngles(this.getX() + 1.5D, this.getY() + 0.7D, this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
         world.spawnEntity(something);
     }
     /*
-        i only determines rotation and relative z position, if that doesn't matter then enter any number.
+        i only determines rotation and relative z position, if that doesn't matter then just enter 0
      */
     public void spawnGipple(int i){
         GippleEntity gipple = FFEntities.GIPPLE.create(this.world);

@@ -8,6 +8,7 @@ import software.bernie.geckolib3.model.AnimatedTickingGeoModel;
 
 public class GippleEntityModel extends AnimatedTickingGeoModel<GippleEntity> {
     public static float BLOATED_SCALE = 1.3f;
+    public static float CHILD_SCALE = 0.6f;
     @Override
     public Identifier getAnimationResource(GippleEntity entity) {
         return new Identifier(FalseFutures.MOD_ID, "animations/gipple.animation.json");
@@ -26,18 +27,18 @@ public class GippleEntityModel extends AnimatedTickingGeoModel<GippleEntity> {
     @Override
     public void setLivingAnimations(GippleEntity entity, Integer uniqueID, AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
-        IBone head = this.getAnimationProcessor().getBone("head");
+        IBone body = this.getAnimationProcessor().getBone("Gipple");
 
 
         if (entity.isDigesting()){
-            head.setScaleX(BLOATED_SCALE);
-            head.setScaleY(BLOATED_SCALE);
-            head.setScaleZ(BLOATED_SCALE);
+            body.setScaleX(BLOATED_SCALE);
+            body.setScaleY(BLOATED_SCALE);
+            body.setScaleZ(BLOATED_SCALE);
         }
         else if(entity.isBaby()){
-            head.setScaleX(0.5f);
-            head.setScaleY(0.5f);
-            head.setScaleZ(0.5f);
+            body.setScaleX(CHILD_SCALE);
+            body.setScaleY(CHILD_SCALE);
+            body.setScaleZ(CHILD_SCALE);
         }
     }
 

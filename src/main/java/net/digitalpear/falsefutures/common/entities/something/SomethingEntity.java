@@ -25,6 +25,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class SomethingEntity extends HostileEntity implements Monster, Flutterer, IAnimatable, IAnimationTickable {
     private AnimationFactory factory = new AnimationFactory(this);
+    private boolean isAttacking = false;
+    private int attackAnimationCooldown = 40;
 
 
     public SomethingEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -33,6 +35,22 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         this.moveControl = new FlightMoveControl(this, 20, true);
         this.experiencePoints = 20;
     }
+
+    @Override
+    public void tick() {
+        if (isAttacking){
+            if (attackAnimationCooldown > 0){
+                attackAnimationCooldown--;
+            }
+            else{
+                isAttacking = false;
+                attackAnimationCooldown = 80;
+            }
+        }
+
+        super.tick();
+    }
+
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
@@ -80,18 +98,26 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         return !this.isOnGround();
     }
 
-
+    @Override
+    public boolean tryAttack(Entity target) {
+        this.isAttacking = true;
+        return super.tryAttack(target);
+    }
 
     /*
-        Geckolib
-     */
+            Geckolib
+         */
     @Override
     public int tickTimer() {
         return this.age;
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.swim", true));
+        if (isAttacking){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.attack", false));
+            return PlayState.CONTINUE;
+        }
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.ambient", true));
         return PlayState.CONTINUE;
     }
 

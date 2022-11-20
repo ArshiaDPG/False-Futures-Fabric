@@ -32,7 +32,6 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -46,7 +45,6 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -72,6 +70,12 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     int eatingCooldownRange = 1000;
     int eatingCooldown;
     private AnimationFactory factory = new AnimationFactory(this);
+    private boolean songPlaying;
+    @Nullable
+    private BlockPos songSource;
+    private boolean isEating = false;
+    private int eatingAnimationCooldown = 40;
+    private boolean wasPet = false;
 
 
     public GippleEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -127,6 +131,14 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
                 eatingCooldown--;
             }
         }
+        if (this.isEating){
+            if (eatingAnimationCooldown > 0){
+                eatingCooldown--;
+            }
+            else{
+                this.isEating = false;
+            }
+        }
         super.tick();
     }
 
@@ -159,6 +171,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     public void eatLichen(){
         if (world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) && !isDigesting()){
             if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
+                this.isEating = true;
+                this.eatingAnimationCooldown = 40;
+
                 world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
                 setDigesting(true);
@@ -167,10 +182,22 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
     }
 
+    public void setNearbySongPlaying(BlockPos songPosition, boolean playing) {
+        this.songSource = songPosition;
+        this.songPlaying = playing;
+    }
 
+    public boolean isSongPlaying() {
+        return this.songPlaying;
+    }
 
     @Override
     public void tickMovement() {
+        if (this.songSource == null || !this.songSource.isWithinDistance(this.getPos(), 3.46D) || !this.world.getBlockState(this.songSource).isOf(Blocks.JUKEBOX)) {
+//            this.songPlaying = false;
+//            this.songSource = null;
+            setNearbySongPlaying(null, false);
+        }
         floatOnWater();
         if (!this.isBaby()) {
             eatLichen();
@@ -391,8 +418,22 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     public int tickTimer() {
         return this.age;
     }
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.gipple.swim", true));
+        if (this.isSongPlaying()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.dance", true));
+            return PlayState.CONTINUE;
+        }
+        if (this.isEating){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
+            return PlayState.CONTINUE;
+        }
+        if (this.wasPet){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.pet", false));
+            return PlayState.CONTINUE;
+        }
+
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.ambient", true));
         return PlayState.CONTINUE;
     }
 

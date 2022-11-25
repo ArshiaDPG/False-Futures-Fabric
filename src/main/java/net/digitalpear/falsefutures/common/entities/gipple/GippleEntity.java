@@ -79,6 +79,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private boolean isEating = false;
     private int eatingAnimationCooldown = 40;
     private boolean wasPet = false;
+    private int pettingCooldown = 0;
 
 
     public GippleEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -130,6 +131,9 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
 
     @Override
     public void tick() {
+        if (pettingCooldown > 0){
+            pettingCooldown--;
+        }
         if (isDigesting()){
             if (digestingCooldown <= 0){
                 digestingCooldown = 300;
@@ -302,17 +306,17 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             /*
                 Pet the gipple
              */
-            else if (FalseFuturesConfig.CAN_PET_GIPPLE.get()){
+            else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0){
                 this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 double d = this.random.nextGaussian() * 0.02D;
                 double e = this.random.nextGaussian() * 0.02D;
                 double f = this.random.nextGaussian() * 0.02D;
                 this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), d, e, f);
+                pettingCooldown = 60;
                 return ActionResult.SUCCESS;
             }
         return ActionResult.FAIL;
     }
-
 
 
     public void mitosis(){

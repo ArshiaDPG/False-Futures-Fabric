@@ -2,6 +2,8 @@ package net.digitalpear.falsefutures.common.entities.something;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;
+
+import net.digitalpear.falsefutures.init.tags.FFEntityTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.TrackTargetGoal;
@@ -22,7 +24,7 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
     protected TargetPredicate targetPredicate;
 
     public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility) {
-        this(mob, targetClass, 10, checkVisibility, false, (Predicate)null);
+        this(mob, targetClass, 10, checkVisibility, false, null);
     }
 
     public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, Predicate<LivingEntity> targetPredicate) {
@@ -30,7 +32,7 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
     }
 
     public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, boolean checkCanNavigate) {
-        this(mob, targetClass, 10, checkVisibility, checkCanNavigate, (Predicate)null);
+        this(mob, targetClass, 10, checkVisibility, checkCanNavigate, null);
     }
 
     public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> targetPredicate) {
@@ -46,7 +48,7 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
             return false;
         } else {
             this.findClosestTarget();
-            return (this.targetEntity != null) && !(this.targetEntity instanceof CreeperEntity)&& !(this.targetEntity instanceof WaterCreatureEntity);
+            return (this.targetEntity != null) && !(this.targetEntity instanceof CreeperEntity) && !(this.targetEntity instanceof WaterCreatureEntity) && !this.targetEntity.getType().isIn(FFEntityTags.SOMETHING_TARGET_BLACKLIST);
         }
     }
 

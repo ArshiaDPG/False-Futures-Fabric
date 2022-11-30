@@ -26,7 +26,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class SomethingEntity extends HostileEntity implements Monster, Flutterer, IAnimatable, IAnimationTickable {
     private AnimationFactory factory = new AnimationFactory(this);
     private boolean isAttacking = false;
-    private int attackAnimationCooldown = 40;
 
 
     public SomethingEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -38,16 +37,7 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
 
     @Override
     public void tick() {
-        if (isAttacking){
-            if (attackAnimationCooldown > 0){
-                attackAnimationCooldown--;
-            }
-            else{
-                isAttacking = false;
-                attackAnimationCooldown = 80;
-            }
-        }
-
+        isAttacking = this.getAttacking() != null && getLastAttackTime() < this.age + 80;
         super.tick();
     }
 
@@ -98,12 +88,6 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         return !this.isOnGround();
     }
 
-    @Override
-    public boolean tryAttack(Entity target) {
-        this.isAttacking = true;
-        return super.tryAttack(target);
-    }
-
     /*
             Geckolib
          */
@@ -114,10 +98,10 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (isAttacking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.attack", false));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("something.attack", false));
             return PlayState.CONTINUE;
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.something.ambient", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("something.ambient", true));
         return PlayState.CONTINUE;
     }
 

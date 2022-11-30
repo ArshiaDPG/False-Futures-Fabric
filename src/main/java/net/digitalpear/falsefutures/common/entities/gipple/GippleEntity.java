@@ -78,7 +78,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private BlockPos songSource;
     private boolean isEating = false;
     private int eatingAnimationCooldown = 40;
-    private boolean wasPet = false;
     private int pettingCooldown = 0;
 
 
@@ -308,10 +307,10 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
              */
             else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0){
                 this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-                double d = this.random.nextGaussian() * 0.02D;
-                double e = this.random.nextGaussian() * 0.02D;
-                double f = this.random.nextGaussian() * 0.02D;
-                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), d, e, f);
+                double x = this.random.nextGaussian() * 0.02D;
+                double y = this.random.nextGaussian() * 0.02D;
+                double z = this.random.nextGaussian() * 0.02D;
+                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
                 pettingCooldown = 60;
                 return ActionResult.SUCCESS;
             }
@@ -321,7 +320,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
 
     public void mitosis(){
         //Chance to spawn a something instead of gipples
-
+        int loop = 0;
         boolean spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) < random.nextFloat();
 
         if (spawnGippleNotSomething){
@@ -329,13 +328,18 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         else{
             //Spawn two gipples with a rare chance of
-
             int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
-            int i = 0;
-            while (i != gippleNumber){
-                spawnGipple(i);
-                i++;
+            while (loop != gippleNumber){
+                spawnGipple(loop);
+                loop++;
             }
+        }
+        this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+        for (int particleLoop=0; particleLoop<=loop; particleLoop++){
+            double x = this.random.nextGaussian() * 0.001D;
+            double y = this.random.nextGaussian() * 0.06D;
+            double z = this.random.nextGaussian() * 0.001D;
+            this.world.addParticle(ParticleTypes.SOUL, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
         }
         this.discard();
     }
@@ -353,7 +357,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         something.setCustomName(this.getCustomName());
         something.setAiDisabled(this.isAiDisabled());
-        something.refreshPositionAndAngles(this.getX() + 1.5D, this.getY() + 0.7D, this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
+        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
         world.spawnEntity(something);
     }
     /*
@@ -443,7 +447,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
             return PlayState.CONTINUE;
         }
-        if (this.wasPet){
+        if (this.pettingCooldown > 0){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.pet", false));
             return PlayState.CONTINUE;
         }

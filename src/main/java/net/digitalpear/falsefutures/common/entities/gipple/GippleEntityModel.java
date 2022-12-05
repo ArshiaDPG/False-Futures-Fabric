@@ -9,6 +9,7 @@ import software.bernie.geckolib3.model.AnimatedTickingGeoModel;
 public class GippleEntityModel extends AnimatedTickingGeoModel<GippleEntity> {
     public static float BLOATED_SCALE = 1.3f;
     public static float CHILD_SCALE = 0.6f;
+
     @Override
     public Identifier getAnimationResource(GippleEntity entity) {
         return new Identifier(FalseFutures.MOD_ID, "animations/gipple.animation.json");

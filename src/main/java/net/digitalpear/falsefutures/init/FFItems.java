@@ -20,6 +20,9 @@ public class FFItems {
     public static Item createSpawnEgg(EntityType<? extends MobEntity> type, int PrimaryColor, int SecondaryColor){
         return register(type.getTranslationKey().split("\\.")[2] + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings().group(ItemGroup.MISC)));
     }
+    public static Item createInvisibleSpawnEgg(EntityType<? extends MobEntity> type, int PrimaryColor, int SecondaryColor){
+        return register(type.getTranslationKey().split("\\.")[2] + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings()));
+    }
     public static Item createDisc(String name, int output, SoundEvent sound, int length){
         return register("music_disc_" + name, new MusicDiscItem(output, sound, new Item.Settings().rarity(Rarity.RARE).maxCount(1).group(ItemGroup.MISC), length));
     }
@@ -30,7 +33,7 @@ public class FFItems {
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);
 
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(FFEntities.GIPPLE, 13558777, 11642584);
-    public static final Item SOMETHING_SPAWN_EGG = createSpawnEgg(FFEntities.SOMETHING, 13558777, 9669861);
+    public static final Item SOMETHING_SPAWN_EGG = createInvisibleSpawnEgg(FFEntities.SOMETHING, 13558777, 9669861);
 
     public static final Item GELATIN = register("gelatin", new Item(new Item.Settings().food(FFFoodComponents.GELATIN).group(ItemGroup.FOOD)));
 

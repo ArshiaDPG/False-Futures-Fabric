@@ -45,12 +45,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -321,13 +316,21 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     public void mitosis(){
         //Chance to spawn a something instead of gipples
         int loop = 0;
-        boolean spawnGippleNotSomething = (0.9 - (world.getDifficulty().getId() / 50)) < random.nextFloat();
+        boolean spawnGippleNotSomething;
+        if (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() == 0){
+            spawnGippleNotSomething = false;
+        }
+        else{
+            spawnGippleNotSomething = (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() / 100 + (world.getDifficulty().getId() / 50)) > random.nextFloat()
+                    && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING);
+        }
+
 
         if (spawnGippleNotSomething){
             spawnSomething();
         }
         else{
-            //Spawn two gipples with a rare chance of
+            //Spawn two gipples with a rare chance of a third
             int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
             while (loop != gippleNumber){
                 spawnGipple(loop);
@@ -445,10 +448,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         if (this.isEating){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
-            return PlayState.CONTINUE;
-        }
-        if (this.pettingCooldown > 0){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.pet", false));
             return PlayState.CONTINUE;
         }
 

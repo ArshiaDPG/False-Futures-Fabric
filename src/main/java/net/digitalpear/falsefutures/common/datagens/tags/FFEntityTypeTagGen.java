@@ -18,6 +18,7 @@ public class FFEntityTypeTagGen extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.CREEPER)
                 .add(EntityType.COD)
                 .add(EntityType.SQUID)
-                .add(EntityType.GLOW_SQUID);
+                .add(EntityType.GLOW_SQUID)
+                .add(EntityType.AXOLOTL);
     }
 }

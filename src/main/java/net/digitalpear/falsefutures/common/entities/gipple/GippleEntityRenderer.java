@@ -7,5 +7,4 @@ public class GippleEntityRenderer extends GeoEntityRenderer<GippleEntity> {
     public GippleEntityRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new GippleEntityModel());
     }
-
 }

@@ -3,7 +3,7 @@ package net.digitalpear.falsefutures.common.entities.something;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
-import net.digitalpear.falsefutures.init.tags.FFEntityTags;
+import net.digitalpear.falsefutures.init.tags.FFEntityTypeTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.TrackTargetGoal;
@@ -48,7 +48,7 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
             return false;
         } else {
             this.findClosestTarget();
-            return (this.targetEntity != null) && !(this.targetEntity instanceof CreeperEntity) && !(this.targetEntity instanceof WaterCreatureEntity) && !this.targetEntity.getType().isIn(FFEntityTags.SOMETHING_TARGET_BLACKLIST);
+            return (this.targetEntity != null) && !(this.targetEntity instanceof CreeperEntity) && !(this.targetEntity instanceof WaterCreatureEntity) && !this.targetEntity.getType().isIn(FFEntityTypeTags.SOMETHING_TARGET_BLACKLIST);
         }
     }
 

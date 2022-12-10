@@ -6,7 +6,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FFEntityTags {
+public class FFEntityTypeTags {
     public static final TagKey<EntityType<?>> SOMETHING_TARGET_BLACKLIST = of("something_target_blacklist");
 
     private static TagKey<EntityType<?>> of(String id) {

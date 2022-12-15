@@ -43,6 +43,11 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
 
 
+        translationBuilder.add("subtitles.falsefutures.gipple_ambient", "Gipple vibrates");
+        translationBuilder.add("subtitles.falsefutures.gipple_hurt", "Gipple hurts");
+        translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
+        translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
+
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
             translationBuilder.add(existingFilePath);

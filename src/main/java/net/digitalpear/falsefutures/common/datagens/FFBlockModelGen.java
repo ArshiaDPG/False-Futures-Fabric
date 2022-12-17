@@ -2,10 +2,8 @@ package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
-import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.ModelIds;
@@ -19,6 +17,8 @@ public class FFBlockModelGen extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         registerGipplePad(blockStateModelGenerator);
+        blockStateModelGenerator.registerSimpleCubeAll(FFBlocks.GELASTONE);
+
     }
 
     @Override

@@ -69,7 +69,7 @@ public class FFBlockModelGen extends FabricModelProvider {
     }
 
     public static void registerBrickBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
-        registerSideMirrorable(blockStateModelGenerator, base);
+        blockStateModelGenerator.registerSimpleCubeAll(base);
         createStairs(blockStateModelGenerator, base, stairs);
         createSlab(blockStateModelGenerator, base, slab);
         createWall(blockStateModelGenerator, base, wall);
@@ -123,13 +123,6 @@ public class FFBlockModelGen extends FabricModelProvider {
         Identifier PRESSURE_PLATE_DOWN = Models.PRESSURE_PLATE_DOWN.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier PRESSURE_PLATE_UP = Models.PRESSURE_PLATE_UP.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createPressurePlateBlockState(plate,
-                PRESSURE_PLATE_UP,
-                PRESSURE_PLATE_DOWN));
-    }
-
-    public static void registerSideMirrorable(BlockStateModelGenerator blockStateModelGenerator, Block block) {
-        Identifier identifier = TexturedModel.CUBE_ALL.upload(block, blockStateModelGenerator.modelCollector);
-        Identifier identifier2 = Models.CUBE_NORTH_WEST_MIRRORED_ALL.upload(block, TextureMap.all(block), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2));
+                PRESSURE_PLATE_UP, PRESSURE_PLATE_DOWN));
     }
 }

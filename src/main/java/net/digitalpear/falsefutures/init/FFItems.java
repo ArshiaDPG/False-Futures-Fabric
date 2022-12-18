@@ -18,16 +18,16 @@ public class FFItems {
         return Registry.register(Registry.ITEM, new Identifier(FalseFutures.MOD_ID, itemID), item);
     }
     public static Item createSpawnEgg(EntityType<? extends MobEntity> type, int PrimaryColor, int SecondaryColor){
-        return register(type.getTranslationKey().split("\\.")[2] + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings().group(ItemGroup.MISC)));
+        return register(Registry.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings().group(ItemGroup.MISC)));
     }
     public static Item createInvisibleSpawnEgg(EntityType<? extends MobEntity> type, int PrimaryColor, int SecondaryColor){
-        return register(type.getTranslationKey().split("\\.")[2] + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings()));
+        return register(Registry.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings()));
     }
     public static Item createDisc(String name, int output, SoundEvent sound, int length){
         return register("music_disc_" + name, new MusicDiscItem(output, sound, new Item.Settings().rarity(Rarity.RARE).maxCount(1).group(ItemGroup.MISC), length));
     }
     public static Item createBucketedMob(EntityType<?> type){
-        return register(type.getTranslationKey().split("\\.")[2] + "_bucket", new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
+        return register(Registry.ENTITY_TYPE.getId(type).getPath() + "_bucket", new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
     }
 
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);

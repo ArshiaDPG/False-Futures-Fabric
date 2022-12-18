@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "falsefutures:block/gelastone_bricks",
+    "side": "falsefutures:block/gelastone_bricks",
+    "top": "falsefutures:block/gelastone_bricks"
+  }
+}

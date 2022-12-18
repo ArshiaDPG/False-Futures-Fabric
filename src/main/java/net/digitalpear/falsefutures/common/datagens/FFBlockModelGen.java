@@ -1,7 +1,5 @@
 package net.digitalpear.falsefutures.common.datagens;
 
-import com.google.gson.JsonElement;
-import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -12,9 +10,6 @@ import net.minecraft.data.client.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 
 public class FFBlockModelGen extends FabricModelProvider {
@@ -69,67 +64,67 @@ public class FFBlockModelGen extends FabricModelProvider {
 
     private void registerGipplePad(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerItemModel(FFBlocks.GIPPLEPAD);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(FFBlocks.GIPPLEPAD,
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(FFBlocks.GIPPLEPAD,
                 ModelIds.getBlockModelId(FFBlocks.GIPPLEPAD)));
     }
 
     public static void registerBrickBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
         registerSideMirrorable(blockStateModelGenerator, base);
-        createStairs(blockStateModelGenerator, stairs);
+        createStairs(blockStateModelGenerator, base, stairs);
         createSlab(blockStateModelGenerator, base, slab);
-        createWall(blockStateModelGenerator, wall);
-        makePressurePlate(blockStateModelGenerator, pressurePlate);
-        makeButton(blockStateModelGenerator, button);
+        createWall(blockStateModelGenerator, base, wall);
+        makePressurePlate(blockStateModelGenerator, base, pressurePlate);
+        makeButton(blockStateModelGenerator, base, button);
     }
 
     public static void registerBlockSetMirrorable(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
         blockStateModelGenerator.registerMirrorable(base);
-        createStairs(blockStateModelGenerator, stairs);
+        createStairs(blockStateModelGenerator, base, stairs);
         createSlab(blockStateModelGenerator, base, slab);
-        createWall(blockStateModelGenerator, wall);
-        makePressurePlate(blockStateModelGenerator, pressurePlate);
-        makeButton(blockStateModelGenerator, button);
+        createWall(blockStateModelGenerator, base, wall);
+        makePressurePlate(blockStateModelGenerator, base, pressurePlate);
+        makeButton(blockStateModelGenerator, base, button);
     }
 
-    public static void createStairs(BlockStateModelGenerator blockStateModelGenerator, Block stairs){
-        String stairs_name = Registry.BLOCK.getId(stairs).getPath();
+    public static void createStairs(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block stairs){
+        Identifier STAIRS = Models.STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier INNER_STAIRS = Models.INNER_STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier OUTER_STAIRS = Models.OUTER_STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createStairsBlockState(stairs,
-                new Identifier(FalseFutures.MOD_ID, stairs_name + "_inner"),
-                new Identifier(FalseFutures.MOD_ID, stairs_name),
-                new Identifier(FalseFutures.MOD_ID, stairs_name + "_outer")));
+                INNER_STAIRS, STAIRS, OUTER_STAIRS));
     }
 
-    public static void createSlab(BlockStateModelGenerator blockStateModelGenerator, Block base, Block slab){
-        String name = Registry.BLOCK.getId(slab).getPath();
+    public static void createSlab(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block slab){
+        Identifier SLAB = Models.SLAB.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier SLAB_TOP = Models.SLAB_TOP.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createSlabBlockState(slab,
-                new Identifier(FalseFutures.MOD_ID, name),
-                new Identifier(FalseFutures.MOD_ID, name + "_top"),
-                new Identifier(FalseFutures.MOD_ID, Registry.BLOCK.getId(base).getPath())));
+                SLAB, SLAB_TOP, Registry.BLOCK.getId(textureBase)));
+
     }
-    public static void createSlab(BlockStateModelGenerator blockStateModelGenerator, Block slab){
-        String name = Registry.BLOCK.getId(slab).getPath();
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createSlabBlockState(slab,
-                new Identifier(FalseFutures.MOD_ID, name),
-                new Identifier(FalseFutures.MOD_ID, name + "_top"),
-                new Identifier(FalseFutures.MOD_ID, slab + "_double")));
-    }
-    public static void createWall(BlockStateModelGenerator blockStateModelGenerator, Block wall){
-        String name = Registry.BLOCK.getId(wall).getPath();
+    public static void createWall(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block wall){
+        Identifier WALL_INVENTORY = Models.WALL_INVENTORY.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier TEMPLATE_WALL_POST = Models.TEMPLATE_WALL_POST.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier TEMPLATE_WALL_SIDE = Models.TEMPLATE_WALL_SIDE.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier TEMPLATE_WALL_SIDE_TALL = Models.TEMPLATE_WALL_SIDE_TALL.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createWallBlockState(wall,
-                new Identifier(FalseFutures.MOD_ID, name + "_post"),
-                new Identifier(FalseFutures.MOD_ID, name + "_side"),
-                new Identifier(FalseFutures.MOD_ID, name + "_side_tall")));
+                TEMPLATE_WALL_POST, TEMPLATE_WALL_SIDE, TEMPLATE_WALL_SIDE_TALL));
+        blockStateModelGenerator.registerParentedItemModel(wall.asItem(), WALL_INVENTORY);
     }
-    public static void makeButton(BlockStateModelGenerator blockStateModelGenerator, Block button){
-        String name = Registry.BLOCK.getId(button).getPath();
+    public static void makeButton(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block button){
+        Identifier BUTTON = Models.BUTTON.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier BUTTON_PRESSED = Models.BUTTON_PRESSED.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier BUTTON_INVENTORY = Models.BUTTON_INVENTORY.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createButtonBlockState(button,
-                new Identifier(FalseFutures.MOD_ID, name),
-                new Identifier(FalseFutures.MOD_ID, name + "_pressed")));
+                BUTTON, BUTTON_PRESSED));
+        blockStateModelGenerator.registerParentedItemModel(button.asItem(), BUTTON_INVENTORY);
     }
 
-    public static void makePressurePlate(BlockStateModelGenerator blockStateModelGenerator, Block plate){
-        String name = Registry.BLOCK.getId(plate).getPath();
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createPressurePlateBlockState(plate, new Identifier(FalseFutures.MOD_ID, name), new Identifier(FalseFutures.MOD_ID, name + "_down")));
+    public static void makePressurePlate(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block plate){
+        Identifier PRESSURE_PLATE_DOWN = Models.PRESSURE_PLATE_DOWN.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        Identifier PRESSURE_PLATE_UP = Models.PRESSURE_PLATE_UP.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createPressurePlateBlockState(plate,
+                PRESSURE_PLATE_UP,
+                PRESSURE_PLATE_DOWN));
     }
 
     public static void registerSideMirrorable(BlockStateModelGenerator blockStateModelGenerator, Block block) {

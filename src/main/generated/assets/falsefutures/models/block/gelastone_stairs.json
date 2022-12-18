@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "falsefutures:block/gelastone",
+    "side": "falsefutures:block/gelastone",
+    "top": "falsefutures:block/gelastone"
+  }
+}

@@ -1,4 +1,4 @@
-// 1.19.2	2022-12-17T22:22:40.2608239	Recipes
+// 1.19.2	2022-12-18T00:35:15.4843227	Recipes
 62ad7fdacb05571a71c8c45cd5e0dd663fae74c0 data\falsefutures\advancements\recipes\redstone\gelastone_button.json
 e14209963ff2da59f6faf86f58796e33bb063a9d data\falsefutures\advancements\recipes\decorations\gelastone_wall.json
 762c57eaaf9aabcefdd21783081918a4eb5c2758 data\falsefutures\advancements\recipes\redstone\gelastone_brick_pressure_plate.json
@@ -17,8 +17,8 @@ b949f3711d71fbb89ff24e9b9e1299e90e8644b6 data\falsefutures\advancements\recipes\
 2b0ff097336ce27fbc75d43ba66e49356da43586 data\falsefutures\advancements\recipes\building_blocks\gelastone_stairs.json
 e8284c7c93e99c5a384bfbf68093ffe5dc1668c3 data\falsefutures\recipes\symphonic_jelly.json
 01f2ae9a9cf98add3187098e6dc074bc7bfb8f20 data\falsefutures\advancements\recipes\food\weird_jelly.json
-8dcc919605528af91b3a71ee1b87f3fc01456978 data\falsefutures\advancements\recipes\food\symphonic_jelly.json
 9f8a58823bf5bb6f2efa455211336cb66b69d3cb data\falsefutures\advancements\recipes\food\milky_jelly.json
+8dcc919605528af91b3a71ee1b87f3fc01456978 data\falsefutures\advancements\recipes\food\symphonic_jelly.json
 c4bde0f52b9b16565ed23a65c1bf027601580d39 data\falsefutures\recipes\gelastone_wall.json
 09a2796dbab76ae3cba625968a2a01e06ebc4433 data\falsefutures\recipes\gelastone_brick_stairs.json
 0718b091d4bf89245b0d8239766cf1e7dab3d689 data\falsefutures\advancements\recipes\building_blocks\gelastone_brick_stairs.json

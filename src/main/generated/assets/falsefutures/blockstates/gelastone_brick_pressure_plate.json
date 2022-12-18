@@ -1,10 +1,10 @@
 {
   "variants": {
     "powered=false": {
-      "model": "falsefutures:gelastone_brick_pressure_plate"
+      "model": "falsefutures:block/gelastone_brick_pressure_plate"
     },
     "powered=true": {
-      "model": "falsefutures:gelastone_brick_pressure_plate_down"
+      "model": "falsefutures:block/gelastone_brick_pressure_plate_down"
     }
   }
 }

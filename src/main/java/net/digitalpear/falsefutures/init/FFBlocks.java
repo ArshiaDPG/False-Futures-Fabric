@@ -2,6 +2,8 @@ package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
+import net.digitalpear.falsefutures.common.blocks.JellyrootBlock;
+import net.digitalpear.falsefutures.common.blocks.TallJellyrootBlock;
 import net.digitalpear.falsefutures.common.blocks.jelly.*;
 import net.digitalpear.falsefutures.init.sets.StoneSets;
 import net.minecraft.block.*;
@@ -78,6 +80,12 @@ public class FFBlocks {
     public static final Block DEEP_GELASTONE_WALL = StoneSets.stoneWall(DEEP_GELASTONE);
     public static final Block DEEP_GELASTONE_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELASTONE);
     public static final Block DEEP_GELASTONE_BUTTON = StoneSets.stoneButton(DEEP_GELASTONE);
+
+
+    public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
+            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES)), ItemGroup.DECORATIONS);
+    public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
+            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES)), ItemGroup.DECORATIONS);
 
 
     public static void init(){

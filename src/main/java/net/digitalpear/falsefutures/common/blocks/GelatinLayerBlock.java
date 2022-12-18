@@ -93,13 +93,6 @@ public class GelatinLayerBlock extends Block implements Waterloggable {
         return !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.getLightLevel(LightType.BLOCK, pos) > 11) {
-            dropStacks(state, world, pos);
-            world.removeBlock(pos, false);
-        }
-    }
-
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
         int i = state.get(LAYERS);
         if (context.getStack().isOf(this.asItem()) && i < MAX_LAYERS) {

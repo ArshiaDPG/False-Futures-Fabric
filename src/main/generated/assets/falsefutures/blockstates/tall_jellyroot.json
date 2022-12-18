@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "falsefutures:block/tall_jellyroot_bottom"
+    },
+    "half=upper": {
+      "model": "falsefutures:block/tall_jellyroot_top"
+    }
+  }
+}

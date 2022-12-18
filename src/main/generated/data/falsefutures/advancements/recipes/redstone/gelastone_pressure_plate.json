@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "falsefutures:gelastone_pressure_plate"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "hasgelastone": {
+    "has_gelastone": {
       "conditions": {
         "items": [
           {
@@ -18,11 +12,17 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "falsefutures:gelastone_pressure_plate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "hasgelastone",
+      "has_gelastone",
       "has_the_recipe"
     ]
   ],

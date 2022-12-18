@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "falsefutures:gelastone",
+    "falsefutures:deep_gelastone",
+    "falsefutures:gelastone_bricks",
+    {
+      "id": "#minecraft:base_stone_overworld",
+      "required": false
+    },
+    {
+      "id": "#minecraft:base_stone_nether",
+      "required": false
+    },
+    "minecraft:end_stone"
+  ]
+}

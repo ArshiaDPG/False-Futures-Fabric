@@ -21,7 +21,7 @@ public class FalseFuturesClient implements ClientModInitializer {
 
 
         BlockRenderLayerMap.INSTANCE.putBlock(FFBlocks.GIPPLEPAD, RenderLayer.getCutout());
-
-
+        BlockRenderLayerMap.INSTANCE.putBlock(FFBlocks.JELLYROOT, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(FFBlocks.TALL_JELLYROOT, RenderLayer.getCutout());
     }
 }

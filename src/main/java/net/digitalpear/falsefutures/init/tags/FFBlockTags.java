@@ -13,6 +13,7 @@ public class FFBlockTags {
 
     public static final TagKey<Block> JELLIES = of("jellies");
     public static final TagKey<Block> GIPPLE_FOOD = of("gipple_food");
+    public static final TagKey<Block> JELLYROOT_PLANTABLES = of("jellyroot_plantables");
 
     private static TagKey<Block> of(String id) {
         return TagKey.of(Registry.BLOCK_KEY, new Identifier(FalseFutures.MOD_ID, id));

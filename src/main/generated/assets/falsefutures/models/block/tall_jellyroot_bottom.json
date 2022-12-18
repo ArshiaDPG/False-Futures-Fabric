@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "falsefutures:block/tall_jellyroot_bottom"
+  }
+}

@@ -69,7 +69,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFBlocks.DEEP_GELASTONE_BUTTON, "Deep Gelastone Button");
 
         translationBuilder.add(FFBlocks.GELATIN_LAYER, "Gelatin Layer");
-
+        translationBuilder.add(FFBlocks.JELLYROOT, "Jellyroot");
+        translationBuilder.add(FFBlocks.TALL_JELLYROOT, "Tall Jellyroot");
 
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();

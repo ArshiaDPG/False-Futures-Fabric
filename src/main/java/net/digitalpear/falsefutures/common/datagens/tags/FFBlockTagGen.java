@@ -32,6 +32,14 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .addOptional(new Identifier("galosphere", "lichen_roots"))
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));
 
+        getOrCreateTagBuilder(FFBlockTags.JELLYROOT_PLANTABLES)
+                .add(FFBlocks.GELASTONE)
+                .add(FFBlocks.DEEP_GELASTONE)
+                .add(FFBlocks.GELASTONE_BRICKS)
+                .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
+                .addOptionalTag(BlockTags.BASE_STONE_NETHER)
+                .add(Blocks.END_STONE);
+
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(FFBlocks.GELASTONE)
                 .add(FFBlocks.GELASTONE_STAIRS)

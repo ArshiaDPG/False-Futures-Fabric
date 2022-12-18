@@ -29,6 +29,9 @@ public class FFBlockModelGen extends FabricModelProvider {
 
         registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB,
                 FFBlocks.DEEP_GELASTONE_WALL, FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_BUTTON);
+
+        blockStateModelGenerator.registerTintableCross(FFBlocks.JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
     }
 
     @Override

@@ -19,15 +19,12 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class FFRecipeGen extends FabricRecipeProvider {
-
-
     /*
         This map is used to generate the recipes and English translations of all Jellys.
      */
     public static final Map<Block, Item> JELLY = new HashMap<>();
     public FFRecipeGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
-        JELLY.put(FFBlocks.FRUITY_JELLY, Items.MELON_SLICE);
         JELLY.put(FFBlocks.WEIRD_JELLY, Items.SLIME_BALL);
         JELLY.put(FFBlocks.PLAIN_JELLY, FFItems.GELATIN);
         JELLY.put(FFBlocks.FLORAL_JELLY, Items.HONEY_BOTTLE);
@@ -39,10 +36,7 @@ public class FFRecipeGen extends FabricRecipeProvider {
 
     @Override
     protected void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
-        JELLY.forEach((jelly, ingredient) -> {
-            offerJellyRecipe(exporter, jelly, ingredient);
-        });
-
+        JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
 
 
         ShapedRecipeJsonBuilder.create(FFBlocks.GELASTONE_BRICKS, 4)
@@ -53,15 +47,19 @@ public class FFRecipeGen extends FabricRecipeProvider {
 
 
         ShapedRecipeJsonBuilder.create(FFBlocks.GELASTONE, 2)
-                .input('S', Blocks.STONE)
+                .input('S', Blocks.COBBLESTONE)
                 .input('G', FFItems.GELATIN)
                 .pattern("SG")
                 .pattern("GS")
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
-        makeStoneRecipes(exporter, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_BUTTON, FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_WALL);
-        makeStoneRecipes(exporter, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB, FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_WALL);
 
+
+        makeStoneRecipes(exporter, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_BUTTON,
+                FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_WALL);
+        makeStoneRecipes(exporter, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB,
+                FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_WALL);
     }
+
     public static void offerJellyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
         ShapedRecipeJsonBuilder.create(output, 2)
                 .input('X', input)
@@ -74,17 +72,12 @@ public class FFRecipeGen extends FabricRecipeProvider {
     }
 
     public static void makeStairs(Consumer<RecipeJsonProvider> exporter, Block input, Block output, String criterion){
-        ShapedRecipeJsonBuilder.create(output, 4).input('C', input)
+        ShapedRecipeJsonBuilder.create(output, 4)
+                .input('C', input)
                 .pattern("C  ")
                 .pattern("CC ")
                 .pattern("CCC")
                 .criterion(criterion, conditionsFromItem(input)).offerTo(exporter);
-    }
-    public static void makeStairs(Consumer<RecipeJsonProvider> exporter, Block input, Block output){
-        ShapedRecipeJsonBuilder.create(output, 4).input('C', input)
-                .pattern("C  ")
-                .pattern("CC ")
-                .pattern("CCC");
     }
     public static void makeSlab(Consumer<RecipeJsonProvider> exporter, Block input, Block output, String criterion){
         ShapedRecipeJsonBuilder.create(output, 6)
@@ -112,13 +105,11 @@ public class FFRecipeGen extends FabricRecipeProvider {
     }
 
     public static void makeStoneRecipes(Consumer<RecipeJsonProvider> exporter, Block input, Block stairs, Block slab, Block button, Block pressurePlate, Block wall){
-        String criteria = "has" + Registry.BLOCK.getId(input).getPath();
+        String criteria = "has_" + Registry.BLOCK.getId(input).getPath();
         makeStairs(exporter, input, stairs, criteria);
         makeSlab(exporter, input, slab, criteria);
         makeButton(exporter, input, button, criteria);
         makePressurePlate(exporter, input, pressurePlate, criteria);
         makeWall(exporter, input, wall, criteria);
-
     }
-
 }

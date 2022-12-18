@@ -5,14 +5,14 @@
         "model": "falsefutures:block/gelastone_bricks"
       },
       {
-        "model": "falsefutures:block/gelastone_bricks_mirrored"
+        "model": "falsefutures:block/gelastone_bricks_north_west_mirrored"
       },
       {
         "model": "falsefutures:block/gelastone_bricks",
         "y": 180
       },
       {
-        "model": "falsefutures:block/gelastone_bricks_mirrored",
+        "model": "falsefutures:block/gelastone_bricks_north_west_mirrored",
         "y": 180
       }
     ]

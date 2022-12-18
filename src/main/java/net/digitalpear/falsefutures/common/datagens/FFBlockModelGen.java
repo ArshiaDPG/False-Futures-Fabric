@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.datagens;
 
+import com.google.gson.JsonElement;
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -11,6 +12,9 @@ import net.minecraft.data.client.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 
 public class FFBlockModelGen extends FabricModelProvider {
@@ -25,7 +29,7 @@ public class FFBlockModelGen extends FabricModelProvider {
 
         registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB,
                 FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_BUTTON);
-        registerBlockSet(blockStateModelGenerator, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB,
+        registerBrickBlockSet(blockStateModelGenerator, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB,
                 FFBlocks.GELASTONE_BRICK_WALL, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_BUTTON);
 
         registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB,
@@ -69,14 +73,15 @@ public class FFBlockModelGen extends FabricModelProvider {
                 ModelIds.getBlockModelId(FFBlocks.GIPPLEPAD)));
     }
 
-    public static void registerBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
-        blockStateModelGenerator.registerMirrorable(base);
+    public static void registerBrickBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
+        registerSideMirrorable(blockStateModelGenerator, base);
         createStairs(blockStateModelGenerator, stairs);
         createSlab(blockStateModelGenerator, base, slab);
         createWall(blockStateModelGenerator, wall);
         makePressurePlate(blockStateModelGenerator, pressurePlate);
         makeButton(blockStateModelGenerator, button);
     }
+
     public static void registerBlockSetMirrorable(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
         blockStateModelGenerator.registerMirrorable(base);
         createStairs(blockStateModelGenerator, stairs);
@@ -125,5 +130,11 @@ public class FFBlockModelGen extends FabricModelProvider {
     public static void makePressurePlate(BlockStateModelGenerator blockStateModelGenerator, Block plate){
         String name = Registry.BLOCK.getId(plate).getPath();
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createPressurePlateBlockState(plate, new Identifier(FalseFutures.MOD_ID, name), new Identifier(FalseFutures.MOD_ID, name + "_down")));
+    }
+
+    public static void registerSideMirrorable(BlockStateModelGenerator blockStateModelGenerator, Block block) {
+        Identifier identifier = TexturedModel.CUBE_ALL.upload(block, blockStateModelGenerator.modelCollector);
+        Identifier identifier2 = Models.CUBE_NORTH_WEST_MIRRORED_ALL.upload(block, TextureMap.all(block), blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2));
     }
 }

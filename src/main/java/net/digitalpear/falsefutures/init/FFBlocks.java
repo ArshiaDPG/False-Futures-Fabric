@@ -14,6 +14,7 @@ import net.minecraft.util.registry.Registry;
 
 public class FFBlocks {
 
+
     public static Block createBlockWithItem(String blockID, Block block, ItemGroup group){
         createBlockItem(blockID, block, group);
         return Registry.register(Registry.BLOCK, new Identifier(FalseFutures.MOD_ID, blockID), block);
@@ -46,9 +47,8 @@ public class FFBlocks {
     public static final Block GIPPLEPAD = createBlockWithoutItem("gipplepad", new LilyPadBlock(AbstractBlock.Settings.of(Material.PLANT,
             MapColor.PALE_PURPLE).breakInstantly().sounds(BlockSoundGroup.LILY_PAD).nonOpaque()));
 
-    public static final Block GELATIN_LAYERS = createBlockWithItem("gelatin_layer",
-            new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK)
-                    .mapColor(MapColor.LIGHT_BLUE)), ItemGroup.DECORATIONS);
+    public static final Block GELATIN_LAYER = createBlockWithItem("gelatin_layer",
+            new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.LIGHT_BLUE)), ItemGroup.DECORATIONS);
 
     public static final Block GELASTONE = createBlockWithItem("gelastone",
             new Block(AbstractBlock.Settings.copy(Blocks.STONE)
@@ -59,6 +59,14 @@ public class FFBlocks {
     public static final Block GELASTONE_WALL = StoneSets.stoneWall(GELASTONE);
     public static final Block GELASTONE_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELASTONE);
     public static final Block GELASTONE_BUTTON = StoneSets.stoneButton(GELASTONE);
+
+    public static final Block GELASTONE_BRICKS = createBlockWithItem("gelastone_bricks",
+            new Block(AbstractBlock.Settings.copy(GELASTONE)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block GELASTONE_BRICK_STAIRS = StoneSets.stoneStairs(GELASTONE_BRICKS);
+    public static final Block GELASTONE_BRICK_SLAB = StoneSets.stoneSlab(GELASTONE_BRICKS);
+    public static final Block GELASTONE_BRICK_WALL = StoneSets.stoneWall(GELASTONE_BRICKS);
+    public static final Block GELASTONE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELASTONE_BRICKS);
+    public static final Block GELASTONE_BRICK_BUTTON = StoneSets.stoneButton(GELASTONE_BRICKS);
 
 
     public static final Block DEEP_GELASTONE = createBlockWithItem("deep_gelastone",

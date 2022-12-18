@@ -1,10 +1,9 @@
 package net.digitalpear.falsefutures.common.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -24,7 +23,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-public class GelatinLayerBlock extends Block {
+public class GelatinLayerBlock extends Block implements Waterloggable {
     public static final int MAX_LAYERS = 8;
     public static final IntProperty LAYERS = Properties.LAYERS;
     protected static final VoxelShape[] LAYERS_TO_SHAPE = new VoxelShape[]{VoxelShapes.empty(),
@@ -88,6 +87,9 @@ public class GelatinLayerBlock extends Block {
     }
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        if (state.get(WATERLOGGED)) {
+            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
         return !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
@@ -114,12 +116,16 @@ public class GelatinLayerBlock extends Block {
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos());
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
         if (blockState.isOf(this)) {
             int i = blockState.get(LAYERS);
-            return blockState.with(LAYERS, Math.min(8, i + 1)).with(WATERLOGGED, blockState.get(Properties.WATERLOGGED));
+            return blockState.with(LAYERS, Math.min(8, i + 1)).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
         } else {
             return super.getPlacementState(ctx);
         }
+    }
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {

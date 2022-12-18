@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -30,5 +31,27 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .addOptional(new Identifier("galosphere", "lichen_moss"))
                 .addOptional(new Identifier("galosphere", "lichen_roots"))
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));
+
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+                .add(FFBlocks.GELASTONE)
+                .add(FFBlocks.GELASTONE_STAIRS)
+                .add(FFBlocks.GELASTONE_SLAB)
+                .add(FFBlocks.GELASTONE_WALL)
+                .add(FFBlocks.GELASTONE_BUTTON)
+                .add(FFBlocks.GELASTONE_PRESSURE_PLATE)
+
+                .add(FFBlocks.GELASTONE_BRICKS)
+                .add(FFBlocks.GELASTONE_BRICK_STAIRS)
+                .add(FFBlocks.GELASTONE_BRICK_SLAB)
+                .add(FFBlocks.GELASTONE_BRICK_WALL)
+                .add(FFBlocks.GELASTONE_BRICK_BUTTON)
+                .add(FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE)
+
+                .add(FFBlocks.DEEP_GELASTONE)
+                .add(FFBlocks.DEEP_GELASTONE_STAIRS)
+                .add(FFBlocks.DEEP_GELASTONE_SLAB)
+                .add(FFBlocks.DEEP_GELASTONE_WALL)
+                .add(FFBlocks.DEEP_GELASTONE_BUTTON)
+                .add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE);
     }
 }

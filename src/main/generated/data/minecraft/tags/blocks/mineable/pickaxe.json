@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "falsefutures:gelastone",
+    "falsefutures:gelastone_stairs",
+    "falsefutures:gelastone_slab",
+    "falsefutures:gelastone_wall",
+    "falsefutures:gelastone_button",
+    "falsefutures:gelastone_pressure_plate",
+    "falsefutures:gelastone_bricks",
+    "falsefutures:gelastone_brick_stairs",
+    "falsefutures:gelastone_brick_slab",
+    "falsefutures:gelastone_brick_wall",
+    "falsefutures:gelastone_brick_button",
+    "falsefutures:gelastone_brick_pressure_plate",
+    "falsefutures:deep_gelastone",
+    "falsefutures:deep_gelastone_stairs",
+    "falsefutures:deep_gelastone_slab",
+    "falsefutures:deep_gelastone_wall",
+    "falsefutures:deep_gelastone_button",
+    "falsefutures:deep_gelastone_pressure_plate"
+  ]
+}

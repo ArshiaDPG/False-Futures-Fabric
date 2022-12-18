@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.nio.file.Path;
 
@@ -19,9 +19,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        FFRecipeGen.JELLY.forEach((item, item2) -> {
-            translationBuilder.add(item, capitalize(item.getTranslationKey().split("\\.")[2]).split("_")[0] + " Jelly");
-        });
+        FFRecipeGen.JELLY.forEach((jelly, ingredient) ->
+                translationBuilder.add(jelly, capitalize(Registry.BLOCK.getId(jelly).getPath()).split("_")[0] + " Jelly"));
 
 
         makeTranslation(translationBuilder, FFItems.GELATIN);
@@ -48,6 +47,30 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
+        translationBuilder.add(FFBlocks.GELASTONE, "Gelastone");
+        translationBuilder.add(FFBlocks.GELASTONE_STAIRS, "Gelastone Stairs");
+        translationBuilder.add(FFBlocks.GELASTONE_SLAB, "Gelastone Slab");
+        translationBuilder.add(FFBlocks.GELASTONE_WALL, "Gelastone Wall");
+        translationBuilder.add(FFBlocks.GELASTONE_PRESSURE_PLATE, "Gelastone Pressure Plate");
+        translationBuilder.add(FFBlocks.GELASTONE_BUTTON, "Gelastone Button");
+
+        translationBuilder.add(FFBlocks.GELASTONE_BRICKS, "Gelastone Bricks");
+        translationBuilder.add(FFBlocks.GELASTONE_BRICK_STAIRS, "Gelastone Brick Stairs");
+        translationBuilder.add(FFBlocks.GELASTONE_BRICK_SLAB, "Gelastone Brick Slab");
+        translationBuilder.add(FFBlocks.GELASTONE_BRICK_WALL, "Gelastone Brick Wall");
+        translationBuilder.add(FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, "Gelastone Brick Pressure Plate");
+        translationBuilder.add(FFBlocks.GELASTONE_BRICK_BUTTON, "Gelastone Brick Button");
+
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE, "Deep Gelastone");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_STAIRS, "Deep Gelastone Stairs");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_SLAB, "Deep Gelastone Slab");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_WALL, "Deep Gelastone Wall");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, "Deep Gelastone Pressure Plate");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BUTTON, "Deep Gelastone Button");
+
+        translationBuilder.add(FFBlocks.GELATIN_LAYER, "Gelatin Layer");
+
+
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
             translationBuilder.add(existingFilePath);
@@ -56,10 +79,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         }
     }
     public static void makeTranslation(TranslationBuilder translationBuilder, Item item){
-        translationBuilder.add(item, capitalize(item.getTranslationKey().split("\\.")[2]));
+        translationBuilder.add(item, capitalize(Registry.ITEM.getId(item).getPath()));
     }
     public static void makeTranslation(TranslationBuilder translationBuilder, EntityType<?> entityType){
-        translationBuilder.add(entityType, capitalize(entityType.getTranslationKey().split("\\.")[2]));
+        translationBuilder.add(entityType, capitalize(Registry.ENTITY_TYPE.getId(entityType).getPath()));
     }
 
     public static String capitalize(String inputString) {

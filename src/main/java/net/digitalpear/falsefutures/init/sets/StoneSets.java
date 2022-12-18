@@ -56,7 +56,7 @@ public class StoneSets {
 
     //If name ends with "Bricks" then shorten to "Brick" for use
     public static String getNameSpace(Block base){
-        String name = Registry.BLOCK.getId(base).getNamespace();
+        String name = Registry.BLOCK.getId(base).getPath();
         return name.endsWith("bricks") ? name.substring(0, name.length() - 1) : name;
     }
     public static String getNameSpace(String base){

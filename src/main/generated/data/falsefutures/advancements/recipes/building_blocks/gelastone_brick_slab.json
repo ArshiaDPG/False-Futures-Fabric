@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "falsefutures:gelastone_brick_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "hasgelastone_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:gelastone_bricks"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "hasgelastone_bricks",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "falsefutures:gelastone_brick_slab"
+    ]
+  }
+}

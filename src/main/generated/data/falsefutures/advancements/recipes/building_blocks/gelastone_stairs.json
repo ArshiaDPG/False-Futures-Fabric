@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "falsefutures:gelastone_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "hasgelastone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:gelastone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "hasgelastone",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "falsefutures:gelastone_stairs"
+    ]
+  }
+}

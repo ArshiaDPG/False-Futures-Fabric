@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "falsefutures:gelastone"
+    }
+  },
+  "pattern": [
+    "CC"
+  ],
+  "result": {
+    "item": "falsefutures:gelastone_pressure_plate"
+  }
+}

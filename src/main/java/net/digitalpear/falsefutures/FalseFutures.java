@@ -1,10 +1,7 @@
 package net.digitalpear.falsefutures;
 
 import com.kyanite.paragon.api.ConfigRegistry;
-import net.digitalpear.falsefutures.init.FFBlocks;
-import net.digitalpear.falsefutures.init.FFEntities;
-import net.digitalpear.falsefutures.init.FFItems;
-import net.digitalpear.falsefutures.init.FFSoundEvents;
+import net.digitalpear.falsefutures.init.*;
 import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -24,6 +21,7 @@ public class FalseFutures implements ModInitializer {
         FFBlocks.init();
         FFEntities.init();
         FFSoundEvents.init();
+        FFConfiguredFeatures.init();
 
         ConfigRegistry.register(new FalseFuturesConfig());
 

@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:cobblestone"
+      "item": "minecraft:cobbled_deepslate"
     },
     {
       "item": "falsefutures:gelatin"
     }
   ],
   "result": {
-    "item": "falsefutures:gelastone"
+    "item": "falsefutures:deep_gelastone"
   }
 }

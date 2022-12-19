@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.blocks;
 
+import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
@@ -11,7 +12,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class JellyrootBlock extends PlantBlock implements Fertilizable {
-    protected static final float field_31261 = 6.0F;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
 
     public JellyrootBlock(Settings settings) {
@@ -33,9 +33,8 @@ public class JellyrootBlock extends PlantBlock implements Fertilizable {
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        TallPlantBlock tallPlantBlock = (TallPlantBlock)(state.isOf(Blocks.FERN) ? Blocks.LARGE_FERN : Blocks.TALL_GRASS);
-        if (tallPlantBlock.getDefaultState().canPlaceAt(world, pos) && world.isAir(pos.up())) {
-            TallPlantBlock.placeAt(world, tallPlantBlock.getDefaultState(), pos, 2);
+        if (FFBlocks.TALL_JELLYROOT.getDefaultState().canPlaceAt(world, pos) && world.isAir(pos.up())) {
+            TallPlantBlock.placeAt(world, FFBlocks.TALL_JELLYROOT.getDefaultState(), pos, 2);
         }
 
     }

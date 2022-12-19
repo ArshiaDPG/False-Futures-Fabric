@@ -43,14 +43,14 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
         stoneSet(biConsumer, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_BUTTON, FFBlocks.GELASTONE_PRESSURE_PLATE);
         stoneSet(biConsumer, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB, FFBlocks.GELASTONE_BRICK_WALL, FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE);
 
-        biConsumer.accept(Registry.BLOCK.getId(FFBlocks.JELLYROOT), jellyrootDrops(FFBlocks.JELLYROOT));
-        biConsumer.accept(Registry.BLOCK.getId(FFBlocks.TALL_JELLYROOT), tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
+        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.JELLYROOT).getPath()), jellyrootDrops(FFBlocks.JELLYROOT));
+        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.TALL_JELLYROOT).getPath()), tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
     }
     public static LootTable.Builder jellyrootDrops(Block dropWithShears) {
         return BlockLootTableGenerator.dropsWithShears(dropWithShears, (net.minecraft.loot.entry.LootPoolEntry.Builder)BlockLootTableGenerator.applyExplosionDecay(dropWithShears, ((net.minecraft.loot.entry.LeafEntry.Builder)ItemEntry.builder(FFItems.GELATIN).conditionally(RandomChanceLootCondition.builder(0.125F))).apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))));
     }
     public static LootTable.Builder tallJellyrootDrops(Block tallRoot, Block root) {
-        net.minecraft.loot.entry.LootPoolEntry.Builder<?> builder = ((net.minecraft.loot.entry.LeafEntry.Builder)ItemEntry.builder(root).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0F))).conditionally(WITH_SHEARS)).alternatively(((net.minecraft.loot.entry.LeafEntry.Builder)BlockLootTableGenerator.addSurvivesExplosionCondition(tallRoot, ItemEntry.builder(FFItems.GELATIN))).conditionally(RandomChanceLootCondition.builder(0.125F)));
+        net.minecraft.loot.entry.LootPoolEntry.Builder<?> builder = ItemEntry.builder(root).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0F))).conditionally(WITH_SHEARS).alternatively(((net.minecraft.loot.entry.LeafEntry.Builder)BlockLootTableGenerator.addSurvivesExplosionCondition(tallRoot, ItemEntry.builder(FFItems.GELATIN))).conditionally(RandomChanceLootCondition.builder(0.125F)));
         return LootTable.builder().pool(LootPool.builder().with(builder).conditionally(BlockStatePropertyLootCondition.builder(tallRoot).properties(net.minecraft.predicate.StatePredicate.Builder.create().exactMatch(TallPlantBlock.HALF, DoubleBlockHalf.LOWER))).conditionally(LocationCheckLootCondition.builder(net.minecraft.predicate.entity.LocationPredicate.Builder.create().block(net.minecraft.predicate.BlockPredicate.Builder.create().blocks(new Block[]{tallRoot}).state(net.minecraft.predicate.StatePredicate.Builder.create().exactMatch(TallPlantBlock.HALF, DoubleBlockHalf.UPPER).build()).build()), new BlockPos(0, 1, 0)))).pool(LootPool.builder().with(builder).conditionally(BlockStatePropertyLootCondition.builder(tallRoot).properties(net.minecraft.predicate.StatePredicate.Builder.create().exactMatch(TallPlantBlock.HALF, DoubleBlockHalf.UPPER))).conditionally(LocationCheckLootCondition.builder(net.minecraft.predicate.entity.LocationPredicate.Builder.create().block(net.minecraft.predicate.BlockPredicate.Builder.create().blocks(new Block[]{tallRoot}).state(net.minecraft.predicate.StatePredicate.Builder.create().exactMatch(TallPlantBlock.HALF, DoubleBlockHalf.LOWER).build()).build()), new BlockPos(0, -1, 0))));
     }
 
@@ -66,4 +66,5 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
         simpleDrop(biConsumer, button);
         simpleDrop(biConsumer, pressurePlate);
     }
+
 }

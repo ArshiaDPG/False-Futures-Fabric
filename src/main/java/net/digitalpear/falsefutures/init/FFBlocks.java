@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.common.blocks.GelastoneBlock;
 import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
 import net.digitalpear.falsefutures.common.blocks.JellyrootBlock;
 import net.digitalpear.falsefutures.common.blocks.TallJellyrootBlock;
@@ -53,7 +54,7 @@ public class FFBlocks {
             new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.LIGHT_BLUE)), ItemGroup.DECORATIONS);
 
     public static final Block GELASTONE = createBlockWithItem("gelastone",
-            new Block(AbstractBlock.Settings.copy(Blocks.STONE)
+            new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
                     .sounds(BlockSoundGroup.NETHER_GOLD_ORE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block GELASTONE_STAIRS = StoneSets.stoneStairs(GELASTONE);
@@ -72,7 +73,7 @@ public class FFBlocks {
 
 
     public static final Block DEEP_GELASTONE = createBlockWithItem("deep_gelastone",
-            new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+            new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
             .sounds(BlockSoundGroup.NETHERRACK)
             .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
     public static final Block DEEP_GELASTONE_STAIRS = StoneSets.stoneStairs(DEEP_GELASTONE);

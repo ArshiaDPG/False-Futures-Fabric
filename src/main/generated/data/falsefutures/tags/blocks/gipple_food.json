@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "minecraft:glow_lichen",
+    "falsefutures:jellyroot",
+    "falsefutures:tall_jellyroot",
     {
       "id": "galosphere:lichen_moss",
       "required": false

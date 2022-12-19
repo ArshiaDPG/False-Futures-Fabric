@@ -28,6 +28,8 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)
+                .add(FFBlocks.JELLYROOT)
+                .add(FFBlocks.TALL_JELLYROOT)
                 .addOptional(new Identifier("galosphere", "lichen_moss"))
                 .addOptional(new Identifier("galosphere", "lichen_roots"))
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));

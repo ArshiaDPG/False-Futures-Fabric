@@ -60,7 +60,7 @@ public class FFBlockModelGen extends FabricModelProvider {
             }
             return blockStateVariant.put(variantSettings, stateName);
         })));
-        blockStateModelGenerator.registerParentedItemModel(FFBlocks.GELATIN_LAYER, ModelIds.getBlockSubModelId(Blocks.SNOW, "_height2"));
+        blockStateModelGenerator.registerParentedItemModel(FFBlocks.GELATIN_LAYER, ModelIds.getBlockSubModelId(FFBlocks.GELATIN_LAYER, "_height2"));
     }
 
 

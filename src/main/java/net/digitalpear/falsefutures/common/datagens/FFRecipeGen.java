@@ -46,18 +46,23 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 .criterion("has_gelastone", conditionsFromItem(FFBlocks.GELASTONE)).offerTo(exporter);
 
 
-        ShapedRecipeJsonBuilder.create(FFBlocks.GELASTONE, 2)
-                .input('S', Blocks.COBBLESTONE)
-                .input('G', FFItems.GELATIN)
-                .pattern("SG")
-                .pattern("GS")
+        ShapelessRecipeJsonBuilder.create(FFBlocks.GELASTONE)
+                .input(Blocks.COBBLESTONE)
+                .input(FFItems.GELATIN)
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(FFBlocks.DEEP_GELASTONE)
+                .input(Blocks.COBBLED_DEEPSLATE)
+                .input(FFItems.GELATIN)
+                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
+
 
 
         makeStoneRecipes(exporter, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_BUTTON,
                 FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_WALL);
         makeStoneRecipes(exporter, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB,
                 FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_WALL);
+        makeStoneRecipes(exporter, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB, FFBlocks.DEEP_GELASTONE_BUTTON,
+                FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_WALL);
     }
 
     public static void offerJellyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {

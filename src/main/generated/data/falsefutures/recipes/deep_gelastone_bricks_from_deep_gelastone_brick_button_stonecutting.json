@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "falsefutures:deep_gelastone_brick_button"
+  },
+  "result": "falsefutures:deep_gelastone_bricks"
+}

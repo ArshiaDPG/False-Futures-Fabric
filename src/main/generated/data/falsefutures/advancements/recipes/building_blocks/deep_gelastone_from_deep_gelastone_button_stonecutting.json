@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_deep_gelatin": {
+    "has_deep_gelastone_button": {
       "conditions": {
         "items": [
           {
             "items": [
-              "falsefutures:gelatin"
+              "falsefutures:deep_gelastone_button"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "falsefutures:deep_gelastone"
+        "recipe": "minecraft:deep_gelastone_from_deep_gelastone_button_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_deep_gelatin",
+      "has_deep_gelastone_button",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "falsefutures:deep_gelastone"
+      "minecraft:deep_gelastone_from_deep_gelastone_button_stonecutting"
     ]
   }
 }

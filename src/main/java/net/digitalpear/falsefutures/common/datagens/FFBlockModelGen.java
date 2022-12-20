@@ -5,7 +5,6 @@ import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
@@ -26,9 +25,11 @@ public class FFBlockModelGen extends FabricModelProvider {
                 FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_BUTTON);
         registerBrickBlockSet(blockStateModelGenerator, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB,
                 FFBlocks.GELASTONE_BRICK_WALL, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_BUTTON);
-
         registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB,
                 FFBlocks.DEEP_GELASTONE_WALL, FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_BUTTON);
+        registerBrickBlockSet(blockStateModelGenerator, FFBlocks.DEEP_GELASTONE_BRICKS, FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, FFBlocks.DEEP_GELASTONE_BRICK_SLAB,
+                FFBlocks.DEEP_GELASTONE_BRICK_WALL, FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_BRICK_BUTTON);
+
 
         blockStateModelGenerator.registerTintableCross(FFBlocks.JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);

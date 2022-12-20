@@ -72,6 +72,12 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFBlocks.JELLYROOT, "Jellyroot");
         translationBuilder.add(FFBlocks.TALL_JELLYROOT, "Tall Jellyroot");
 
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICKS, "Deep Gelastone Bricks");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, "Deep Gelastone Brick Stairs");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_SLAB, "Deep Gelastone Brick Slab");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_WALL, "Deep Gelastone Brick Wall");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, "Deep Gelastone Brick Pressure Plate");
+        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_BUTTON, "Deep Gelastone Brick Button");
 
 
         try {

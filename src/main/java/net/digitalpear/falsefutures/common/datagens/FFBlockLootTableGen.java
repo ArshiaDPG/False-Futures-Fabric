@@ -28,6 +28,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
@@ -40,8 +42,14 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
     public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/gipplepad"), BlockLootTableGenerator.drops(FFItems.GIPPLEPAD));
 
-        stoneSet(biConsumer, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_BUTTON, FFBlocks.GELASTONE_PRESSURE_PLATE);
-        stoneSet(biConsumer, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB, FFBlocks.GELASTONE_BRICK_WALL, FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_BUTTON,
+                FFBlocks.GELASTONE_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB, FFBlocks.GELASTONE_BRICK_WALL,
+                FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB, FFBlocks.DEEP_GELASTONE_WALL,
+                FFBlocks.DEEP_GELASTONE_BUTTON, FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.DEEP_GELASTONE_BRICKS, FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, FFBlocks.DEEP_GELASTONE_BRICK_SLAB,
+                FFBlocks.DEEP_GELASTONE_BRICK_WALL, FFBlocks.DEEP_GELASTONE_BRICK_BUTTON, FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE);
 
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.JELLYROOT).getPath()), jellyrootDrops(FFBlocks.JELLYROOT));
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.TALL_JELLYROOT).getPath()), tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
@@ -66,5 +74,10 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
         simpleDrop(biConsumer, button);
         simpleDrop(biConsumer, pressurePlate);
     }
-
+    public static void stoneSet(BiConsumer<Identifier, LootTable.Builder> biConsumer, Block slab, Block... stone){
+        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(slab).getPath()), BlockLootTableGenerator.slabDrops(slab));
+        List.of(stone).forEach(block -> {
+            simpleDrop(biConsumer, block);
+        });
+    }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/pressure_plate_up",
+  "textures": {
+    "texture": "falsefutures:block/deep_gelastone_bricks"
+  }
+}

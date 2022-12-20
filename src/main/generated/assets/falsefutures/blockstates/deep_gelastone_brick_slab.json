@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "falsefutures:block/deep_gelastone_brick_slab"
+    },
+    "type=double": {
+      "model": "falsefutures:deep_gelastone_bricks"
+    },
+    "type=top": {
+      "model": "falsefutures:block/deep_gelastone_brick_slab_top"
+    }
+  }
+}

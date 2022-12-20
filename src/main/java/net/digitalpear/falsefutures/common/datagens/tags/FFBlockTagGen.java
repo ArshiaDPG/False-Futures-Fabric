@@ -38,6 +38,8 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.GELASTONE)
                 .add(FFBlocks.DEEP_GELASTONE)
                 .add(FFBlocks.GELASTONE_BRICKS)
+                .add(FFBlocks.DEEP_GELASTONE_BRICKS)
+                .forceAddTag(BlockTags.DIRT)
                 .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
                 .addOptionalTag(BlockTags.BASE_STONE_NETHER)
                 .add(Blocks.END_STONE);

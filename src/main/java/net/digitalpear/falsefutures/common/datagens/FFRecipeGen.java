@@ -45,6 +45,11 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 .pattern("XX")
                 .criterion("has_gelastone", conditionsFromItem(FFBlocks.GELASTONE)).offerTo(exporter);
 
+        ShapedRecipeJsonBuilder.create(FFBlocks.DEEP_GELASTONE_BRICKS, 4)
+                .input('X', FFBlocks.DEEP_GELASTONE)
+                .pattern("XX")
+                .pattern("XX")
+                .criterion("has_deep_gelastone", conditionsFromItem(FFBlocks.DEEP_GELASTONE)).offerTo(exporter);
 
         ShapelessRecipeJsonBuilder.create(FFBlocks.GELASTONE)
                 .input(Blocks.COBBLESTONE)
@@ -63,7 +68,10 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_WALL);
         makeStoneRecipes(exporter, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB, FFBlocks.DEEP_GELASTONE_BUTTON,
                 FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_WALL);
+        makeStoneRecipes(exporter, FFBlocks.DEEP_GELASTONE_BRICKS, FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, FFBlocks.DEEP_GELASTONE_BRICK_SLAB,
+                FFBlocks.DEEP_GELASTONE_BRICK_WALL, FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_BRICK_BUTTON);
     }
+
 
     public static void offerJellyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
         ShapedRecipeJsonBuilder.create(output, 2)
@@ -75,7 +83,6 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 .group("jellies")
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
     }
-
     public static void makeStairs(Consumer<RecipeJsonProvider> exporter, Block input, Block output, String criterion){
         ShapedRecipeJsonBuilder.create(output, 4)
                 .input('C', input)

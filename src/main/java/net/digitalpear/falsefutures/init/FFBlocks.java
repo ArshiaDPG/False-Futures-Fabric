@@ -83,6 +83,16 @@ public class FFBlocks {
     public static final Block DEEP_GELASTONE_BUTTON = StoneSets.stoneButton(DEEP_GELASTONE);
 
 
+    public static final Block DEEP_GELASTONE_BRICKS = createBlockWithItem("deep_gelastone_bricks",
+            new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+                    .sounds(BlockSoundGroup.NETHERRACK)
+                    .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block DEEP_GELASTONE_BRICK_STAIRS = StoneSets.stoneStairs(DEEP_GELASTONE_BRICKS);
+    public static final Block DEEP_GELASTONE_BRICK_SLAB = StoneSets.stoneSlab(DEEP_GELASTONE_BRICKS);
+    public static final Block DEEP_GELASTONE_BRICK_WALL = StoneSets.stoneWall(DEEP_GELASTONE_BRICKS);
+    public static final Block DEEP_GELASTONE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELASTONE_BRICKS);
+    public static final Block DEEP_GELASTONE_BRICK_BUTTON = StoneSets.stoneButton(DEEP_GELASTONE_BRICKS);
+
     public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES)), ItemGroup.DECORATIONS);
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)

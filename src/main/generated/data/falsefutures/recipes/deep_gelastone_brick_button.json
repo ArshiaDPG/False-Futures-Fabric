@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "falsefutures:deep_gelastone_bricks"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CCC"
+  ],
+  "result": {
+    "count": 6,
+    "item": "falsefutures:deep_gelastone_brick_button"
+  }
+}

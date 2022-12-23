@@ -53,6 +53,7 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
 
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.JELLYROOT).getPath()), jellyrootDrops(FFBlocks.JELLYROOT));
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.TALL_JELLYROOT).getPath()), tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
+        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.POTTED_JELLYROOT).getPath()), BlockLootTableGenerator.pottedPlantDrops(FFBlocks.JELLYROOT));
     }
     public static LootTable.Builder jellyrootDrops(Block dropWithShears) {
         return BlockLootTableGenerator.dropsWithShears(dropWithShears, (net.minecraft.loot.entry.LootPoolEntry.Builder)BlockLootTableGenerator.applyExplosionDecay(dropWithShears, ((net.minecraft.loot.entry.LeafEntry.Builder)ItemEntry.builder(FFItems.GELATIN).conditionally(RandomChanceLootCondition.builder(0.125F))).apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))));
@@ -74,8 +75,7 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
         simpleDrop(biConsumer, button);
         simpleDrop(biConsumer, pressurePlate);
     }
-    public static void stoneSet(BiConsumer<Identifier, LootTable.Builder> biConsumer, Block slab, Block... stone){
-        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(slab).getPath()), BlockLootTableGenerator.slabDrops(slab));
+    public static void singleDropBlocks(BiConsumer<Identifier, LootTable.Builder> biConsumer, Block... stone){
         List.of(stone).forEach(block -> {
             simpleDrop(biConsumer, block);
         });

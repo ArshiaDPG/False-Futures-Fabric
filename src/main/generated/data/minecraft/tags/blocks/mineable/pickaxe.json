@@ -18,6 +18,12 @@
     "falsefutures:deep_gelastone_slab",
     "falsefutures:deep_gelastone_wall",
     "falsefutures:deep_gelastone_button",
-    "falsefutures:deep_gelastone_pressure_plate"
+    "falsefutures:deep_gelastone_pressure_plate",
+    "falsefutures:deep_gelastone_bricks",
+    "falsefutures:deep_gelastone_brick_stairs",
+    "falsefutures:deep_gelastone_brick_slab",
+    "falsefutures:deep_gelastone_brick_wall",
+    "falsefutures:deep_gelastone_brick_button",
+    "falsefutures:deep_gelastone_brick_pressure_plate"
   ]
 }

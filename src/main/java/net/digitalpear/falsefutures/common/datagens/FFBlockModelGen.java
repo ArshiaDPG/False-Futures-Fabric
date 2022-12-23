@@ -33,6 +33,7 @@ public class FFBlockModelGen extends FabricModelProvider {
 
         blockStateModelGenerator.registerTintableCross(FFBlocks.JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
     }
 
     @Override

@@ -44,6 +44,30 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .addOptionalTag(BlockTags.BASE_STONE_NETHER)
                 .add(Blocks.END_STONE);
 
+        getOrCreateTagBuilder(BlockTags.WALLS)
+                .add(FFBlocks.GELASTONE_WALL)
+                .add(FFBlocks.DEEP_GELASTONE_WALL)
+                .add(FFBlocks.GELASTONE_BRICK_WALL)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_WALL);
+
+        getOrCreateTagBuilder(BlockTags.STAIRS)
+                .add(FFBlocks.GELASTONE_STAIRS)
+                .add(FFBlocks.GELASTONE_BRICK_STAIRS)
+                .add(FFBlocks.DEEP_GELASTONE_STAIRS)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_STAIRS);
+
+        getOrCreateTagBuilder(BlockTags.SLABS)
+                .add(FFBlocks.GELASTONE_SLAB)
+                .add(FFBlocks.GELASTONE_BRICK_SLAB)
+                .add(FFBlocks.DEEP_GELASTONE_SLAB)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_SLAB);
+
+        getOrCreateTagBuilder(BlockTags.STONE_PRESSURE_PLATES)
+                .add(FFBlocks.GELASTONE_PRESSURE_PLATE)
+                .add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE)
+                .add(FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE);
+
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(FFBlocks.GELASTONE)
                 .add(FFBlocks.GELASTONE_STAIRS)
@@ -64,6 +88,13 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.DEEP_GELASTONE_SLAB)
                 .add(FFBlocks.DEEP_GELASTONE_WALL)
                 .add(FFBlocks.DEEP_GELASTONE_BUTTON)
-                .add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE);
+                .add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE)
+
+                .add(FFBlocks.DEEP_GELASTONE_BRICKS)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_STAIRS)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_SLAB)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_WALL)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_BUTTON)
+                .add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE);
     }
 }

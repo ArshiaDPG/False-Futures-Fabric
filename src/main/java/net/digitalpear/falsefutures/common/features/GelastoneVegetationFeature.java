@@ -5,6 +5,7 @@ import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
@@ -37,11 +38,20 @@ public class GelastoneVegetationFeature extends Feature<NetherForestVegetationFe
                         structureWorldAccess.setBlockState(blockPos2, blockState2, 2);
                         ++j;
                     }
-                    else if((structureWorldAccess.getBlockState(blockPos2).isOf(FFBlocks.GELATIN_LAYER)
-                            && structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.LAYERS) < 8)
+                    else if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER)
                             && blockPos2.getY() > structureWorldAccess.getBottomY()
                             && blockState2.canPlaceAt(structureWorldAccess, blockPos2)){
-                        structureWorldAccess.setBlockState(blockPos2, FFBlocks.GELATIN_LAYER.getDefaultState().with(GelatinLayerBlock.LAYERS, structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.LAYERS) + 1), 2);
+                        structureWorldAccess.setBlockState(blockPos2, FFBlocks.GELATIN_LAYER.getDefaultState()
+                                .with(GelatinLayerBlock.WATERLOGGED, structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.WATERLOGGED)), 2);
+                        ++j;
+                    }
+                    else if(structureWorldAccess.getBlockState(blockPos2).isOf(FFBlocks.GELATIN_LAYER)
+                            && (structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.LAYERS) < 8)
+                            && blockPos2.getY() > structureWorldAccess.getBottomY()
+                            && blockState2.canPlaceAt(structureWorldAccess, blockPos2)){
+                        structureWorldAccess.setBlockState(blockPos2, FFBlocks.GELATIN_LAYER.getDefaultState()
+                                .with(GelatinLayerBlock.LAYERS, structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.LAYERS) + 1)
+                                .with(GelatinLayerBlock.WATERLOGGED, structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.WATERLOGGED)), 2);
                         ++j;
                     }
                 }

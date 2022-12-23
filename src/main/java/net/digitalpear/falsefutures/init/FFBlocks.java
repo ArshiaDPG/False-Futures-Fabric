@@ -94,10 +94,15 @@ public class FFBlocks {
     public static final Block DEEP_GELASTONE_BRICK_BUTTON = StoneSets.stoneButton(DEEP_GELASTONE_BRICKS);
 
     public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
-            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES)), ItemGroup.DECORATIONS);
+            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 4)), ItemGroup.DECORATIONS);
+    public static final Block POTTED_JELLYROOT = makePottedPlant(JELLYROOT);
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
-            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES)), ItemGroup.DECORATIONS);
+            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)), ItemGroup.DECORATIONS);
 
+
+    public static Block makePottedPlant(Block base){
+        return createBlockWithoutItem("potted_" + Registry.BLOCK.getId(base).getPath(), new FlowerPotBlock(base, AbstractBlock.Settings.copy(Blocks.POTTED_WARPED_FUNGUS).luminance(state -> base.getDefaultState().getLuminance()).mapColor(base.getDefaultMapColor())));
+    }
 
     public static void init(){
     }

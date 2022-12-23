@@ -1,6 +1,6 @@
 package net.digitalpear.falsefutures.common.blocks;
 
-import net.digitalpear.falsefutures.init.FFConfiguredFeatures;
+import net.digitalpear.falsefutures.init.features.FFConfiguredFeatures;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;

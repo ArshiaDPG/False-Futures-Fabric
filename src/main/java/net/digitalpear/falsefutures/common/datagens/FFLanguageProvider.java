@@ -70,6 +70,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
         translationBuilder.add(FFBlocks.GELATIN_LAYER, "Gelatin Layer");
         translationBuilder.add(FFBlocks.JELLYROOT, "Jellyroot");
+        translationBuilder.add(FFBlocks.POTTED_JELLYROOT, "Potted Jellyroot");
         translationBuilder.add(FFBlocks.TALL_JELLYROOT, "Tall Jellyroot");
 
         translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICKS, "Deep Gelastone Bricks");

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "falsefutures:gelastone_stairs",
+    "falsefutures:gelastone_brick_stairs",
+    "falsefutures:deep_gelastone_stairs",
+    "falsefutures:deep_gelastone_brick_stairs"
+  ]
+}

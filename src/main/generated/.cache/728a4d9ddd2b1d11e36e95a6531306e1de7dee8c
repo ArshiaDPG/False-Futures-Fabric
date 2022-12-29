@@ -1,4 +1,4 @@
-// 1.19.2	2022-12-20T20:34:36.5013037	minecraft:block Loot Table
+// 1.19.2	2022-12-29T14:23:36.2193172	minecraft:block Loot Table
 05eb2bee33af549103dc4fb5e0f5686fae5431d5 data\falsefutures\loot_tables\blocks\gelastone.json
 d4efe6c47287bcff583713986df6e2d79a7c1f36 data\falsefutures\loot_tables\blocks\gelastone_bricks.json
 b6b328671c603cb6d821949891da15165ac35b10 data\falsefutures\loot_tables\blocks\deep_gelastone_stairs.json
@@ -24,5 +24,6 @@ ee9a5ccbd196176baa0686a2fad640dd10df4d8c data\falsefutures\loot_tables\blocks\de
 41f26c8ce6fcdb72e81fbb6854a7fce2b107804b data\falsefutures\loot_tables\blocks\tall_jellyroot.json
 d119d5396f1082fac6b52fcb088d09d4fc3e5cf6 data\falsefutures\loot_tables\blocks\jellyroot.json
 2c4fd5df610fc4df0c0125ad4985b253316dd360 data\falsefutures\loot_tables\blocks\gelastone_brick_wall.json
+98f1628efd7df6f5e08894a90e73991ae724b5a3 data\falsefutures\loot_tables\blocks\potted_jellyroot.json
 34157f337253ca85ce1013371ee3213a68e496a4 data\falsefutures\loot_tables\blocks\deep_gelastone.json
 a11702802858e6587942a6416d2ce6b5bf2a2de8 data\falsefutures\loot_tables\blocks\gelastone_pressure_plate.json

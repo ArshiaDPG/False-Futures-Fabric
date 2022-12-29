@@ -31,9 +31,8 @@ public class FFBlockModelGen extends FabricModelProvider {
                 FFBlocks.DEEP_GELASTONE_BRICK_WALL, FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_BRICK_BUTTON);
 
 
-        blockStateModelGenerator.registerTintableCross(FFBlocks.JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
-        blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
     }
 
     @Override

@@ -25,8 +25,10 @@ public class FFConfiguredFeatures {
             .build());
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELASTONE_VEGETATION = register("gelastone_vegetation", FFFeatures.GELASTONE_VEGETATION, new NetherForestVegetationFeatureConfig(GELASTONE_VEGETATION_PROVIDER, 8, 4));
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELASTONE_VEGETATION_BONEMEAL = register("gelastone_vegetation_bonemeal", FFFeatures.GELASTONE_VEGETATION, new NetherForestVegetationFeatureConfig(GELASTONE_VEGETATION_PROVIDER, 3, 1));
+
     public static final RegistryEntry<ConfiguredFeature<BrinePoolsFeature.Config, ?>> BRINE_POOL = register("brine_pool", FFFeatures.BRINE_POOL,
             new BrinePoolsFeature.Config(BlockStateProvider.of(Blocks.WATER.getDefaultState()), BlockStateProvider.of(FFBlocks.GELASTONE.getDefaultState())));
+
     public static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_GELASTONE = register("ore_gelastone", Feature.ORE,
             new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(
                     OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, FFBlocks.DEEP_GELASTONE.getDefaultState()),

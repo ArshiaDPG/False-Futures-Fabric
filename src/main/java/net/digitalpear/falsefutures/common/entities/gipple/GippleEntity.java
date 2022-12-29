@@ -380,8 +380,8 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     }
 
     /*
-            Sounds
-         */
+        Sounds
+    */
 
     @Nullable
     @Override

@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.datagens;
 
+import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -33,6 +34,8 @@ public class FFBlockModelGen extends FabricModelProvider {
 
         blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
+
+        GippleInfestedBlock.REGULAR_TO_INFESTED_BLOCK.forEach(blockStateModelGenerator::registerParented);
     }
 
     @Override

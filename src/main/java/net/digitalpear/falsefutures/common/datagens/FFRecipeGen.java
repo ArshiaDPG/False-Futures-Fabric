@@ -47,7 +47,7 @@ public class FFRecipeGen extends FabricRecipeProvider {
         ShapelessRecipeJsonBuilder.create(FFBlocks.DEEP_GELASTONE)
                 .input(Blocks.COBBLED_DEEPSLATE)
                 .input(FFItems.GELATIN)
-                .criterion("has_deep_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
+                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
 
 
 

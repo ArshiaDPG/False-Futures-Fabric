@@ -99,6 +99,11 @@ public class FFBlocks {
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)), ItemGroup.DECORATIONS);
 
+    public static final Block INFESTED_GELASTONE = StoneSets.infestedBlock(GELASTONE);
+    public static final Block INFESTED_DEEP_GELASTONE = StoneSets.infestedBlock(DEEP_GELASTONE);
+    public static final Block INFESTED_GELASTONE_BRICKS = StoneSets.infestedBlock(GELASTONE_BRICKS);
+    public static final Block INFESTED_DEEP_GELASTONE_BRICKS = StoneSets.infestedBlock(DEEP_GELASTONE_BRICKS);
+
 
     public static Block makePottedPlant(Block base){
         return createBlockWithoutItem("potted_" + Registry.BLOCK.getId(base).getPath(), new FlowerPotBlock(base, AbstractBlock.Settings.copy(Blocks.POTTED_WARPED_FUNGUS).luminance(state -> base.getDefaultState().getLuminance()).mapColor(base.getDefaultMapColor())));

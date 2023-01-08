@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -9,9 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.server.BlockLootTableGenerator;
-import net.minecraft.data.server.EntityLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -28,7 +27,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -54,6 +52,11 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.JELLYROOT).getPath()), jellyrootDrops(FFBlocks.JELLYROOT));
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.TALL_JELLYROOT).getPath()), tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.POTTED_JELLYROOT).getPath()), BlockLootTableGenerator.pottedPlantDrops(FFBlocks.JELLYROOT));
+
+        GippleInfestedBlock.REGULAR_TO_INFESTED_BLOCK.forEach((regular, infested) -> {
+            biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(infested).getPath()), BlockLootTableGenerator.dropsWithSilkTouch(regular));
+
+        });
     }
     public static LootTable.Builder jellyrootDrops(Block dropWithShears) {
         return BlockLootTableGenerator.dropsWithShears(dropWithShears, (net.minecraft.loot.entry.LootPoolEntry.Builder)BlockLootTableGenerator.applyExplosionDecay(dropWithShears, ((net.minecraft.loot.entry.LeafEntry.Builder)ItemEntry.builder(FFItems.GELATIN).conditionally(RandomChanceLootCondition.builder(0.125F))).apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))));
@@ -65,6 +68,9 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
 
     public static void simpleDrop(BiConsumer<Identifier, LootTable.Builder> biConsumer, Block block){
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(block).getPath()), BlockLootTableGenerator.drops(block));
+    }
+    public static void infestedBlockDrop(BiConsumer<Identifier, LootTable.Builder> biConsumer, Block block, Block drop){
+        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(block).getPath()), BlockLootTableGenerator.dropsWithSilkTouch(drop));
     }
 
     public static void stoneSet(BiConsumer<Identifier, LootTable.Builder> biConsumer, Block stone, Block stairs, Block slab, Block wall, Block button, Block pressurePlate){

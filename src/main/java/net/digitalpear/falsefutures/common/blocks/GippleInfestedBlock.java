@@ -19,9 +19,9 @@ import java.util.function.Supplier;
 
 public class GippleInfestedBlock  extends Block {
     private final Block regularBlock;
-    private static final Map<Block, Block> REGULAR_TO_INFESTED_BLOCK = Maps.newIdentityHashMap();
-    private static final Map<BlockState, BlockState> REGULAR_TO_INFESTED_STATE = Maps.newIdentityHashMap();
-    private static final Map<BlockState, BlockState> INFESTED_TO_REGULAR_STATE = Maps.newIdentityHashMap();
+    public static final Map<Block, Block> REGULAR_TO_INFESTED_BLOCK = Maps.newIdentityHashMap();
+    public static final Map<BlockState, BlockState> REGULAR_TO_INFESTED_STATE = Maps.newIdentityHashMap();
+    public static final Map<BlockState, BlockState> INFESTED_TO_REGULAR_STATE = Maps.newIdentityHashMap();
 
     public GippleInfestedBlock(Block regularBlock, Settings settings) {
         super(settings.hardness(regularBlock.getHardness() / 2.0F).resistance(0.75F));
@@ -39,7 +39,7 @@ public class GippleInfestedBlock  extends Block {
 
     private void spawnGipple(ServerWorld world, BlockPos pos) {
         GippleEntity gipple = FFEntities.GIPPLE.create(world);
-        gipple.refreshPositionAndAngles((double)pos.getX() + 0.5D, pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+        gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
         world.spawnEntity(gipple);
         gipple.playSpawnEffects();
     }
@@ -64,10 +64,11 @@ public class GippleInfestedBlock  extends Block {
             BlockState blockState = toStateSupplier.get();
 
             Property property;
-            for(Iterator var3 = infestedState.getProperties().iterator(); var3.hasNext(); blockState = blockState.contains(property) ? (BlockState)blockState.with(property, infestedState.get(property)) : blockState) {
-                property = (Property)var3.next();
+            for (Iterator var3 = infestedState.getProperties().iterator(); var3.hasNext(); blockState = blockState.contains(property) ? (BlockState) blockState.with(property, infestedState.get(property)) : blockState) {
+                property = (Property) var3.next();
             }
 
             return blockState;
         });
     }
+}

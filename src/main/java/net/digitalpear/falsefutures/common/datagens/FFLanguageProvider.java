@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -80,6 +81,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, "Deep Gelastone Brick Pressure Plate");
         translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_BUTTON, "Deep Gelastone Brick Button");
 
+        translationBuilder.add(FFBlocks.INFESTED_GELASTONE, "Infested Gelastone");
+        translationBuilder.add(FFBlocks.INFESTED_GELASTONE_BRICKS, "Infested Gelastone Bricks");
+        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELASTONE, "Infested Deep Gelastone");
+        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELASTONE_BRICKS, "Infested Deep Gelastone Bricks");
 
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();

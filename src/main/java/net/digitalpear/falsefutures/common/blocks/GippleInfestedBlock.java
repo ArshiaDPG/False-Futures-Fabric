@@ -40,6 +40,7 @@ public class GippleInfestedBlock  extends Block {
     private void spawnGipple(ServerWorld world, BlockPos pos) {
         GippleEntity gipple = FFEntities.GIPPLE.create(world);
         gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.25D, (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
+        gipple.setBaby(true);
         world.spawnEntity(gipple);
         gipple.playSpawnEffects();
     }

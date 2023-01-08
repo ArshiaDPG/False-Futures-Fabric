@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_deep_gelatin": {
+    "has_gelatin": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_deep_gelatin",
+      "has_gelatin",
       "has_the_recipe"
     ]
   ],

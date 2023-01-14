@@ -69,7 +69,7 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
                 }
             }
 
-            pos = pos.add(-1 + serverWorld.random.nextBetween(-3, 4), -serverWorld.random.nextBetween(-3, 4), -1 + serverWorld.random.nextBetween(-3, 4));
+            pos = pos.add(serverWorld.random.nextBetween(-2, 2), serverWorld.random.nextBetween(-2, 2), serverWorld.random.nextBetween(-2, 2));
         }
     }
 }

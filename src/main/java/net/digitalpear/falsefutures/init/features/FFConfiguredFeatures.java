@@ -18,9 +18,8 @@ public class FFConfiguredFeatures {
     public static final RuleTest DEEP_GELASTONE = new BlockMatchRuleTest(FFBlocks.DEEP_GELASTONE);
 
     public static final WeightedBlockStateProvider GELASTONE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
-            .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 4)
-            .add(FFBlocks.JELLYROOT.getDefaultState(), 3)
-            .add(FFBlocks.TALL_JELLYROOT.getDefaultState(), 2)
+            .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
+            .add(FFBlocks.JELLYROOT.getDefaultState(), 4)
             .build());
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELASTONE_VEGETATION = register("gelastone_vegetation", FFFeatures.GELASTONE_VEGETATION, new NetherForestVegetationFeatureConfig(GELASTONE_VEGETATION_PROVIDER, 8, 4));
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELASTONE_VEGETATION_BONEMEAL = register("gelastone_vegetation_bonemeal", FFFeatures.GELASTONE_VEGETATION, new NetherForestVegetationFeatureConfig(GELASTONE_VEGETATION_PROVIDER, 3, 1));

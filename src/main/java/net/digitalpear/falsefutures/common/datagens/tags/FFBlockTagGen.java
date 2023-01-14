@@ -17,6 +17,11 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
 
     @Override
     protected void generateTags() {
+        getOrCreateTagBuilder(FFBlockTags.BRINE_POOL_CANNOT_REPLACE)
+                .forceAddTag(BlockTags.FEATURES_CANNOT_REPLACE)
+                .add(FFBlocks.JELLYROOT)
+                .add(FFBlocks.TALL_JELLYROOT);
+
         getOrCreateTagBuilder(FFBlockTags.JELLIES)
                 .add(FFBlocks.PLAIN_JELLY)
                 .add(FFBlocks.FLORAL_JELLY)

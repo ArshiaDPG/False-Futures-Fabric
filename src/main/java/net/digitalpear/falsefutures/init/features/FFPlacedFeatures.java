@@ -22,7 +22,7 @@ import java.util.List;
 public class FFPlacedFeatures {
     public static final RegistryEntry<PlacedFeature> BRINE_POOL = register("brine_pool", FFConfiguredFeatures.BRINE_POOL,
             RarityFilterPlacementModifier.of(FalseFuturesConfig.CHANCE_OF_BRINE_POOL.get()), SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.of(UniformHeightProvider.create(YOffset.fixed(0), YOffset.getTop())),
+            HeightRangePlacementModifier.of(UniformHeightProvider.create(YOffset.getBottom(), YOffset.fixed(0))),
             EnvironmentScanPlacementModifier.of(Direction.DOWN, BlockPredicate.bothOf(BlockPredicate.not(BlockPredicate.IS_AIR),
                     BlockPredicate.insideWorldBounds(new BlockPos(0, -5, 0))), 32),
             SurfaceThresholdFilterPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG, -2147483648, -5), BiomePlacementModifier.of());

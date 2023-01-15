@@ -67,8 +67,6 @@ public class FFBlockModelGen extends FabricModelProvider {
         blockStateModelGenerator.registerParentedItemModel(FFBlocks.GELATIN_LAYER, ModelIds.getBlockSubModelId(FFBlocks.GELATIN_LAYER, "_height2"));
     }
 
-
-
     private void registerGipplePad(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerItemModel(FFBlocks.GIPPLEPAD);
         blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(FFBlocks.GIPPLEPAD,
@@ -106,7 +104,6 @@ public class FFBlockModelGen extends FabricModelProvider {
         Identifier SLAB_TOP = Models.SLAB_TOP.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createSlabBlockState(slab,
                 SLAB, SLAB_TOP, Registry.BLOCK.getId(textureBase)));
-
     }
     public static void createWall(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block wall){
         Identifier WALL_INVENTORY = Models.WALL_INVENTORY.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);

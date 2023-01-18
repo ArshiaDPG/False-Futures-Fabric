@@ -2,6 +2,7 @@ package net.digitalpear.falsefutures.init.features;
 
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.FalseFuturesConfig;
+import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +36,6 @@ public class FFPlacedFeatures {
 
 
     public static void init(){
-//        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.FLUID_SPRINGS, BRINE_POOL.getKey().get());
+//        BiomeModifications.addFeature(BiomeSelectors.tag(FFBiomeTags.GIPPLE_HABITATS), GenerationStep.Feature.FLUID_SPRINGS, BRINE_POOL.getKey().get());
     }
 }

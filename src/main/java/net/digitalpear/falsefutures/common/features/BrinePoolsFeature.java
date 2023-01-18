@@ -35,7 +35,7 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
 
 
         //If is in biome where gipples spawn and place of origin is solid block then generate
-        if (world.getBlockState(initialPos).isSolidBlock(world, initialPos) && world.getBiome(initialPos).isIn(FFBiomeTags.GIPPLE_HABITATS) && isValidSpawn(world, initialPos, baseHeight)){
+        if (world.getBlockState(initialPos).isSolidBlock(world, initialPos) && isValidSpawn(world, initialPos, baseHeight)){
             makePool(world, initialPos, FFBlocks.DEEP_GELASTONE.getDefaultState(), baseWidth, baseHeight);
             makePool(world, offsetPos, Blocks.WATER.getDefaultState(), baseWidth / 2, baseHeight-3);
             makePool(world, offsetPos.up(baseHeight), CAVE_AIR, baseWidth - 2, baseHeight-1);

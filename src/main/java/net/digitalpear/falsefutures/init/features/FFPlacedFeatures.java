@@ -20,18 +20,21 @@ import net.minecraft.world.gen.placementmodifier.*;
 import java.util.List;
 
 public class FFPlacedFeatures {
+
     public static final RegistryEntry<PlacedFeature> BRINE_POOL = register("brine_pool", FFConfiguredFeatures.BRINE_POOL,
-            RarityFilterPlacementModifier.of(FalseFuturesConfig.CHANCE_OF_BRINE_POOL.get()), SquarePlacementModifier.of(),
+            RarityFilterPlacementModifier.of(9), SquarePlacementModifier.of(),
             HeightRangePlacementModifier.of(UniformHeightProvider.create(YOffset.getBottom(), YOffset.fixed(0))),
             EnvironmentScanPlacementModifier.of(Direction.DOWN, BlockPredicate.bothOf(BlockPredicate.not(BlockPredicate.IS_AIR),
-                    BlockPredicate.insideWorldBounds(new BlockPos(0, -5, 0))), 32),
+                    BlockPredicate.insideWorldBounds(new BlockPos(0, -5, 0))), 16),
             SurfaceThresholdFilterPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG, -2147483648, -5), BiomePlacementModifier.of());
+
 
     public static RegistryEntry<PlacedFeature> register(String id, RegistryEntry<? extends ConfiguredFeature<?, ?>> registryEntry, PlacementModifier... modifiers) {
         return PlacedFeatures.register(FalseFutures.MOD_ID + ":" + id, registryEntry, List.of(modifiers));
     }
 
+
     public static void init(){
-        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.RAW_GENERATION, BRINE_POOL.getKey().get());
+//        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.FLUID_SPRINGS, BRINE_POOL.getKey().get());
     }
 }

@@ -1,6 +1,8 @@
 package net.digitalpear.falsefutures.common.datagens;
 
+import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
+import net.digitalpear.falsefutures.common.blocks.jelly.JellyBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -9,7 +11,10 @@ import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+
+import java.util.Optional;
 
 
 public class FFBlockModelGen extends FabricModelProvider {
@@ -17,10 +22,15 @@ public class FFBlockModelGen extends FabricModelProvider {
         super(dataGenerator);
     }
 
+    public static final Model JELLY_HALF_SIDE = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_side")), Optional.of("_half_side"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
+    public static final Model JELLY_HALF_UPPER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
+    public static final Model JELLY_HALF_LOWER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
+
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         registerGipplePad(blockStateModelGenerator);
         registerGelatinLayers(blockStateModelGenerator);
+        registerAllJellies(blockStateModelGenerator);
 
         registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB,
                 FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_BUTTON);
@@ -45,8 +55,48 @@ public class FFBlockModelGen extends FabricModelProvider {
         itemModelGenerator.register(FFItems.MUSIC_DISC_GIPPLECORE, Models.GENERATED);
     }
 
+    private void registerAllJellies(BlockStateModelGenerator blockStateModelGenerator) {
+        registerJelly(blockStateModelGenerator, FFBlocks.PLAIN_JELLY);
+        registerJelly(blockStateModelGenerator, FFBlocks.WEIRD_JELLY);
+        registerJelly(blockStateModelGenerator, FFBlocks.MILKY_JELLY);
+        registerJelly(blockStateModelGenerator, FFBlocks.FLORAL_JELLY);
+        registerJelly(blockStateModelGenerator, FFBlocks.SYMPHONIC_JELLY);
+        registerJelly(blockStateModelGenerator, FFBlocks.SWEET_JELLY);
+        registerJelly(blockStateModelGenerator, FFBlocks.FRUITY_JELLY);
+    }
 
+    private VariantSettings.Rotation rotationOf(Direction d) {
+        return switch (d) {
+            case EAST -> VariantSettings.Rotation.R90;
+            case SOUTH -> VariantSettings.Rotation.R180;
+            case WEST -> VariantSettings.Rotation.R270;
+            default -> VariantSettings.Rotation.R0;
+        };
+    }
 
+    private void registerJelly(BlockStateModelGenerator blockStateModelGenerator, Block block) {
+        TextureMap textureMap = (new TextureMap()).put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
+        Identifier half_side = JELLY_HALF_SIDE.upload(block,textureMap, blockStateModelGenerator.modelCollector);
+        Identifier half_upper = JELLY_HALF_UPPER.upload(block,textureMap, blockStateModelGenerator.modelCollector);
+        Identifier half_lower = JELLY_HALF_LOWER.upload(block,textureMap, blockStateModelGenerator.modelCollector);
+        Identifier full = Models.CUBE_BOTTOM_TOP.upload(block,textureMap,blockStateModelGenerator.modelCollector);
+        var stateMap = BlockStateVariantMap.create(Properties.FACING,JellyBlock.HALVED);
+        for(Direction d : Direction.values()) {
+
+            stateMap.register(d, Boolean.FALSE, BlockStateVariant.create().put(VariantSettings.MODEL, full));
+
+            if (d == Direction.DOWN) {
+                stateMap.register(d, Boolean.TRUE, BlockStateVariant.create().put(VariantSettings.MODEL, half_upper));
+            }
+            else if (d == Direction.UP) {
+                stateMap.register(d, Boolean.TRUE, BlockStateVariant.create().put(VariantSettings.MODEL, half_lower));
+            }
+            else {
+                stateMap.register(d, Boolean.TRUE, BlockStateVariant.create().put(VariantSettings.MODEL, half_side).put(VariantSettings.Y, rotationOf(d)));
+            }
+        }
+        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block, BlockStateVariant.create().put(VariantSettings.MODEL, full)).coordinate(stateMap));
+    }
 
     private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
         TextureMap textureMap = TextureMap.all(FFBlocks.GELATIN_LAYER);

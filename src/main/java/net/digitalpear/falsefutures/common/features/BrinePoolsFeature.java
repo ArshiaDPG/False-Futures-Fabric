@@ -1,28 +1,20 @@
 package net.digitalpear.falsefutures.common.features;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.digitalpear.falsefutures.common.entities.gipple.GippleEntity;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.features.FFConfiguredFeatures;
 import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
-import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Waterloggable;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.BiomeTags;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 
 public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
@@ -43,12 +35,13 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
 
 
         //If is in biome where gipples spawn and place of origin is solid block then generate
-        if (world.getBlockState(initialPos).isSolidBlock(world, initialPos) && world.getBiome(initialPos).isIn(FFBiomeTags.GIPPLE_HABITATS) && isValidSpawn(world, initialPos, baseHeight)){
+        if (world.getBlockState(initialPos).isSolidBlock(world, initialPos) && isValidSpawn(world, initialPos, baseHeight)){
             makePool(world, initialPos, FFBlocks.DEEP_GELASTONE.getDefaultState(), baseWidth, baseHeight);
             makePool(world, offsetPos, Blocks.WATER.getDefaultState(), baseWidth / 2, baseHeight-3);
             makePool(world, offsetPos.up(baseHeight), CAVE_AIR, baseWidth - 2, baseHeight-1);
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static boolean isValidSpawn(World world, BlockPos pos, int baseHeight){
@@ -79,14 +72,6 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
                     if (serverWorld.random.nextFloat() > 0.7 && serverWorld.getBlockState(blockPos2.up()).isAir()) {
                         FFConfiguredFeatures.GELASTONE_VEGETATION.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
                                 serverWorld.random, blockPos2);
-                    }
-
-                    //With 10% chace spawn a gipple if 2 blocks above current block is air
-                    if (serverWorld.random.nextFloat() > 0.9 && serverWorld.getBlockState(blockPos2.up(2)).isAir()){
-                        GippleEntity gipple = FFEntities.GIPPLE.create(serverWorld);
-                        gipple.setPosition(blockPos2.getX(), blockPos2.up(2).getY(), blockPos2.getZ());
-                        gipple.setBaby(serverWorld.random.nextFloat() > 0.8);
-                        serverWorld.spawnEntity(gipple);
                     }
                 }
             }

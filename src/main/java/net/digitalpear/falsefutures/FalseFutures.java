@@ -28,10 +28,6 @@ public class FalseFutures implements ModInitializer {
 
         ConfigRegistry.register(new FalseFuturesConfig());
 
-        BiomeModifications.addSpawn(BiomeSelectors.tag(FFBiomeTags.GIPPLE_HABITATS),
-                SpawnGroup.UNDERGROUND_WATER_CREATURE, FFEntities.GIPPLE, FalseFuturesConfig.GIPPLE_SPAWNING_WEIGHT.get(), 1, 3);
-
-
 
         LOGGER.info("False Futures has finished registering successfully.");
     }

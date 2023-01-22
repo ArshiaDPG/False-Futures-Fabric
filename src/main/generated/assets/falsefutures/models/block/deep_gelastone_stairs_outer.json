@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "falsefutures:block/deep_gelastone",
-    "side": "falsefutures:block/deep_gelastone",
-    "top": "falsefutures:block/deep_gelastone"
-  }
-}

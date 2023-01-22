@@ -40,14 +40,14 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
     public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/gipplepad"), BlockLootTableGenerator.drops(FFItems.GIPPLEPAD));
 
-        stoneSet(biConsumer, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_WALL, FFBlocks.GELASTONE_BUTTON,
-                FFBlocks.GELASTONE_PRESSURE_PLATE);
-        stoneSet(biConsumer, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB, FFBlocks.GELASTONE_BRICK_WALL,
-                FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE);
-        stoneSet(biConsumer, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB, FFBlocks.DEEP_GELASTONE_WALL,
-                FFBlocks.DEEP_GELASTONE_BUTTON, FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE);
-        stoneSet(biConsumer, FFBlocks.DEEP_GELASTONE_BRICKS, FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, FFBlocks.DEEP_GELASTONE_BRICK_SLAB,
-                FFBlocks.DEEP_GELASTONE_BRICK_WALL, FFBlocks.DEEP_GELASTONE_BRICK_BUTTON, FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_WALL, FFBlocks.GELATITE_BUTTON,
+                FFBlocks.GELATITE_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL,
+                FFBlocks.GELATITE_BRICK_BUTTON, FFBlocks.GELATITE_BRICK_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.DEEP_GELATITE, FFBlocks.DEEP_GELATITE_STAIRS, FFBlocks.DEEP_GELATITE_SLAB, FFBlocks.DEEP_GELATITE_WALL,
+                FFBlocks.DEEP_GELATITE_BUTTON, FFBlocks.DEEP_GELATITE_PRESSURE_PLATE);
+        stoneSet(biConsumer, FFBlocks.DEEP_GELATITE_BRICKS, FFBlocks.DEEP_GELATITE_BRICK_STAIRS, FFBlocks.DEEP_GELATITE_BRICK_SLAB,
+                FFBlocks.DEEP_GELATITE_BRICK_WALL, FFBlocks.DEEP_GELATITE_BRICK_BUTTON, FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE);
 
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.JELLYROOT).getPath()), jellyrootDrops(FFBlocks.JELLYROOT));
         biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/" + Registry.BLOCK.getId(FFBlocks.TALL_JELLYROOT).getPath()), tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));

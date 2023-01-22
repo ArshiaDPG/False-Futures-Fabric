@@ -9,15 +9,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.StonecuttingRecipe;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class FFRecipeGen extends FabricRecipeProvider {
@@ -33,39 +28,39 @@ public class FFRecipeGen extends FabricRecipeProvider {
 
         FFBlocks.JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
 
-        ShapelessRecipeJsonBuilder.create(FFBlocks.GELASTONE)
+        ShapelessRecipeJsonBuilder.create(FFBlocks.GELATITE)
                 .input(Blocks.COBBLESTONE)
                 .input(FFItems.GELATIN)
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
-        ShapelessRecipeJsonBuilder.create(FFBlocks.DEEP_GELASTONE)
+        ShapelessRecipeJsonBuilder.create(FFBlocks.DEEP_GELATITE)
                 .input(Blocks.COBBLED_DEEPSLATE)
                 .input(FFItems.GELATIN)
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
 
 
 
-        ShapedRecipeJsonBuilder.create(FFBlocks.GELASTONE_BRICKS, 4)
-                .input('X', FFBlocks.GELASTONE)
+        ShapedRecipeJsonBuilder.create(FFBlocks.GELATITE_BRICKS, 4)
+                .input('X', FFBlocks.GELATITE)
                 .pattern("XX")
                 .pattern("XX")
-                .criterion("has_gelastone", conditionsFromItem(FFBlocks.GELASTONE)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, FFBlocks.GELASTONE, FFBlocks.GELASTONE_BRICKS);
+                .criterion("has_gelastone", conditionsFromItem(FFBlocks.GELATITE)).offerTo(exporter);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, FFBlocks.GELATITE, FFBlocks.GELATITE_BRICKS);
 
-        ShapedRecipeJsonBuilder.create(FFBlocks.DEEP_GELASTONE_BRICKS, 4)
-                .input('X', FFBlocks.DEEP_GELASTONE)
+        ShapedRecipeJsonBuilder.create(FFBlocks.DEEP_GELATITE_BRICKS, 4)
+                .input('X', FFBlocks.DEEP_GELATITE)
                 .pattern("XX")
                 .pattern("XX")
-                .criterion("has_deep_gelastone", conditionsFromItem(FFBlocks.DEEP_GELASTONE)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_BRICKS);
+                .criterion("has_deep_gelastone", conditionsFromItem(FFBlocks.DEEP_GELATITE)).offerTo(exporter);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, FFBlocks.DEEP_GELATITE, FFBlocks.DEEP_GELATITE_BRICKS);
 
-        makeStoneRecipes(exporter, FFBlocks.GELASTONE, FFBlocks.GELASTONE_STAIRS, FFBlocks.GELASTONE_SLAB, FFBlocks.GELASTONE_BUTTON,
-                FFBlocks.GELASTONE_PRESSURE_PLATE, FFBlocks.GELASTONE_WALL);
-        makeStoneRecipes(exporter, FFBlocks.GELASTONE_BRICKS, FFBlocks.GELASTONE_BRICK_STAIRS, FFBlocks.GELASTONE_BRICK_SLAB,
-                FFBlocks.GELASTONE_BRICK_BUTTON, FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.GELASTONE_BRICK_WALL);
-        makeStoneRecipes(exporter, FFBlocks.DEEP_GELASTONE, FFBlocks.DEEP_GELASTONE_STAIRS, FFBlocks.DEEP_GELASTONE_SLAB, FFBlocks.DEEP_GELASTONE_BUTTON,
-                FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_WALL);
-        makeStoneRecipes(exporter, FFBlocks.DEEP_GELASTONE_BRICKS, FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, FFBlocks.DEEP_GELASTONE_BRICK_SLAB,
-                FFBlocks.DEEP_GELASTONE_BRICK_WALL, FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, FFBlocks.DEEP_GELASTONE_BRICK_BUTTON);
+        makeStoneRecipes(exporter, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_BUTTON,
+                FFBlocks.GELATITE_PRESSURE_PLATE, FFBlocks.GELATITE_WALL);
+        makeStoneRecipes(exporter, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB,
+                FFBlocks.GELATITE_BRICK_BUTTON, FFBlocks.GELATITE_BRICK_PRESSURE_PLATE, FFBlocks.GELATITE_BRICK_WALL);
+        makeStoneRecipes(exporter, FFBlocks.DEEP_GELATITE, FFBlocks.DEEP_GELATITE_STAIRS, FFBlocks.DEEP_GELATITE_SLAB, FFBlocks.DEEP_GELATITE_BUTTON,
+                FFBlocks.DEEP_GELATITE_PRESSURE_PLATE, FFBlocks.DEEP_GELATITE_WALL);
+        makeStoneRecipes(exporter, FFBlocks.DEEP_GELATITE_BRICKS, FFBlocks.DEEP_GELATITE_BRICK_STAIRS, FFBlocks.DEEP_GELATITE_BRICK_SLAB,
+                FFBlocks.DEEP_GELATITE_BRICK_WALL, FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE, FFBlocks.DEEP_GELATITE_BRICK_BUTTON);
     }
 
 

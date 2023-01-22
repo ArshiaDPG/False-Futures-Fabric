@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "falsefutures:gelastone_brick_wall"
-  },
-  "result": "falsefutures:gelastone_bricks"
-}

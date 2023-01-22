@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "falsefutures:gelastone",
-    "falsefutures:deep_gelastone",
-    "falsefutures:gelastone_bricks",
-    "falsefutures:deep_gelastone_bricks",
+    "falsefutures:gelatite",
+    "falsefutures:deep_gelatite",
+    "falsefutures:gelatite_bricks",
+    "falsefutures:deep_gelatite_bricks",
     "#minecraft:dirt",
     {
       "id": "#minecraft:base_stone_overworld",

@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -36,66 +37,72 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));
 
         getOrCreateTagBuilder(FFBlockTags.JELLYROOT_PLANTABLES)
-                .add(FFBlocks.GELASTONE)
-                .add(FFBlocks.DEEP_GELASTONE)
-                .add(FFBlocks.GELASTONE_BRICKS)
-                .add(FFBlocks.DEEP_GELASTONE_BRICKS)
+                .add(FFBlocks.GELATITE)
+                .add(FFBlocks.DEEP_GELATITE)
+                .add(FFBlocks.GELATITE_BRICKS)
+                .add(FFBlocks.DEEP_GELATITE_BRICKS)
                 .forceAddTag(BlockTags.DIRT)
                 .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
                 .addOptionalTag(BlockTags.BASE_STONE_NETHER)
                 .add(Blocks.END_STONE);
 
+        getOrCreateTagBuilder(BlockTags.BUTTONS)
+                .add(FFBlocks.GELATITE_BUTTON)
+                .add(FFBlocks.GELATITE_BRICK_BUTTON)
+                .add(FFBlocks.DEEP_GELATITE_BUTTON)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON);
+
         getOrCreateTagBuilder(BlockTags.WALLS)
-                .add(FFBlocks.GELASTONE_WALL)
-                .add(FFBlocks.DEEP_GELASTONE_WALL)
-                .add(FFBlocks.GELASTONE_BRICK_WALL)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_WALL);
+                .add(FFBlocks.GELATITE_WALL)
+                .add(FFBlocks.DEEP_GELATITE_WALL)
+                .add(FFBlocks.GELATITE_BRICK_WALL)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_WALL);
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
-                .add(FFBlocks.GELASTONE_STAIRS)
-                .add(FFBlocks.GELASTONE_BRICK_STAIRS)
-                .add(FFBlocks.DEEP_GELASTONE_STAIRS)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_STAIRS);
+                .add(FFBlocks.GELATITE_STAIRS)
+                .add(FFBlocks.GELATITE_BRICK_STAIRS)
+                .add(FFBlocks.DEEP_GELATITE_STAIRS)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS);
 
         getOrCreateTagBuilder(BlockTags.SLABS)
-                .add(FFBlocks.GELASTONE_SLAB)
-                .add(FFBlocks.GELASTONE_BRICK_SLAB)
-                .add(FFBlocks.DEEP_GELASTONE_SLAB)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_SLAB);
+                .add(FFBlocks.GELATITE_SLAB)
+                .add(FFBlocks.GELATITE_BRICK_SLAB)
+                .add(FFBlocks.DEEP_GELATITE_SLAB)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_SLAB);
 
         getOrCreateTagBuilder(BlockTags.STONE_PRESSURE_PLATES)
-                .add(FFBlocks.GELASTONE_PRESSURE_PLATE)
-                .add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE)
-                .add(FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE);
+                .add(FFBlocks.GELATITE_PRESSURE_PLATE)
+                .add(FFBlocks.DEEP_GELATITE_PRESSURE_PLATE)
+                .add(FFBlocks.GELATITE_BRICK_PRESSURE_PLATE)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE);
 
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(FFBlocks.GELASTONE)
-                .add(FFBlocks.GELASTONE_STAIRS)
-                .add(FFBlocks.GELASTONE_SLAB)
-                .add(FFBlocks.GELASTONE_WALL)
-                .add(FFBlocks.GELASTONE_BUTTON)
-                .add(FFBlocks.GELASTONE_PRESSURE_PLATE)
+                .add(FFBlocks.GELATITE)
+                .add(FFBlocks.GELATITE_STAIRS)
+                .add(FFBlocks.GELATITE_SLAB)
+                .add(FFBlocks.GELATITE_WALL)
+                .add(FFBlocks.GELATITE_BUTTON)
+                .add(FFBlocks.GELATITE_PRESSURE_PLATE)
 
-                .add(FFBlocks.GELASTONE_BRICKS)
-                .add(FFBlocks.GELASTONE_BRICK_STAIRS)
-                .add(FFBlocks.GELASTONE_BRICK_SLAB)
-                .add(FFBlocks.GELASTONE_BRICK_WALL)
-                .add(FFBlocks.GELASTONE_BRICK_BUTTON)
-                .add(FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE)
+                .add(FFBlocks.GELATITE_BRICKS)
+                .add(FFBlocks.GELATITE_BRICK_STAIRS)
+                .add(FFBlocks.GELATITE_BRICK_SLAB)
+                .add(FFBlocks.GELATITE_BRICK_WALL)
+                .add(FFBlocks.GELATITE_BRICK_BUTTON)
+                .add(FFBlocks.GELATITE_BRICK_PRESSURE_PLATE)
 
-                .add(FFBlocks.DEEP_GELASTONE)
-                .add(FFBlocks.DEEP_GELASTONE_STAIRS)
-                .add(FFBlocks.DEEP_GELASTONE_SLAB)
-                .add(FFBlocks.DEEP_GELASTONE_WALL)
-                .add(FFBlocks.DEEP_GELASTONE_BUTTON)
-                .add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE)
+                .add(FFBlocks.DEEP_GELATITE)
+                .add(FFBlocks.DEEP_GELATITE_STAIRS)
+                .add(FFBlocks.DEEP_GELATITE_SLAB)
+                .add(FFBlocks.DEEP_GELATITE_WALL)
+                .add(FFBlocks.DEEP_GELATITE_BUTTON)
+                .add(FFBlocks.DEEP_GELATITE_PRESSURE_PLATE)
 
-                .add(FFBlocks.DEEP_GELASTONE_BRICKS)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_STAIRS)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_SLAB)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_WALL)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_BUTTON)
-                .add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE);
+                .add(FFBlocks.DEEP_GELATITE_BRICKS)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_SLAB)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_WALL)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON)
+                .add(FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE);
     }
 }

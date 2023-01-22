@@ -19,6 +19,8 @@ import net.minecraft.util.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 
+
+@SuppressWarnings("unused")
 public class FFBlocks {
 
     public static final Map<Block, Item> JELLY = new HashMap<>();
@@ -52,6 +54,10 @@ public class FFBlocks {
         });
     }
 
+    public static Block makePottedPlant(Block base){
+        return createBlockWithoutItem("potted_" + Registry.BLOCK.getId(base).getPath(), new FlowerPotBlock(base, AbstractBlock.Settings.copy(Blocks.POTTED_WARPED_FUNGUS).luminance(state -> base.getDefaultState().getLuminance()).mapColor(base.getDefaultMapColor())));
+    }
+
     public static final Block PLAIN_JELLY = createJellyBlockWithItem("plain_jelly", new JellyBlock(jellySettings(MapColor.PALE_PURPLE)),Items.SUGAR);
     public static final Block MILKY_JELLY = createJellyBlockWithItem("milky_jelly", new MilkyJellyBlock(jellySettings(MapColor.WHITE)), Items.MILK_BUCKET);
     public static final Block BRIGHT_JELLY = createJellyBlockWithItem( "bright_jelly", new BrightJellyBlock(jellySettings(MapColor.ORANGE,14)),Items.GLOW_BERRIES);
@@ -76,45 +82,46 @@ public class FFBlocks {
     public static final Block GELATIN_LAYER = createBlockWithItem("gelatin_layer",
             new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.PALE_PURPLE)), ItemGroup.DECORATIONS);
 
-    public static final Block GELASTONE = createBlockWithItem("gelastone",
+    public static final Block GELATITE = createBlockWithItem("gelatite",
             new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
                     .sounds(BlockSoundGroup.NETHER_GOLD_ORE)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block GELASTONE_STAIRS = StoneSets.stoneStairs(GELASTONE);
-    public static final Block GELASTONE_SLAB = StoneSets.stoneSlab(GELASTONE);
-    public static final Block GELASTONE_WALL = StoneSets.stoneWall(GELASTONE);
-    public static final Block GELASTONE_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELASTONE);
-    public static final Block GELASTONE_BUTTON = StoneSets.stoneButton(GELASTONE);
+    public static final Block GELATITE_STAIRS = StoneSets.stoneStairs(GELATITE);
+    public static final Block GELATITE_SLAB = StoneSets.stoneSlab(GELATITE);
+    public static final Block GELATITE_WALL = StoneSets.stoneWall(GELATITE);
+    public static final Block GELATITE_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELATITE);
+    public static final Block GELATITE_BUTTON = StoneSets.stoneButton(GELATITE);
 
-    public static final Block GELASTONE_BRICKS = createBlockWithItem("gelastone_bricks",
-            new Block(AbstractBlock.Settings.copy(GELASTONE)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block GELASTONE_BRICK_STAIRS = StoneSets.stoneStairs(GELASTONE_BRICKS);
-    public static final Block GELASTONE_BRICK_SLAB = StoneSets.stoneSlab(GELASTONE_BRICKS);
-    public static final Block GELASTONE_BRICK_WALL = StoneSets.stoneWall(GELASTONE_BRICKS);
-    public static final Block GELASTONE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELASTONE_BRICKS);
-    public static final Block GELASTONE_BRICK_BUTTON = StoneSets.stoneButton(GELASTONE_BRICKS);
+    public static final Block GELATITE_BRICKS = createBlockWithItem("gelatite_bricks",
+            new Block(AbstractBlock.Settings.copy(GELATITE)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block GELATITE_BRICK_STAIRS = StoneSets.stoneStairs(GELATITE_BRICKS);
+    public static final Block GELATITE_BRICK_SLAB = StoneSets.stoneSlab(GELATITE_BRICKS);
+    public static final Block GELATITE_BRICK_WALL = StoneSets.stoneWall(GELATITE_BRICKS);
+    public static final Block GELATITE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELATITE_BRICKS);
+    public static final Block GELATITE_BRICK_BUTTON = StoneSets.stoneButton(GELATITE_BRICKS);
 
 
-    public static final Block DEEP_GELASTONE = createBlockWithItem("deep_gelastone",
+
+    public static final Block DEEP_GELATITE = createBlockWithItem("deep_gelatite",
             new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
             .sounds(BlockSoundGroup.NETHERRACK)
             .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block DEEP_GELASTONE_STAIRS = StoneSets.stoneStairs(DEEP_GELASTONE);
-    public static final Block DEEP_GELASTONE_SLAB = StoneSets.stoneSlab(DEEP_GELASTONE);
-    public static final Block DEEP_GELASTONE_WALL = StoneSets.stoneWall(DEEP_GELASTONE);
-    public static final Block DEEP_GELASTONE_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELASTONE);
-    public static final Block DEEP_GELASTONE_BUTTON = StoneSets.stoneButton(DEEP_GELASTONE);
+    public static final Block DEEP_GELATITE_STAIRS = StoneSets.stoneStairs(DEEP_GELATITE);
+    public static final Block DEEP_GELATITE_SLAB = StoneSets.stoneSlab(DEEP_GELATITE);
+    public static final Block DEEP_GELATITE_WALL = StoneSets.stoneWall(DEEP_GELATITE);
+    public static final Block DEEP_GELATITE_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELATITE);
+    public static final Block DEEP_GELATITE_BUTTON = StoneSets.stoneButton(DEEP_GELATITE);
 
 
-    public static final Block DEEP_GELASTONE_BRICKS = createBlockWithItem("deep_gelastone_bricks",
+    public static final Block DEEP_GELATITE_BRICKS = createBlockWithItem("deep_gelatite_bricks",
             new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
                     .sounds(BlockSoundGroup.NETHERRACK)
                     .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block DEEP_GELASTONE_BRICK_STAIRS = StoneSets.stoneStairs(DEEP_GELASTONE_BRICKS);
-    public static final Block DEEP_GELASTONE_BRICK_SLAB = StoneSets.stoneSlab(DEEP_GELASTONE_BRICKS);
-    public static final Block DEEP_GELASTONE_BRICK_WALL = StoneSets.stoneWall(DEEP_GELASTONE_BRICKS);
-    public static final Block DEEP_GELASTONE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELASTONE_BRICKS);
-    public static final Block DEEP_GELASTONE_BRICK_BUTTON = StoneSets.stoneButton(DEEP_GELASTONE_BRICKS);
+    public static final Block DEEP_GELATITE_BRICK_STAIRS = StoneSets.stoneStairs(DEEP_GELATITE_BRICKS);
+    public static final Block DEEP_GELATITE_BRICK_SLAB = StoneSets.stoneSlab(DEEP_GELATITE_BRICKS);
+    public static final Block DEEP_GELATITE_BRICK_WALL = StoneSets.stoneWall(DEEP_GELATITE_BRICKS);
+    public static final Block DEEP_GELATITE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELATITE_BRICKS);
+    public static final Block DEEP_GELATITE_BRICK_BUTTON = StoneSets.stoneButton(DEEP_GELATITE_BRICKS);
 
     public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 4)), ItemGroup.DECORATIONS);
@@ -122,15 +129,12 @@ public class FFBlocks {
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)), ItemGroup.DECORATIONS);
 
-    public static final Block INFESTED_GELASTONE = StoneSets.infestedBlock(GELASTONE);
-    public static final Block INFESTED_DEEP_GELASTONE = StoneSets.infestedBlock(DEEP_GELASTONE);
-    public static final Block INFESTED_GELASTONE_BRICKS = StoneSets.infestedBlock(GELASTONE_BRICKS);
-    public static final Block INFESTED_DEEP_GELASTONE_BRICKS = StoneSets.infestedBlock(DEEP_GELASTONE_BRICKS);
+    public static final Block INFESTED_GELATITE = StoneSets.infestedBlock(GELATITE);
+    public static final Block INFESTED_DEEP_GELATITE = StoneSets.infestedBlock(DEEP_GELATITE);
+    public static final Block INFESTED_GELATITE_BRICKS = StoneSets.infestedBlock(GELATITE_BRICKS);
+    public static final Block INFESTED_DEEP_GELATITE_BRICKS = StoneSets.infestedBlock(DEEP_GELATITE_BRICKS);
 
 
-    public static Block makePottedPlant(Block base){
-        return createBlockWithoutItem("potted_" + Registry.BLOCK.getId(base).getPath(), new FlowerPotBlock(base, AbstractBlock.Settings.copy(Blocks.POTTED_WARPED_FUNGUS).luminance(state -> base.getDefaultState().getLuminance()).mapColor(base.getDefaultMapColor())));
-    }
 
     public static void init(){
     }

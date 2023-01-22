@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "falsefutures:gelastone_slab",
-    "falsefutures:gelastone_brick_slab",
-    "falsefutures:deep_gelastone_slab",
-    "falsefutures:deep_gelastone_brick_slab"
+    "falsefutures:gelatite_slab",
+    "falsefutures:gelatite_brick_slab",
+    "falsefutures:deep_gelatite_slab",
+    "falsefutures:deep_gelatite_brick_slab"
   ]
 }

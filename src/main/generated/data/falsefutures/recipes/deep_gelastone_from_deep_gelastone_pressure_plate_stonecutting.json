@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "falsefutures:deep_gelastone_pressure_plate"
-  },
-  "result": "falsefutures:deep_gelastone"
-}

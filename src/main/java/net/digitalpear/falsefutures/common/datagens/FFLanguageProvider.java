@@ -1,7 +1,6 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -48,43 +47,43 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
-        translationBuilder.add(FFBlocks.GELASTONE, "Gelastone");
-        translationBuilder.add(FFBlocks.GELASTONE_STAIRS, "Gelastone Stairs");
-        translationBuilder.add(FFBlocks.GELASTONE_SLAB, "Gelastone Slab");
-        translationBuilder.add(FFBlocks.GELASTONE_WALL, "Gelastone Wall");
-        translationBuilder.add(FFBlocks.GELASTONE_PRESSURE_PLATE, "Gelastone Pressure Plate");
-        translationBuilder.add(FFBlocks.GELASTONE_BUTTON, "Gelastone Button");
+        translationBuilder.add(FFBlocks.GELATITE, "Gelatite");
+        translationBuilder.add(FFBlocks.GELATITE_STAIRS, "Gelatite Stairs");
+        translationBuilder.add(FFBlocks.GELATITE_SLAB, "Gelatite Slab");
+        translationBuilder.add(FFBlocks.GELATITE_WALL, "Gelatite Wall");
+        translationBuilder.add(FFBlocks.GELATITE_PRESSURE_PLATE, "Gelatite Pressure Plate");
+        translationBuilder.add(FFBlocks.GELATITE_BUTTON, "Gelatite Button");
 
-        translationBuilder.add(FFBlocks.GELASTONE_BRICKS, "Gelastone Bricks");
-        translationBuilder.add(FFBlocks.GELASTONE_BRICK_STAIRS, "Gelastone Brick Stairs");
-        translationBuilder.add(FFBlocks.GELASTONE_BRICK_SLAB, "Gelastone Brick Slab");
-        translationBuilder.add(FFBlocks.GELASTONE_BRICK_WALL, "Gelastone Brick Wall");
-        translationBuilder.add(FFBlocks.GELASTONE_BRICK_PRESSURE_PLATE, "Gelastone Brick Pressure Plate");
-        translationBuilder.add(FFBlocks.GELASTONE_BRICK_BUTTON, "Gelastone Brick Button");
+        translationBuilder.add(FFBlocks.GELATITE_BRICKS, "Gelatite Bricks");
+        translationBuilder.add(FFBlocks.GELATITE_BRICK_STAIRS, "Gelatite Brick Stairs");
+        translationBuilder.add(FFBlocks.GELATITE_BRICK_SLAB, "Gelatite Brick Slab");
+        translationBuilder.add(FFBlocks.GELATITE_BRICK_WALL, "Gelatite Brick Wall");
+        translationBuilder.add(FFBlocks.GELATITE_BRICK_PRESSURE_PLATE, "Gelatite Brick Pressure Plate");
+        translationBuilder.add(FFBlocks.GELATITE_BRICK_BUTTON, "Gelatite Brick Button");
 
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE, "Deep Gelastone");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_STAIRS, "Deep Gelastone Stairs");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_SLAB, "Deep Gelastone Slab");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_WALL, "Deep Gelastone Wall");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_PRESSURE_PLATE, "Deep Gelastone Pressure Plate");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BUTTON, "Deep Gelastone Button");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE, "Deep Gelatite");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_STAIRS, "Deep Gelatite Stairs");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_SLAB, "Deep Gelatite Slab");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_WALL, "Deep Gelatite Wall");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_PRESSURE_PLATE, "Deep Gelatite Pressure Plate");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BUTTON, "Deep Gelatite Button");
 
         translationBuilder.add(FFBlocks.GELATIN_LAYER, "Gelatin Layer");
         translationBuilder.add(FFBlocks.JELLYROOT, "Jellyroot");
         translationBuilder.add(FFBlocks.POTTED_JELLYROOT, "Potted Jellyroot");
         translationBuilder.add(FFBlocks.TALL_JELLYROOT, "Tall Jellyroot");
 
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICKS, "Deep Gelastone Bricks");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_STAIRS, "Deep Gelastone Brick Stairs");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_SLAB, "Deep Gelastone Brick Slab");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_WALL, "Deep Gelastone Brick Wall");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_PRESSURE_PLATE, "Deep Gelastone Brick Pressure Plate");
-        translationBuilder.add(FFBlocks.DEEP_GELASTONE_BRICK_BUTTON, "Deep Gelastone Brick Button");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICKS, "Deep Gelatite Bricks");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS, "Deep Gelatite Brick Stairs");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_SLAB, "Deep Gelatite Brick Slab");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_WALL, "Deep Gelatite Brick Wall");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE, "Deep Gelatite Brick Pressure Plate");
+        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON, "Deep Gelatite Brick Button");
 
-        translationBuilder.add(FFBlocks.INFESTED_GELASTONE, "Infested Gelastone");
-        translationBuilder.add(FFBlocks.INFESTED_GELASTONE_BRICKS, "Infested Gelastone Bricks");
-        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELASTONE, "Infested Deep Gelastone");
-        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELASTONE_BRICKS, "Infested Deep Gelastone Bricks");
+        translationBuilder.add(FFBlocks.INFESTED_GELATITE, "Infested Gelatite");
+        translationBuilder.add(FFBlocks.INFESTED_GELATITE_BRICKS, "Infested Gelatite Bricks");
+        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELATITE, "Infested Deep Gelatite");
+        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELATITE_BRICKS, "Infested Deep Gelatite Bricks");
 
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();

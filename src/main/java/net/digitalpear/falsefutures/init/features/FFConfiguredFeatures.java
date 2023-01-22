@@ -18,7 +18,7 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 import java.util.List;
 
 public class FFConfiguredFeatures {
-    public static final RuleTest DEEP_GELASTONE = new BlockMatchRuleTest(FFBlocks.DEEP_GELASTONE);
+    public static final RuleTest DEEP_GELASTONE = new BlockMatchRuleTest(FFBlocks.DEEP_GELATITE);
 
     public static final WeightedBlockStateProvider GELASTONE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
             .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
@@ -33,9 +33,9 @@ public class FFConfiguredFeatures {
 
     public static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_GELASTONE = register("ore_gelastone", Feature.ORE,
             new OreFeatureConfig(List.of(
-                    OreFeatureConfig.createTarget(DEEP_GELASTONE, FFBlocks.GELASTONE.getDefaultState()),
-                    OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, FFBlocks.DEEP_GELASTONE.getDefaultState()),
-                    OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, FFBlocks.GELASTONE.getDefaultState())),
+                    OreFeatureConfig.createTarget(DEEP_GELASTONE, FFBlocks.GELATITE.getDefaultState()),
+                    OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, FFBlocks.DEEP_GELATITE.getDefaultState()),
+                    OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, FFBlocks.GELATITE.getDefaultState())),
                     8));
 
 

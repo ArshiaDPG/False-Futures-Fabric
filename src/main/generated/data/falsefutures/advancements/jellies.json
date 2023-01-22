@@ -223,55 +223,55 @@
   },
   "requirements": [
     [
-      "collected_jelly_inky"
-    ],
-    [
-      "collected_jelly_symphonic"
-    ],
-    [
-      "collected_jelly_milky"
-    ],
-    [
-      "collected_jelly_bouncy"
-    ],
-    [
-      "collected_jelly_bright"
-    ],
-    [
-      "collected_jelly_foamy"
-    ],
-    [
-      "collected_jelly_cocoa"
-    ],
-    [
-      "collected_jelly_plain"
-    ],
-    [
-      "collected_jelly_luminescent"
-    ],
-    [
-      "collected_jelly_fruity"
-    ],
-    [
-      "collected_jelly_enchanting"
-    ],
-    [
-      "collected_jelly_sweet"
+      "collected_jelly_floral"
     ],
     [
       "collected_jelly_warp"
     ],
     [
-      "collected_jelly_prickly"
+      "collected_jelly_plain"
+    ],
+    [
+      "collected_jelly_fruity"
+    ],
+    [
+      "collected_jelly_bright"
+    ],
+    [
+      "collected_jelly_muddy"
+    ],
+    [
+      "collected_jelly_bouncy"
+    ],
+    [
+      "collected_jelly_milky"
     ],
     [
       "collected_jelly_blast"
     ],
     [
-      "collected_jelly_floral"
+      "collected_jelly_enchanting"
     ],
     [
-      "collected_jelly_muddy"
+      "collected_jelly_foamy"
+    ],
+    [
+      "collected_jelly_luminescent"
+    ],
+    [
+      "collected_jelly_inky"
+    ],
+    [
+      "collected_jelly_cocoa"
+    ],
+    [
+      "collected_jelly_prickly"
+    ],
+    [
+      "collected_jelly_symphonic"
+    ],
+    [
+      "collected_jelly_sweet"
     ]
   ]
 }

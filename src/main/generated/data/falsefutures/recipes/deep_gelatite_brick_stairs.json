@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "falsefutures:deep_gelatite_bricks"
+    }
+  },
+  "pattern": [
+    "C  ",
+    "CC ",
+    "CCC"
+  ],
+  "result": {
+    "count": 4,
+    "item": "falsefutures:deep_gelatite_brick_stairs"
+  }
+}

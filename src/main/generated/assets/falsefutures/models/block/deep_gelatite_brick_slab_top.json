@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "falsefutures:block/deep_gelatite_bricks",
+    "side": "falsefutures:block/deep_gelatite_bricks",
+    "top": "falsefutures:block/deep_gelatite_bricks"
+  }
+}

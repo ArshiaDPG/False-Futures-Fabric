@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "falsefutures:gelatite_bricks"
+    }
+  ],
+  "result": {
+    "item": "falsefutures:gelatite_brick_button"
+  }
+}

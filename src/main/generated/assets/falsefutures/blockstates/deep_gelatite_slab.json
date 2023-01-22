@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "falsefutures:block/deep_gelatite_slab"
+    },
+    "type=double": {
+      "model": "falsefutures:deep_gelatite"
+    },
+    "type=top": {
+      "model": "falsefutures:block/deep_gelatite_slab_top"
+    }
+  }
+}

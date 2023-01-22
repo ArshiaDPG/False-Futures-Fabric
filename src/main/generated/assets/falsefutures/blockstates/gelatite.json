@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "falsefutures:block/gelatite"
+      },
+      {
+        "model": "falsefutures:block/gelatite_mirrored"
+      },
+      {
+        "model": "falsefutures:block/gelatite",
+        "y": 180
+      },
+      {
+        "model": "falsefutures:block/gelatite_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

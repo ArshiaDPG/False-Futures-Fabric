@@ -14,6 +14,7 @@ public class FFDatagens implements DataGeneratorEntrypoint {
         fabricDataGenerator.addProvider(FFItemTagGen::new);
         fabricDataGenerator.addProvider(FFBlockTagGen::new);
         fabricDataGenerator.addProvider(FFEntityTypeTagGen::new);
+        fabricDataGenerator.addProvider(FFAdvancementGen::new);
 
 
         fabricDataGenerator.addProvider(FFBlockLootTableGen::new);

@@ -24,21 +24,14 @@ public class FFRecipeGen extends FabricRecipeProvider {
     /*
         This map is used to generate the recipes and English translations of all Jellys.
      */
-    public static final Map<Block, Item> JELLY = new HashMap<>();
     public FFRecipeGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
-        JELLY.put(FFBlocks.WEIRD_JELLY, Items.SLIME_BALL);
-        JELLY.put(FFBlocks.PLAIN_JELLY, FFItems.GELATIN);
-        JELLY.put(FFBlocks.FLORAL_JELLY, Items.HONEY_BOTTLE);
-        JELLY.put(FFBlocks.FRUITY_JELLY, Items.MELON_SLICE);
-        JELLY.put(FFBlocks.MILKY_JELLY, Items.MILK_BUCKET);
-        JELLY.put(FFBlocks.SWEET_JELLY, Items.SWEET_BERRIES);
-        JELLY.put(FFBlocks.SYMPHONIC_JELLY, Items.CHORUS_FRUIT);
     }
 
     @Override
     protected void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
-        JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
+
+        FFBlocks.JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
 
         ShapelessRecipeJsonBuilder.create(FFBlocks.GELASTONE)
                 .input(Blocks.COBBLESTONE)

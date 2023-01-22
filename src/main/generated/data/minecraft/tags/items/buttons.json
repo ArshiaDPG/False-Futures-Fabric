@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "falsefutures:gelastone_button",
+    "falsefutures:gelastone_brick_button",
+    "falsefutures:deep_gelastone_button",
+    "falsefutures:deep_gelastone_brick_button"
+  ]
+}

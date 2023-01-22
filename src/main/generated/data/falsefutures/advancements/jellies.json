@@ -1,0 +1,277 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "collected_jelly_blast": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:blast_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_bouncy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:bouncy_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_bright": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:bright_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_cocoa": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:cocoa_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_enchanting": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:enchanting_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_floral": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:floral_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_foamy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:foamy_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_fruity": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:fruity_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_inky": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:inky_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_luminescent": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:luminescent_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_milky": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:milky_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_muddy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:muddy_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_plain": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:plain_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_prickly": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:prickly_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_sweet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:sweet_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_symphonic": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:symphonic_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "collected_jelly_warp": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "falsefutures:warp_jelly"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.husbandry.jellies.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "falsefutures:plain_jelly"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.husbandry.jellies.title"
+    }
+  },
+  "requirements": [
+    [
+      "collected_jelly_inky"
+    ],
+    [
+      "collected_jelly_symphonic"
+    ],
+    [
+      "collected_jelly_milky"
+    ],
+    [
+      "collected_jelly_bouncy"
+    ],
+    [
+      "collected_jelly_bright"
+    ],
+    [
+      "collected_jelly_foamy"
+    ],
+    [
+      "collected_jelly_cocoa"
+    ],
+    [
+      "collected_jelly_plain"
+    ],
+    [
+      "collected_jelly_luminescent"
+    ],
+    [
+      "collected_jelly_fruity"
+    ],
+    [
+      "collected_jelly_enchanting"
+    ],
+    [
+      "collected_jelly_sweet"
+    ],
+    [
+      "collected_jelly_warp"
+    ],
+    [
+      "collected_jelly_prickly"
+    ],
+    [
+      "collected_jelly_blast"
+    ],
+    [
+      "collected_jelly_floral"
+    ],
+    [
+      "collected_jelly_muddy"
+    ]
+  ]
+}

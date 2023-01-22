@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "jellies",
+  "key": {
+    "#": {
+      "item": "falsefutures:gelatin"
+    },
+    "X": {
+      "item": "minecraft:glow_berries"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "falsefutures:bright_jelly"
+  }
+}

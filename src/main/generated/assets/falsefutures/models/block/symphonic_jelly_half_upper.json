@@ -2,7 +2,7 @@
   "parent": "falsefutures:block/jelly_half_upper",
   "textures": {
     "bottom": "falsefutures:block/symphonic_jelly_bottom",
-    "inside": "falsefutures:block/symphonic_jelly_inside",
+    "inside": "falsefutures:block/symphonic_jelly_inside_vertical",
     "side": "falsefutures:block/symphonic_jelly_side",
     "top": "falsefutures:block/symphonic_jelly_top"
   }

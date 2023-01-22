@@ -2,7 +2,7 @@
   "parent": "falsefutures:block/jelly_half_lower",
   "textures": {
     "bottom": "falsefutures:block/sweet_jelly_bottom",
-    "inside": "falsefutures:block/sweet_jelly_inside",
+    "inside": "falsefutures:block/sweet_jelly_inside_vertical",
     "side": "falsefutures:block/sweet_jelly_side",
     "top": "falsefutures:block/sweet_jelly_top"
   }

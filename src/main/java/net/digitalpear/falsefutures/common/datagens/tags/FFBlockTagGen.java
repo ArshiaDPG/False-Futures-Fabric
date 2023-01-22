@@ -22,14 +22,10 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.JELLYROOT)
                 .add(FFBlocks.TALL_JELLYROOT);
 
-        getOrCreateTagBuilder(FFBlockTags.JELLIES)
-                .add(FFBlocks.PLAIN_JELLY)
-                .add(FFBlocks.FLORAL_JELLY)
-                .add(FFBlocks.FRUITY_JELLY)
-                .add(FFBlocks.MILKY_JELLY)
-                .add(FFBlocks.SWEET_JELLY)
-                .add(FFBlocks.SYMPHONIC_JELLY)
-                .add(FFBlocks.WEIRD_JELLY);
+        var jellies = getOrCreateTagBuilder(FFBlockTags.JELLIES);
+            for(Block jelly : FFBlocks.JELLY.keySet()) {
+                jellies.add(jelly);
+            }
 
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)

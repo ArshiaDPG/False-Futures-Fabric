@@ -56,13 +56,9 @@ public class FFBlockModelGen extends FabricModelProvider {
     }
 
     private void registerAllJellies(BlockStateModelGenerator blockStateModelGenerator) {
-        registerJelly(blockStateModelGenerator, FFBlocks.PLAIN_JELLY);
-        registerJelly(blockStateModelGenerator, FFBlocks.WEIRD_JELLY);
-        registerJelly(blockStateModelGenerator, FFBlocks.MILKY_JELLY);
-        registerJelly(blockStateModelGenerator, FFBlocks.FLORAL_JELLY);
-        registerJelly(blockStateModelGenerator, FFBlocks.SYMPHONIC_JELLY);
-        registerJelly(blockStateModelGenerator, FFBlocks.SWEET_JELLY);
-        registerJelly(blockStateModelGenerator, FFBlocks.FRUITY_JELLY);
+        for (Block jelly : FFBlocks.JELLY.keySet()) {
+            registerJelly(blockStateModelGenerator, jelly);
+        }
     }
 
     private VariantSettings.Rotation rotationOf(Direction d) {
@@ -75,11 +71,12 @@ public class FFBlockModelGen extends FabricModelProvider {
     }
 
     private void registerJelly(BlockStateModelGenerator blockStateModelGenerator, Block block) {
-        TextureMap textureMap = (new TextureMap()).put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
-        Identifier half_side = JELLY_HALF_SIDE.upload(block,textureMap, blockStateModelGenerator.modelCollector);
-        Identifier half_upper = JELLY_HALF_UPPER.upload(block,textureMap, blockStateModelGenerator.modelCollector);
-        Identifier half_lower = JELLY_HALF_LOWER.upload(block,textureMap, blockStateModelGenerator.modelCollector);
-        Identifier full = Models.CUBE_BOTTOM_TOP.upload(block,textureMap,blockStateModelGenerator.modelCollector);
+        TextureMap horizontalMap = new TextureMap().put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
+        TextureMap verticalMap = new TextureMap().put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside_vertical")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
+        Identifier half_side = JELLY_HALF_SIDE.upload(block,horizontalMap, blockStateModelGenerator.modelCollector);
+        Identifier half_upper = JELLY_HALF_UPPER.upload(block,verticalMap, blockStateModelGenerator.modelCollector);
+        Identifier half_lower = JELLY_HALF_LOWER.upload(block,verticalMap, blockStateModelGenerator.modelCollector);
+        Identifier full = Models.CUBE_BOTTOM_TOP.upload(block,horizontalMap,blockStateModelGenerator.modelCollector);
         var stateMap = BlockStateVariantMap.create(Properties.FACING,JellyBlock.HALVED);
         for(Direction d : Direction.values()) {
 

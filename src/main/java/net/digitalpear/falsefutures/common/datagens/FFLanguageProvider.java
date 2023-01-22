@@ -20,9 +20,9 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        FFRecipeGen.JELLY.forEach((jelly, ingredient) ->
-                translationBuilder.add(jelly, capitalize(Registry.BLOCK.getId(jelly).getPath()).split("_")[0] + " Jelly"));
 
+        FFBlocks.JELLY.forEach((jelly, ingredient) ->
+                translationBuilder.add(jelly, capitalize(Registry.BLOCK.getId(jelly).getPath().split("_")[0]) + " Jelly"));
 
         makeTranslation(translationBuilder, FFItems.GELATIN);
 
@@ -105,11 +105,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         // get the first character of the inputString
         char firstLetter = inputString.charAt(0);
 
-        // convert it to an UpperCase letter
-        char capitalFirstLetter = Character.toUpperCase(firstLetter);
-
         // return the output string by updating
         //the first char of the input string
-        return inputString.replace(inputString.charAt(0), capitalFirstLetter);
+        return inputString.replaceFirst(String.valueOf(firstLetter), String.valueOf(firstLetter).toUpperCase());
     }
 }

@@ -6,6 +6,8 @@ import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
@@ -20,10 +22,54 @@ public class FFLanguageProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
 
-        FFBlocks.JELLY.forEach((jelly, ingredient) ->
-                translationBuilder.add(jelly, capitalize(Registry.BLOCK.getId(jelly).getPath().split("_")[0]) + " Jelly"));
+        for(Block jelly : FFBlocks.JELLY.keySet()) {
+            autoName(translationBuilder, jelly);
+        }
 
-        makeTranslation(translationBuilder, FFItems.GELATIN);
+        autoName(translationBuilder, FFBlocks.GELATITE);
+        autoName(translationBuilder, FFBlocks.GELATITE_STAIRS);
+        autoName(translationBuilder, FFBlocks.GELATITE_SLAB);
+        autoName(translationBuilder, FFBlocks.GELATITE_WALL);
+        autoName(translationBuilder, FFBlocks.GELATITE_PRESSURE_PLATE);
+        autoName(translationBuilder, FFBlocks.GELATITE_BUTTON);
+
+        autoName(translationBuilder, FFBlocks.GELATITE_BRICKS);
+        autoName(translationBuilder, FFBlocks.GELATITE_BRICK_STAIRS);
+        autoName(translationBuilder, FFBlocks.GELATITE_BRICK_SLAB);
+        autoName(translationBuilder, FFBlocks.GELATITE_BRICK_WALL);
+        autoName(translationBuilder, FFBlocks.CHISELED_GELATITE_BRICKS);
+
+        autoName(translationBuilder, FFBlocks.BRINESHALE);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_STAIRS);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_SLAB);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_WALL);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_PRESSURE_PLATE);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_BUTTON);
+
+        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICKS);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_STAIRS);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_SLAB);
+        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_WALL);
+        autoName(translationBuilder, FFBlocks.CHISELED_BRINESHALE_BRICKS);
+
+        autoName(translationBuilder, FFBlocks.INFESTED_GELATITE);
+        autoName(translationBuilder, FFBlocks.INFESTED_GELATITE_BRICKS);
+        autoName(translationBuilder, FFBlocks.INFESTED_BRINESHALE);
+        autoName(translationBuilder, FFBlocks.INFESTED_BRINESHALE_BRICKS);
+
+        autoName(translationBuilder, FFBlocks.GELATIN_LAYER);
+        autoName(translationBuilder, FFBlocks.JELLYROOT);
+        autoName(translationBuilder, FFBlocks.POTTED_JELLYROOT);
+        autoName(translationBuilder, FFBlocks.TALL_JELLYROOT);
+
+        autoName(translationBuilder, FFBlocks.GIPPLEPAD);
+
+
+        autoName(translationBuilder, FFEntities.GIPPLE);
+        autoName(translationBuilder, FFEntities.SOMETHING);
+
+
+        autoName(translationBuilder, FFItems.GELATIN);
 
         translationBuilder.add(FFItems.GIPPLE_BUCKET, "Bucket of Gipple");
 
@@ -33,10 +79,6 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
 
-        makeTranslation(translationBuilder, FFEntities.GIPPLE);
-        makeTranslation(translationBuilder, FFEntities.SOMETHING);
-
-        translationBuilder.add(FFBlocks.GIPPLEPAD, "Gipplepad");
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
@@ -47,43 +89,6 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
-        translationBuilder.add(FFBlocks.GELATITE, "Gelatite");
-        translationBuilder.add(FFBlocks.GELATITE_STAIRS, "Gelatite Stairs");
-        translationBuilder.add(FFBlocks.GELATITE_SLAB, "Gelatite Slab");
-        translationBuilder.add(FFBlocks.GELATITE_WALL, "Gelatite Wall");
-        translationBuilder.add(FFBlocks.GELATITE_PRESSURE_PLATE, "Gelatite Pressure Plate");
-        translationBuilder.add(FFBlocks.GELATITE_BUTTON, "Gelatite Button");
-
-        translationBuilder.add(FFBlocks.GELATITE_BRICKS, "Gelatite Bricks");
-        translationBuilder.add(FFBlocks.GELATITE_BRICK_STAIRS, "Gelatite Brick Stairs");
-        translationBuilder.add(FFBlocks.GELATITE_BRICK_SLAB, "Gelatite Brick Slab");
-        translationBuilder.add(FFBlocks.GELATITE_BRICK_WALL, "Gelatite Brick Wall");
-        translationBuilder.add(FFBlocks.GELATITE_BRICK_PRESSURE_PLATE, "Gelatite Brick Pressure Plate");
-        translationBuilder.add(FFBlocks.GELATITE_BRICK_BUTTON, "Gelatite Brick Button");
-
-        translationBuilder.add(FFBlocks.DEEP_GELATITE, "Deep Gelatite");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_STAIRS, "Deep Gelatite Stairs");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_SLAB, "Deep Gelatite Slab");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_WALL, "Deep Gelatite Wall");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_PRESSURE_PLATE, "Deep Gelatite Pressure Plate");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BUTTON, "Deep Gelatite Button");
-
-        translationBuilder.add(FFBlocks.GELATIN_LAYER, "Gelatin Layer");
-        translationBuilder.add(FFBlocks.JELLYROOT, "Jellyroot");
-        translationBuilder.add(FFBlocks.POTTED_JELLYROOT, "Potted Jellyroot");
-        translationBuilder.add(FFBlocks.TALL_JELLYROOT, "Tall Jellyroot");
-
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICKS, "Deep Gelatite Bricks");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS, "Deep Gelatite Brick Stairs");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_SLAB, "Deep Gelatite Brick Slab");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_WALL, "Deep Gelatite Brick Wall");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE, "Deep Gelatite Brick Pressure Plate");
-        translationBuilder.add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON, "Deep Gelatite Brick Button");
-
-        translationBuilder.add(FFBlocks.INFESTED_GELATITE, "Infested Gelatite");
-        translationBuilder.add(FFBlocks.INFESTED_GELATITE_BRICKS, "Infested Gelatite Bricks");
-        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELATITE, "Infested Deep Gelatite");
-        translationBuilder.add(FFBlocks.INFESTED_DEEP_GELATITE_BRICKS, "Infested Deep Gelatite Bricks");
 
         try {
             Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
@@ -92,11 +97,27 @@ public class FFLanguageProvider extends FabricLanguageProvider {
             throw new RuntimeException("Failed to add existing language file!", e);
         }
     }
-    public static void makeTranslation(TranslationBuilder translationBuilder, Item item){
-        translationBuilder.add(item, capitalize(Registry.ITEM.getId(item).getPath()));
+
+    private void autoName(TranslationBuilder translationBuilder, Block block) {
+        translationBuilder.add(block, autoNameInner(Registry.BLOCK.getId(block).getPath()));
     }
-    public static void makeTranslation(TranslationBuilder translationBuilder, EntityType<?> entityType){
-        translationBuilder.add(entityType, capitalize(Registry.ENTITY_TYPE.getId(entityType).getPath()));
+    private void autoName(TranslationBuilder translationBuilder, Item item) {
+        translationBuilder.add(item, autoNameInner(Registry.ITEM.getId(item).getPath()));
+    }
+    private void autoName(TranslationBuilder translationBuilder, EntityType<?> entityType) {
+        translationBuilder.add(entityType, autoNameInner(Registry.ENTITY_TYPE.getId(entityType).getPath()));
+    }
+
+    private String autoNameInner(String id) {
+        StringBuilder name = new StringBuilder();
+        String[] split = id.split("_");
+        for(String str : split) {
+            if(!name.isEmpty()) {
+                name.append(" ");
+            }
+            name.append(capitalize(str));
+        }
+        return name.toString();
     }
 
     public static String capitalize(String inputString) {

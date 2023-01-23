@@ -38,9 +38,11 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(FFBlockTags.JELLYROOT_PLANTABLES)
                 .add(FFBlocks.GELATITE)
-                .add(FFBlocks.DEEP_GELATITE)
+                .add(FFBlocks.BRINESHALE)
+                .add(FFBlocks.CHISELED_GELATITE_BRICKS)
+                .add(FFBlocks.CHISELED_BRINESHALE_BRICKS)
                 .add(FFBlocks.GELATITE_BRICKS)
-                .add(FFBlocks.DEEP_GELATITE_BRICKS)
+                .add(FFBlocks.BRINESHALE_BRICKS)
                 .forceAddTag(BlockTags.DIRT)
                 .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
                 .addOptionalTag(BlockTags.BASE_STONE_NETHER)
@@ -48,33 +50,29 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(BlockTags.BUTTONS)
                 .add(FFBlocks.GELATITE_BUTTON)
-                .add(FFBlocks.GELATITE_BRICK_BUTTON)
-                .add(FFBlocks.DEEP_GELATITE_BUTTON)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON);
+                .add(FFBlocks.BRINESHALE_BUTTON);
 
         getOrCreateTagBuilder(BlockTags.WALLS)
                 .add(FFBlocks.GELATITE_WALL)
-                .add(FFBlocks.DEEP_GELATITE_WALL)
+                .add(FFBlocks.BRINESHALE_WALL)
                 .add(FFBlocks.GELATITE_BRICK_WALL)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_WALL);
+                .add(FFBlocks.BRINESHALE_BRICK_WALL);
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
                 .add(FFBlocks.GELATITE_STAIRS)
                 .add(FFBlocks.GELATITE_BRICK_STAIRS)
-                .add(FFBlocks.DEEP_GELATITE_STAIRS)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS);
+                .add(FFBlocks.BRINESHALE_STAIRS)
+                .add(FFBlocks.BRINESHALE_BRICK_STAIRS);
 
         getOrCreateTagBuilder(BlockTags.SLABS)
                 .add(FFBlocks.GELATITE_SLAB)
                 .add(FFBlocks.GELATITE_BRICK_SLAB)
-                .add(FFBlocks.DEEP_GELATITE_SLAB)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_SLAB);
+                .add(FFBlocks.BRINESHALE_SLAB)
+                .add(FFBlocks.BRINESHALE_BRICK_SLAB);
 
         getOrCreateTagBuilder(BlockTags.STONE_PRESSURE_PLATES)
                 .add(FFBlocks.GELATITE_PRESSURE_PLATE)
-                .add(FFBlocks.DEEP_GELATITE_PRESSURE_PLATE)
-                .add(FFBlocks.GELATITE_BRICK_PRESSURE_PLATE)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE);
+                .add(FFBlocks.BRINESHALE_PRESSURE_PLATE);
 
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(FFBlocks.GELATITE)
@@ -84,25 +82,25 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.GELATITE_BUTTON)
                 .add(FFBlocks.GELATITE_PRESSURE_PLATE)
 
+                .add(FFBlocks.CHISELED_GELATITE_BRICKS)
+
                 .add(FFBlocks.GELATITE_BRICKS)
                 .add(FFBlocks.GELATITE_BRICK_STAIRS)
                 .add(FFBlocks.GELATITE_BRICK_SLAB)
                 .add(FFBlocks.GELATITE_BRICK_WALL)
-                .add(FFBlocks.GELATITE_BRICK_BUTTON)
-                .add(FFBlocks.GELATITE_BRICK_PRESSURE_PLATE)
 
-                .add(FFBlocks.DEEP_GELATITE)
-                .add(FFBlocks.DEEP_GELATITE_STAIRS)
-                .add(FFBlocks.DEEP_GELATITE_SLAB)
-                .add(FFBlocks.DEEP_GELATITE_WALL)
-                .add(FFBlocks.DEEP_GELATITE_BUTTON)
-                .add(FFBlocks.DEEP_GELATITE_PRESSURE_PLATE)
+                .add(FFBlocks.BRINESHALE)
+                .add(FFBlocks.BRINESHALE_STAIRS)
+                .add(FFBlocks.BRINESHALE_SLAB)
+                .add(FFBlocks.BRINESHALE_WALL)
+                .add(FFBlocks.BRINESHALE_BUTTON)
+                .add(FFBlocks.BRINESHALE_PRESSURE_PLATE)
 
-                .add(FFBlocks.DEEP_GELATITE_BRICKS)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_SLAB)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_WALL)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON)
-                .add(FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE);
+                .add(FFBlocks.CHISELED_BRINESHALE_BRICKS)
+
+                .add(FFBlocks.BRINESHALE_BRICKS)
+                .add(FFBlocks.BRINESHALE_BRICK_STAIRS)
+                .add(FFBlocks.BRINESHALE_BRICK_SLAB)
+                .add(FFBlocks.BRINESHALE_BRICK_WALL);
     }
 }

@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "falsefutures:deep_gelatite_wall"
-  },
-  "result": "falsefutures:deep_gelatite"
-}

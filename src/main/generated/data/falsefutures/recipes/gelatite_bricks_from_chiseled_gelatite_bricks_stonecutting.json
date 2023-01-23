@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "falsefutures:chiseled_gelatite_bricks"
+  },
+  "result": "falsefutures:gelatite_bricks"
+}

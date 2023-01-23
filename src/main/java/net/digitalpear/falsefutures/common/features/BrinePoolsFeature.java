@@ -33,7 +33,7 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
 
         //If is in biome where gipples spawn and place of origin is solid block then generate
         if (world.getBlockState(initialPos).isSolidBlock(world, initialPos) && isValidSpawn(world, initialPos, baseHeight)){
-            makePool(world, initialPos, FFBlocks.DEEP_GELATITE.getDefaultState(), baseWidth, baseHeight);
+            makePool(world, initialPos, FFBlocks.BRINESHALE.getDefaultState(), baseWidth, baseHeight);
             makePool(world, offsetPos, Blocks.WATER.getDefaultState(), baseWidth / 2, baseHeight-3);
             makePool(world, offsetPos.up(baseHeight), CAVE_AIR, baseWidth - 2, baseHeight-1);
             return true;
@@ -59,15 +59,15 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
                 if (blockPos2.getSquaredDistance(pos) <= (double) (f * f) && canReplace(serverWorld.getBlockState(blockPos2))) {
                     serverWorld.setBlockState(blockPos2, state, 2);
 
-                    //With 10% change spawn gelastone
+                    //With 10% change spawn gelatite
                     if (serverWorld.random.nextFloat() > 0.9) {
-                        FFConfiguredFeatures.ORE_GELASTONE.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
+                        FFConfiguredFeatures.ORE_GELATITE.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
                                 serverWorld.random, blockPos2);
                     }
 
-                    //With 30% chance if block above is air spawn gelastone vegetation
+                    //With 30% chance if block above is air spawn gelatite vegetation
                     if (serverWorld.random.nextFloat() > 0.7 && serverWorld.getBlockState(blockPos2.up()).isAir()) {
-                        FFConfiguredFeatures.GELASTONE_VEGETATION.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
+                        FFConfiguredFeatures.GELATITE_VEGETATION.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
                                 serverWorld.random, blockPos2);
                     }
                 }

@@ -18,23 +18,23 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 import java.util.List;
 
 public class FFConfiguredFeatures {
-    public static final RuleTest DEEP_GELASTONE = new BlockMatchRuleTest(FFBlocks.DEEP_GELATITE);
+    public static final RuleTest BRINESHALE = new BlockMatchRuleTest(FFBlocks.BRINESHALE);
 
-    public static final WeightedBlockStateProvider GELASTONE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
+    public static final WeightedBlockStateProvider GELATITE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
             .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
             .add(FFBlocks.JELLYROOT.getDefaultState(), 4)
             .build());
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELASTONE_VEGETATION = register("gelastone_vegetation", FFFeatures.GELASTONE_VEGETATION, new NetherForestVegetationFeatureConfig(GELASTONE_VEGETATION_PROVIDER, 8, 4));
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELASTONE_VEGETATION_BONEMEAL = register("gelastone_vegetation_bonemeal", FFFeatures.GELASTONE_VEGETATION, new NetherForestVegetationFeatureConfig(GELASTONE_VEGETATION_PROVIDER, 3, 1));
+    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELATITE_VEGETATION = register("gelatite_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 8, 4));
+    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELATITE_VEGETATION_BONEMEAL = register("gelatite_vegetation_bonemeal", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 3, 1));
 
     public static final RegistryKey<ConfiguredFeature<?, ?>> BRINE_POOL = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
             new Identifier(FalseFutures.MOD_ID, "brine_pool"));
 
 
-    public static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_GELASTONE = register("ore_gelastone", Feature.ORE,
+    public static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_GELATITE = register("ore_gelatite", Feature.ORE,
             new OreFeatureConfig(List.of(
-                    OreFeatureConfig.createTarget(DEEP_GELASTONE, FFBlocks.GELATITE.getDefaultState()),
-                    OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, FFBlocks.DEEP_GELATITE.getDefaultState()),
+                    OreFeatureConfig.createTarget(BRINESHALE, FFBlocks.GELATITE.getDefaultState()),
+                    OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, FFBlocks.BRINESHALE.getDefaultState()),
                     OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, FFBlocks.GELATITE.getDefaultState())),
                     8));
 

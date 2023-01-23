@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "falsefutures:block/deep_gelatite",
-    "side": "falsefutures:block/deep_gelatite",
-    "top": "falsefutures:block/deep_gelatite"
-  }
-}

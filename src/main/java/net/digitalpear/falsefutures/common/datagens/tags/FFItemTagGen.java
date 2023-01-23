@@ -28,22 +28,20 @@ public class FFItemTagGen extends FabricTagProvider<Item> {
         getOrCreateTagBuilder(ItemTags.WALLS)
                 .add(FFBlocks.GELATITE_WALL.asItem())
                 .add(FFBlocks.GELATITE_BRICK_WALL.asItem())
-                .add(FFBlocks.DEEP_GELATITE_WALL.asItem())
-                .add(FFBlocks.DEEP_GELATITE_BRICK_WALL.asItem());
+                .add(FFBlocks.BRINESHALE_WALL.asItem())
+                .add(FFBlocks.BRINESHALE_BRICK_WALL.asItem());
         getOrCreateTagBuilder(ItemTags.STAIRS)
                 .add(FFBlocks.GELATITE_STAIRS.asItem())
                 .add(FFBlocks.GELATITE_BRICK_STAIRS.asItem())
-                .add(FFBlocks.DEEP_GELATITE_STAIRS.asItem())
-                .add(FFBlocks.DEEP_GELATITE_BRICK_STAIRS.asItem());
+                .add(FFBlocks.BRINESHALE_STAIRS.asItem())
+                .add(FFBlocks.BRINESHALE_BRICK_STAIRS.asItem());
         getOrCreateTagBuilder(ItemTags.SLABS)
                 .add(FFBlocks.GELATITE_SLAB.asItem())
                 .add(FFBlocks.GELATITE_BRICK_SLAB.asItem())
-                .add(FFBlocks.DEEP_GELATITE_SLAB.asItem())
-                .add(FFBlocks.DEEP_GELATITE_BRICK_SLAB.asItem());
+                .add(FFBlocks.BRINESHALE_SLAB.asItem())
+                .add(FFBlocks.BRINESHALE_BRICK_SLAB.asItem());
         getOrCreateTagBuilder(ItemTags.BUTTONS)
                 .add(FFBlocks.GELATITE_BUTTON.asItem())
-                .add(FFBlocks.GELATITE_BRICK_BUTTON.asItem())
-                .add(FFBlocks.DEEP_GELATITE_BUTTON.asItem())
-                .add(FFBlocks.DEEP_GELATITE_BRICK_BUTTON.asItem());
+                .add(FFBlocks.BRINESHALE_BUTTON.asItem());
     }
 }

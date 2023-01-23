@@ -4,12 +4,11 @@ import net.digitalpear.falsefutures.init.FFBlocks;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.AdvancementManager;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.function.Consumer;

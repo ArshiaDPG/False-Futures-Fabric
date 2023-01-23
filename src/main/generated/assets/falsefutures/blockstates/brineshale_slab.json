@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "falsefutures:block/brineshale_slab"
+    },
+    "type=double": {
+      "model": "falsefutures:brineshale"
+    },
+    "type=top": {
+      "model": "falsefutures:block/brineshale_slab_top"
+    }
+  }
+}

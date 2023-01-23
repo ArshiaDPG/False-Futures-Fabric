@@ -32,14 +32,16 @@ public class FFBlockModelGen extends FabricModelProvider {
         registerGelatinLayers(blockStateModelGenerator);
         registerAllJellies(blockStateModelGenerator);
 
-        registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB,
+        registerBlockSet(blockStateModelGenerator, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB,
                 FFBlocks.GELATITE_WALL, FFBlocks.GELATITE_PRESSURE_PLATE, FFBlocks.GELATITE_BUTTON);
+        blockStateModelGenerator.registerSimpleCubeAll(FFBlocks.CHISELED_GELATITE_BRICKS);
         registerBrickBlockSet(blockStateModelGenerator, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB,
-                FFBlocks.GELATITE_BRICK_WALL, FFBlocks.GELATITE_BRICK_PRESSURE_PLATE, FFBlocks.GELATITE_BRICK_BUTTON);
-        registerBlockSetMirrorable(blockStateModelGenerator, FFBlocks.DEEP_GELATITE, FFBlocks.DEEP_GELATITE_STAIRS, FFBlocks.DEEP_GELATITE_SLAB,
-                FFBlocks.DEEP_GELATITE_WALL, FFBlocks.DEEP_GELATITE_PRESSURE_PLATE, FFBlocks.DEEP_GELATITE_BUTTON);
-        registerBrickBlockSet(blockStateModelGenerator, FFBlocks.DEEP_GELATITE_BRICKS, FFBlocks.DEEP_GELATITE_BRICK_STAIRS, FFBlocks.DEEP_GELATITE_BRICK_SLAB,
-                FFBlocks.DEEP_GELATITE_BRICK_WALL, FFBlocks.DEEP_GELATITE_BRICK_PRESSURE_PLATE, FFBlocks.DEEP_GELATITE_BRICK_BUTTON);
+                FFBlocks.GELATITE_BRICK_WALL);
+        registerBlockSet(blockStateModelGenerator, FFBlocks.BRINESHALE, FFBlocks.BRINESHALE_STAIRS, FFBlocks.BRINESHALE_SLAB,
+                FFBlocks.BRINESHALE_WALL, FFBlocks.BRINESHALE_PRESSURE_PLATE, FFBlocks.BRINESHALE_BUTTON);
+        blockStateModelGenerator.registerSimpleCubeAll(FFBlocks.CHISELED_BRINESHALE_BRICKS);
+        registerBrickBlockSet(blockStateModelGenerator, FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB,
+                FFBlocks.BRINESHALE_BRICK_WALL);
 
 
         blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
@@ -120,17 +122,15 @@ public class FFBlockModelGen extends FabricModelProvider {
                 ModelIds.getBlockModelId(FFBlocks.GIPPLEPAD)));
     }
 
-    public static void registerBrickBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
+    public static void registerBrickBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall){
         blockStateModelGenerator.registerSimpleCubeAll(base);
         createStairs(blockStateModelGenerator, base, stairs);
         createSlab(blockStateModelGenerator, base, slab);
         createWall(blockStateModelGenerator, base, wall);
-        makePressurePlate(blockStateModelGenerator, base, pressurePlate);
-        makeButton(blockStateModelGenerator, base, button);
     }
 
-    public static void registerBlockSetMirrorable(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
-        blockStateModelGenerator.registerMirrorable(base);
+    public static void registerBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
+        blockStateModelGenerator.registerSimpleCubeAll(base);
         createStairs(blockStateModelGenerator, base, stairs);
         createSlab(blockStateModelGenerator, base, slab);
         createWall(blockStateModelGenerator, base, wall);

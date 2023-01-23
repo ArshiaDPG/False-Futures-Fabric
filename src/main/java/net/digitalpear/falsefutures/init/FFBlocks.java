@@ -1,7 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.GelastoneBlock;
+import net.digitalpear.falsefutures.common.blocks.GelatiteBlock;
 import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
 import net.digitalpear.falsefutures.common.blocks.JellyrootBlock;
 import net.digitalpear.falsefutures.common.blocks.TallJellyrootBlock;
@@ -83,7 +83,7 @@ public class FFBlocks {
             new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.PALE_PURPLE)), ItemGroup.DECORATIONS);
 
     public static final Block GELATITE = createBlockWithItem("gelatite",
-            new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.STONE)
+            new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
                     .sounds(BlockSoundGroup.NETHER_GOLD_ORE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block GELATITE_STAIRS = StoneSets.stoneStairs(GELATITE);
@@ -97,31 +97,31 @@ public class FFBlocks {
     public static final Block GELATITE_BRICK_STAIRS = StoneSets.stoneStairs(GELATITE_BRICKS);
     public static final Block GELATITE_BRICK_SLAB = StoneSets.stoneSlab(GELATITE_BRICKS);
     public static final Block GELATITE_BRICK_WALL = StoneSets.stoneWall(GELATITE_BRICKS);
-    public static final Block GELATITE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELATITE_BRICKS);
-    public static final Block GELATITE_BRICK_BUTTON = StoneSets.stoneButton(GELATITE_BRICKS);
+
+    public static final Block CHISELED_GELATITE_BRICKS = createBlockWithItem("chiseled_gelatite_bricks",
+            new Block(AbstractBlock.Settings.copy(GELATITE)), ItemGroup.BUILDING_BLOCKS);
 
 
-
-    public static final Block DEEP_GELATITE = createBlockWithItem("deep_gelatite",
-            new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+    public static final Block BRINESHALE = createBlockWithItem("brineshale",
+            new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
             .sounds(BlockSoundGroup.NETHERRACK)
             .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block DEEP_GELATITE_STAIRS = StoneSets.stoneStairs(DEEP_GELATITE);
-    public static final Block DEEP_GELATITE_SLAB = StoneSets.stoneSlab(DEEP_GELATITE);
-    public static final Block DEEP_GELATITE_WALL = StoneSets.stoneWall(DEEP_GELATITE);
-    public static final Block DEEP_GELATITE_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELATITE);
-    public static final Block DEEP_GELATITE_BUTTON = StoneSets.stoneButton(DEEP_GELATITE);
+    public static final Block BRINESHALE_STAIRS = StoneSets.stoneStairs(BRINESHALE);
+    public static final Block BRINESHALE_SLAB = StoneSets.stoneSlab(BRINESHALE);
+    public static final Block BRINESHALE_WALL = StoneSets.stoneWall(BRINESHALE);
+    public static final Block BRINESHALE_PRESSURE_PLATE = StoneSets.stonePressurePlate(BRINESHALE);
+    public static final Block BRINESHALE_BUTTON = StoneSets.stoneButton(BRINESHALE);
 
+    public static final Block CHISELED_BRINESHALE_BRICKS = createBlockWithItem("chiseled_brineshale_bricks",
+            new Block(AbstractBlock.Settings.copy(BRINESHALE)), ItemGroup.BUILDING_BLOCKS);
 
-    public static final Block DEEP_GELATITE_BRICKS = createBlockWithItem("deep_gelatite_bricks",
-            new GelastoneBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+    public static final Block BRINESHALE_BRICKS = createBlockWithItem("brineshale_bricks",
+            new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
                     .sounds(BlockSoundGroup.NETHERRACK)
                     .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block DEEP_GELATITE_BRICK_STAIRS = StoneSets.stoneStairs(DEEP_GELATITE_BRICKS);
-    public static final Block DEEP_GELATITE_BRICK_SLAB = StoneSets.stoneSlab(DEEP_GELATITE_BRICKS);
-    public static final Block DEEP_GELATITE_BRICK_WALL = StoneSets.stoneWall(DEEP_GELATITE_BRICKS);
-    public static final Block DEEP_GELATITE_BRICK_PRESSURE_PLATE = StoneSets.stonePressurePlate(DEEP_GELATITE_BRICKS);
-    public static final Block DEEP_GELATITE_BRICK_BUTTON = StoneSets.stoneButton(DEEP_GELATITE_BRICKS);
+    public static final Block BRINESHALE_BRICK_STAIRS = StoneSets.stoneStairs(BRINESHALE_BRICKS);
+    public static final Block BRINESHALE_BRICK_SLAB = StoneSets.stoneSlab(BRINESHALE_BRICKS);
+    public static final Block BRINESHALE_BRICK_WALL = StoneSets.stoneWall(BRINESHALE_BRICKS);
 
     public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 4)), ItemGroup.DECORATIONS);
@@ -130,9 +130,9 @@ public class FFBlocks {
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)), ItemGroup.DECORATIONS);
 
     public static final Block INFESTED_GELATITE = StoneSets.infestedBlock(GELATITE);
-    public static final Block INFESTED_DEEP_GELATITE = StoneSets.infestedBlock(DEEP_GELATITE);
+    public static final Block INFESTED_BRINESHALE = StoneSets.infestedBlock(BRINESHALE);
     public static final Block INFESTED_GELATITE_BRICKS = StoneSets.infestedBlock(GELATITE_BRICKS);
-    public static final Block INFESTED_DEEP_GELATITE_BRICKS = StoneSets.infestedBlock(DEEP_GELATITE_BRICKS);
+    public static final Block INFESTED_BRINESHALE_BRICKS = StoneSets.infestedBlock(BRINESHALE_BRICKS);
 
 
 

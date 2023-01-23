@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "falsefutures:brineshale"
+    }
+  },
+  "pattern": [
+    "CC"
+  ],
+  "result": {
+    "item": "falsefutures:brineshale_pressure_plate"
+  }
+}

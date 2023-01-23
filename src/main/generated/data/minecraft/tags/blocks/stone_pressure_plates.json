@@ -2,8 +2,6 @@
   "replace": false,
   "values": [
     "falsefutures:gelatite_pressure_plate",
-    "falsefutures:deep_gelatite_pressure_plate",
-    "falsefutures:gelatite_brick_pressure_plate",
-    "falsefutures:deep_gelatite_brick_pressure_plate"
+    "falsefutures:brineshale_pressure_plate"
   ]
 }

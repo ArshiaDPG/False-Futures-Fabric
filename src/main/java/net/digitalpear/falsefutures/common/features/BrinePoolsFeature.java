@@ -67,7 +67,7 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
 
                     //With 30% chance if block above is air spawn gelatite vegetation
                     if (serverWorld.random.nextFloat() > 0.7 && serverWorld.getBlockState(blockPos2.up()).isAir()) {
-                        FFConfiguredFeatures.GELATITE_VEGETATION.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
+                        FFConfiguredFeatures.BRINE_POOL_VEGETATION.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
                                 serverWorld.random, blockPos2);
                     }
                 }

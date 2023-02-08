@@ -86,6 +86,7 @@ public class FFBlocks {
             new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
                     .sounds(BlockSoundGroup.NETHER_GOLD_ORE)), ItemGroup.BUILDING_BLOCKS);
+
     public static final Block GELATITE_STAIRS = StoneSets.stoneStairs(GELATITE);
     public static final Block GELATITE_SLAB = StoneSets.stoneSlab(GELATITE);
     public static final Block GELATITE_WALL = StoneSets.stoneWall(GELATITE);
@@ -106,6 +107,7 @@ public class FFBlocks {
             new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
             .sounds(BlockSoundGroup.NETHERRACK)
             .mapColor(MapColor.DARK_CRIMSON)), ItemGroup.BUILDING_BLOCKS);
+
     public static final Block BRINESHALE_STAIRS = StoneSets.stoneStairs(BRINESHALE);
     public static final Block BRINESHALE_SLAB = StoneSets.stoneSlab(BRINESHALE);
     public static final Block BRINESHALE_WALL = StoneSets.stoneWall(BRINESHALE);

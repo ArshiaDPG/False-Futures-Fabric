@@ -1,29 +1,27 @@
 {
-  "feature": "falsefutures:brine_pool",
-  "placement": [
-    {
-      "type": "minecraft:rarity_filter",
-      "chance": 9
-    },
-    {
-      "type": "minecraft:in_square"
-    },
-    {
-      "type": "minecraft:height_range",
-      "height": {
-        "type": "minecraft:uniform",
-        "min_inclusive": {
-          "above_bottom": 5
-        },
-        "max_inclusive": {
-          "absolute": 0
-        }
-      }
-    },
-    {
-      "type": "minecraft:surface_relative_threshold_filter",
-      "heightmap": "OCEAN_FLOOR_WG",
-      "max_inclusive": -30
-    }
-  ]
+	"feature": "falsefutures:brine_pool",
+	"placement": [
+		{
+			"type": "minecraft:rarity_filter",
+			"chance": 24
+		},
+		{
+			"type": "minecraft:in_square"
+		},
+		{
+			"type": "minecraft:height_range",
+			"height": {
+				"type": "minecraft:uniform",
+				"min_inclusive": {
+					"above_bottom": 6
+				},
+				"max_inclusive": {
+					"absolute": 20
+				}
+			}
+		},
+		{
+			"type": "minecraft:biome"
+		}
+	]
 }

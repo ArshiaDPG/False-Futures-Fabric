@@ -32,7 +32,7 @@ public class FFConfiguredFeatures {
             .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
             .add(FFBlocks.JELLYROOT.getDefaultState(), 4)
             .build());
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("gelatite_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(BRINE_POOL_VEGETATION_PROVIDER, 8, 4));
+    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("brine_pool_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(BRINE_POOL_VEGETATION_PROVIDER, 8, 4));
 
     public static final RegistryKey<ConfiguredFeature<?, ?>> BRINE_POOL = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
             new Identifier(FalseFutures.MOD_ID, "brine_pool"));

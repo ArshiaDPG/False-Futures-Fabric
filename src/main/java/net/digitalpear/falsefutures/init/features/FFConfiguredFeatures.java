@@ -22,17 +22,13 @@ public class FFConfiguredFeatures {
 
     public static final WeightedBlockStateProvider GELATITE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
             .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 1)
-            .add(FFBlocks.TALL_JELLYROOT.getDefaultState(), 2)
             .add(FFBlocks.JELLYROOT.getDefaultState(), 5)
             .build());
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELATITE_VEGETATION = register("gelatite_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 8, 4));
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELATITE_VEGETATION_BONEMEAL = register("gelatite_vegetation_bonemeal", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 3, 1));
 
-    public static final WeightedBlockStateProvider BRINE_POOL_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
-            .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
-            .add(FFBlocks.JELLYROOT.getDefaultState(), 4)
-            .build());
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("brine_pool_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(BRINE_POOL_VEGETATION_PROVIDER, 8, 4));
+
+    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("brine_pool_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 20, 5));
 
     public static final RegistryKey<ConfiguredFeature<?, ?>> BRINE_POOL = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
             new Identifier(FalseFutures.MOD_ID, "brine_pool"));
@@ -50,6 +46,7 @@ public class FFConfiguredFeatures {
     public static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> register(String id, F feature, FC config) {
         return BuiltinRegistries.addCasted(BuiltinRegistries.CONFIGURED_FEATURE, FalseFutures.MOD_ID + ":" + id, new ConfiguredFeature(feature, config));
     }
+
     public static void init() {
     }
 }

@@ -48,7 +48,7 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
             return false;
         } else {
             this.findClosestTarget();
-            return (this.targetEntity != null) && (!this.targetEntity.isSubmergedInWater()) && !(this.targetEntity instanceof CreeperEntity) && !(this.targetEntity instanceof WaterCreatureEntity) && !this.targetEntity.getType().isIn(FFEntityTypeTags.SOMETHING_TARGET_BLACKLIST);
+            return (this.targetEntity != null) && (!this.targetEntity.isSubmergedInWater()) && !this.targetEntity.getType().isIn(FFEntityTypeTags.SOMETHING_TARGET_BLACKLIST);
         }
     }
 

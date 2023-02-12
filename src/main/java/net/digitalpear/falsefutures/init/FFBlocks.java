@@ -76,6 +76,7 @@ public class FFBlocks {
     public static final Block FRUITY_JELLY = createJellyBlockWithItem("fruity_jelly", new SweetJellyBlock(jellySettings(MapColor.BRIGHT_RED)), Items.MELON_SLICE);
     public static final Block INKY_JELLY = createJellyBlockWithItem( "inky_jelly", new InkyJellyBlock(jellySettings(MapColor.BLACK)), Items.INK_SAC);
 
+
     public static final Block GIPPLEPAD = createBlockWithoutItem("gipplepad", new LilyPadBlock(AbstractBlock.Settings.of(Material.PLANT,
             MapColor.PALE_PURPLE).breakInstantly().sounds(BlockSoundGroup.LILY_PAD).nonOpaque()));
 
@@ -139,5 +140,6 @@ public class FFBlocks {
 
 
     public static void init(){
+
     }
 }

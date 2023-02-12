@@ -4,7 +4,7 @@
       "model": "falsefutures:block/gelatite_brick_slab"
     },
     "type=double": {
-      "model": "falsefutures:gelatite_bricks"
+      "model": "falsefutures:block/gelatite_bricks"
     },
     "type=top": {
       "model": "falsefutures:block/gelatite_brick_slab_top"

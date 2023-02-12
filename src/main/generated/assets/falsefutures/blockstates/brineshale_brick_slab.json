@@ -4,7 +4,7 @@
       "model": "falsefutures:block/brineshale_brick_slab"
     },
     "type=double": {
-      "model": "falsefutures:brineshale_bricks"
+      "model": "falsefutures:block/brineshale_bricks"
     },
     "type=top": {
       "model": "falsefutures:block/brineshale_brick_slab_top"

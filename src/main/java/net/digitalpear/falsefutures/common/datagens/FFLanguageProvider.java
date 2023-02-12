@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.init.FFBannerPatterns;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -78,6 +79,9 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
+
+        translationBuilder.add(FFItems.GIPPLE_BANNER_PATTERN, "Banner Pattern");
+        translationBuilder.add(FFItems.GIPPLE_BANNER_PATTERN.getTranslationKey() + ".desc", "Gipple");
 
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");

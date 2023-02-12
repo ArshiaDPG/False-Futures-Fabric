@@ -17,8 +17,8 @@ import net.minecraft.util.registry.Registry;
 import java.util.Optional;
 
 
-public class FFBlockModelGen extends FabricModelProvider {
-    public FFBlockModelGen(FabricDataGenerator dataGenerator) {
+public class FFModelGen extends FabricModelProvider {
+    public FFModelGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
     }
 
@@ -55,6 +55,7 @@ public class FFBlockModelGen extends FabricModelProvider {
         itemModelGenerator.register(FFItems.GELATIN, Models.GENERATED);
         itemModelGenerator.register(FFItems.GIPPLE_BUCKET, Models.GENERATED);
         itemModelGenerator.register(FFItems.MUSIC_DISC_GIPPLECORE, Models.GENERATED);
+        itemModelGenerator.register(FFItems.GIPPLE_BANNER_PATTERN, Models.GENERATED);
     }
 
     private void registerAllJellies(BlockStateModelGenerator blockStateModelGenerator) {
@@ -149,9 +150,10 @@ public class FFBlockModelGen extends FabricModelProvider {
     public static void createSlab(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block slab){
         Identifier SLAB = Models.SLAB.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier SLAB_TOP = Models.SLAB_TOP.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createSlabBlockState(slab,
-                SLAB, SLAB_TOP, Registry.BLOCK.getId(textureBase)));
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(slab,
+                SLAB, SLAB_TOP, new Identifier(FalseFutures.MOD_ID, "block/" + Registry.BLOCK.getId(textureBase).getPath())));
     }
+
     public static void createWall(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block wall){
         Identifier WALL_INVENTORY = Models.WALL_INVENTORY.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier TEMPLATE_WALL_POST = Models.TEMPLATE_WALL_POST.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
@@ -176,4 +178,6 @@ public class FFBlockModelGen extends FabricModelProvider {
         blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createPressurePlateBlockState(plate,
                 PRESSURE_PLATE_UP, PRESSURE_PLATE_DOWN));
     }
+
+
 }

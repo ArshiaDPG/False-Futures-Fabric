@@ -10,6 +10,7 @@ import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.registry.Registry;
 
@@ -37,6 +38,9 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 .input(FFItems.GELATIN)
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
 
+        ShapelessRecipeJsonBuilder.create(FFItems.GIPPLE_BANNER_PATTERN)
+                .input(Items.PAPER).input(FFItems.GIPPLE_BUCKET)
+                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
 
 
         ShapedRecipeJsonBuilder.create(FFBlocks.GELATITE_BRICKS, 4)

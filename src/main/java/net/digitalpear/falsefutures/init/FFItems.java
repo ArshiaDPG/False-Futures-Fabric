@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.init.tags.FFBannerPatternItemTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.Fluids;
@@ -27,7 +28,7 @@ public class FFItems {
         return register("music_disc_" + name, new MusicDiscItem(output, sound, new Item.Settings().rarity(Rarity.RARE).maxCount(1).group(ItemGroup.MISC), length));
     }
     public static Item createBucketedMob(EntityType<?> type){
-        return register(Registry.ENTITY_TYPE.getId(type).getPath() + "_bucket", new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
+        return register(Registry.ENTITY_TYPE.getId(type).getPath() + "_bucket", new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).recipeRemainder(Items.WATER_BUCKET).maxCount(1).group(ItemGroup.MISC)));
     }
 
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);
@@ -41,6 +42,7 @@ public class FFItems {
 
     public static final Item GIPPLEPAD = register("gipplepad", new PlaceableOnWaterItem(FFBlocks.GIPPLEPAD, new Item.Settings()));
 
+    public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", new BannerPatternItem(FFBannerPatternItemTags.GIPPLE_PATTERN_ITEM, new Item.Settings().maxCount(1).group(ItemGroup.MISC)));
 
     public static void init(){
     }

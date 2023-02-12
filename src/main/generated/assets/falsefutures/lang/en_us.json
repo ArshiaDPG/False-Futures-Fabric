@@ -52,6 +52,8 @@
   "entity.falsefutures.gipple": "Gipple",
   "entity.falsefutures.something": "Something",
   "item.falsefutures.gelatin": "Gelatin",
+  "item.falsefutures.gipple_banner_pattern": "Banner Pattern",
+  "item.falsefutures.gipple_banner_pattern.desc": "Gipple",
   "item.falsefutures.gipple_bucket": "Bucket of Gipple",
   "item.falsefutures.gipple_spawn_egg": "Gipple Spawn Egg",
   "item.falsefutures.music_disc_gipplecore": "Music Disc",

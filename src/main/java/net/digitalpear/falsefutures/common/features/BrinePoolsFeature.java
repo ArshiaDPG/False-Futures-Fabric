@@ -31,14 +31,16 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
         int baseHeight = 2 + world.random.nextInt(3);
 
 
-        //If is in biome where gipples spawn and place of origin is solid block then generate
+        //Makes sure the pool does not generate outside the world or in the air
         if (world.getBlockState(initialPos).isSolidBlock(world, initialPos) && isValidSpawn(world, initialPos, baseHeight)){
             makePool(world, initialPos, FFBlocks.BRINESHALE.getDefaultState(), baseWidth, baseHeight);
-            makePool(world, offsetPos, Blocks.WATER.getDefaultState(), baseWidth / 2, baseHeight-3);
-            makePool(world, offsetPos.up(baseHeight), CAVE_AIR, baseWidth - 2, baseHeight-1);
+            makePool(world, offsetPos, Blocks.WATER.getDefaultState(), baseWidth / 2, baseHeight - 3);
+            makePool(world, offsetPos.up(baseHeight), CAVE_AIR, baseWidth - 2, baseHeight - 1);
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
     }
 
     public static boolean isValidSpawn(World world, BlockPos pos, int baseHeight){
@@ -48,8 +50,12 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
         return !state.isIn(FFBlockTags.BRINE_POOL_CANNOT_REPLACE);
     }
 
+
+    /*
+        Makes a sort of sphere out of any block designated
+     */
     public static void makePool(ServerWorld serverWorld, BlockPos pos, BlockState state, int width, int height){
-        for(int i = 0; i < 3; ++i) {
+        for(int i = 0; i < serverWorld.random.nextBetween(2, 6); ++i) {
             int x = width + serverWorld.random.nextInt(4);
             int y = height - serverWorld.random.nextInt(2);
             int z = width + serverWorld.random.nextInt(4);

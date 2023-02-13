@@ -39,8 +39,9 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
 
         ShapelessRecipeJsonBuilder.create(FFItems.GIPPLE_BANNER_PATTERN)
-                .input(Items.PAPER).input(FFItems.GIPPLE_BUCKET)
-                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
+                .input(Items.PAPER)
+                .input(FFItems.GIPPLE_BUCKET)
+                .criterion("has_gipple_bucket", conditionsFromItem(FFItems.GIPPLE_BUCKET)).offerTo(exporter);
 
 
         ShapedRecipeJsonBuilder.create(FFBlocks.GELATITE_BRICKS, 4)

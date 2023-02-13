@@ -8,8 +8,8 @@ import net.minecraft.util.registry.RegistryKey;
 
 public class FFBannerPatterns {
 
-    public static void createPattern(String nam, RegistryKey<BannerPattern> key){
-        Registry.register(Registry.BANNER_PATTERN, key, new BannerPattern("gipple"));
+    public static void createPattern(String name, RegistryKey<BannerPattern> key){
+        Registry.register(Registry.BANNER_PATTERN, key, new BannerPattern(name));
     }
     public static final RegistryKey<BannerPattern> GIPPLE = register("gipple");
 

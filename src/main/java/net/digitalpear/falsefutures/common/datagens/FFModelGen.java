@@ -143,7 +143,7 @@ public class FFModelGen extends FabricModelProvider {
         Identifier STAIRS = Models.STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier INNER_STAIRS = Models.INNER_STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier OUTER_STAIRS = Models.OUTER_STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createStairsBlockState(stairs,
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairs,
                 INNER_STAIRS, STAIRS, OUTER_STAIRS));
     }
 
@@ -159,7 +159,7 @@ public class FFModelGen extends FabricModelProvider {
         Identifier TEMPLATE_WALL_POST = Models.TEMPLATE_WALL_POST.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier TEMPLATE_WALL_SIDE = Models.TEMPLATE_WALL_SIDE.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier TEMPLATE_WALL_SIDE_TALL = Models.TEMPLATE_WALL_SIDE_TALL.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createWallBlockState(wall,
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createWallBlockState(wall,
                 TEMPLATE_WALL_POST, TEMPLATE_WALL_SIDE, TEMPLATE_WALL_SIDE_TALL));
         blockStateModelGenerator.registerParentedItemModel(wall.asItem(), WALL_INVENTORY);
     }
@@ -167,7 +167,7 @@ public class FFModelGen extends FabricModelProvider {
         Identifier BUTTON = Models.BUTTON.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier BUTTON_PRESSED = Models.BUTTON_PRESSED.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier BUTTON_INVENTORY = Models.BUTTON_INVENTORY.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createButtonBlockState(button,
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createButtonBlockState(button,
                 BUTTON, BUTTON_PRESSED));
         blockStateModelGenerator.registerParentedItemModel(button.asItem(), BUTTON_INVENTORY);
     }
@@ -175,7 +175,7 @@ public class FFModelGen extends FabricModelProvider {
     public static void makePressurePlate(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block plate){
         Identifier PRESSURE_PLATE_DOWN = Models.PRESSURE_PLATE_DOWN.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier PRESSURE_PLATE_UP = Models.PRESSURE_PLATE_UP.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(blockStateModelGenerator.createPressurePlateBlockState(plate,
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createPressurePlateBlockState(plate,
                 PRESSURE_PLATE_UP, PRESSURE_PLATE_DOWN));
     }
 

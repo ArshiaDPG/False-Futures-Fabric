@@ -7,21 +7,25 @@
     "falsefutures:gelatite_wall",
     "falsefutures:gelatite_button",
     "falsefutures:gelatite_pressure_plate",
+    "falsefutures:infested_gelatite",
     "falsefutures:chiseled_gelatite_bricks",
     "falsefutures:gelatite_bricks",
     "falsefutures:gelatite_brick_stairs",
     "falsefutures:gelatite_brick_slab",
     "falsefutures:gelatite_brick_wall",
+    "falsefutures:infested_gelatite_brick",
     "falsefutures:brineshale",
     "falsefutures:brineshale_stairs",
     "falsefutures:brineshale_slab",
     "falsefutures:brineshale_wall",
     "falsefutures:brineshale_button",
     "falsefutures:brineshale_pressure_plate",
+    "falsefutures:infested_brineshale",
     "falsefutures:chiseled_brineshale_bricks",
     "falsefutures:brineshale_bricks",
     "falsefutures:brineshale_brick_stairs",
     "falsefutures:brineshale_brick_slab",
-    "falsefutures:brineshale_brick_wall"
+    "falsefutures:brineshale_brick_wall",
+    "falsefutures:infested_brineshale_brick"
   ]
 }

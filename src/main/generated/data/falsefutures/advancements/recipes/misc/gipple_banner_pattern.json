@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gelatin": {
+    "has_gipple_bucket": {
       "conditions": {
         "items": [
           {
             "items": [
-              "falsefutures:gelatin"
+              "falsefutures:gipple_bucket"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_gelatin",
+      "has_gipple_bucket",
       "has_the_recipe"
     ]
   ],

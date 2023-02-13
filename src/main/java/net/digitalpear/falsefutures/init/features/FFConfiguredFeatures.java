@@ -28,7 +28,7 @@ public class FFConfiguredFeatures {
     public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELATITE_VEGETATION_BONEMEAL = register("gelatite_vegetation_bonemeal", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 3, 1));
 
 
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("brine_pool_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 20, 5));
+    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("brine_pool_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 8, 5));
 
     public static final RegistryKey<ConfiguredFeature<?, ?>> BRINE_POOL = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
             new Identifier(FalseFutures.MOD_ID, "brine_pool"));

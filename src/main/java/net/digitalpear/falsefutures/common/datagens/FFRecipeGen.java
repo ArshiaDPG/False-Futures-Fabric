@@ -10,23 +10,22 @@ import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.registry.Registry;
 
 import java.util.function.Consumer;
 
 public class FFRecipeGen extends FabricRecipeProvider {
-    /*
-        This map is used to generate the recipes and English translations of all Jellys.
-     */
+
     public FFRecipeGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
     }
 
     @Override
     protected void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
-
+        /*
+            This map is used to generate the recipes and English translations of all Jellys.
+         */
         FFBlocks.JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
 
         ShapelessRecipeJsonBuilder.create(FFBlocks.GELATITE)
@@ -37,12 +36,6 @@ public class FFRecipeGen extends FabricRecipeProvider {
                 .input(Blocks.COBBLED_DEEPSLATE)
                 .input(FFItems.GELATIN)
                 .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
-
-        ShapelessRecipeJsonBuilder.create(FFItems.GIPPLE_BANNER_PATTERN)
-                .input(Items.PAPER)
-                .input(FFItems.GIPPLE_BUCKET)
-                .criterion("has_gipple_bucket", conditionsFromItem(FFItems.GIPPLE_BUCKET)).offerTo(exporter);
-
 
         ShapedRecipeJsonBuilder.create(FFBlocks.GELATITE_BRICKS, 4)
                 .input('X', FFBlocks.GELATITE)

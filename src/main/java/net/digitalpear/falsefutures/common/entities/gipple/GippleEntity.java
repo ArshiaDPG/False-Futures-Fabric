@@ -115,7 +115,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
         this.goalSelector.add(1, new FleeEntityGoal(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(2, new FlyGoal(this, 1.0D));
         this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
@@ -138,13 +137,15 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
         super.mobTick();
     }
 
-    public static DefaultAttributeContainer.Builder createGippleAttributes() {
-
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25D)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
+    @Override
+    public boolean canSpawn(WorldView world) {
+        if (this.getPos().getY() >= world.getSeaLevel()){
+            return false;
+        }
+        else if(random.nextInt(100) == 1){
+            return super.canSpawn(world);
+        }
+        return false;
     }
 
     @Override
@@ -153,15 +154,21 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
             this.setPersistent();
             this.setFromBucket(true);
         }
-        this.setVelocity(0, 0, 0);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
-
 
 
     /*
     Data
     */
+    public static DefaultAttributeContainer.Builder createGippleAttributes() {
+
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25D)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
+    }
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
     }
@@ -238,13 +245,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
         Tick stuff
      */
 
-
-
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient && this.isAlive() && this.age % 10 == 0) {
-            this.heal(1.0F);
-        }
 
         if (this.isDancing() && this.shouldStopDancing() && this.age % 20 == 0) {
             this.setDancing(false);
@@ -277,7 +279,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
         }
 
         if (!this.world.isClient() && this.digestingCooldown == 0L) {
-            this.dataTracker.set(DIGESTING, true);
+            this.dataTracker.set(DIGESTING, false);
         }
 
     }
@@ -427,14 +429,20 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
         return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
     }
+
+    @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
+
+    @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
     }
 
+    @Override
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
     }
+
     private static class FlyOntoLichenGoal extends FlyGoal {
         public FlyOntoLichenGoal(PathAwareEntity pathAwareEntity, double d) {
             super(pathAwareEntity, d);
@@ -480,25 +488,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
             return Vec3d.ofBottomCenter(blockPos2);
         }
     }
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() || this.isLogicalSideForUpdatingMovement()) {
-            if (this.isTouchingWater()) {
-                this.updateVelocity(0.02F, movementInput);
-                this.move(MovementType.SELF, this.getVelocity());
-                this.setVelocity(this.getVelocity().multiply(0.800000011920929D));
-            } else if (this.isInLava()) {
-                this.updateVelocity(0.02F, movementInput);
-                this.move(MovementType.SELF, this.getVelocity());
-                this.setVelocity(this.getVelocity().multiply(0.5D));
-            } else {
-                this.updateVelocity(this.getMovementSpeed(), movementInput);
-                this.move(MovementType.SELF, this.getVelocity());
-                this.setVelocity(this.getVelocity().multiply(0.9100000262260437D));
-            }
-        }
 
-        this.updateLimbs(this, false);
-    }
     public void eatLichen(){
         if (world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) && !isDigesting()){
             if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){

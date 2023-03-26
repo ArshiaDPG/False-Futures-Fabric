@@ -1,7 +1,6 @@
-package net.digitalpear.falsefutures.common.entities.new_gipple;
+package net.digitalpear.falsefutures.common.entities.gipple;
 
 import net.digitalpear.falsefutures.FalseFuturesConfig;
-import net.digitalpear.falsefutures.common.entities.gipple.GippleEntity;
 import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -62,12 +61,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Iterator;
 
-public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnimatable, IAnimationTickable {
+public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimatable, IAnimationTickable {
     /*
         General values
      */
-    private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(NewGippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(NewGippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     /*
         Interactions
@@ -77,6 +76,8 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
     private int pettingCooldown = 300;
     private int eatingCooldown;
     int eatingCooldownRange = 1000;
+    private boolean isEating = false;
+    int eatingAnimationCooldown = 30;
 
     /*
         Animations
@@ -88,20 +89,20 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
      */
     @Nullable
     private BlockPos jukeboxPos;
-    private static final TrackedData<Boolean> DANCING = DataTracker.registerData(NewGippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private final EntityGameEventHandler<NewGippleEntity.JukeboxEventListener> jukeboxEventHandler;
+    private static final TrackedData<Boolean> DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private final EntityGameEventHandler<GippleEntity.JukeboxEventListener> jukeboxEventHandler;
 
 
     /*
         Initialization
      */
-    protected NewGippleEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public GippleEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
         this.moveControl = new FlightMoveControl(this, 20, true);
 
         PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
-        this.jukeboxEventHandler = new EntityGameEventHandler(new NewGippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
+        this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
         eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
     }
     protected void initGoals() {
@@ -111,11 +112,12 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
         this.goalSelector.add(1, new FleeEntityGoal(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(2, new NewGippleEntity.FlyOntoLichenGoal(this, 1.0D));
+        this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
     public static DefaultAttributeContainer.Builder createGippleAttributes() {
+        Alla
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25D)
@@ -170,7 +172,7 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
         this.setDancing(nbt.getBoolean("Dancing"));
     }
 
-    private boolean isDigesting() {
+    public boolean isDigesting() {
         return dataTracker.get(DIGESTING);
     }
     public void setDigesting(boolean value) {
@@ -182,6 +184,7 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
     public void setDancing(boolean value) {
         this.dataTracker.set(DANCING, value);
     }
+
 
     /*
     Bucket stuff
@@ -221,8 +224,23 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
             this.setDancing(false);
             this.jukeboxPos = null;
         }
+        if (this.isEating){
+            if (eatingAnimationCooldown <= 0){
+                this.isEating = false;
+            }
+            else{
+                eatingAnimationCooldown--;
+            }
+        }
+        if (!this.isBaby()) {
+            eatLichen();
+        }
+
 
         this.tickDigestionCooldown();
+
+
+        super.tickMovement();
     }
     public void tickDigestionCooldown() {
         if (this.digestingCooldown > 0L) {
@@ -232,9 +250,7 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
         if (!this.world.isClient() && this.digestingCooldown == 0L) {
             this.dataTracker.set(DIGESTING, true);
         }
-        if (!this.isBaby()) {
-            eatLichen();
-        }
+
     }
 
     /*
@@ -453,6 +469,8 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
             if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
                 world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
+                isEating = true;
+                eatingAnimationCooldown = 30;
                 setDigesting(true);
                 eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
             }
@@ -487,18 +505,15 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (this.isDancing()){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.dance", true));
-            return PlayState.CONTINUE;
+
         }
-//        else if (this.isEating){
-//            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
-//            return PlayState.CONTINUE;
-//        }
+        else if (this.isEating){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
+        }
         else{
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.ambient", true));
-            return PlayState.CONTINUE;
         }
-
-
+        return PlayState.CONTINUE;
     }
     @Override
     public void registerControllers(AnimationData animationData) {
@@ -535,10 +550,10 @@ public class NewGippleEntity extends PathAwareEntity implements Bucketable,IAnim
 
         public boolean listen(ServerWorld world, GameEvent.Message event) {
             if (event.getEvent() == GameEvent.JUKEBOX_PLAY) {
-                NewGippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), true);
+                GippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), true);
                 return true;
             } else if (event.getEvent() == GameEvent.JUKEBOX_STOP_PLAY) {
-                NewGippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), false);
+                GippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), false);
                 return true;
             } else {
                 return false;

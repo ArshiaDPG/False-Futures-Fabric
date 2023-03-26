@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
+import com.mojang.serialization.Dynamic;
 import net.digitalpear.falsefutures.FalseFuturesConfig;
 import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
@@ -13,25 +14,22 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.FuzzyTargeting;
-import net.minecraft.entity.ai.control.MoveControl;
+import net.minecraft.entity.ai.brain.Brain;
+import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandler;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.mob.ZoglinEntity;
-import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.AllayBrain;
+import net.minecraft.entity.passive.AllayEntity;
 import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -47,6 +45,11 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+import net.minecraft.world.event.EntityPositionSource;
+import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.event.PositionSource;
+import net.minecraft.world.event.listener.EntityGameEventHandler;
+import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -59,31 +62,50 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Iterator;
 
-public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable, IAnimationTickable, Bucketable  {
+public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimatable, IAnimationTickable {
+    /*
+        General values
+     */
     private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    /*
+        Interactions
+     */
     private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
-    private int digestingCooldown = 300;
-    private float floatOnWaterDistance = 0.5f;
-    private int blocksToCheckForWater = 2;
+    private int digestingCooldown = 6000;
+    private int pettingCooldown = 300;
+    private int eatingCooldown;
     int eatingCooldownRange = 1000;
-    int eatingCooldown;
-    private AnimationFactory factory = new AnimationFactory(this);
-    private boolean songPlaying;
-    @Nullable
-    private BlockPos songSource;
     private boolean isEating = false;
-    private int eatingAnimationCooldown = 40;
-    private int pettingCooldown = 0;
+    int eatingAnimationCooldown = 30;
+
+    /*
+        Animations
+     */
+    private AnimationFactory factory = new AnimationFactory(this);
+
+    /*
+        Dancing
+     */
+    @Nullable
+    private BlockPos jukeboxPos;
+    private static final TrackedData<Boolean> DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private final EntityGameEventHandler<GippleEntity.JukeboxEventListener> jukeboxEventHandler;
 
 
-
-    public GippleEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    /*
+        Initialization
+     */
+    public GippleEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
-        this.moveControl = new GippleMoveControl(this, 20, true);
-        this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
-        this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
+        this.moveControl = new FlightMoveControl(this, 20, true);
+
+
+
+        PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
+        this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
         eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
     }
     protected void initGoals() {
@@ -93,9 +115,36 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         this.goalSelector.add(1, new FleeEntityGoal(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(2, new FlyGoal(this, 1.0D));
         this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+    }
+    protected Brain<?> deserializeBrain(Dynamic<?> dynamic) {
+        return GippleBrain.create((Brain<GippleEntity>) this.createBrainProfile().deserialize(dynamic));
+    }
+
+    public Brain<GippleEntity> getBrain() {
+        return (Brain<GippleEntity>) super.getBrain();
+    }
+
+    protected void mobTick() {
+        this.world.getProfiler().push("gippleBrain");
+        this.getBrain().tick((ServerWorld)this.world, this);
+        this.world.getProfiler().pop();
+        this.world.getProfiler().push("gippleActivityUpdate");
+        GippleBrain.updateActivities(this);
+        this.world.getProfiler().pop();
+        super.mobTick();
+    }
+
+    public static DefaultAttributeContainer.Builder createGippleAttributes() {
+
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25D)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
     }
 
     @Override
@@ -108,141 +157,27 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
-    /*
-        Make smol
-     */
-    @Override
-    public EntityDimensions getDimensions(EntityPose pose) {
-        return super.getDimensions(pose).scaled(0.6f);
-    }
 
-    @Override
-    protected Box calculateBoundingBox() {
-        if (this.isBaby()){
-            return super.calculateBoundingBox().contract(0.1);
-        }
-        return super.calculateBoundingBox();
-    }
-
-
-    @Override
-    public void tick() {
-        if (pettingCooldown > 0){
-            pettingCooldown--;
-        }
-        if (isDigesting()){
-            if (digestingCooldown <= 0){
-                digestingCooldown = 300;
-                setDigesting(false);
-            }
-            else{
-                digestingCooldown--;
-            }
-        }
-        else{
-            if (eatingCooldown > 0) {
-                eatingCooldown--;
-            }
-        }
-        if (this.isEating){
-            if (eatingAnimationCooldown > 0){
-                eatingAnimationCooldown--;
-            }
-            else{
-                this.isEating = false;
-            }
-        }
-        super.tick();
-    }
 
     /*
-        Code to stay slightly above water
-     */
-    public void floatOnWater(){
-        for (int i = 0; i <= blocksToCheckForWater; i++){
-            if (world.getBlockState(this.getBlockPos().down(i)).isAir()) {
-                if (world.getBlockState(this.getBlockPos().down(i + 1)).isOf(Blocks.WATER) || world.getBlockState(this.getBlockPos().down(i + 1)).isOf(Blocks.WATER_CAULDRON)) {
-
-                    //Stay a distance from the water
-                    if (this.getY() - this.getBlockPos().down(i + 1).getY() >= 1.5) {
-                        this.setVelocity(this.getVelocity().x, -0.1, this.getVelocity().y);
-                    }
-                    else if (this.getY() - this.getBlockPos().down(i + 1).getY() < floatOnWaterDistance) {
-                        this.setVelocity(this.getVelocity().x, 0.1, this.getVelocity().y);
-                    }
-                    else{
-                        this.setVelocity(this.getVelocity().x, 0, this.getVelocity().y);
-                    }
-                    break;
-                }
-            }
-        }
-    }
-    /*
-        Code to eat lichen
-     */
-
-    @Override
-    public float getPathfindingFavor(BlockPos pos, WorldView world) {
-        return world.getBlockState(pos.down()).isOf(Blocks.GLOW_LICHEN) ? 10.0F : world.getPhototaxisFavor(pos);
-    }
-
-    public void eatLichen(){
-        if (world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) && !isDigesting()){
-            if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
-                this.isEating = true;
-                this.eatingAnimationCooldown = 40;
-
-                world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-                this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
-                setDigesting(true);
-                eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
-            }
-        }
-    }
-
-
-    public boolean isSongPlaying() {
-        return this.songPlaying;
-    }
-
-    @Override
-    public void tickMovement() {
-        if (this.songSource == null || !this.songSource.isWithinDistance(this.getPos(), 3.46D) || !this.world.getBlockState(this.songSource).isOf(Blocks.JUKEBOX)) {
-            this.songPlaying = false;
-            this.songSource = null;
-        }
-        floatOnWater();
-        if (!this.isBaby()) {
-            eatLichen();
-        }
-        super.tickMovement();
-    }
-
-
-
-
-    public static DefaultAttributeContainer.Builder createGippleAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25D)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
-    }
-
+    Data
+    */
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
     }
-
-    public boolean isDigesting(){
-        return dataTracker.get(DIGESTING);
+    @Override
+    protected Box calculateBoundingBox() {
+        if (this.isBaby()){
+            return super.calculateBoundingBox().contract(0.5);
+        }
+        return super.calculateBoundingBox();
     }
-    public final void setDigesting(boolean bloated) {
-        dataTracker.set(DIGESTING, bloated);
+    public Vec3d getLeashOffset() {
+        return new Vec3d(0.0D, (double) this.getStandingEyeHeight() * 0.6D, (double) this.getWidth() * 0.1D);
     }
-
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(DANCING, false);
         this.dataTracker.startTracking(DIGESTING, false);
         this.dataTracker.startTracking(FROM_BUCKET, false);
     }
@@ -250,16 +185,105 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Digesting", this.isDigesting());
         nbt.putBoolean("FromBucket", this.isFromBucket());
+        nbt.putBoolean("Dancing", this.isDancing());
     }
-
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setDigesting(nbt.getBoolean("Digesting"));
         this.setFromBucket(nbt.getBoolean("FromBucket"));
+        this.setDancing(nbt.getBoolean("Dancing"));
+    }
+
+    public boolean isDigesting() {
+        return dataTracker.get(DIGESTING);
+    }
+    public void setDigesting(boolean value) {
+        dataTracker.set(DIGESTING, value);
+    }
+    public boolean isDancing() {
+        return this.dataTracker.get(DANCING);
+    }
+    public void setDancing(boolean value) {
+        this.dataTracker.set(DANCING, value);
+    }
+
+
+    /*
+    Bucket stuff
+    */
+    @Override
+    public boolean isFromBucket() {
+        return dataTracker.get(FROM_BUCKET);
+    }
+    @Override
+    public void setFromBucket(boolean fromBucket) {
+        dataTracker.set(FROM_BUCKET, fromBucket);
+    }
+    public void copyDataToStack(ItemStack stack) {
+        Bucketable.copyDataToStack(this, stack);
+    }
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+    }
+    public SoundEvent getBucketFillSound() {
+        return SoundEvents.ITEM_BUCKET_FILL_FISH;
+    }
+    @Override
+    public ItemStack getBucketItem() {
+        return new ItemStack(FFItems.GIPPLE_BUCKET);
+    }
+
+
+    /*
+        Tick stuff
+     */
+
+
+
+    public void tickMovement() {
+        super.tickMovement();
+        if (!this.world.isClient && this.isAlive() && this.age % 10 == 0) {
+            this.heal(1.0F);
+        }
+
+        if (this.isDancing() && this.shouldStopDancing() && this.age % 20 == 0) {
+            this.setDancing(false);
+            this.jukeboxPos = null;
+        }
+        if (this.isEating){
+            if (eatingAnimationCooldown <= 0){
+                this.isEating = false;
+            }
+            else{
+                eatingAnimationCooldown--;
+            }
+        }
+        if (pettingCooldown > 0){
+            pettingCooldown--;
+        }
+        if (!this.isBaby()) {
+            eatLichen();
+        }
+
+
+        this.tickDigestionCooldown();
+
+
+        super.tickMovement();
+    }
+    public void tickDigestionCooldown() {
+        if (this.digestingCooldown > 0L) {
+            --this.digestingCooldown;
+        }
+
+        if (!this.world.isClient() && this.digestingCooldown == 0L) {
+            this.dataTracker.set(DIGESTING, true);
+        }
+
     }
 
     /*
-        IF digesting drop gelatin when hit.
+        Player Interaction
      */
     @Override
     public boolean damage(DamageSource source, float amount) {
@@ -276,45 +300,38 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         return super.damage(source, amount);
     }
-    /*
-        Overfeeding code.
-     */
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
             /*
                 Go in bucket
              */
-            if (stack.isOf(Items.WATER_BUCKET)) {
-                player.swingHand(hand);
-                Bucketable.tryBucket(player, hand, this);
-            }
+        if (stack.isOf(Items.WATER_BUCKET)) {
+            player.swingHand(hand);
+            Bucketable.tryBucket(player, hand, this);
+        }
             /*
                 Eat lichen and multiply
              */
-            else if (GIPPLE_FOOD.test(stack) && this.isDigesting()) {
-//                if (!this.world.isClient) {
-                    mitosis();
-                    stack.decrement(1);
-                    return ActionResult.SUCCESS;
-//                }
-            }
+        else if (GIPPLE_FOOD.test(stack) && this.isDigesting()) {
+            mitosis();
+            stack.decrement(1);
+            return ActionResult.SUCCESS;
+        }
             /*
                 Pet the gipple
              */
-            else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0){
-                this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-                double x = this.random.nextGaussian() * 0.02D;
-                double y = this.random.nextGaussian() * 0.02D;
-                double z = this.random.nextGaussian() * 0.02D;
-                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
-                pettingCooldown = 60;
-                return ActionResult.SUCCESS;
-            }
+        else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0){
+            this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            double x = this.random.nextGaussian() * 0.02D;
+            double y = this.random.nextGaussian() * 0.02D;
+            double z = this.random.nextGaussian() * 0.02D;
+            this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
+            pettingCooldown = 60;
+            return ActionResult.SUCCESS;
+        }
         return ActionResult.FAIL;
     }
-
-
     public void mitosis(){
         //Chance to spawn a something instead of gipples
         int loop = 0;
@@ -323,8 +340,11 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             spawnGippleNotSomething = false;
         }
         else{
+            /*
+                If something chance passes and hostile mobs can spawn and is not peaceful
+             */
             spawnGippleNotSomething = (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() / 100 + (world.getDifficulty().getId() / 50)) > random.nextFloat()
-                    && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING);
+                    && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && world.getDifficulty() != Difficulty.PEACEFUL;
         }
 
 
@@ -348,13 +368,6 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         this.discard();
     }
-    /*
-        Disables breeding
-     */
-    @Override
-    public void breed(ServerWorld world, AnimalEntity other) {
-    }
-
     public void spawnSomething(){
         SomethingEntity something = FFEntities.SOMETHING.create(world);
         if (this.isPersistent()) {
@@ -381,10 +394,15 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         world.spawnEntity(gipple);
     }
 
+
+
+
+
+
+
     /*
         Sounds
-    */
-
+     */
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
@@ -403,103 +421,20 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         return FFSoundEvents.ENTITY_GIPPLE_HURT;
     }
 
-
     /*
-        Flying code.
-     */
+            Flying code
+    */
+    public float getPathfindingFavor(BlockPos pos, WorldView world) {
+        return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
+    }
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
+    protected void playStepSound(BlockPos pos, BlockState state) {
+    }
 
-    @Override
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
     }
-
-    protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world);
-        birdNavigation.setCanPathThroughDoors(false);
-        birdNavigation.setCanSwim(true);
-        birdNavigation.setCanEnterOpenDoors(true);
-        return birdNavigation;
-    }
-
-    @Override
-    public boolean isInAir() {
-        return !this.isOnGround();
-    }
-
-    @Nullable
-    @Override
-    public GippleEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return FFEntities.GIPPLE.create(world);
-    }
-
-
-    /*
-        Geckolib
-     */
-    @Override
-    public int tickTimer() {
-        return this.age;
-    }
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.isSongPlaying()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.dance", true));
-            return PlayState.CONTINUE;
-        }
-        if (this.isEating){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
-            return PlayState.CONTINUE;
-        }
-
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.ambient", true));
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<GippleEntity>(this, "controller", 0, this::predicate));
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
-    }
-
-    /*
-        Bucket stuff
-     */
-    @Override
-    public boolean isFromBucket() {
-        return dataTracker.get(FROM_BUCKET);
-    }
-
-    @Override
-    public void setFromBucket(boolean fromBucket) {
-        dataTracker.set(FROM_BUCKET, fromBucket);
-    }
-
-    public void copyDataToStack(ItemStack stack) {
-        Bucketable.copyDataToStack(this, stack);
-    }
-
-    public void copyDataFromNbt(NbtCompound nbt) {
-        Bucketable.copyDataFromNbt(this, nbt);
-    }
-
-    public SoundEvent getBucketFillSound() {
-        return SoundEvents.ITEM_BUCKET_FILL_FISH;
-    }
-
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(FFItems.GIPPLE_BUCKET);
-    }
-
-    /*
-        Flying Goal
-     */
     private static class FlyOntoLichenGoal extends FlyGoal {
         public FlyOntoLichenGoal(PathAwareEntity pathAwareEntity, double d) {
             super(pathAwareEntity, d);
@@ -545,65 +480,120 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
             return Vec3d.ofBottomCenter(blockPos2);
         }
     }
-
-    public class GippleMoveControl extends MoveControl {
-        private final int maxPitchChange;
-        private final boolean noGravity;
-
-        public GippleMoveControl(GippleEntity entity, int maxPitchChange, boolean noGravity) {
-            super(entity);
-            this.maxPitchChange = maxPitchChange;
-            this.noGravity = noGravity;
-        }
-        public static boolean isOnWater(World world, Entity gipple) {
-            for (int i = 0; i <= 10; i++) {
-                if (world.getBlockState(gipple.getBlockPos().down(i)).isAir()) {
-                    if (world.getBlockState(gipple.getBlockPos().down(i + 1)).isOf(Blocks.WATER) || world.getBlockState(gipple.getBlockPos().down(i + 1)).isOf(Blocks.WATER_CAULDRON)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public void tick() {
-            if (this.state == State.MOVE_TO) {
-                this.state = State.WAIT;
-                this.entity.setNoGravity(true);
-                double x = this.targetX - this.entity.getX();
-                double y = isOnWater(world, entity) ? 0 : this.targetY - this.entity.getY();
-                double z = this.targetZ - this.entity.getZ();
-                double g = x * x + y * y + z * z;
-                if (g < 2.500000277905201E-7D) {
-                    this.entity.setUpwardSpeed(0.0F);
-                    this.entity.setForwardSpeed(0.0F);
-                    return;
-                }
-                float flightPath = (float)(MathHelper.atan2(z, x) * 57.2957763671875D) - 90.0F;
-                this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(), flightPath, 90.0F));
-                float speed;
-                if (this.entity.isOnGround()) {
-                    speed = (float)(this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-                } else {
-                    speed = (float)(this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_FLYING_SPEED));
-                }
-
-                this.entity.setMovementSpeed(speed);
-                double j = Math.sqrt(x * x + z * z);
-                if (Math.abs(y) > 9.999999747378752E-6D || Math.abs(j) > 9.999999747378752E-6D) {
-                    float k = (float)(-(MathHelper.atan2(y, j) * 57.2957763671875D));
-                    this.entity.setPitch(this.wrapDegrees(this.entity.getPitch(), k, (float)this.maxPitchChange));
-                    this.entity.setUpwardSpeed(y > 0.0D ? speed : -speed);
-                }
+    public void travel(Vec3d movementInput) {
+        if (this.canMoveVoluntarily() || this.isLogicalSideForUpdatingMovement()) {
+            if (this.isTouchingWater()) {
+                this.updateVelocity(0.02F, movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(0.800000011920929D));
+            } else if (this.isInLava()) {
+                this.updateVelocity(0.02F, movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(0.5D));
             } else {
-                if (!this.noGravity) {
-                    this.entity.setNoGravity(false);
-                }
-
-                this.entity.setUpwardSpeed(0.0F);
-                this.entity.setForwardSpeed(0.0F);
+                this.updateVelocity(this.getMovementSpeed(), movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(0.9100000262260437D));
             }
+        }
 
+        this.updateLimbs(this, false);
+    }
+    public void eatLichen(){
+        if (world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) && !isDigesting()){
+            if ((random.nextFloat() > 0.8) && eatingCooldown <= 0){
+                world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+                this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
+                isEating = true;
+                eatingAnimationCooldown = 30;
+                setDigesting(true);
+                eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
+            }
         }
     }
+
+
+
+    /*
+            Dancing code
+         */
+    private boolean shouldStopDancing() {
+        return this.jukeboxPos == null || !this.jukeboxPos.isWithinDistance(this.getPos(), (double)GameEvent.JUKEBOX_PLAY.getRange()) || !this.world.getBlockState(this.jukeboxPos).isOf(Blocks.JUKEBOX);
+    }
+
+    public void updateJukeboxPos(BlockPos jukeboxPos, boolean playing) {
+        if (playing) {
+            if (!this.isDancing()) {
+                this.jukeboxPos = jukeboxPos;
+                this.setDancing(true);
+            }
+        } else if (jukeboxPos.equals(this.jukeboxPos) || this.jukeboxPos == null) {
+            this.jukeboxPos = null;
+            this.setDancing(false);
+        }
+
+    }
+
+    /*
+        Animations
+     */
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (this.isDancing()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.dance", true));
+
+        }
+        else if (this.isEating){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
+        }
+        else{
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.ambient", true));
+        }
+        return PlayState.CONTINUE;
+    }
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
+    @Override
+    public int tickTimer() {
+        return this.age;
+    }
+
+
+    private class JukeboxEventListener implements GameEventListener {
+        private final PositionSource positionSource;
+        private final int range;
+
+        public JukeboxEventListener(PositionSource positionSource, int range) {
+            this.positionSource = positionSource;
+            this.range = range;
+        }
+
+        public PositionSource getPositionSource() {
+            return this.positionSource;
+        }
+
+        public int getRange() {
+            return this.range;
+        }
+
+        public boolean listen(ServerWorld world, GameEvent.Message event) {
+            if (event.getEvent() == GameEvent.JUKEBOX_PLAY) {
+                GippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), true);
+                return true;
+            } else if (event.getEvent() == GameEvent.JUKEBOX_STOP_PLAY) {
+                GippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), false);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 }

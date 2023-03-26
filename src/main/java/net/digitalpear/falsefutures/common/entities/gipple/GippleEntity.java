@@ -23,6 +23,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandler;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -74,6 +75,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
     private boolean isEating = false;
     private int eatingAnimationCooldown = 40;
     private int pettingCooldown = 0;
+
 
 
     public GippleEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -144,7 +146,7 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
         }
         if (this.isEating){
             if (eatingAnimationCooldown > 0){
-                eatingCooldown--;
+                eatingAnimationCooldown--;
             }
             else{
                 this.isEating = false;
@@ -604,5 +606,4 @@ public class GippleEntity extends AnimalEntity implements Flutterer, IAnimatable
 
         }
     }
-
 }

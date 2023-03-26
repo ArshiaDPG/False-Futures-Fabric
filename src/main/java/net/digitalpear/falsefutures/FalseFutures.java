@@ -26,6 +26,7 @@ public class FalseFutures implements ModInitializer {
         FFConfiguredFeatures.init();
         FFPlacedFeatures.init();
         FFBannerPatterns.init();
+        FFStructures.init();
 
 
         ConfigRegistry.register(new FalseFuturesConfig());

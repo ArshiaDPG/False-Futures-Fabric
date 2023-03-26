@@ -11,6 +11,7 @@ import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.server.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -38,7 +39,7 @@ public class FFBlockLootTableGen extends SimpleFabricLootTableProvider {
 
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
-        biConsumer.accept(new Identifier(FalseFutures.MOD_ID, "blocks/gipplepad"), BlockLootTableGenerator.drops(FFItems.GIPPLEPAD));
+        simpleDrop(biConsumer, FFBlocks.GIPPLEPAD);
 
         stoneSet(biConsumer, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_WALL, FFBlocks.GELATITE_BUTTON,
                 FFBlocks.GELATITE_PRESSURE_PLATE);

@@ -36,9 +36,8 @@ public class JellyrootBlock extends PlantBlock implements Fertilizable {
         if (FFBlocks.TALL_JELLYROOT.getDefaultState().canPlaceAt(world, pos) && world.isAir(pos.up())) {
             TallPlantBlock.placeAt(world, FFBlocks.TALL_JELLYROOT.getDefaultState(), pos, 2);
         }
-
     }
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.FARMLAND) || floor.isIn(FFBlockTags.JELLYROOT_PLANTABLES);
+        return floor.isIn(FFBlockTags.JELLYROOT_PLANTABLES);
     }
 }

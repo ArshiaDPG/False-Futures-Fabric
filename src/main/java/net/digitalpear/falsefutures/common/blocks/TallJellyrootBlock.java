@@ -7,6 +7,7 @@ import net.minecraft.block.TallPlantBlock;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 
 public class TallJellyrootBlock extends TallPlantBlock {
     public TallJellyrootBlock(Settings settings) {
@@ -15,6 +16,6 @@ public class TallJellyrootBlock extends TallPlantBlock {
 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.FARMLAND) || floor.isIn(FFBlockTags.JELLYROOT_PLANTABLES);
+        return floor.isIn(FFBlockTags.JELLYROOT_PLANTABLES);
     }
 }

@@ -1,6 +1,5 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
-import com.mojang.serialization.Dynamic;
 import net.digitalpear.falsefutures.FalseFuturesConfig;
 import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
@@ -14,8 +13,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.FuzzyTargeting;
-import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.control.FlightMoveControl;
+import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -23,12 +22,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.WardenEntity;
-import net.minecraft.entity.mob.ZoglinEntity;
-import net.minecraft.entity.passive.AllayBrain;
-import net.minecraft.entity.passive.AllayEntity;
+import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -44,6 +38,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import net.minecraft.world.event.EntityPositionSource;
 import net.minecraft.world.event.GameEvent;
@@ -60,9 +55,10 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.EnumSet;
 import java.util.Iterator;
 
-public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimatable, IAnimationTickable {
+public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimatable, IAnimationTickable {
     /*
         General values
      */
@@ -100,10 +96,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
     public GippleEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
+
         this.moveControl = new FlightMoveControl(this, 20, true);
-
-
-
         PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
         this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
         eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
@@ -115,26 +109,10 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
         this.goalSelector.add(1, new FleeEntityGoal(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(2, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
+        this.goalSelector.add(1, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
+        this.goalSelector.add(2, new FlyRandomlyGoal(this));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-    }
-    protected Brain<?> deserializeBrain(Dynamic<?> dynamic) {
-        return GippleBrain.create((Brain<GippleEntity>) this.createBrainProfile().deserialize(dynamic));
-    }
-
-    public Brain<GippleEntity> getBrain() {
-        return (Brain<GippleEntity>) super.getBrain();
-    }
-
-    protected void mobTick() {
-        this.world.getProfiler().push("gippleBrain");
-        this.getBrain().tick((ServerWorld)this.world, this);
-        this.world.getProfiler().pop();
-        this.world.getProfiler().push("gippleActivityUpdate");
-        GippleBrain.updateActivities(this);
-        this.world.getProfiler().pop();
-        super.mobTick();
     }
 
     @Override
@@ -246,7 +224,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
      */
 
     public void tickMovement() {
-        super.tickMovement();
 
         if (this.isDancing() && this.shouldStopDancing() && this.age % 20 == 0) {
             this.setDancing(false);
@@ -269,7 +246,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
 
 
         this.tickDigestionCooldown();
-
 
         super.tickMovement();
     }
@@ -399,9 +375,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
 
 
 
-
-
-
     /*
         Sounds
      */
@@ -423,6 +396,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
         return FFSoundEvents.ENTITY_GIPPLE_HURT;
     }
 
+
+
     /*
             Flying code
     */
@@ -437,6 +412,11 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
+    }
+
+    @Override
+    public boolean hasNoGravity() {
+        return true;
     }
 
     @Override
@@ -505,8 +485,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
 
 
     /*
-            Dancing code
-         */
+        Dancing code
+    */
     private boolean shouldStopDancing() {
         return this.jukeboxPos == null || !this.jukeboxPos.isWithinDistance(this.getPos(), (double)GameEvent.JUKEBOX_PLAY.getRange()) || !this.world.getBlockState(this.jukeboxPos).isOf(Blocks.JUKEBOX);
     }
@@ -585,5 +565,95 @@ public class GippleEntity extends PathAwareEntity implements Bucketable,IAnimata
             }
         }
     }
+    public void travel(Vec3d movementInput) {
+        if (this.canMoveVoluntarily() || this.isLogicalSideForUpdatingMovement()) {
+            if (this.isTouchingWater()) {
+                this.updateVelocity(0.02F, movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(0.800000011920929));
+            } else if (this.isInLava()) {
+                this.updateVelocity(0.02F, movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(0.5));
+            } else {
+                this.updateVelocity(this.getMovementSpeed(), movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(0.9100000262260437));
+            }
+        }
 
+        this.updateLimbs(this, false);
+    }
+    private static class FlyRandomlyGoal extends Goal {
+        private final GippleEntity gipple;
+
+        public FlyRandomlyGoal(GippleEntity gipple) {
+            this.gipple = gipple;
+            this.setControls(EnumSet.of(Goal.Control.MOVE));
+        }
+
+        public boolean canStart() {
+            MoveControl moveControl = this.gipple.getMoveControl();
+            if (!moveControl.isMoving()) {
+                return true;
+            } else {
+                double d = moveControl.getTargetX() - this.gipple.getX();
+                double e = moveControl.getTargetY() - this.gipple.getY();
+                double f = moveControl.getTargetZ() - this.gipple.getZ();
+                double g = d * d + e * e + f * f;
+                return g < 1.0 || g > 3600.0;
+            }
+        }
+
+        public boolean shouldContinue() {
+            return false;
+        }
+
+        public void start() {
+            Random random = this.gipple.getRandom();
+            double d = this.gipple.getX() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double e = this.gipple.getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double f = this.gipple.getZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.gipple.getMoveControl().moveTo(d, e, f, 1.0);
+        }
+    }
+    static class GippleMoveControls extends MoveControl {
+        private final GippleEntity gipple;
+        private int collisionCheckCooldown;
+
+        public GippleMoveControls(GippleEntity gipple) {
+            super(gipple);
+            this.gipple = gipple;
+        }
+
+        public void tick() {
+            if (this.state == MoveControl.State.MOVE_TO) {
+                if (this.collisionCheckCooldown-- <= 0) {
+                    this.collisionCheckCooldown += this.gipple.getRandom().nextInt(5) + 2;
+                    Vec3d vec3d = new Vec3d(this.targetX - this.gipple.getX(), this.targetY - this.gipple.getY(), this.targetZ - this.gipple.getZ());
+                    double d = vec3d.length();
+                    vec3d = vec3d.normalize();
+                    if (this.willCollide(vec3d, MathHelper.ceil(d))) {
+                        this.gipple.setVelocity(this.gipple.getVelocity().add(vec3d.multiply(0.1)));
+                    } else {
+                        this.state = MoveControl.State.WAIT;
+                    }
+                }
+
+            }
+        }
+
+        private boolean willCollide(Vec3d direction, int steps) {
+            Box box = this.gipple.getBoundingBox();
+
+            for(int i = 1; i < steps; ++i) {
+                box = box.offset(direction);
+                if (!this.gipple.world.isSpaceEmpty(this.gipple, box)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
 }

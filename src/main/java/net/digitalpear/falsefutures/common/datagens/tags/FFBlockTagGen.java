@@ -44,8 +44,9 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.GELATITE_BRICKS)
                 .add(FFBlocks.BRINESHALE_BRICKS)
                 .forceAddTag(BlockTags.DIRT)
-                .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
-                .addOptionalTag(BlockTags.BASE_STONE_NETHER)
+                .add(Blocks.FARMLAND)
+                .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+                .forceAddTag(BlockTags.BASE_STONE_NETHER)
                 .add(Blocks.END_STONE);
 
         getOrCreateTagBuilder(BlockTags.BUTTONS)

@@ -60,8 +60,8 @@ public class FFBlockLootTableGen extends FabricBlockLootTableProvider {
 
         GippleInfestedBlock.REGULAR_TO_INFESTED_BLOCK.forEach((regular, infested) -> drops(infested));
 
-
-        tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT);
+        addDrop(FFBlocks.JELLYROOT, jellyrootDrops(FFBlocks.JELLYROOT));
+        addDrop(FFBlocks.TALL_JELLYROOT, tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
     }
 
     public static LootTable.Builder jellyrootDrops(Block dropWithShears) {

@@ -48,6 +48,9 @@ public class FFModelGen extends FabricModelProvider {
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
 
         GippleInfestedBlock.REGULAR_TO_INFESTED_BLOCK.forEach(blockStateModelGenerator::registerParented);
+
+        blockStateModelGenerator.registerParentedItemModel(FFItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
+        blockStateModelGenerator.registerParentedItemModel(FFItems.SOMETHING_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
     }
 
     @Override

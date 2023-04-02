@@ -64,6 +64,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
      */
     private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final float GENERIC_FLYING_SPEED = 0.25f;
 
     /*
         Interactions
@@ -97,7 +98,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         super(entityType, world);
         this.experiencePoints = 5;
 
-        this.moveControl = new FlightMoveControl(this, 20, true);
+        this.moveControl = new FlightMoveControl(this, 1, true);
         PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
         this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
         eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
@@ -113,17 +114,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         this.goalSelector.add(2, new FlyRandomlyGoal(this));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-    }
-
-    @Override
-    public boolean canSpawn(WorldView world) {
-        if (this.getPos().getY() >= world.getSeaLevel()){
-            return false;
-        }
-        else if(random.nextInt(100) == 1){
-            return super.canSpawn(world);
-        }
-        return false;
     }
 
     @Override
@@ -143,7 +133,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
 
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25D)
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, GENERIC_FLYING_SPEED)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
     }
@@ -614,46 +604,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             double d = this.gipple.getX() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double e = this.gipple.getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double f = this.gipple.getZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.gipple.getMoveControl().moveTo(d, e, f, 1.0);
-        }
-    }
-    static class GippleMoveControls extends MoveControl {
-        private final GippleEntity gipple;
-        private int collisionCheckCooldown;
-
-        public GippleMoveControls(GippleEntity gipple) {
-            super(gipple);
-            this.gipple = gipple;
-        }
-
-        public void tick() {
-            if (this.state == MoveControl.State.MOVE_TO) {
-                if (this.collisionCheckCooldown-- <= 0) {
-                    this.collisionCheckCooldown += this.gipple.getRandom().nextInt(5) + 2;
-                    Vec3d vec3d = new Vec3d(this.targetX - this.gipple.getX(), this.targetY - this.gipple.getY(), this.targetZ - this.gipple.getZ());
-                    double d = vec3d.length();
-                    vec3d = vec3d.normalize();
-                    if (this.willCollide(vec3d, MathHelper.ceil(d))) {
-                        this.gipple.setVelocity(this.gipple.getVelocity().add(vec3d.multiply(0.1)));
-                    } else {
-                        this.state = MoveControl.State.WAIT;
-                    }
-                }
-
-            }
-        }
-
-        private boolean willCollide(Vec3d direction, int steps) {
-            Box box = this.gipple.getBoundingBox();
-
-            for(int i = 1; i < steps; ++i) {
-                box = box.offset(direction);
-                if (!this.gipple.world.isSpaceEmpty(this.gipple, box)) {
-                    return false;
-                }
-            }
-
-            return true;
+            this.gipple.getMoveControl().moveTo(d, e, f, GENERIC_FLYING_SPEED);
         }
     }
 }

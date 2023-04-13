@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
 
 import java.nio.file.Path;
@@ -80,8 +81,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
 
-        translationBuilder.add(FFItems.GIPPLE_BANNER_PATTERN, "Banner Pattern");
-        translationBuilder.add(FFItems.GIPPLE_BANNER_PATTERN.getTranslationKey() + ".desc", "Gipple");
+//        translationBuilder.add(FFItems.GIPPLE_BANNER_PATTERN, "Banner Pattern");
+//        translationBuilder.add(FFItems.GIPPLE_BANNER_PATTERN.getTranslationKey() + ".desc", "Gipple");
+//        makeColoredBannerPatterns(translationBuilder, "Gipple");
+        makeBannerStuff(translationBuilder, FFItems.GIPPLE_BANNER_PATTERN, "Gipple");
 
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
@@ -99,6 +102,20 @@ public class FFLanguageProvider extends FabricLanguageProvider {
             translationBuilder.add(existingFilePath);
         } catch (Exception e) {
             throw new RuntimeException("Failed to add existing language file!", e);
+        }
+    }
+
+    private void makeBannerStuff(TranslationBuilder translationBuilder, Item item, String name){
+        translationBuilder.add(item, "Banner Pattern");
+        translationBuilder.add(item.getTranslationKey() + ".desc", name);
+        makeColoredBannerPatterns(translationBuilder, name);
+    }
+
+
+    private void makeColoredBannerPatterns(TranslationBuilder translationBuilder, String name){
+        for (int i = 0; i < 16; i++){
+            translationBuilder.add("block.minecraft.banner."  + FalseFutures.MOD_ID +  "." + name.toLowerCase() + "." + DyeColor.byId(i),
+                    autoNameInner(DyeColor.byId(i).getName()) + " " + name);
         }
     }
 

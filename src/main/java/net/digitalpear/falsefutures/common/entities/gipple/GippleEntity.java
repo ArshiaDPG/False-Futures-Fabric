@@ -150,6 +150,17 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
     }
+
+    @Override
+    public Box getBoundingBox(EntityPose pose) {
+        if (this.isBaby()){
+            return super.getBoundingBox(pose).contract(0.2);
+        }
+        else{
+            return super.getBoundingBox(pose);
+        }
+    }
+
     @Override
     protected Box calculateBoundingBox() {
         if (this.isBaby()){
@@ -304,7 +315,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             /*
                 Pet the gipple
              */
-        else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0){
+        else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0 && player.getStackInHand(hand).isEmpty()){
             this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             double x = this.random.nextGaussian() * 0.02D;
             double y = this.random.nextGaussian() * 0.02D;

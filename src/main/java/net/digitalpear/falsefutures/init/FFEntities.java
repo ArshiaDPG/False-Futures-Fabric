@@ -16,7 +16,7 @@ public class FFEntities {
     public static final EntityType<GippleEntity> GIPPLE = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier(FalseFutures.MOD_ID, "gipple"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, GippleEntity::new).dimensions(EntityDimensions.fixed(0.75f, 0.5f)).build()
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, GippleEntity::new).dimensions(EntityDimensions.changing(0.75f, 0.5f)).build()
     );
     public static final EntityType<SomethingEntity> SOMETHING = Registry.register(
             Registry.ENTITY_TYPE,

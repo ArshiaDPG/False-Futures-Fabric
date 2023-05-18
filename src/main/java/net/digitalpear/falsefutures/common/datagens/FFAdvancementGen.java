@@ -6,9 +6,15 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.AdvancementManager;
+import net.minecraft.advancement.criterion.ConsumeItemCriterion;
+import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.function.Consumer;
@@ -20,7 +26,9 @@ public class FFAdvancementGen extends FabricAdvancementProvider {
 
     @Override
     public void generateAdvancement(Consumer<Advancement> consumer) {
-        Advancement dummy = Advancement.Builder.create().build(consumer,"husbandry/root");
+
+
+        Advancement dummy = Advancement.Builder.create().display((ItemConvertible) Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), new Identifier("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", (CriterionConditions) ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
         var jellies = Advancement.Builder.create()
                 .display(
                         FFBlocks.PLAIN_JELLY, // The display icon
@@ -33,6 +41,7 @@ public class FFAdvancementGen extends FabricAdvancementProvider {
                         false // Hidden in the advancement tab
                 )
                 .parent(dummy);
+
         for(Block jelly : FFBlocks.JELLY.keySet()) {
             jellies.criterion("collected_jelly_" + Registry.BLOCK.getId(jelly).getPath().split("_")[0], InventoryChangedCriterion.Conditions.items(jelly));
         }

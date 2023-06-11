@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.util.registry.Registry;
 
-public class FFBannerPatternItemTagGen extends FabricTagProvider<BannerPattern> {
+public class FFBannerPatternTagGen extends FabricTagProvider<BannerPattern> {
     /**
      * Construct a new {@link FabricTagProvider} with the default computed path.
      *
@@ -15,7 +15,7 @@ public class FFBannerPatternItemTagGen extends FabricTagProvider<BannerPattern> 
      *
      * @param dataGenerator The data generator instance
      */
-    public FFBannerPatternItemTagGen(FabricDataGenerator dataGenerator) {
+    public FFBannerPatternTagGen(FabricDataGenerator dataGenerator) {
         super(dataGenerator, Registry.BANNER_PATTERN);
     }
 

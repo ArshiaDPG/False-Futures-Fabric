@@ -14,7 +14,6 @@ import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.control.FlightMoveControl;
-import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -24,7 +23,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.mob.WardenEntity;
+import net.minecraft.entity.mob.ZoglinEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -40,7 +42,6 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import net.minecraft.world.event.EntityPositionSource;
 import net.minecraft.world.event.GameEvent;
@@ -57,7 +58,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.EnumSet;
 import java.util.Iterator;
 
 public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimatable, IAnimationTickable {
@@ -66,6 +66,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
      */
     private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_EATING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final float GENERIC_FLYING_SPEED = 0.1f;
 
     /*
@@ -76,7 +77,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
     private int pettingCooldown = 300;
     private int eatingCooldown;
     int eatingCooldownRange = 200;
-    private boolean isEating = false;
     int eatingAnimationCooldown = 30;
 
     /*
@@ -176,18 +176,21 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         this.dataTracker.startTracking(DANCING, false);
         this.dataTracker.startTracking(DIGESTING, false);
         this.dataTracker.startTracking(FROM_BUCKET, false);
+        this.dataTracker.startTracking(IS_EATING, false);
     }
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Digesting", this.isDigesting());
         nbt.putBoolean("FromBucket", this.isFromBucket());
         nbt.putBoolean("Dancing", this.isDancing());
+        nbt.putBoolean("IsEating", this.getIsEating());
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setDigesting(nbt.getBoolean("Digesting"));
         this.setFromBucket(nbt.getBoolean("FromBucket"));
         this.setDancing(nbt.getBoolean("Dancing"));
+        this.setIsEating(nbt.getBoolean("IsEating"));
     }
 
     public boolean isDigesting() {
@@ -201,6 +204,13 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
     }
     public void setDancing(boolean value) {
         this.dataTracker.set(DANCING, value);
+    }
+
+    public Boolean getIsEating() {
+        return this.dataTracker.get(IS_EATING);
+    }
+    public void setIsEating(boolean value) {
+        this.dataTracker.set(IS_EATING, value);
     }
 
 
@@ -240,9 +250,9 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             this.setDancing(false);
             this.jukeboxPos = null;
         }
-        if (this.isEating){
+        if (getIsEating()){
             if (eatingAnimationCooldown <= 0){
-                this.isEating = false;
+                setIsEating(false);
             }
             else{
                 eatingAnimationCooldown--;
@@ -534,7 +544,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         if ((world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) || world.getBlockState(this.getBlockPos().down()).isIn(FFBlockTags.GIPPLE_FOOD)) && !isDigesting() && eatingCooldown <= 0){
             world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
-            isEating = true;
+            setIsEating(true);
             eatingAnimationCooldown = 30;
             setDigesting(true);
             eatingCooldown = random.nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
@@ -571,7 +581,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.dance", true));
 
         }
-        else if (this.isEating){
+        else if (getIsEating()){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
         }
         else{

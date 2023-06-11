@@ -6,6 +6,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.*;
 
 public class FFFeatures {
+
     public static final Feature<NetherForestVegetationFeatureConfig> GELATITE_VEGETATION = register("gelatite_vegetation", new GelatiteVegetationFeature(NetherForestVegetationFeatureConfig.VEGETATION_CODEC));
     public static final Feature<DefaultFeatureConfig> BRINE_POOL = register("brine_pool", new BrinePoolsFeature(DefaultFeatureConfig.CODEC));
 

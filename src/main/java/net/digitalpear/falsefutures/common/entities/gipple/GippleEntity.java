@@ -634,6 +634,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             }
         }
     }
+
     public void travel(Vec3d movementInput) {
         if (this.canMoveVoluntarily() || this.isLogicalSideForUpdatingMovement()) {
             if (this.isTouchingWater()) {
@@ -654,4 +655,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         this.updateLimbs(this, false);
     }
 
+    @Override
+    public boolean canSpawn(WorldView world) {
+        return world.getBlockState(this.getBlockPos().down()).isIn(FFBlockTags.GIPPLE_SPAWNABLES);
+    }
 }

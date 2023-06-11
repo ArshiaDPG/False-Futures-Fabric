@@ -28,6 +28,8 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 jellies.add(jelly);
             }
 
+        getOrCreateTagBuilder(FFBlockTags.GIPPLE_SPAWNABLES).add(FFBlocks.GELATITE).add(FFBlocks.BRINESHALE);
+
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)
                 .add(FFBlocks.JELLYROOT)

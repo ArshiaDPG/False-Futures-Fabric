@@ -28,7 +28,7 @@ public class FFAdvancementGen extends FabricAdvancementProvider {
     public void generateAdvancement(Consumer<Advancement> consumer) {
 
 
-        Advancement dummy = Advancement.Builder.create().display((ItemConvertible) Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), new Identifier("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", (CriterionConditions) ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
+        Advancement dummy = Advancement.Builder.create().display(Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), new Identifier("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", (CriterionConditions) ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
         var jellies = Advancement.Builder.create()
                 .display(
                         FFBlocks.PLAIN_JELLY, // The display icon

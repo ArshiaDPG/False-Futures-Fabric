@@ -1,10 +1,7 @@
 package net.digitalpear.falsefutures;
 
 import net.digitalpear.falsefutures.common.datagens.*;
-import net.digitalpear.falsefutures.common.datagens.tags.FFBannerPatternTagGen;
-import net.digitalpear.falsefutures.common.datagens.tags.FFBlockTagGen;
-import net.digitalpear.falsefutures.common.datagens.tags.FFEntityTypeTagGen;
-import net.digitalpear.falsefutures.common.datagens.tags.FFItemTagGen;
+import net.digitalpear.falsefutures.common.datagens.tags.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -19,6 +16,7 @@ public class FFDatagens implements DataGeneratorEntrypoint {
         fabricDataGenerator.addProvider(FFBlockTagGen::new);
         fabricDataGenerator.addProvider(FFEntityTypeTagGen::new);
         fabricDataGenerator.addProvider(FFBannerPatternTagGen::new);
+        fabricDataGenerator.addProvider(FFBiomeTagGen::new);
 
         /*
             Everything else

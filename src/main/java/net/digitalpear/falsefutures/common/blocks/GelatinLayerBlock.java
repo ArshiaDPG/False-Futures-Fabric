@@ -47,7 +47,6 @@ public class GelatinLayerBlock extends Block implements Waterloggable {
             case LAND -> state.get(LAYERS) < 5;
             case WATER -> false;
             case AIR -> false;
-            default -> false;
         };
     }
 
@@ -82,7 +81,7 @@ public class GelatinLayerBlock extends Block implements Waterloggable {
         } else if (blockState.isIn(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)) {
             return true;
         } else {
-            return Block.isFaceFullSquare(blockState.getCollisionShape(world, pos.down()), Direction.UP) || blockState.isOf(this) && (Integer) blockState.get(LAYERS) == 8;
+            return Block.isFaceFullSquare(blockState.getCollisionShape(world, pos.down()), Direction.UP) || blockState.isOf(this) && blockState.get(LAYERS) == 8;
         }
     }
 

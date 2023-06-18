@@ -3,6 +3,7 @@ package net.digitalpear.falsefutures.common.datagens.tags;
 import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -23,6 +24,6 @@ public class FFBiomeTagGen extends FabricTagProvider.DynamicRegistryTagProvider<
 
     @Override
     protected void generateTags() {
-        getOrCreateTagBuilder(FFBiomeTags.GIPPLE_HABITATS).add(BiomeKeys.DRIPSTONE_CAVES);
+        getOrCreateTagBuilder(FFBiomeTags.GIPPLE_HABITATS).add(BiomeKeys.DRIPSTONE_CAVES).addOptional(new Identifier("galosphere:lichen_caves"));
     }
 }

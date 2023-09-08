@@ -14,6 +14,7 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
@@ -23,7 +24,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class SomethingEntity extends HostileEntity implements Monster, Flutterer, IAnimatable, IAnimationTickable {
+public class SomethingEntity extends HostileEntity implements Monster, Flutterer, IAnimatable, IAnimationTickable, GeoAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private boolean isAttacking = false;
 

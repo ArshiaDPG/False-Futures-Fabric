@@ -1,6 +1,8 @@
 package net.digitalpear.falsefutures;
 
 import net.digitalpear.falsefutures.common.datagens.*;
+import net.digitalpear.falsefutures.common.datagens.providers.FFConfiguredFeatureProvider;
+import net.digitalpear.falsefutures.common.datagens.providers.FFPlacedFeatureProvider;
 import net.digitalpear.falsefutures.common.datagens.tags.*;
 import net.digitalpear.falsefutures.init.features.FFConfiguredFeatures;
 import net.digitalpear.falsefutures.init.features.FFPlacedFeatures;
@@ -33,6 +35,9 @@ public class FFDatagens implements DataGeneratorEntrypoint {
         pack.addProvider(FFModelGen::new);
         pack.addProvider(FFRecipeGen::new);
         pack.addProvider(FFLanguageProvider::new);
+
+        pack.addProvider(FFConfiguredFeatureProvider::new);
+        pack.addProvider(FFPlacedFeatureProvider::new);
     }
 
     @Override

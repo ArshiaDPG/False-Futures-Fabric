@@ -20,10 +20,10 @@ import java.util.List;
 
 public class FFConfiguredFeatures {
 
-    public static List<RegistryKey<ConfiguredFeature<?, ?>>> placedFeatures = new ArrayList<>();
+    public static List<RegistryKey<ConfiguredFeature<?, ?>>> configuredFeatures = new ArrayList<>();
     public static RegistryKey<ConfiguredFeature<?, ?>> of(String id) {
         RegistryKey<ConfiguredFeature<?, ?>> placed = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, new Identifier(FalseFutures.MOD_ID, id));
-        placedFeatures.add(placed);
+        configuredFeatures.add(placed);
         return placed;
     }
     public static final RegistryKey<ConfiguredFeature<?, ?>> GIPPLE_COLONY = of("gipple_colony");

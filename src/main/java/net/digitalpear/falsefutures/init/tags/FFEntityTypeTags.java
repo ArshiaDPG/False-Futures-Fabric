@@ -4,9 +4,7 @@ import net.digitalpear.falsefutures.FalseFutures;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class FFEntityTypeTags {
     public static final TagKey<EntityType<?>> SOMETHING_TARGET_BLACKLIST = of("something_target_blacklist");

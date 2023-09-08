@@ -68,17 +68,7 @@ public class BrinePoolsFeature  extends Feature<DefaultFeatureConfig> {
                 if (blockPos2.getSquaredDistance(pos) <= (double) (f * f) && canReplace(serverWorld.getBlockState(blockPos2))) {
                     serverWorld.setBlockState(blockPos2, state, 2);
 
-//                    //With 10% change spawn gelatite
-//                    if (serverWorld.random.nextFloat() > 0.9) {
-//                        FFConfiguredFeatures.ORE_GELATITE.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
-//                                serverWorld.random, blockPos2);
-//                    }
-//
-//                    //With 30% chance if block above is air spawn gelatite vegetation
-//                    if (serverWorld.random.nextFloat() > 0.7 && serverWorld.getBlockState(blockPos2.up()).isAir()) {
-//                        FFConfiguredFeatures.BRINE_POOL_VEGETATION.value().generate(serverWorld, serverWorld.getChunkManager().getChunkGenerator(),
-//                                serverWorld.random, blockPos2);
-//                    }
+
                 }
             }
             pos = pos.add(random.nextBetween(-2, 2), random.nextBetween(-2, 2), random.nextBetween(-2, 2));

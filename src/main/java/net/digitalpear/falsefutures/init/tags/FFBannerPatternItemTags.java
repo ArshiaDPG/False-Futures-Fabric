@@ -2,6 +2,9 @@ package net.digitalpear.falsefutures.init.tags;
 
 import net.digitalpear.falsefutures.FalseFutures;
 import net.minecraft.block.entity.BannerPattern;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -11,6 +14,6 @@ public class FFBannerPatternItemTags {
 
 
     private static TagKey<BannerPattern> of(String id) {
-        return TagKey.of(Registry.BANNER_PATTERN_KEY, new Identifier(FalseFutures.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BANNER_PATTERN, new Identifier(FalseFutures.MOD_ID, id));
     }
 }

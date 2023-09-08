@@ -42,5 +42,4 @@ public class GippleEntityModel extends AnimatedTickingGeoModel<GippleEntity> {
             body.setScaleZ(CHILD_SCALE);
         }
     }
-
 }

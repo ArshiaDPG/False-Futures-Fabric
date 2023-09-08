@@ -4,21 +4,31 @@ import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.features.FFFeatures;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.minecraft.block.BlockState;
-import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.structure.rule.RuleTest;
+import net.minecraft.registry.Registerable;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.gen.feature.NetherForestVegetationFeatureConfig;
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FFConfiguredFeatures {
-    public static final RuleTest BRINESHALE = new BlockMatchRuleTest(FFBlocks.BRINESHALE);
+
+    public static List<RegistryKey<ConfiguredFeature<?, ?>>> placedFeatures = new ArrayList<>();
+    public static RegistryKey<ConfiguredFeature<?, ?>> of(String id) {
+        RegistryKey<ConfiguredFeature<?, ?>> placed = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, new Identifier(FalseFutures.MOD_ID, id));
+        placedFeatures.add(placed);
+        return placed;
+    }
+    public static final RegistryKey<ConfiguredFeature<?, ?>> GIPPLE_COLONY = of("gipple_colony");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> GIPPLE_COLONY_VEGETATION = of("gipple_colony_vegetation");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> GIPPLE_COLONY_VEGETATION_BONEMEAL = of("gipple_colony_vegetation_bonemeal");
 
     public static final WeightedBlockStateProvider GELATITE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
             .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
@@ -26,25 +36,12 @@ public class FFConfiguredFeatures {
             .add(FFBlocks.JELLYROOT.getDefaultState(), 10)
             .build());
 
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> GELATITE_VEGETATION_BONEMEAL = register("gelatite_vegetation_bonemeal", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 3, 1));
+    public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> featureRegisterable) {
+        RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 
-
-    public static final RegistryEntry<ConfiguredFeature<NetherForestVegetationFeatureConfig, ?>> BRINE_POOL_VEGETATION = register("brine_pool_vegetation", FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 8, 5));
-
-    public static final RegistryEntry<ConfiguredFeature<DefaultFeatureConfig, ?>> BRINE_POOL = register("brine_pool", FFFeatures.BRINE_POOL, new DefaultFeatureConfig());
-
-
-    public static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_GELATITE = register("ore_gelatite", Feature.ORE,
-            new OreFeatureConfig(List.of(
-                    OreFeatureConfig.createTarget(BRINESHALE, FFBlocks.GELATITE.getDefaultState()),
-                    OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, FFBlocks.BRINESHALE.getDefaultState()),
-                    OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, FFBlocks.GELATITE.getDefaultState())),
-                    8));
-
-
-
-    public static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> register(String id, F feature, FC config) {
-        return BuiltinRegistries.addCasted(BuiltinRegistries.CONFIGURED_FEATURE, FalseFutures.MOD_ID + ":" + id, new ConfiguredFeature(feature, config));
+        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY, FFFeatures.BRINE_POOL);
+        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION_BONEMEAL, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 3, 1));
+        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 8, 5));
     }
 
     public static void init() {

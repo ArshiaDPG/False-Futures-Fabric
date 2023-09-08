@@ -1,13 +1,13 @@
 package net.digitalpear.falsefutures.common.blocks.jelly;
 
 import net.digitalpear.falsefutures.FalseFuturesConfig;
-import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -23,7 +23,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
 
 public class JellyBlock extends Block {
     public static final DirectionProperty FACING = Properties.FACING;
@@ -48,13 +47,6 @@ public class JellyBlock extends Block {
         builder.add(FACING);
     }
 
-    /*
-        -If half block, then destroy instead of push.
-     */
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return state.get(HALVED) ? PistonBehavior.DESTROY : PistonBehavior.NORMAL;
-    }
 
 
     /*
@@ -108,9 +100,8 @@ public class JellyBlock extends Block {
         if (entity.bypassesLandingEffects()) {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
         } else {
-            entity.handleFallDamage(fallDistance, 0.0F, DamageSource.FALL);
+            entity.handleFallDamage(fallDistance, 0.0F, entity.getDamageSources().fall());
         }
-
     }
 
 

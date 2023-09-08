@@ -1,14 +1,10 @@
 package net.digitalpear.falsefutures;
 
-import com.kyanite.paragon.api.ConfigRegistry;
+import com.kyanite.paragon.api.ConfigManager;
 import net.digitalpear.falsefutures.init.*;
 import net.digitalpear.falsefutures.init.features.FFConfiguredFeatures;
 import net.digitalpear.falsefutures.init.features.FFPlacedFeatures;
-import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.entity.SpawnGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +22,8 @@ public class FalseFutures implements ModInitializer {
         FFConfiguredFeatures.init();
         FFPlacedFeatures.init();
         FFBannerPatterns.init();
-        FFStructures.init();
 
-
-        ConfigRegistry.register(new FalseFuturesConfig());
-
+        ConfigManager.register(MOD_ID, new FalseFuturesConfig());
 
         LOGGER.info("False Futures has finished registering successfully.");
     }

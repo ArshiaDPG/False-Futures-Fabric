@@ -5,26 +5,28 @@ import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.digitalpear.falsefutures.common.blocks.jelly.JellyBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Optional;
 
 
 public class FFModelGen extends FabricModelProvider {
-    public FFModelGen(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
-    }
+
 
     public static final Model JELLY_HALF_SIDE = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_side")), Optional.of("_half_side"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_UPPER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_LOWER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
+
+    public FFModelGen(FabricDataOutput output) {
+        super(output);
+    }
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
@@ -154,7 +156,7 @@ public class FFModelGen extends FabricModelProvider {
         Identifier SLAB = Models.SLAB.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         Identifier SLAB_TOP = Models.SLAB_TOP.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(slab,
-                SLAB, SLAB_TOP, new Identifier(FalseFutures.MOD_ID, "block/" + Registry.BLOCK.getId(textureBase).getPath())));
+                SLAB, SLAB_TOP, new Identifier(FalseFutures.MOD_ID, "block/" + Registries.BLOCK.getId(textureBase).getPath())));
     }
 
     public static void createWall(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block wall){

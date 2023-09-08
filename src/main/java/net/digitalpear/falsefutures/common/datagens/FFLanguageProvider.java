@@ -1,24 +1,24 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.init.FFBannerPatterns;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.registry.Registry;
 
 import java.nio.file.Path;
 
 public class FFLanguageProvider extends FabricLanguageProvider {
-    public FFLanguageProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
+
+
+    public FFLanguageProvider(FabricDataOutput dataOutput) {
+        super(dataOutput);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
 
         try {
-            Path existingFilePath = dataGenerator.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
+            Path existingFilePath = dataOutput.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
             translationBuilder.add(existingFilePath);
         } catch (Exception e) {
             throw new RuntimeException("Failed to add existing language file!", e);
@@ -118,13 +118,13 @@ public class FFLanguageProvider extends FabricLanguageProvider {
     }
 
     private void autoName(TranslationBuilder translationBuilder, Block block) {
-        translationBuilder.add(block, autoNameInner(Registry.BLOCK.getId(block).getPath()));
+        translationBuilder.add(block, autoNameInner(Registries.BLOCK.getId(block).getPath()));
     }
     private void autoName(TranslationBuilder translationBuilder, Item item) {
-        translationBuilder.add(item, autoNameInner(Registry.ITEM.getId(item).getPath()));
+        translationBuilder.add(item, autoNameInner(Registries.ITEM.getId(item).getPath()));
     }
     private void autoName(TranslationBuilder translationBuilder, EntityType<?> entityType) {
-        translationBuilder.add(entityType, autoNameInner(Registry.ENTITY_TYPE.getId(entityType).getPath()));
+        translationBuilder.add(entityType, autoNameInner(Registries.ENTITY_TYPE.getId(entityType).getPath()));
     }
 
     private String autoNameInner(String id) {

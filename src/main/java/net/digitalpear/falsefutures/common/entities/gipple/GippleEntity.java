@@ -271,7 +271,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             --this.digestingCooldown;
         }
 
-        if (!this.world.isClient() && this.digestingCooldown == 0L) {
+        if (!this.getWorld().isClient() && this.digestingCooldown == 0L) {
             this.dataTracker.set(DIGESTING, false);
         }
 

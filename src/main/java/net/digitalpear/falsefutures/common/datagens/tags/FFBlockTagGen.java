@@ -2,31 +2,44 @@ package net.digitalpear.falsefutures.common.datagens.tags;
 
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+
+import java.util.concurrent.CompletableFuture;
 
 public class FFBlockTagGen extends FabricTagProvider<Block> {
-    public FFBlockTagGen(FabricDataGenerator dataGenerator) {
-        super(dataGenerator, Registry.BLOCK);
+
+    /**
+     * Constructs a new {@link FabricTagProvider} with the default computed path.
+     *
+     * <p>Common implementations of this class are provided.
+     *
+     * @param output           the {@link FabricDataOutput} instance
+
+     * @param registriesFuture the backing registry for the tag type
+     */
+    public FFBlockTagGen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, RegistryKeys.BLOCK, registriesFuture);
     }
 
     @Override
-    protected void generateTags() {
+    protected void configure(RegistryWrapper.WrapperLookup arg) {
+
         getOrCreateTagBuilder(FFBlockTags.BRINE_POOL_CANNOT_REPLACE)
                 .forceAddTag(BlockTags.FEATURES_CANNOT_REPLACE)
                 .add(FFBlocks.JELLYROOT)
                 .add(FFBlocks.TALL_JELLYROOT);
 
         var jellies = getOrCreateTagBuilder(FFBlockTags.JELLIES);
-            for(Block jelly : FFBlocks.JELLY.keySet()) {
-                jellies.add(jelly);
-            }
+        for(Block jelly : FFBlocks.JELLY.keySet()) {
+            jellies.add(jelly);
+        }
 
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_SPAWNABLES).add(FFBlocks.GELATITE).add(FFBlocks.BRINESHALE);
 

@@ -1,27 +1,25 @@
 package net.digitalpear.falsefutures.common.datagens;
+
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.init.FFBlocks;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.advancement.AdvancementManager;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.tag.BlockTags;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.function.Consumer;
 
 public class FFAdvancementGen extends FabricAdvancementProvider {
-    public FFAdvancementGen(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
+    public FFAdvancementGen(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
@@ -43,7 +41,7 @@ public class FFAdvancementGen extends FabricAdvancementProvider {
                 .parent(dummy);
 
         for(Block jelly : FFBlocks.JELLY.keySet()) {
-            jellies.criterion("collected_jelly_" + Registry.BLOCK.getId(jelly).getPath().split("_")[0], InventoryChangedCriterion.Conditions.items(jelly));
+            jellies.criterion("collected_jelly_" + Registries.BLOCK.getId(jelly).getPath().split("_")[0], InventoryChangedCriterion.Conditions.items(jelly));
         }
         Advancement jelliesAdvancement = jellies.build(consumer, FalseFutures.MOD_ID + ":husbandry/jellies");
     }

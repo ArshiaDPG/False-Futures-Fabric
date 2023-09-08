@@ -1,9 +1,10 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class FFSoundEvents {
     public static final SoundEvent ENTITY_GIPPLE_AMBIENT = register("entity.falsefutures.gipple_ambient");
@@ -13,7 +14,7 @@ public class FFSoundEvents {
     public static final SoundEvent MUSIC_DISC_GIPPLECORE = register("music.record.gipplecore");
 
     private static SoundEvent register(String id) {
-        return Registry.register(Registry.SOUND_EVENT, new Identifier(FalseFutures.MOD_ID + ":" + id), new SoundEvent(new Identifier(FalseFutures.MOD_ID + ":" + id)));
+        return Registry.register(Registries.SOUND_EVENT, new Identifier(FalseFutures.MOD_ID + ":" + id), SoundEvent.of(new Identifier(FalseFutures.MOD_ID + ":" + id)));
     }
 
     public static void init(){

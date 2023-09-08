@@ -40,7 +40,7 @@ public class SymphonicJellyBlock extends JellyBlock {
                 if (player.teleport(g, h, j, true)) {
                     world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(player));
                     SoundEvent soundEvent = SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                    world.playSound((PlayerEntity)null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    world.playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     player.playSound(soundEvent, 1.0F, 1.0F);
                     break;
                 }

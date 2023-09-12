@@ -14,18 +14,20 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SomethingEntity extends HostileEntity implements Monster, Flutterer, IAnimatable, IAnimationTickable, GeoAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class SomethingEntity extends HostileEntity implements Monster, Flutterer, GeoEntity {
+    private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
+    protected static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("something.attack");
+    protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("something.ambient");
     private boolean isAttacking = false;
 
 
@@ -47,8 +49,8 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(1, new FlyGoal(this, 20.0D));
         this.goalSelector.add(1, new SomethingAttackGoal(this, 1.0D, true));
-        this.targetSelector.add(1, new SomethingTargetGoal(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new SomethingTargetGoal(this, PathAwareEntity.class, false));
+        this.targetSelector.add(1, new SomethingTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(2, new SomethingTargetGoal<>(this, PathAwareEntity.class, false));
     }
 
     public static DefaultAttributeContainer.Builder createSomethingAttributes() {
@@ -92,28 +94,28 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
     /*
             Geckolib
          */
+
     @Override
-    public int tickTimer() {
-        return this.age;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isAttacking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("something.attack", false));
-            return PlayState.CONTINUE;
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return instanceCache;
+    }
+
+    public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {
+        if (isAttacking) {
+            return event.setAndContinue(ATTACK_ANIM);
+        } else {
+            return event.setAndContinue(AMBIENT_ANIM);
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("something.ambient", true));
-        return PlayState.CONTINUE;
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<SomethingEntity>(this, "controller", 0, this::predicate));
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public double getTick(Object object) {
+        return this.age;
     }
 
 }

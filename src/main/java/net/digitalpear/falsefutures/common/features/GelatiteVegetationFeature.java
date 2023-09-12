@@ -33,7 +33,7 @@ public class GelatiteVegetationFeature extends Feature<NetherForestVegetationFea
 
                 for(int spreadLoop = 0; spreadLoop < netherForestVegetationFeatureConfig.spreadWidth * netherForestVegetationFeatureConfig.spreadWidth; ++spreadLoop) {
                     BlockPos blockPos2 = blockPos.add(random.nextInt(netherForestVegetationFeatureConfig.spreadWidth) - random.nextInt(netherForestVegetationFeatureConfig.spreadWidth), random.nextInt(netherForestVegetationFeatureConfig.spreadHeight) - random.nextInt(netherForestVegetationFeatureConfig.spreadHeight), random.nextInt(netherForestVegetationFeatureConfig.spreadWidth) - random.nextInt(netherForestVegetationFeatureConfig.spreadWidth));
-                    BlockState blockState2 = netherForestVegetationFeatureConfig.stateProvider.getBlockState(random, blockPos2);
+                    BlockState blockState2 = netherForestVegetationFeatureConfig.stateProvider.get(random, blockPos2);
                     if (structureWorldAccess.isAir(blockPos2) && blockPos2.getY() > structureWorldAccess.getBottomY() && blockState2.canPlaceAt(structureWorldAccess, blockPos2)) {
                         structureWorldAccess.setBlockState(blockPos2, blockState2, 2);
                         ++j;

@@ -38,7 +38,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BlockTags;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
@@ -49,18 +49,19 @@ import net.minecraft.world.event.PositionSource;
 import net.minecraft.world.event.listener.EntityGameEventHandler;
 import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Iterator;
 
-public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimatable, IAnimationTickable {
+public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEntity {
     /*
         General values
      */
@@ -82,7 +83,11 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
     /*
         Animations
      */
-    private AnimationFactory factory = new AnimationFactory(this);
+    private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
+    protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
+    protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlayAndHold("gipple.eat");
+    protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
+
 
     /*
         Dancing
@@ -110,9 +115,9 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(1, new FleeEntityGoal(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(1, new FleeEntityGoal(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
-        this.goalSelector.add(1, new FleeEntityGoal(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(1, new FleeEntityGoal<>(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(1, new FleeEntityGoal<>(this, WardenEntity.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.add(1, new FleeEntityGoal<>(this, ZoglinEntity.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.add(1, new GippleEntity.FlyOntoLichenGoal(this, 1.0D));
         this.goalSelector.add(1, new GippleEntity.FlyOntoWaterGoal(this, 1.0D));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
@@ -326,11 +331,11 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
                 Pet the gipple
              */
         else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0 && player.getStackInHand(hand).isEmpty()){
-            this.world.playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             double x = this.random.nextGaussian() * 0.02D;
             double y = this.random.nextGaussian() * 0.02D;
             double z = this.random.nextGaussian() * 0.02D;
-            this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
+            this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
             pettingCooldown = 60;
             return ActionResult.SUCCESS;
         }
@@ -347,8 +352,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             /*
                 If something chance passes and hostile mobs can spawn and is not peaceful
              */
-            spawnGippleNotSomething = (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() / 100 + (world.getDifficulty().getId() / 50)) > random.nextFloat()
-                    && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && world.getDifficulty() != Difficulty.PEACEFUL;
+            spawnGippleNotSomething = (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() / 100 + (getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
+                    && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && getWorld().getDifficulty() != Difficulty.PEACEFUL;
         }
 
 
@@ -363,30 +368,30 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
                 loop++;
             }
         }
-        this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
         for (int particleLoop=0; particleLoop<=loop; particleLoop++){
             double x = this.random.nextGaussian() * 0.001D;
             double y = this.random.nextGaussian() * 0.06D;
             double z = this.random.nextGaussian() * 0.001D;
-            this.world.addParticle(ParticleTypes.SOUL, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
+            this.getWorld().addParticle(ParticleTypes.SOUL, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
         }
         this.discard();
     }
     public void spawnSomething(){
-        SomethingEntity something = FFEntities.SOMETHING.create(world);
+        SomethingEntity something = FFEntities.SOMETHING.create(getWorld());
         if (this.isPersistent()) {
             something.setPersistent();
         }
         something.setCustomName(this.getCustomName());
         something.setAiDisabled(this.isAiDisabled());
         something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
-        world.spawnEntity(something);
+        getWorld().spawnEntity(something);
     }
     /*
         i only determines rotation and relative z position, if that doesn't matter then just enter 0
      */
     public void spawnGipple(int i){
-        GippleEntity gipple = FFEntities.GIPPLE.create(this.world);
+        GippleEntity gipple = FFEntities.GIPPLE.create(this.getWorld());
 
         if (this.isPersistent()) {
             gipple.setPersistent();
@@ -395,7 +400,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         gipple.setAiDisabled(this.isAiDisabled());
         gipple.setBaby(true);
         gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
-        world.spawnEntity(gipple);
+        getWorld().spawnEntity(gipple);
     }
 
 
@@ -474,7 +479,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             BlockPos.Mutable mutable = new BlockPos.Mutable();
             BlockPos.Mutable mutable2 = new BlockPos.Mutable();
             Iterable<BlockPos> iterable = BlockPos.iterate(MathHelper.floor(this.mob.getX() - 3.0D), MathHelper.floor(this.mob.getY() - 6.0D), MathHelper.floor(this.mob.getZ() - 3.0D), MathHelper.floor(this.mob.getX() + 3.0D), MathHelper.floor(this.mob.getY() + 6.0D), MathHelper.floor(this.mob.getZ() + 3.0D));
-            Iterator var5 = iterable.iterator();
+            Iterator<BlockPos> var5 = iterable.iterator();
 
             BlockPos blockPos2;
             boolean bl;
@@ -484,12 +489,12 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
                         return null;
                     }
 
-                    blockPos2 = (BlockPos)var5.next();
+                    blockPos2 = var5.next();
                 } while(blockPos.equals(blockPos2));
 
-                BlockState blockState = this.mob.world.getBlockState(mutable2.set(blockPos2, Direction.DOWN));
+                BlockState blockState = this.mob.getWorld().getBlockState(mutable2.set(blockPos2, Direction.DOWN));
                 bl = blockState.getBlock() instanceof GlowLichenBlock || blockState.isIn(BlockTags.BASE_STONE_OVERWORLD) || blockState.isIn(FFBlockTags.GIPPLE_FOOD);
-            } while(!bl || !this.mob.world.isAir(blockPos2) || !this.mob.world.isAir(mutable.set(blockPos2, Direction.UP)));
+            } while(!bl || !this.mob.getWorld().isAir(blockPos2) || !this.mob.getWorld().isAir(mutable.set(blockPos2, Direction.UP)));
 
             return Vec3d.ofBottomCenter(blockPos2).add(0, -0.3, 0);
         }
@@ -519,7 +524,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             BlockPos.Mutable mutable = new BlockPos.Mutable();
             BlockPos.Mutable mutable2 = new BlockPos.Mutable();
             Iterable<BlockPos> iterable = BlockPos.iterate(MathHelper.floor(this.mob.getX() - 3.0D), MathHelper.floor(this.mob.getY() - 6.0D), MathHelper.floor(this.mob.getZ() - 3.0D), MathHelper.floor(this.mob.getX() + 3.0D), MathHelper.floor(this.mob.getY() + 6.0D), MathHelper.floor(this.mob.getZ() + 3.0D));
-            Iterator var5 = iterable.iterator();
+            Iterator<BlockPos> var5 = iterable.iterator();
 
             BlockPos blockPos2;
             boolean bl;
@@ -529,21 +534,21 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
                         return null;
                     }
 
-                    blockPos2 = (BlockPos)var5.next();
+                    blockPos2 = var5.next();
                 } while(blockPos.equals(blockPos2));
 
-                BlockState blockState = this.mob.world.getBlockState(mutable2.set(blockPos2, Direction.DOWN));
+                BlockState blockState = this.mob.getWorld().getBlockState(mutable2.set(blockPos2, Direction.DOWN));
                 bl = blockState.isOf(Blocks.WATER) || blockState.isOf(Blocks.WATER_CAULDRON);
-            } while(!bl || !this.mob.world.isAir(blockPos2) || !this.mob.world.isAir(mutable.set(blockPos2, Direction.UP)));
+            } while(!bl || !this.mob.getWorld().isAir(blockPos2) || !this.mob.getWorld().isAir(mutable.set(blockPos2, Direction.UP)));
 
             return Vec3d.ofBottomCenter(blockPos2);
         }
     }
 
     public void eatLichen(){
-        if ((world.getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) || world.getBlockState(this.getBlockPos().down()).isIn(FFBlockTags.GIPPLE_FOOD)) && !isDigesting() && eatingCooldown <= 0){
-            world.playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-            this.world.syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
+        if ((getWorld().getBlockState(this.getBlockPos()).isIn(FFBlockTags.GIPPLE_FOOD) || getWorld().getBlockState(this.getBlockPos().down()).isIn(FFBlockTags.GIPPLE_FOOD)) && !isDigesting() && eatingCooldown <= 0){
+            getWorld().playSound(null, this.getBlockPos(), FFSoundEvents.ENTITY_GIPPLE_BURP, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            this.getWorld().syncWorldEvent(2001, this.getBlockPos(), Block.getRawIdFromState(Blocks.GLOW_LICHEN.getDefaultState()));
             setIsEating(true);
             eatingAnimationCooldown = 30;
             setDigesting(true);
@@ -557,7 +562,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
         Dancing code
     */
     private boolean shouldStopDancing() {
-        return this.jukeboxPos == null || !this.jukeboxPos.isWithinDistance(this.getPos(), (double)GameEvent.JUKEBOX_PLAY.getRange()) || !this.world.getBlockState(this.jukeboxPos).isOf(Blocks.JUKEBOX);
+        return this.jukeboxPos == null || !this.jukeboxPos.isWithinDistance(this.getPos(), GameEvent.JUKEBOX_PLAY.getRange()) || !this.getWorld().getBlockState(this.jukeboxPos).isOf(Blocks.JUKEBOX);
     }
 
     public void updateJukeboxPos(BlockPos jukeboxPos, boolean playing) {
@@ -576,31 +581,28 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
     /*
         Animations
      */
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.isDancing()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.dance", true));
-
-        }
-        else if (getIsEating()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.eat", false));
-        }
-        else{
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gipple.ambient", true));
-        }
-        return PlayState.CONTINUE;
-    }
     @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return instanceCache;
+    }
+
+    public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {
+        if (this.isDancing()) {
+            return event.setAndContinue(DANCING_ANIM);
+        } else if (this.getIsEating()) {
+            return event.setAndContinue(EATING_ANIM);
+        } else {
+            return event.setAndContinue(AMBIENT_ANIM);
+        }
     }
 
     @Override
-    public int tickTimer() {
+    public double getTick(Object object) {
         return this.age;
     }
 
@@ -622,12 +624,13 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             return this.range;
         }
 
-        public boolean listen(ServerWorld world, GameEvent.Message event) {
-            if (event.getEvent() == GameEvent.JUKEBOX_PLAY) {
-                GippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), true);
+        @Override
+        public boolean listen(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos) {
+            if (event == GameEvent.JUKEBOX_PLAY) {
+                GippleEntity.this.updateJukeboxPos(new BlockPos((int)emitterPos.getX(), (int)emitterPos.getY(), (int)emitterPos.getZ()), true);
                 return true;
-            } else if (event.getEvent() == GameEvent.JUKEBOX_STOP_PLAY) {
-                GippleEntity.this.updateJukeboxPos(new BlockPos(event.getEmitterPos()), false);
+            } else if (event == GameEvent.JUKEBOX_STOP_PLAY) {
+                GippleEntity.this.updateJukeboxPos(new BlockPos((int)emitterPos.getX(), (int)emitterPos.getY(), (int)emitterPos.getZ()), false);
                 return true;
             } else {
                 return false;
@@ -652,7 +655,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, IAnimat
             }
         }
 
-        this.updateLimbs(this, false);
+        this.updateLimbs(false);
     }
 
     @Override

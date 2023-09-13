@@ -35,22 +35,8 @@ public class FFPlacedFeatures {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
         RegistryEntry<ConfiguredFeature<?, ?>> registryEntry = registryEntryLookup.getOrThrow(VegetationConfiguredFeatures.BAMBOO_NO_PODZOL);
 
-        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, RarityFilterPlacementModifier.of(10), HeightRangePlacementModifier.uniform(YOffset.BOTTOM, YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
-
+        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, RarityFilterPlacementModifier.of(10), HeightRangePlacementModifier.uniform(YOffset.fixed(-54), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
     }
-
-
-//    public static final RegistryEntry<PlacedFeature> BRINE_POOL = register("brine_pool", FFConfiguredFeatures.BRINE_POOL,
-//            RarityFilterPlacementModifier.of(24), SquarePlacementModifier.of(), HeightRangePlacementModifier.uniform(YOffset.aboveBottom(6), YOffset.fixed(30)), BiomePlacementModifier.of());
-//
-//    public static RegistryEntry<PlacedFeature> register(String id, RegistryEntry<? extends ConfiguredFeature<?, ?>> registryEntry, List<PlacementModifier> modifiers) {
-//        return BuiltinRegistries.add(BuiltinRegistries.PLACED_FEATURE, FalseFutures.MOD_ID + ":" + id, new PlacedFeature(RegistryEntry.upcast(registryEntry), List.copyOf(modifiers)));
-//    }
-//
-//    public static RegistryEntry<PlacedFeature> register(String id, RegistryEntry<? extends ConfiguredFeature<?, ?>> registryEntry, PlacementModifier... modifiers) {
-//        return register(id, registryEntry, List.of(modifiers));
-//    }
-
 
 
     public static void init(){

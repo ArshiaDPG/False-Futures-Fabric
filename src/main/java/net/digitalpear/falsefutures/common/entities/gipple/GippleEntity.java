@@ -1,6 +1,5 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
-import net.digitalpear.falsefutures.FalseFuturesConfig;
 import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;

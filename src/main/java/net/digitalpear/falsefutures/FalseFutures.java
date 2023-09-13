@@ -1,8 +1,7 @@
 package net.digitalpear.falsefutures;
 
-import com.kyanite.paragon.api.ConfigManager;
+import net.digitalpear.falsefutures.common.features.FFFeatures;
 import net.digitalpear.falsefutures.init.*;
-import net.digitalpear.falsefutures.init.features.FFConfiguredFeatures;
 import net.digitalpear.falsefutures.init.features.FFPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -19,11 +18,10 @@ public class FalseFutures implements ModInitializer {
         FFBlocks.init();
         FFEntities.init();
         FFSoundEvents.init();
-        FFConfiguredFeatures.init();
+        FFFeatures.init();
         FFPlacedFeatures.init();
         FFBannerPatterns.init();
-
-        ConfigManager.register(MOD_ID, new FalseFuturesConfig());
+        FFGameRules.init();
 
         LOGGER.info("False Futures has finished registering successfully.");
     }

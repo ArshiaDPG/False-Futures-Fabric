@@ -28,8 +28,6 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib}"
-
-    include modImplementation("maven.modrinth:paragon:${project.paragon}")
 }
 
 processResources {

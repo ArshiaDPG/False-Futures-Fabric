@@ -1,6 +1,6 @@
 package net.digitalpear.falsefutures.common.blocks.jelly;
 
-import net.digitalpear.falsefutures.FalseFuturesConfig;
+import net.digitalpear.falsefutures.init.FFGameRules;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -64,7 +64,7 @@ public class JellyBlock extends Block {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
 
             //Add food levels
-            player.getHungerManager().add(FalseFuturesConfig.JELLY_FOOD_VALUE.get(), FalseFuturesConfig.JELLY_SATURATION_VALUE.get());
+            player.getHungerManager().add(2, 0.8f);
 
             world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f);
             player.swingHand(hand);
@@ -75,7 +75,7 @@ public class JellyBlock extends Block {
             else{
                 world.setBlockState(pos, this.getDefaultState().with(HALVED, true).with(FACING,hit.getSide()), 2);
             }
-            if (FalseFuturesConfig.JELLY_SPECIAL_EFFECTS.get()) {
+            if (world.getGameRules().getBoolean(FFGameRules.SHOULD_APPLY_JELLY_EFFECTS)) {
                 specialEffects(state, world, pos, player, hand, hit);
             }
             return ActionResult.SUCCESS;

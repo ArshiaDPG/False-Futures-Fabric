@@ -2,16 +2,23 @@ package net.digitalpear.falsefutures.common.features;
 
 import net.digitalpear.falsefutures.FalseFutures;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
 import net.minecraft.registry.Registry;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.NetherForestVegetationFeatureConfig;
 
 public class FFFeatures {
 
     public static final Feature<NetherForestVegetationFeatureConfig> GELATITE_VEGETATION = register("gelatite_vegetation", new GelatiteVegetationFeature(NetherForestVegetationFeatureConfig.VEGETATION_CODEC));
-    public static final Feature<DefaultFeatureConfig> BRINE_POOL = register("brine_pool", new BrinePoolsFeature(DefaultFeatureConfig.CODEC));
+    public static final Feature<DefaultFeatureConfig> GIPPLE_COLONY = register("gipple_colony", new GippleColonyFeature(DefaultFeatureConfig.CODEC));
 
     private static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
         return Registry.register(Registries.FEATURE, new Identifier(FalseFutures.MOD_ID, name), feature);
+    }
+
+
+    public static void init() {
     }
 }

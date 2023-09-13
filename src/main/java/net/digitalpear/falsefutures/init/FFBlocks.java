@@ -137,6 +137,7 @@ public class FFBlocks {
     public static final Block INFESTED_GELATITE_BRICKS = StoneSets.infestedBlock(GELATITE_BRICKS);
     public static final Block INFESTED_BRINESHALE_BRICKS = StoneSets.infestedBlock(BRINESHALE_BRICKS);
 
+    public static final Block GIPPLE_PERMAFROST = createBlockWithItem("gipple_permafrost", new Block(AbstractBlock.Settings.copy(Blocks.BLUE_ICE)));
 
 
     public static void init(){

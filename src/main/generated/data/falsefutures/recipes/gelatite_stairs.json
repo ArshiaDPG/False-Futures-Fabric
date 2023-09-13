@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
     "C": {
       "item": "falsefutures:gelatite"
@@ -13,5 +14,6 @@
   "result": {
     "count": 4,
     "item": "falsefutures:gelatite_stairs"
-  }
+  },
+  "show_notification": true
 }

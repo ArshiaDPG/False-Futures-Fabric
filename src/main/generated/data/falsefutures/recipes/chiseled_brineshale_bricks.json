@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
     "X": {
       "item": "falsefutures:brineshale_brick_slab"
@@ -11,5 +12,6 @@
   ],
   "result": {
     "item": "falsefutures:chiseled_brineshale_bricks"
-  }
+  },
+  "show_notification": true
 }

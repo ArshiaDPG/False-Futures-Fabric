@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
     "#": {
       "item": "falsefutures:gelatite_bricks"
     }
   },
   "pattern": [
-    "#  ",
-    "## ",
     "###"
   ],
   "result": {
-    "count": 4,
+    "count": 6,
     "item": "falsefutures:gelatite_brick_slab"
-  }
+  },
+  "show_notification": true
 }

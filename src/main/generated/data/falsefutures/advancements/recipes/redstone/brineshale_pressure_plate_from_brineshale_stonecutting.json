@@ -30,5 +30,6 @@
     "recipes": [
       "minecraft:brineshale_pressure_plate_from_brineshale_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

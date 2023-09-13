@@ -1,12 +1,12 @@
-// 1.19.2	2023-06-18T13:30:26.7502661	Block Loot Tables
+// 1.20.1	2023-09-13T13:42:31.1550443	False Futures/Block Loot Tables
 175f2b4c2371401ec039fbd13477cf8d4a47e5d3 data\falsefutures\loot_tables\blocks\gelatite_wall.json
 1c87cb07798472a67d706637ca0f85176fc91f98 data\falsefutures\loot_tables\blocks\brineshale_wall.json
 f62d94592b49da5d4d4488bddb86aa1d47e41d28 data\falsefutures\loot_tables\blocks\gelatite_brick_slab.json
 856579e27c3788ad48120090f4838fb1139500a5 data\falsefutures\loot_tables\blocks\brineshale_bricks.json
 74eba7caf494071e5cfe7ac2f54ac6c8c2808738 data\falsefutures\loot_tables\blocks\brineshale_brick_slab.json
 695ebf29f4b352c9707ecc92c6fe49bcfef51564 data\falsefutures\loot_tables\blocks\gelatite_stairs.json
-21bbe9ebee052b57cdc71e85f434ddbf6c9c1817 data\falsefutures\loot_tables\blocks\brineshale_slab.json
 c4465aefc8f5c3a5fcc7410911372d96a69ac848 data\falsefutures\loot_tables\blocks\gelatite_bricks.json
+21bbe9ebee052b57cdc71e85f434ddbf6c9c1817 data\falsefutures\loot_tables\blocks\brineshale_slab.json
 1bcac53869018f312ad590ec549c32d173d95e1c data\falsefutures\loot_tables\blocks\brineshale_brick_stairs.json
 41f26c8ce6fcdb72e81fbb6854a7fce2b107804b data\falsefutures\loot_tables\blocks\tall_jellyroot.json
 d119d5396f1082fac6b52fcb088d09d4fc3e5cf6 data\falsefutures\loot_tables\blocks\jellyroot.json

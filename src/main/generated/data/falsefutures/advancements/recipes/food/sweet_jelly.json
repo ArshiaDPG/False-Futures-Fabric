@@ -30,5 +30,6 @@
     "recipes": [
       "falsefutures:sweet_jelly"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

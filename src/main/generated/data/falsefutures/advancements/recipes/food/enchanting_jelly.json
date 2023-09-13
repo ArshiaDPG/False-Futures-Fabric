@@ -30,5 +30,6 @@
     "recipes": [
       "falsefutures:enchanting_jelly"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

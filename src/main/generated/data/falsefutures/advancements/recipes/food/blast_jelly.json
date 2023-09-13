@@ -30,5 +30,6 @@
     "recipes": [
       "falsefutures:blast_jelly"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "falsefutures:warp_jelly"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

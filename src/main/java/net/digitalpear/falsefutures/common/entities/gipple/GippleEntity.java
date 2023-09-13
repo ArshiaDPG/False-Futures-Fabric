@@ -329,7 +329,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
             /*
                 Pet the gipple
              */
-        else if (FalseFuturesConfig.CAN_PET_GIPPLE.get() && pettingCooldown <= 0 && player.getStackInHand(hand).isEmpty()){
+        else if (pettingCooldown <= 0 && player.getStackInHand(hand).isEmpty()){
             this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             double x = this.random.nextGaussian() * 0.02D;
             double y = this.random.nextGaussian() * 0.02D;
@@ -344,16 +344,11 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
         //Chance to spawn a something instead of gipples
         int loop = 0;
         boolean spawnGippleNotSomething;
-        if (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() == 0){
-            spawnGippleNotSomething = false;
-        }
-        else{
             /*
                 If something chance passes and hostile mobs can spawn and is not peaceful
              */
-            spawnGippleNotSomething = (FalseFuturesConfig.SOMETHING_SPAWNING_PERCENTAGE.get() / 100 + (getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
+            spawnGippleNotSomething = (0.1f + ((float) getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
                     && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && getWorld().getDifficulty() != Difficulty.PEACEFUL;
-        }
 
 
         if (spawnGippleNotSomething){

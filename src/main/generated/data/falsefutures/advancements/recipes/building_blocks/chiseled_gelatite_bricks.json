@@ -30,5 +30,6 @@
     "recipes": [
       "falsefutures:chiseled_gelatite_bricks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

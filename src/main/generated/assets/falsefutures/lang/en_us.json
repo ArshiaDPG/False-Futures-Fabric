@@ -67,6 +67,7 @@
   "block.minecraft.banner.falsefutures.gipple.yellow": "Yellow Gipple",
   "entity.falsefutures.gipple": "Gipple",
   "entity.falsefutures.something": "Something",
+  "gamerule.shouldAppplyJellyyEffects": "Jelly eaten effects",
   "item.falsefutures.gelatin": "Gelatin",
   "item.falsefutures.gipple_banner_pattern": "Banner Pattern",
   "item.falsefutures.gipple_banner_pattern.desc": "Gipple",

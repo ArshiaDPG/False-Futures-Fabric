@@ -30,5 +30,6 @@
     "recipes": [
       "minecraft:brineshale_bricks_from_chiseled_brineshale_bricks_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -95,6 +95,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
 
+        translationBuilder.add("gamerule.shouldAppplyJellyyEffects", "Jelly eaten effects");
+
         try {
             Path existingFilePath = dataOutput.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();
             translationBuilder.add(existingFilePath);

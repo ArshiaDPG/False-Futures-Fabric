@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.init.sets;
+package net.digitalpear.falsefutures.init.data.sets;
 
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;

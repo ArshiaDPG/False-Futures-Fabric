@@ -6,7 +6,7 @@ import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
 import net.digitalpear.falsefutures.common.blocks.JellyrootBlock;
 import net.digitalpear.falsefutures.common.blocks.TallJellyrootBlock;
 import net.digitalpear.falsefutures.common.blocks.jelly.*;
-import net.digitalpear.falsefutures.init.sets.StoneSets;
+import net.digitalpear.falsefutures.init.data.sets.StoneSets;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

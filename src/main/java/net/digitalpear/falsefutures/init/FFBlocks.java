@@ -3,7 +3,7 @@ package net.digitalpear.falsefutures.init;
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.blocks.*;
 import net.digitalpear.falsefutures.common.blocks.jelly.*;
-import net.digitalpear.falsefutures.init.sets.StoneSets;
+import net.digitalpear.falsefutures.init.data.sets.StoneSets;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;

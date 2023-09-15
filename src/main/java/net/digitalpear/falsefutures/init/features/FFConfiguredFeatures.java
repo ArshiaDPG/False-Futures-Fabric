@@ -32,7 +32,6 @@ public class FFConfiguredFeatures {
 
     public static final WeightedBlockStateProvider GELATITE_VEGETATION_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
             .add(FFBlocks.GELATIN_LAYER.getDefaultState(), 2)
-            .add(FFBlocks.TALL_JELLYROOT.getDefaultState(), 5)
             .add(FFBlocks.JELLYROOT.getDefaultState(), 10)
             .build());
 

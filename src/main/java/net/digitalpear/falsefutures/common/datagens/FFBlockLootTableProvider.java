@@ -1,6 +1,6 @@
 package net.digitalpear.falsefutures.common.datagens;
 
-import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
+import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
 import net.digitalpear.falsefutures.common.blocks.TallJellyrootBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -31,10 +31,10 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;
 
-public class FFBlockLootTableGen extends FabricBlockLootTableProvider {
+public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
     private static final net.minecraft.loot.condition.LootCondition.Builder WITH_SHEARS = MatchToolLootCondition.builder(net.minecraft.predicate.item.ItemPredicate.Builder.create().items(Items.SHEARS));
 
-    public FFBlockLootTableGen(FabricDataOutput dataOutput) {
+    public FFBlockLootTableProvider(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
 
@@ -86,9 +86,21 @@ public class FFBlockLootTableGen extends FabricBlockLootTableProvider {
         stoneSet(FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL);
         stoneSet(FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB, FFBlocks.BRINESHALE_BRICK_WALL);
 
-        GippleInfestedBlock.REGULAR_TO_INFESTED_BLOCK.forEach((regular, infested) -> drops(infested));
 
         addDrop(FFBlocks.JELLYROOT, jellyrootDrops(FFBlocks.JELLYROOT));
         addDrop(FFBlocks.TALL_JELLYROOT, tallJellyrootDrops(FFBlocks.TALL_JELLYROOT, FFBlocks.JELLYROOT));
+
+        addDrop(FFBlocks.GELATIN_LAYER, gelatinLayerLoot());
+    }
+
+
+    public LootTable.Builder gelatinLayerLoot(){
+        LootTable.Builder builder = LootTable.builder();
+
+        for (int i = 0; i <= GelatinLayerBlock.MAX_LAYERS; i++){
+            builder.pool(new LootPool.Builder().conditionally(BlockStatePropertyLootCondition.builder(FFBlocks.GELATIN_LAYER).properties(StatePredicate.Builder.create().exactMatch(GelatinLayerBlock.LAYERS, i))).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(i))).with(ItemEntry.builder(FFItems.GELATIN)));
+
+        }
+        return builder;
     }
 }

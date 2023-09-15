@@ -1,7 +1,6 @@
 package net.digitalpear.falsefutures.init.sets;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
@@ -26,7 +25,7 @@ public class StoneSets {
     }
 
 
-    public static Block fullStoneSet(String name, AbstractBlock.Settings settings){
+    public static Block fullStoneSet(String name, AbstractBlock.Settings settings) {
         Block baseBlock = createBlockWithItem(name, new Block(settings));
         stoneStairs(baseBlock);
         stoneSlab(baseBlock);
@@ -34,10 +33,6 @@ public class StoneSets {
         stoneButton(baseBlock);
         stonePressurePlate(baseBlock);
         return baseBlock;
-    }
-
-    public static Block infestedBlock(Block block){
-        return createBlockWithItem("infested_" + getName(block), new GippleInfestedBlock(block, AbstractBlock.Settings.copy(block)));
     }
 
     public static Block stoneStairs(Block baseBlock){

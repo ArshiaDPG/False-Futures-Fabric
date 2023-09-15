@@ -16,10 +16,10 @@ import net.minecraft.registry.Registries;
 
 import java.util.function.Consumer;
 
-public class FFRecipeGen extends FabricRecipeProvider {
+public class FFRecipeProvider extends FabricRecipeProvider {
 
 
-    public FFRecipeGen(FabricDataOutput output) {
+    public FFRecipeProvider(FabricDataOutput output) {
         super(output);
     }
 

@@ -17,8 +17,8 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
 
-public class FFAdvancementGen extends FabricAdvancementProvider {
-    public FFAdvancementGen(FabricDataOutput output) {
+public class FFAdvancementProvider extends FabricAdvancementProvider {
+    public FFAdvancementProvider(FabricDataOutput output) {
         super(output);
     }
 

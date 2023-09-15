@@ -18,15 +18,6 @@
         },
         {
           "data": {
-            "Name": "falsefutures:tall_jellyroot",
-            "Properties": {
-              "half": "lower"
-            }
-          },
-          "weight": 5
-        },
-        {
-          "data": {
             "Name": "falsefutures:jellyroot"
           },
           "weight": 10

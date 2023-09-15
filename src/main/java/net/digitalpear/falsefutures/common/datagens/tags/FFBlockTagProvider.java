@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FFBlockTagGen extends FabricTagProvider<Block> {
+public class FFBlockTagProvider extends FabricTagProvider<Block> {
 
     /**
      * Constructs a new {@link FabricTagProvider} with the default computed path.
@@ -24,7 +24,7 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
 
      * @param registriesFuture the backing registry for the tag type
      */
-    public FFBlockTagGen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public FFBlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, RegistryKeys.BLOCK, registriesFuture);
     }
 
@@ -97,7 +97,6 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.GELATITE_WALL)
                 .add(FFBlocks.GELATITE_BUTTON)
                 .add(FFBlocks.GELATITE_PRESSURE_PLATE)
-                .add(FFBlocks.INFESTED_GELATITE)
 
                 .add(FFBlocks.CHISELED_GELATITE_BRICKS)
 
@@ -105,7 +104,6 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.GELATITE_BRICK_STAIRS)
                 .add(FFBlocks.GELATITE_BRICK_SLAB)
                 .add(FFBlocks.GELATITE_BRICK_WALL)
-                .add(FFBlocks.INFESTED_GELATITE_BRICKS)
 
                 .add(FFBlocks.BRINESHALE)
                 .add(FFBlocks.BRINESHALE_STAIRS)
@@ -113,14 +111,12 @@ public class FFBlockTagGen extends FabricTagProvider<Block> {
                 .add(FFBlocks.BRINESHALE_WALL)
                 .add(FFBlocks.BRINESHALE_BUTTON)
                 .add(FFBlocks.BRINESHALE_PRESSURE_PLATE)
-                .add(FFBlocks.INFESTED_BRINESHALE)
 
                 .add(FFBlocks.CHISELED_BRINESHALE_BRICKS)
 
                 .add(FFBlocks.BRINESHALE_BRICKS)
                 .add(FFBlocks.BRINESHALE_BRICK_STAIRS)
                 .add(FFBlocks.BRINESHALE_BRICK_SLAB)
-                .add(FFBlocks.BRINESHALE_BRICK_WALL)
-                .add(FFBlocks.INFESTED_BRINESHALE_BRICKS);
+                .add(FFBlocks.BRINESHALE_BRICK_WALL);
     }
 }

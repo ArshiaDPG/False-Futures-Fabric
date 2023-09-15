@@ -54,11 +54,6 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_WALL);
         autoName(translationBuilder, FFBlocks.CHISELED_BRINESHALE_BRICKS);
 
-        autoName(translationBuilder, FFBlocks.INFESTED_GELATITE);
-        autoName(translationBuilder, FFBlocks.INFESTED_GELATITE_BRICKS);
-        autoName(translationBuilder, FFBlocks.INFESTED_BRINESHALE);
-        autoName(translationBuilder, FFBlocks.INFESTED_BRINESHALE_BRICKS);
-
         autoName(translationBuilder, FFBlocks.GELATIN_LAYER);
         autoName(translationBuilder, FFBlocks.JELLYROOT);
         autoName(translationBuilder, FFBlocks.POTTED_JELLYROOT);

@@ -1,10 +1,7 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
-import net.digitalpear.falsefutures.common.blocks.GelatiteBlock;
-import net.digitalpear.falsefutures.common.blocks.JellyrootBlock;
-import net.digitalpear.falsefutures.common.blocks.TallJellyrootBlock;
+import net.digitalpear.falsefutures.common.blocks.*;
 import net.digitalpear.falsefutures.common.blocks.jelly.*;
 import net.digitalpear.falsefutures.init.sets.StoneSets;
 import net.minecraft.block.*;
@@ -131,13 +128,7 @@ public class FFBlocks {
     public static final Block POTTED_JELLYROOT = makePottedPlant(JELLYROOT);
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)));
-
-    public static final Block INFESTED_GELATITE = StoneSets.infestedBlock(GELATITE);
-    public static final Block INFESTED_BRINESHALE = StoneSets.infestedBlock(BRINESHALE);
-    public static final Block INFESTED_GELATITE_BRICKS = StoneSets.infestedBlock(GELATITE_BRICKS);
-    public static final Block INFESTED_BRINESHALE_BRICKS = StoneSets.infestedBlock(BRINESHALE_BRICKS);
-
-    public static final Block GIPPLE_PERMAFROST = createBlockWithItem("gipple_permafrost", new Block(AbstractBlock.Settings.copy(Blocks.BLUE_ICE)));
+    public static final Block GIPPLE_PERMAFROST = createBlockWithItem("gipple_infested_gelatin", new GippleInfestedGelatinBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).hardness(0.1f).pistonBehavior(PistonBehavior.DESTROY).dropsNothing()));
 
 
     public static void init(){

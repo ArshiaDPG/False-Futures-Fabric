@@ -23,6 +23,7 @@ public class FFModelProvider extends FabricModelProvider {
     public static final Model JELLY_HALF_UPPER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_LOWER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
 
+
     public FFModelProvider(FabricDataOutput output) {
         super(output);
     }
@@ -44,7 +45,9 @@ public class FFModelProvider extends FabricModelProvider {
         registerBrickBlockSet(blockStateModelGenerator, FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB,
                 FFBlocks.BRINESHALE_BRICK_WALL);
 
-        blockStateModelGenerator.registerSingleton(FFBlocks.GIPPLE_INFESTED_GELATIN, TextureMap.all(new Identifier(FalseFutures.MOD_ID, "block/gelatin")), Models.CUBE_ALL);
+
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple")));
+        blockStateModelGenerator.registerParentedItemModel(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple"));
 
         blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
@@ -52,6 +55,7 @@ public class FFModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerParentedItemModel(FFItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(FFItems.SOMETHING_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
     }
+
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
@@ -103,7 +107,7 @@ public class FFModelProvider extends FabricModelProvider {
 
     private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
         TextureMap textureMap = TextureMap.all(FFBlocks.GELATIN_LAYER);
-        Identifier identifier = Models.CUBE_ALL.upload(FFBlocks.GELATIN_LAYER, "_height16", textureMap, blockStateModelGenerator.modelCollector);
+        Identifier identifier = Models.CUBE_ALL.upload(new Identifier(FalseFutures.MOD_ID, "block/gelatin_height16"), textureMap, blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(FFBlocks.GELATIN_LAYER).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register((height) -> {
             BlockStateVariant blockStateVariant = BlockStateVariant.create();
             VariantSetting variantSettings = VariantSettings.MODEL;

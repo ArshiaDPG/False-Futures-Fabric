@@ -61,12 +61,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
         autoName(translationBuilder, FFBlocks.GIPPLEPAD);
 
-
         autoName(translationBuilder, FFEntities.GIPPLE);
         autoName(translationBuilder, FFEntities.SOMETHING);
 
-        autoName(translationBuilder, FFBlocks.GIPPLE_INFESTED_GELATIN);
-
+        autoName(translationBuilder, FFBlocks.HIBERNATING_GIPPLE);
 
         autoName(translationBuilder, FFItems.GELATIN);
 
@@ -78,19 +76,15 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
 
-
         makeBannerStuff(translationBuilder, FFItems.GIPPLE_BANNER_PATTERN, "Gipple");
-
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
-
 
         translationBuilder.add("subtitles.falsefutures.gipple_ambient", "Gipple vibrates");
         translationBuilder.add("subtitles.falsefutures.gipple_hurt", "Gipple hurts");
         translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
-
 
         translationBuilder.add("gamerule.doApplyJellyEffects", "Should apply jelly effects when eaten");
 

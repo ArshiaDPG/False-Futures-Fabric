@@ -72,7 +72,7 @@ public class FFItems {
             entries.addAfter(Items.DEEPSLATE, FFBlocks.GELATITE, FFBlocks.BRINESHALE);
             entries.addAfter(Items.SMALL_DRIPLEAF, FFBlocks.JELLYROOT, FFBlocks.TALL_JELLYROOT);
             entries.addAfter(Items.SNOW, FFBlocks.GELATIN_LAYER);
-            entries.add(FFBlocks.GIPPLE_INFESTED_GELATIN);
+            entries.add(FFBlocks.HIBERNATING_GIPPLE);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
             entries.addAfter(Items.REINFORCED_DEEPSLATE,

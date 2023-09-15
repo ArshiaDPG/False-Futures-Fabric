@@ -12,7 +12,7 @@ public class FFBlockTags {
     public static final TagKey<Block> GIPPLE_SPAWNABLES = of("gipple_spawnables");
     public static final TagKey<Block> GIPPLE_FOOD = of("gipple_food");
     public static final TagKey<Block> JELLYROOT_PLANTABLES = of("jellyroot_plantables");
-    public static final TagKey<Block> BRINE_POOL_CANNOT_REPLACE = of("brine_pool_cannot_replace");
+    public static final TagKey<Block> GIPPLE_COLONY_REPLACEABLE = of("gipple_colony_replaceable");
 
     private static TagKey<Block> of(String id) {
         return TagKey.of(RegistryKeys.BLOCK, new Identifier(FalseFutures.MOD_ID, id));

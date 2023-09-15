@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
-public class GippleInfestedGelatinBlock extends Block {
-    public GippleInfestedGelatinBlock(Settings settings) {
+public class HibernatingGippleBlock extends Block {
+    public HibernatingGippleBlock(Settings settings) {
         super(settings);
     }
 
@@ -22,6 +22,5 @@ public class GippleInfestedGelatinBlock extends Block {
         GippleEntity gipple = FFEntities.GIPPLE.create(world);
         gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.25D, (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
         world.spawnEntity(gipple);
-        gipple.playSpawnEffects();
     }
 }

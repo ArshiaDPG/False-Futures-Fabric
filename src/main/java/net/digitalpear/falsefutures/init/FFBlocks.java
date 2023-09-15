@@ -130,7 +130,7 @@ public class FFBlocks {
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)));
 
-    public static final Block GIPPLE_INFESTED_GELATIN = createBlockWithItem("gipple_infested_gelatin", new GippleInfestedGelatinBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(GELATIN_LAYER.getDefaultMapColor()).hardness(0.1f).pistonBehavior(PistonBehavior.DESTROY).dropsNothing()));
+    public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple", new HibernatingGippleBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(GELATIN_LAYER.getDefaultMapColor()).hardness(0.1f).pistonBehavior(PistonBehavior.DESTROY).dropsNothing()));
 
 
     public static void init(){

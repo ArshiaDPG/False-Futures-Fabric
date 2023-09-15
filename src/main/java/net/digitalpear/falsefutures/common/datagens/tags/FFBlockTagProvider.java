@@ -31,10 +31,13 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
 
-        getOrCreateTagBuilder(FFBlockTags.BRINE_POOL_CANNOT_REPLACE)
-                .forceAddTag(BlockTags.FEATURES_CANNOT_REPLACE)
-                .add(FFBlocks.JELLYROOT)
-                .add(FFBlocks.TALL_JELLYROOT);
+        getOrCreateTagBuilder(FFBlockTags.GIPPLE_COLONY_REPLACEABLE)
+                .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+                .forceAddTag(BlockTags.BASE_STONE_NETHER)
+                .forceAddTag(BlockTags.DIRT)
+                .add(Blocks.DRIPSTONE_BLOCK)
+                .add(Blocks.POINTED_DRIPSTONE)
+                .add(Blocks.WATER);
 
         var jellies = getOrCreateTagBuilder(FFBlockTags.JELLIES);
         for(Block jelly : FFBlocks.JELLY.keySet()) {

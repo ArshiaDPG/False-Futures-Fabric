@@ -65,6 +65,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, FFEntities.GIPPLE);
         autoName(translationBuilder, FFEntities.SOMETHING);
 
+        autoName(translationBuilder, FFBlocks.GIPPLE_INFESTED_GELATIN);
+
 
         autoName(translationBuilder, FFItems.GELATIN);
 
@@ -90,7 +92,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
 
-        translationBuilder.add("gamerule.shouldAppplyJellyyEffects", "Jelly eaten effects");
+        translationBuilder.add("gamerule.doApplyJellyEffects", "Should apply jelly effects when eaten");
 
         try {
             Path existingFilePath = dataOutput.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();

@@ -22,7 +22,7 @@
       "model": "falsefutures:block/gelatin_layer_height14"
     },
     "layers=8": {
-      "model": "falsefutures:block/gelatin_layer"
+      "model": "falsefutures:block/gelatin_layer_height16"
     }
   }
 }

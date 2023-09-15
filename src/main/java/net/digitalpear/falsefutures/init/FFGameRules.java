@@ -8,7 +8,7 @@ import net.minecraft.world.GameRules;
 public class FFGameRules {
 
     public static final GameRules.Key<GameRules.BooleanRule> SHOULD_APPLY_JELLY_EFFECTS =
-            GameRuleRegistry.register("shouldApplyJellyEffects", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
+            GameRuleRegistry.register("doJellyEffects", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
 
     public static void init(){}
 

@@ -44,6 +44,7 @@ public class FFModelProvider extends FabricModelProvider {
         registerBrickBlockSet(blockStateModelGenerator, FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB,
                 FFBlocks.BRINESHALE_BRICK_WALL);
 
+        blockStateModelGenerator.registerSingleton(FFBlocks.GIPPLE_INFESTED_GELATIN, TextureMap.all(new Identifier(FalseFutures.MOD_ID, "block/gelatin")), Models.CUBE_ALL);
 
         blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
@@ -102,7 +103,7 @@ public class FFModelProvider extends FabricModelProvider {
 
     private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
         TextureMap textureMap = TextureMap.all(FFBlocks.GELATIN_LAYER);
-        Identifier identifier = Models.CUBE_ALL.upload(FFBlocks.GELATIN_LAYER, textureMap, blockStateModelGenerator.modelCollector);
+        Identifier identifier = Models.CUBE_ALL.upload(FFBlocks.GELATIN_LAYER, "_height16", textureMap, blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(FFBlocks.GELATIN_LAYER).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register((height) -> {
             BlockStateVariant blockStateVariant = BlockStateVariant.create();
             VariantSetting variantSettings = VariantSettings.MODEL;

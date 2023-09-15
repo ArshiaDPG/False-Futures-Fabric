@@ -59,15 +59,20 @@ public class FFItems {
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
             entries.addAfter(Items.MUSIC_DISC_RELIC, MUSIC_DISC_GIPPLECORE);
+            entries.addAfter(Items.TADPOLE_BUCKET, GIPPLE_BUCKET);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.addAfter(Items.PIGLIN_BANNER_PATTERN, GIPPLE_BANNER_PATTERN);
+        });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
+            entries.addAfter(Items.GLOW_SQUID_SPAWN_EGG, GIPPLE_SPAWN_EGG, SOMETHING_SPAWN_EGG);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
             entries.addAfter(Items.DEEPSLATE, FFBlocks.GELATITE, FFBlocks.BRINESHALE);
             entries.addAfter(Items.SMALL_DRIPLEAF, FFBlocks.JELLYROOT, FFBlocks.TALL_JELLYROOT);
             entries.addAfter(Items.SNOW, FFBlocks.GELATIN_LAYER);
+            entries.add(FFBlocks.GIPPLE_INFESTED_GELATIN);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
             entries.addAfter(Items.REINFORCED_DEEPSLATE,

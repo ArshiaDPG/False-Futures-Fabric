@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -93,14 +94,8 @@ public class FFRecipeProvider extends FabricRecipeProvider {
          */
         FFBlocks.JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE)
-                .input(Blocks.COBBLESTONE)
-                .input(FFItems.GELATIN)
-                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.BRINESHALE)
-                .input(Blocks.COBBLED_DEEPSLATE)
-                .input(FFItems.GELATIN)
-                .criterion("has_gelatin", conditionsFromItem(FFItems.GELATIN)).offerTo(exporter);
+        createGelatinStoneMaking(exporter, Blocks.COBBLESTONE, FFBlocks.GELATITE);
+        createGelatinStoneMaking(exporter, Blocks.COBBLED_DEEPSLATE, FFBlocks.BRINESHALE);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICKS, 4)
                 .input('X', FFBlocks.GELATITE)
@@ -137,5 +132,12 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                 FFBlocks.BRINESHALE_PRESSURE_PLATE, FFBlocks.BRINESHALE_WALL);
         makeStoneRecipes(exporter, FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB,
                 FFBlocks.BRINESHALE_BRICK_WALL);
+    }
+
+    public void createGelatinStoneMaking(Consumer<RecipeJsonProvider> exporter, ItemConvertible stone, ItemConvertible output){
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output)
+                .criterion(hasItem(FFItems.GELATIN), conditionsFromItem(FFItems.GELATIN))
+                .input(stone).input(FFItems.GELATIN)
+                .offerTo(exporter);
     }
 }

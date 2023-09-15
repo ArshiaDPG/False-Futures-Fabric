@@ -7,7 +7,6 @@ import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
@@ -55,7 +54,7 @@ public class GippleColonyFeature extends Feature<DefaultFeatureConfig> {
                                     world.setBlockState(blockPos2.up(a), Blocks.BLUE_ICE.getDefaultState(), 3);
                                 }
                                 else{
-                                    world.setBlockState(blockPos2.up(a), FFBlocks.GIPPLE_PERMAFROST.getDefaultState(), 3);
+                                    world.setBlockState(blockPos2.up(a), FFBlocks.GIPPLE_INFESTED_GELATIN.getDefaultState(), 3);
                                 }
                             }
                         } else if (output < 5) {

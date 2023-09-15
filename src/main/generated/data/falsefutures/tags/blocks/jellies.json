@@ -1,22 +1,22 @@
 {
   "replace": false,
   "values": [
-    "falsefutures:inky_jelly",
-    "falsefutures:foamy_jelly",
+    "falsefutures:milky_jelly",
     "falsefutures:bright_jelly",
-    "falsefutures:symphonic_jelly",
+    "falsefutures:muddy_jelly",
+    "falsefutures:floral_jelly",
+    "falsefutures:foamy_jelly",
+    "falsefutures:blast_jelly",
+    "falsefutures:enchanting_jelly",
+    "falsefutures:fruity_jelly",
+    "falsefutures:prickly_jelly",
     "falsefutures:plain_jelly",
     "falsefutures:warp_jelly",
-    "falsefutures:blast_jelly",
     "falsefutures:cocoa_jelly",
-    "falsefutures:prickly_jelly",
-    "falsefutures:enchanting_jelly",
-    "falsefutures:bouncy_jelly",
-    "falsefutures:fruity_jelly",
-    "falsefutures:milky_jelly",
+    "falsefutures:inky_jelly",
+    "falsefutures:symphonic_jelly",
     "falsefutures:luminescent_jelly",
-    "falsefutures:floral_jelly",
-    "falsefutures:muddy_jelly",
-    "falsefutures:sweet_jelly"
+    "falsefutures:sweet_jelly",
+    "falsefutures:bouncy_jelly"
   ]
 }

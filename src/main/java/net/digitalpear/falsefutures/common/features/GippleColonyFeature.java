@@ -35,7 +35,7 @@ public class GippleColonyFeature extends Feature<DefaultFeatureConfig> {
         int radius = random.nextBetween(10, 20);
 
         // Check the initial block
-        if (!world.getBlockState(initialPos).isAir()) {
+        if (world.getBlockState(initialPos).isAir()) {
             return false;
         }
 
@@ -43,7 +43,7 @@ public class GippleColonyFeature extends Feature<DefaultFeatureConfig> {
         for (Direction direction : Direction.stream().toList()) {
             if (direction.getAxis() != Direction.Axis.Y) {
                 int i = 1;
-                while (i <= radius) {
+                while (i <= radius/2) {
                     BlockPos offsetPos = initialPos.offset(direction, i);
                     if (world.getBlockState(offsetPos).isAir()) {
                         return false;
@@ -100,16 +100,9 @@ public class GippleColonyFeature extends Feature<DefaultFeatureConfig> {
                     if (random.nextBoolean() && world.getBlockState(pos.up(2)).isAir()) {
                         TallJellyrootBlock.placeAt(world, FFBlocks.TALL_JELLYROOT.getDefaultState(), pos.up(), 3);
                     } else {
-                        if (random.nextBoolean()){
-                            world.getRegistryManager().getOptional(RegistryKeys.CONFIGURED_FEATURE)
-                                    .flatMap(registry -> registry.getEntry(FFConfiguredFeatures.GIPPLE_COLONY_VEGETATION))
-                                    .ifPresent(reference -> reference.value().generate(world, context.getGenerator(), random, pos.up()));
-                        }
-                        else{
-                            world.getRegistryManager().getOptional(RegistryKeys.CONFIGURED_FEATURE)
-                                    .flatMap(registry -> registry.getEntry(UndergroundConfiguredFeatures.GLOW_LICHEN))
-                                    .ifPresent(reference -> reference.value().generate(world, context.getGenerator(), random, pos.up()));
-                        }
+                        world.getRegistryManager().getOptional(RegistryKeys.CONFIGURED_FEATURE)
+                                .flatMap(registry -> registry.getEntry(FFConfiguredFeatures.GIPPLE_COLONY_VEGETATION))
+                                .ifPresent(reference -> reference.value().generate(world, context.getGenerator(), random, pos.up()));
                     }
                 }
             }

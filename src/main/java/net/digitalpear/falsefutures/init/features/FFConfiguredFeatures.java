@@ -4,12 +4,16 @@ import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.features.FFFeatures;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.GlowLichenBlock;
+import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.NetherForestVegetationFeatureConfig;
@@ -35,11 +39,15 @@ public class FFConfiguredFeatures {
             .add(FFBlocks.JELLYROOT.getDefaultState(), 10)
             .build());
 
+    public static final WeightedBlockStateProvider GELATITE_VEGETATION_BONEMEAL_PROVIDER = new WeightedBlockStateProvider(DataPool.<BlockState>builder()
+            .add(FFBlocks.JELLYROOT.getDefaultState(), 10)
+            .build());
+
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> featureRegisterable) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 
         ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY, FFFeatures.GIPPLE_COLONY);
-        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION_BONEMEAL, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 3, 1));
+        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION_BONEMEAL, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_BONEMEAL_PROVIDER, 3, 1));
         ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(GELATITE_VEGETATION_PROVIDER, 8, 5));
     }
 }

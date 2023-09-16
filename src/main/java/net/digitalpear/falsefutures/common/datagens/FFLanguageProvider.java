@@ -54,11 +54,6 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_WALL);
         autoName(translationBuilder, FFBlocks.CHISELED_BRINESHALE_BRICKS);
 
-        autoName(translationBuilder, FFBlocks.INFESTED_GELATITE);
-        autoName(translationBuilder, FFBlocks.INFESTED_GELATITE_BRICKS);
-        autoName(translationBuilder, FFBlocks.INFESTED_BRINESHALE);
-        autoName(translationBuilder, FFBlocks.INFESTED_BRINESHALE_BRICKS);
-
         autoName(translationBuilder, FFBlocks.GELATIN_LAYER);
         autoName(translationBuilder, FFBlocks.JELLYROOT);
         autoName(translationBuilder, FFBlocks.POTTED_JELLYROOT);
@@ -66,10 +61,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
         autoName(translationBuilder, FFBlocks.GIPPLEPAD);
 
-
         autoName(translationBuilder, FFEntities.GIPPLE);
         autoName(translationBuilder, FFEntities.SOMETHING);
 
+        autoName(translationBuilder, FFBlocks.HIBERNATING_GIPPLE);
 
         autoName(translationBuilder, FFItems.GELATIN);
 
@@ -81,21 +76,17 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
 
-
         makeBannerStuff(translationBuilder, FFItems.GIPPLE_BANNER_PATTERN, "Gipple");
-
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
-
 
         translationBuilder.add("subtitles.falsefutures.gipple_ambient", "Gipple vibrates");
         translationBuilder.add("subtitles.falsefutures.gipple_hurt", "Gipple hurts");
         translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
-
-        translationBuilder.add("gamerule.shouldAppplyJellyyEffects", "Jelly eaten effects");
+        translationBuilder.add("gamerule.doApplyJellyEffects", "Should apply jelly effects when eaten");
 
         try {
             Path existingFilePath = dataOutput.getModContainer().findPath("assets/" + FalseFutures.MOD_ID + "/lang/en_us.existing.json").get();

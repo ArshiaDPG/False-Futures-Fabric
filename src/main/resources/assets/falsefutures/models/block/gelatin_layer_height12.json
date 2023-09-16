@@ -1,8 +1,8 @@
 {
     "textures": {
-        "particle": "falsefutures:block/gelatin_layer",
-        "side": "falsefutures:block/gelatin_layer",
-		"end": "falsefutures:block/gelatin_layer"
+        "particle": "falsefutures:block/gelatin",
+        "side": "falsefutures:block/gelatin",
+		"end": "falsefutures:block/gelatin"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

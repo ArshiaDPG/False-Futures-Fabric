@@ -8,25 +8,6 @@
       "entries": [
         {
           "data": {
-            "Name": "falsefutures:gelatin_layer",
-            "Properties": {
-              "layers": "1",
-              "waterlogged": "false"
-            }
-          },
-          "weight": 2
-        },
-        {
-          "data": {
-            "Name": "falsefutures:tall_jellyroot",
-            "Properties": {
-              "half": "lower"
-            }
-          },
-          "weight": 5
-        },
-        {
-          "data": {
             "Name": "falsefutures:jellyroot"
           },
           "weight": 10

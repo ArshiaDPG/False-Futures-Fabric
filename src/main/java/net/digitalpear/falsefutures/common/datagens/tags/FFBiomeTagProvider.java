@@ -11,7 +11,7 @@ import net.minecraft.world.biome.BiomeKeys;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FFBiomeTagGen extends FabricTagProvider<Biome> {
+public class FFBiomeTagProvider extends FabricTagProvider<Biome> {
 
 
     /**
@@ -22,7 +22,7 @@ public class FFBiomeTagGen extends FabricTagProvider<Biome> {
      * @param output           the {@link FabricDataOutput} instance
      * @param registriesFuture the backing registry for the tag type
      */
-    public FFBiomeTagGen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public FFBiomeTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, RegistryKeys.BIOME, registriesFuture);
     }
 

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "falsefutures:block/gelatin_layer"
+    "all": "falsefutures:block/gelatin"
   }
 }

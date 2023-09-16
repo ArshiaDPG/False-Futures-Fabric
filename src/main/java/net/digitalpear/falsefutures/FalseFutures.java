@@ -2,6 +2,7 @@ package net.digitalpear.falsefutures;
 
 import net.digitalpear.falsefutures.common.features.FFFeatures;
 import net.digitalpear.falsefutures.init.*;
+import net.digitalpear.falsefutures.init.data.FFData;
 import net.digitalpear.falsefutures.init.features.FFPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ public class FalseFutures implements ModInitializer {
         FFPlacedFeatures.init();
         FFBannerPatterns.init();
         FFGameRules.init();
+        FFData.init();
 
         LOGGER.info("False Futures has finished registering successfully.");
     }

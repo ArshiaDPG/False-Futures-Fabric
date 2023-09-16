@@ -1,7 +1,6 @@
 package net.digitalpear.falsefutures.common.datagens;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.GippleInfestedBlock;
 import net.digitalpear.falsefutures.common.blocks.jelly.JellyBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -17,14 +16,15 @@ import net.minecraft.util.math.Direction;
 import java.util.Optional;
 
 
-public class FFModelGen extends FabricModelProvider {
+public class FFModelProvider extends FabricModelProvider {
 
 
     public static final Model JELLY_HALF_SIDE = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_side")), Optional.of("_half_side"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_UPPER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_LOWER = new Model(Optional.of(new Identifier(FalseFutures.MOD_ID, "block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
 
-    public FFModelGen(FabricDataOutput output) {
+
+    public FFModelProvider(FabricDataOutput output) {
         super(output);
     }
 
@@ -46,14 +46,16 @@ public class FFModelGen extends FabricModelProvider {
                 FFBlocks.BRINESHALE_BRICK_WALL);
 
 
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple")));
+        blockStateModelGenerator.registerParentedItemModel(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple"));
+
         blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
-
-        GippleInfestedBlock.REGULAR_TO_INFESTED_BLOCK.forEach(blockStateModelGenerator::registerParented);
 
         blockStateModelGenerator.registerParentedItemModel(FFItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(FFItems.SOMETHING_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
     }
+
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
@@ -104,8 +106,7 @@ public class FFModelGen extends FabricModelProvider {
     }
 
     private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textureMap = TextureMap.all(FFBlocks.GELATIN_LAYER);
-        Identifier identifier = Models.CUBE_ALL.upload(FFBlocks.GELATIN_LAYER, textureMap, blockStateModelGenerator.modelCollector);
+        Identifier identifier = Models.CUBE_ALL.upload(new Identifier(FalseFutures.MOD_ID, "block/gelatin_height16"), TextureMap.all(new Identifier(FalseFutures.MOD_ID, "block/gelatin")), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(FFBlocks.GELATIN_LAYER).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register((height) -> {
             BlockStateVariant blockStateVariant = BlockStateVariant.create();
             VariantSetting variantSettings = VariantSettings.MODEL;

@@ -35,11 +35,11 @@ public class FFPlacedFeatures {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
         RegistryEntry<ConfiguredFeature<?, ?>> registryEntry = registryEntryLookup.getOrThrow(VegetationConfiguredFeatures.BAMBOO_NO_PODZOL);
 
-        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, RarityFilterPlacementModifier.of(10), HeightRangePlacementModifier.uniform(YOffset.fixed(-54), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
+        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, CountPlacementModifier.of(3), HeightRangePlacementModifier.uniform(YOffset.aboveBottom(12), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
     }
 
 
     public static void init(){
-        BiomeModifications.addFeature(BiomeSelectors.tag(FFBiomeTags.GIPPLE_HABITATS), GenerationStep.Feature.UNDERGROUND_DECORATION, GIPPLE_COLONY);
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY);
     }
 }

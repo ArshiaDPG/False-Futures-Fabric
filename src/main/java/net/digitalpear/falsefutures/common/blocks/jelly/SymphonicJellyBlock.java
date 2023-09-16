@@ -46,9 +46,7 @@ public class SymphonicJellyBlock extends JellyBlock {
                 }
             }
 
-            if (player instanceof PlayerEntity) {
-                player.getItemCooldownManager().set(Item.fromBlock(this), 20);
-            }
+            player.getItemCooldownManager().set(Item.fromBlock(this), 20);
         }
     }
 

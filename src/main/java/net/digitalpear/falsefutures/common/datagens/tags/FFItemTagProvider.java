@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FFItemTagGen extends FabricTagProvider<Item> {
+public class FFItemTagProvider extends FabricTagProvider<Item> {
 
 
     /**
@@ -25,19 +25,20 @@ public class FFItemTagGen extends FabricTagProvider<Item> {
      * @param output           the {@link FabricDataOutput} instance
      * @param registriesFuture the backing registry for the tag type
      */
-    public FFItemTagGen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public FFItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, RegistryKeys.ITEM, registriesFuture);
     }
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
+
         getOrCreateTagBuilder(FFItemTags.GIPPLE_FOOD)
                 .add(Items.GLOW_LICHEN)
                 .addOptional(new Identifier("galosphere", "lichen_cordyceps"));
 
 
-
         getOrCreateTagBuilder(ItemTags.MUSIC_DISCS).add(FFItems.MUSIC_DISC_GIPPLECORE);
+
         getOrCreateTagBuilder(ItemTags.WALLS)
                 .add(FFBlocks.GELATITE_WALL.asItem())
                 .add(FFBlocks.GELATITE_BRICK_WALL.asItem())

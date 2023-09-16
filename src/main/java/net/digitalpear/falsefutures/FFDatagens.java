@@ -20,20 +20,20 @@ public class FFDatagens implements DataGeneratorEntrypoint {
         /*
             Tag datagens
          */
-        pack.addProvider(FFItemTagGen::new);
-        pack.addProvider(FFBlockTagGen::new);
-        pack.addProvider(FFEntityTypeTagGen::new);
-        pack.addProvider(FFBannerPatternTagGen::new);
-        pack.addProvider(FFBiomeTagGen::new);
+        pack.addProvider(FFItemTagProvider::new);
+        pack.addProvider(FFBlockTagProvider::new);
+        pack.addProvider(FFEntityTypeTagProvider::new);
+        pack.addProvider(FFBannerPatternTagProvider::new);
+        pack.addProvider(FFBiomeTagProvider::new);
 
         /*
             Everything else
          */
-        pack.addProvider(FFAdvancementGen::new);
-        pack.addProvider(FFBlockLootTableGen::new);
+        pack.addProvider(FFAdvancementProvider::new);
+        pack.addProvider(FFBlockLootTableProvider::new);
         pack.addProvider(FabricEntityLootTableProvider::new);
-        pack.addProvider(FFModelGen::new);
-        pack.addProvider(FFRecipeGen::new);
+        pack.addProvider(FFModelProvider::new);
+        pack.addProvider(FFRecipeProvider::new);
         pack.addProvider(FFLanguageProvider::new);
 
         pack.addProvider(FFConfiguredFeatureProvider::new);

@@ -6,17 +6,11 @@ import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.control.FlightMoveControl;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -24,12 +18,12 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.WardenEntity;
-import net.minecraft.entity.mob.ZoglinEntity;
-import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.mob.PiglinEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
@@ -37,16 +31,13 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.math.random.RandomSequence;
+import net.minecraft.util.math.random.RandomSplitter;
 import net.minecraft.world.*;
-import net.minecraft.world.event.EntityPositionSource;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.world.event.PositionSource;
-import net.minecraft.world.event.listener.EntityGameEventHandler;
-import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -58,57 +49,313 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.Iterator;
+import java.util.RandomAccess;
 
-public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEntity {
-    /*
-        General values
-     */
-    private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_LUMINOUS = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_EATING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
+    protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
+    protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlayAndHold("gipple.eat");
+    protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
+    private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
+
+
+    public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
+        super(entityType, world);
+        this.experiencePoints = 5;
+
+        this.moveControl = new FlightMoveControl(this, 10, true);
+
+        /*PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
+        this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
+        eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
+
+         */
+    }
+
+    public static DefaultAttributeContainer.Builder createGippleAttributes() {
+
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1F)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
+    }
+
+    @Nullable
+    @Override
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return FFEntities.GIPPLE.create(world);
+    }
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(IS_DANCING, false);
+        this.dataTracker.startTracking(IS_LUMINOUS, false);
+        this.dataTracker.startTracking(FROM_BUCKET, false);
+        this.dataTracker.startTracking(IS_EATING, false);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("FromBucket", this.isFromBucket());
+        nbt.putBoolean("Dancing", this.isDancing());
+        nbt.putBoolean("Eating", this.isEating());
+        nbt.putBoolean("Luminous", this.isLuminous());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setFromBucket(nbt.getBoolean("FromBucket"));
+        this.setDancing(nbt.getBoolean("Dancing"));
+        this.setEating(nbt.getBoolean("Eating"));
+        this.setLuminous(nbt.getBoolean("Luminous"));
+    }
+
+
+    //The following 4 methods were only to test the glowing and current splitting behavior. They will be changed
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack itemInHand = player.getStackInHand(hand);
+        World world = this.getWorld();
+        Random random = world.getRandom();
+        if (isFood(itemInHand)) {
+            if (!world.isClient() && !this.isBaby()) {
+                if (!this.isBaby()) {
+                    if (!this.isLuminous()) {
+                        this.setLuminous(true);
+                    } else {
+                        this.mitosis();
+                    }
+                } else {
+                    this.growUp(AnimalEntity.toGrowUpAge(-getBreedingAge()), true);
+                    return ActionResult.success(this.getWorld().isClient);
+                }
+
+                if (!player.getAbilities().creativeMode) {
+                    itemInHand.decrement(1);
+                }
+                return ActionResult.SUCCESS;
+            } else {
+                return ActionResult.CONSUME;
+            }
+        }
+        return super.interactMob(player, hand);
+    }
+
+    public void mitosis() {
+        //Chance to spawn a Mega Gipple instead of gipples
+        int loop = 0;
+        boolean spawnGippleNotSomething;
+
+        // If something chance passes and hostile mobs can spawn and is not peaceful
+        spawnGippleNotSomething = (0.1f + ((float) getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
+                && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && getWorld().getDifficulty() != Difficulty.PEACEFUL;
+
+
+        if (spawnGippleNotSomething){
+            //spawnSomething();
+        }
+
+        else {
+            //Spawn two gipples with a rare chance of a third
+            int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
+            while (loop != gippleNumber){
+                spawnGipple(loop);
+                loop++;
+            }
+        }
+        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+        for (int particleLoop = 0; particleLoop<=loop; particleLoop++){
+            double x = this.random.nextGaussian() * 0.001D;
+            double y = this.random.nextGaussian() * 0.06D;
+            double z = this.random.nextGaussian() * 0.001D;
+            this.getWorld().addParticle(ParticleTypes.SOUL, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
+        }
+        this.discard();
+    }
+    public void spawnSomething(){
+        SomethingEntity something = FFEntities.SOMETHING.create(getWorld());
+        if (this.isPersistent()) {
+            something.setPersistent();
+        }
+        something.setCustomName(this.getCustomName());
+        something.setAiDisabled(this.isAiDisabled());
+        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
+        getWorld().spawnEntity(something);
+    }
+
+    // i only determines rotation and relative z position, if that doesn't matter then just enter 0
+
+    public void spawnGipple(int i) {
+        GippleEntity gipple = FFEntities.GIPPLE.create(this.getWorld());
+        if (gipple != null) {
+            if (this.isPersistent()) {
+                gipple.setPersistent();
+            }
+            gipple.setBaby(true);
+            gipple.setLuminous(false);
+            gipple.setCustomName(this.getCustomName());
+            gipple.setAiDisabled(this.isAiDisabled());
+            //Randomize position and rotation
+            gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
+            getWorld().spawnEntity(gipple);
+        }
+
+
+        /*
+
+
+         */
+
+
+
+
+    }
+
+    public boolean isFood(ItemStack pStack) {
+        return GIPPLE_FOOD.test(pStack);
+    }
+
+
+
+    /*
+    public float getPathfindingFavor(BlockPos pos, WorldView world) {
+        return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
+    }
+     */
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+    }
+
+    @Override
+    public boolean hasNoGravity() {
+        return true;
+    }
+
+    @Override
+    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
+    }
+
+    public boolean isDancing() {
+        return this.dataTracker.get(IS_DANCING);
+    }
+    public void setDancing(boolean value) {
+        this.dataTracker.set(IS_DANCING, value);
+    }
+
+    public boolean isEating() {
+        return this.dataTracker.get(IS_EATING);
+    }
+    public void setEating(boolean value) {
+        this.dataTracker.set(IS_EATING, value);
+    }
+
+    public boolean isLuminous() {
+        return this.dataTracker.get(IS_LUMINOUS);
+    }
+    public void setLuminous(boolean value) {
+        this.dataTracker.set(IS_LUMINOUS, value);
+    }
+
+    @Override
+    public boolean isFromBucket() {
+        return dataTracker.get(FROM_BUCKET);
+    }
+    @Override
+    public void setFromBucket(boolean fromBucket) {
+        dataTracker.set(FROM_BUCKET, fromBucket);
+    }
+
+    @Override
+    public void copyDataToStack(ItemStack stack) {
+        Bucketable.copyDataToStack(this, stack);
+    }
+
+    @Override
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+    }
+
+    @Override
+    public SoundEvent getBucketFillSound() {
+        return SoundEvents.ITEM_BUCKET_FILL_FISH;
+    }
+
+    @Override
+    public ItemStack getBucketItem() {
+        return new ItemStack(FFItems.GIPPLE_BUCKET);
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "GippleAnimations", 3, this::setAnimations));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return instanceCache;
+    }
+
+    public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {
+        if (this.isDancing()) {
+            return event.setAndContinue(DANCING_ANIM);
+        } else if (this.isEating()) {
+            return event.setAndContinue(EATING_ANIM);
+        } else {
+            return event.setAndContinue(AMBIENT_ANIM);
+        }
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return this.age;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return FFSoundEvents.ENTITY_GIPPLE_DEATH;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return FFSoundEvents.ENTITY_GIPPLE_AMBIENT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return FFSoundEvents.ENTITY_GIPPLE_HURT;
+    }
+
+/*Old code
+    private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     private static final float GENERIC_FLYING_SPEED = 0.1f;
 
-    /*
-        Interactions
-     */
-    private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
     private int digestingCooldown = 6000;
     private int pettingCooldown = 300;
     private int eatingCooldown;
     int eatingCooldownRange = 200;
     int eatingAnimationCooldown = 30;
 
-    /*
-        Animations
-     */
-    private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
-    protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
-    protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlayAndHold("gipple.eat");
-    protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
-
-
-    /*
-        Dancing
-     */
     @Nullable
     private BlockPos jukeboxPos;
-    private static final TrackedData<Boolean> DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final EntityGameEventHandler<GippleEntity.JukeboxEventListener> jukeboxEventHandler;
-
-
-    /*
-        Initialization
-     */
-    public GippleEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
-        super(entityType, world);
-        this.experiencePoints = 5;
-
-        this.moveControl = new FlightMoveControl(this, 10, true);
-        PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
-        this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
-        eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
-    }
 
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
@@ -140,17 +387,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
     }
 
 
-    /*
-    Data
-    */
-    public static DefaultAttributeContainer.Builder createGippleAttributes() {
 
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, GENERIC_FLYING_SPEED)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
-    }
+
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
     }
@@ -175,27 +413,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
     public Vec3d getLeashOffset() {
         return new Vec3d(0.0D, (double) this.getStandingEyeHeight() * 0.6D, (double) this.getWidth() * 0.1D);
     }
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(DANCING, false);
-        this.dataTracker.startTracking(DIGESTING, false);
-        this.dataTracker.startTracking(FROM_BUCKET, false);
-        this.dataTracker.startTracking(IS_EATING, false);
-    }
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("Digesting", this.isDigesting());
-        nbt.putBoolean("FromBucket", this.isFromBucket());
-        nbt.putBoolean("Dancing", this.isDancing());
-        nbt.putBoolean("IsEating", this.getIsEating());
-    }
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.setDigesting(nbt.getBoolean("Digesting"));
-        this.setFromBucket(nbt.getBoolean("FromBucket"));
-        this.setDancing(nbt.getBoolean("Dancing"));
-        this.setIsEating(nbt.getBoolean("IsEating"));
-    }
+
 
     public boolean isDigesting() {
         return dataTracker.get(DIGESTING);
@@ -203,50 +421,6 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
     public void setDigesting(boolean value) {
         dataTracker.set(DIGESTING, value);
     }
-    public boolean isDancing() {
-        return this.dataTracker.get(DANCING);
-    }
-    public void setDancing(boolean value) {
-        this.dataTracker.set(DANCING, value);
-    }
-
-    public Boolean getIsEating() {
-        return this.dataTracker.get(IS_EATING);
-    }
-    public void setIsEating(boolean value) {
-        this.dataTracker.set(IS_EATING, value);
-    }
-
-
-    /*
-    Bucket stuff
-    */
-    @Override
-    public boolean isFromBucket() {
-        return dataTracker.get(FROM_BUCKET);
-    }
-    @Override
-    public void setFromBucket(boolean fromBucket) {
-        dataTracker.set(FROM_BUCKET, fromBucket);
-    }
-    public void copyDataToStack(ItemStack stack) {
-        Bucketable.copyDataToStack(this, stack);
-    }
-    public void copyDataFromNbt(NbtCompound nbt) {
-        Bucketable.copyDataFromNbt(this, nbt);
-    }
-    public SoundEvent getBucketFillSound() {
-        return SoundEvents.ITEM_BUCKET_FILL_FISH;
-    }
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(FFItems.GIPPLE_BUCKET);
-    }
-
-
-    /*
-        Tick stuff
-     */
 
     public void tickMovement() {
 
@@ -290,9 +464,7 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
         super.tick();
     }
 
-    /*
-            Player Interaction
-         */
+
     @Override
     public boolean damage(DamageSource source, float amount) {
         if (isDigesting()){
@@ -311,24 +483,21 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-            /*
-                Go in bucket
-             */
+            //Go in bucket
         if (stack.isOf(Items.WATER_BUCKET)) {
             player.swingHand(hand);
             Bucketable.tryBucket(player, hand, this);
         }
-            /*
-                Eat lichen and multiply
-             */
+         //       Eat lichen and multiply
+
         else if (GIPPLE_FOOD.test(stack) && this.isDigesting()) {
             mitosis();
             stack.decrement(1);
             return ActionResult.SUCCESS;
         }
-            /*
-                Pet the gipple
-             */
+
+                //Pet the gipple
+
         else if (pettingCooldown <= 0 && player.getStackInHand(hand).isEmpty()){
             this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), FFSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             double x = this.random.nextGaussian() * 0.02D;
@@ -344,9 +513,9 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
         //Chance to spawn a something instead of gipples
         int loop = 0;
         boolean spawnGippleNotSomething;
-            /*
-                If something chance passes and hostile mobs can spawn and is not peaceful
-             */
+
+               // If something chance passes and hostile mobs can spawn and is not peaceful
+
             spawnGippleNotSomething = (0.1f + ((float) getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
                     && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && getWorld().getDifficulty() != Difficulty.PEACEFUL;
 
@@ -381,9 +550,9 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
         something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
         getWorld().spawnEntity(something);
     }
-    /*
-        i only determines rotation and relative z position, if that doesn't matter then just enter 0
-     */
+
+       // i only determines rotation and relative z position, if that doesn't matter then just enter 0
+
     public void spawnGipple(int i){
         GippleEntity gipple = FFEntities.GIPPLE.create(this.getWorld());
 
@@ -400,53 +569,15 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
 
 
 
-    /*
-        Sounds
-     */
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return FFSoundEvents.ENTITY_GIPPLE_DEATH;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return FFSoundEvents.ENTITY_GIPPLE_AMBIENT;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return FFSoundEvents.ENTITY_GIPPLE_HURT;
-    }
 
 
 
-    /*
-            Flying code
-    */
-    public float getPathfindingFavor(BlockPos pos, WorldView world) {
-        return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
-    }
 
-    @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-        return false;
-    }
 
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-    }
 
-    @Override
-    public boolean hasNoGravity() {
-        return true;
-    }
+           // Flying code
 
-    @Override
-    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
-    }
+
 
     private static class FlyOntoLichenGoal extends FlyGoal {
         public FlyOntoLichenGoal(PathAwareEntity pathAwareEntity, double d) {
@@ -552,9 +683,9 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
 
 
 
-    /*
-        Dancing code
-    */
+
+       // Dancing code
+
     private boolean shouldStopDancing() {
         return this.jukeboxPos == null || !this.jukeboxPos.isWithinDistance(this.getPos(), GameEvent.JUKEBOX_PLAY.getRange()) || !this.getWorld().getBlockState(this.jukeboxPos).isOf(Blocks.JUKEBOX);
     }
@@ -572,33 +703,8 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
 
     }
 
-    /*
-        Animations
-     */
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
-    }
 
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return instanceCache;
-    }
 
-    public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {
-        if (this.isDancing()) {
-            return event.setAndContinue(DANCING_ANIM);
-        } else if (this.getIsEating()) {
-            return event.setAndContinue(EATING_ANIM);
-        } else {
-            return event.setAndContinue(AMBIENT_ANIM);
-        }
-    }
-
-    @Override
-    public double getTick(Object object) {
-        return this.age;
-    }
 
 
     private class JukeboxEventListener implements GameEventListener {
@@ -656,4 +762,5 @@ public class GippleEntity extends PathAwareEntity implements Bucketable, GeoEnti
     public boolean canSpawn(WorldView world) {
         return world.getBlockState(this.getBlockPos().down()).isIn(FFBlockTags.GIPPLE_SPAWNABLES);
     }
+ */
 }

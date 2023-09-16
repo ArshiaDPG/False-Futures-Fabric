@@ -40,6 +40,6 @@ public class FFPlacedFeatures {
 
 
     public static void init(){
-        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_DECORATION, GIPPLE_COLONY);
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY);
     }
 }

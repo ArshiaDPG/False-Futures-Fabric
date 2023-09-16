@@ -106,8 +106,7 @@ public class FFModelProvider extends FabricModelProvider {
     }
 
     private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
-        TextureMap textureMap = TextureMap.all(FFBlocks.GELATIN_LAYER);
-        Identifier identifier = Models.CUBE_ALL.upload(new Identifier(FalseFutures.MOD_ID, "block/gelatin_height16"), textureMap, blockStateModelGenerator.modelCollector);
+        Identifier identifier = Models.CUBE_ALL.upload(new Identifier(FalseFutures.MOD_ID, "block/gelatin_height16"), TextureMap.all(new Identifier(FalseFutures.MOD_ID, "block/gelatin")), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(FFBlocks.GELATIN_LAYER).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register((height) -> {
             BlockStateVariant blockStateVariant = BlockStateVariant.create();
             VariantSetting variantSettings = VariantSettings.MODEL;

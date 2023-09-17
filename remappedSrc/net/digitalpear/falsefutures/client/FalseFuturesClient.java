@@ -1,7 +1,7 @@
 package net.digitalpear.falsefutures.client;
 
 import net.digitalpear.falsefutures.common.entities.gipple.GippleEntityRenderer;
-import net.digitalpear.falsefutures.common.entities.something.SomethingEntityRenderer;
+import net.digitalpear.falsefutures.common.entities.aneuploidian.SomethingEntityRenderer;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.fabricmc.api.ClientModInitializer;

@@ -26,7 +26,7 @@ public class FFEntityTypeTagProvider extends FabricTagProvider<EntityType<?>> {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
-        getOrCreateTagBuilder(FFEntityTypeTags.SOMETHING_TARGET_BLACKLIST)
+        getOrCreateTagBuilder(FFEntityTypeTags.ANEUPLOIDIAN_TARGET_BLACKLIST)
                 .add(EntityType.CREEPER)
                 .add(EntityType.COD)
                 .add(EntityType.SQUID)

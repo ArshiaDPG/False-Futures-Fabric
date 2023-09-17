@@ -37,7 +37,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "killer",
           "predicate": {
-            "type": "falsefutures:something"
+            "type": "falsefutures:aneuploidian"
           }
         }
       ],

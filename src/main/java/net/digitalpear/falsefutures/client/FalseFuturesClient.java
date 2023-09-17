@@ -1,7 +1,7 @@
 package net.digitalpear.falsefutures.client;
 
 import net.digitalpear.falsefutures.common.entities.gipple.GippleEntityRenderer;
-import net.digitalpear.falsefutures.common.entities.something.SomethingEntityRenderer;
+import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEntityRenderer;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.fabricmc.api.ClientModInitializer;
@@ -16,7 +16,7 @@ public class FalseFuturesClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry.register(FFEntities.GIPPLE, GippleEntityRenderer::new);
-        EntityRendererRegistry.register(FFEntities.SOMETHING, SomethingEntityRenderer::new);
+        EntityRendererRegistry.register(FFEntities.ANEUPLOIDIAN, AneuploidianEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), FFBlocks.GELATIN_LAYER);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), FFBlocks.GIPPLEPAD, FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, FFBlocks.TALL_JELLYROOT);

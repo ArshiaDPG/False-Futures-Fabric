@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.common.entities.something;
+package net.digitalpear.falsefutures.common.entities.aneuploidian;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;

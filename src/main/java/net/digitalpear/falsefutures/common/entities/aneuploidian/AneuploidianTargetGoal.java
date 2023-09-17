@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.common.entities.something;
+package net.digitalpear.falsefutures.common.entities.aneuploidian;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;
@@ -7,15 +7,13 @@ import net.digitalpear.falsefutures.init.tags.FFEntityTypeTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.TrackTargetGoal;
-import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
 import org.jetbrains.annotations.Nullable;
 
-public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal {
+public class AneuploidianTargetGoal<T extends LivingEntity> extends TrackTargetGoal {
     private static final int DEFAULT_RECIPROCAL_CHANCE = 10;
     protected final Class<T> targetClass;
     protected final int reciprocalChance;
@@ -23,19 +21,19 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
     protected LivingEntity targetEntity;
     protected TargetPredicate targetPredicate;
 
-    public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility) {
+    public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility) {
         this(mob, targetClass, 10, checkVisibility, false, null);
     }
 
-    public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, Predicate<LivingEntity> targetPredicate) {
+    public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, Predicate<LivingEntity> targetPredicate) {
         this(mob, targetClass, 10, checkVisibility, false, targetPredicate);
     }
 
-    public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, boolean checkCanNavigate) {
+    public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, boolean checkCanNavigate) {
         this(mob, targetClass, 10, checkVisibility, checkCanNavigate, null);
     }
 
-    public SomethingTargetGoal(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> targetPredicate) {
+    public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> targetPredicate) {
         super(mob, checkVisibility, checkCanNavigate);
         this.targetClass = targetClass;
         this.reciprocalChance = toGoalTicks(reciprocalChance);
@@ -48,7 +46,7 @@ public class SomethingTargetGoal<T extends LivingEntity> extends TrackTargetGoal
             return false;
         } else {
             this.findClosestTarget();
-            return (this.targetEntity != null) && (!this.targetEntity.isSubmergedInWater()) && !this.targetEntity.getType().isIn(FFEntityTypeTags.SOMETHING_TARGET_BLACKLIST);
+            return (this.targetEntity != null) && (!this.targetEntity.isSubmergedInWater()) && !this.targetEntity.getType().isIn(FFEntityTypeTags.ANEUPLOIDIAN_TARGET_BLACKLIST);
         }
     }
 

@@ -35,7 +35,7 @@ public class FFItems {
 
     public static final Item GIPPLE_BUCKET = createBucketedMob(FFEntities.GIPPLE);
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(FFEntities.GIPPLE, 13558777, 11642584);
-    public static final Item SOMETHING_SPAWN_EGG = createInvisibleSpawnEgg(FFEntities.SOMETHING, 13558777, 9669861);
+    public static final Item ANEUPLOIDIAN_SPAWN_EGG = createInvisibleSpawnEgg(FFEntities.ANEUPLOIDIAN, 13558777, 9669861);
     public static final Item GELATIN = register("gelatin", new Item(new Item.Settings().food(FFFoodComponents.GELATIN)));
     public static final Item MUSIC_DISC_GIPPLECORE = createDisc("gipplecore", 13, FFSoundEvents.MUSIC_DISC_GIPPLECORE, 113);
     public static final Item GIPPLEPAD = register("gipplepad", new PlaceableOnWaterItem(FFBlocks.GIPPLEPAD, new Item.Settings()));
@@ -65,7 +65,7 @@ public class FFItems {
             entries.addAfter(Items.PIGLIN_BANNER_PATTERN, GIPPLE_BANNER_PATTERN);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
-            entries.addAfter(Items.GLOW_SQUID_SPAWN_EGG, GIPPLE_SPAWN_EGG, SOMETHING_SPAWN_EGG);
+            entries.addAfter(Items.GLOW_SQUID_SPAWN_EGG, GIPPLE_SPAWN_EGG, ANEUPLOIDIAN_SPAWN_EGG);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {

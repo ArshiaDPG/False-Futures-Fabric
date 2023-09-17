@@ -1,27 +1,22 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
-import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
+import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
-import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -35,8 +30,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.math.random.RandomSequence;
-import net.minecraft.util.math.random.RandomSplitter;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -48,8 +41,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.RandomAccess;
 
 public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -150,72 +141,63 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
 
     public void mitosis() {
-        //Chance to spawn a Mega Gipple instead of gipples
+        Random random = this.getRandom();
+        World world = this.getWorld();
         int loop = 0;
-        boolean spawnGippleNotSomething;
+        boolean spawnAneuploidianNotGipple = (0.1f + ((float) world.getDifficulty().getId() / 50)) > random.nextFloat() && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && world.getDifficulty() != Difficulty.PEACEFUL;
 
-        // If something chance passes and hostile mobs can spawn and is not peaceful
-        spawnGippleNotSomething = (0.1f + ((float) getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
-                && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && getWorld().getDifficulty() != Difficulty.PEACEFUL;
-
-
-        if (spawnGippleNotSomething){
+        if (spawnAneuploidianNotGipple){
             //spawnSomething();
-        }
-
-        else {
-            //Spawn two gipples with a rare chance of a third
-            int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
-            while (loop != gippleNumber){
-                spawnGipple(loop);
+        } else {
+            while (loop != 2) {
+                spawnGipple(random);
                 loop++;
             }
         }
-        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-        for (int particleLoop = 0; particleLoop<=loop; particleLoop++){
-            double x = this.random.nextGaussian() * 0.001D;
-            double y = this.random.nextGaussian() * 0.06D;
-            double z = this.random.nextGaussian() * 0.001D;
-            this.getWorld().addParticle(ParticleTypes.SOUL, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
+        //doesn't work
+        for (int particleLoop = 0; particleLoop <= 5; particleLoop++){
+            double x = random.nextGaussian() * 0.001D;
+            double y = random.nextGaussian() * 0.06D;
+            double z = random.nextGaussian() * 0.001D;
+            world.addParticle(ParticleTypes.COMPOSTER, this.getX() + 0.5D, this.getY() + 0.5D, getZ() + 0.5D, 0, 0, 0);
         }
+        world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+
         this.discard();
     }
     public void spawnSomething(){
-        SomethingEntity something = FFEntities.SOMETHING.create(getWorld());
+        AneuploidianEntity something = FFEntities.ANEUPLOIDIAN.create(getWorld());
         if (this.isPersistent()) {
             something.setPersistent();
         }
         something.setCustomName(this.getCustomName());
         something.setAiDisabled(this.isAiDisabled());
-        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
+        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getRandom().nextFloat() * 360.0F, 0.0F);
         getWorld().spawnEntity(something);
     }
 
     // i only determines rotation and relative z position, if that doesn't matter then just enter 0
 
-    public void spawnGipple(int i) {
+    public void spawnGipple(Random random) {
         GippleEntity gipple = FFEntities.GIPPLE.create(this.getWorld());
         if (gipple != null) {
             if (this.isPersistent()) {
                 gipple.setPersistent();
             }
+            NbtCompound nbt = this.writeNbt(new NbtCompound());
+            nbt.remove("UUID");
+            gipple.readNbt(nbt);
             gipple.setBaby(true);
             gipple.setLuminous(false);
+            /*
             gipple.setCustomName(this.getCustomName());
             gipple.setAiDisabled(this.isAiDisabled());
+
+             */
             //Randomize position and rotation
-            gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
+            gipple.refreshPositionAndAngles(this.getX() + random.nextDouble(), this.getY() + random.nextDouble(), this.getZ() - random.nextDouble() , 0, 0);
             getWorld().spawnEntity(gipple);
         }
-
-
-        /*
-
-
-         */
-
-
-
 
     }
 

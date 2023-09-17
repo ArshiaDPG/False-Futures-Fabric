@@ -4,10 +4,16 @@ import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEnt
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
+import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
+import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.FlyGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.pathing.BirdNavigation;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -22,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -51,13 +58,13 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
     protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlayAndHold("gipple.eat");
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
+    protected static final RawAnimation ON_GROUND_ANIM = RawAnimation.begin().thenLoop("gipple.floor");
     private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
 
 
     public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
-
         this.moveControl = new FlightMoveControl(this, 10, true);
 
         /*PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
@@ -74,6 +81,28 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1F)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
+    }
+
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(0, new FlyGoal(this, 1.0));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 1.25D));
+        this.goalSelector.add(4, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
+
+    }
+
+    @Override
+    protected EntityNavigation createNavigation(World world) {
+        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
+            @Override
+            public boolean isValidPosition(BlockPos pos) {
+                return !this.world.getBlockState(pos.down()).isAir();
+            }
+        };
+        birdNavigation.setCanPathThroughDoors(false);
+        birdNavigation.setCanSwim(false);
+        birdNavigation.setCanEnterOpenDoors(true);
+        return birdNavigation;
     }
 
     @Nullable
@@ -111,13 +140,14 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
 
     //The following 4 methods were only to test the glowing and current splitting behavior. They will be changed
+    /*
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemInHand = player.getStackInHand(hand);
         World world = this.getWorld();
         Random random = world.getRandom();
         if (isFood(itemInHand)) {
-            if (!world.isClient() && !this.isBaby()) {
+            if (!world.isClient()) {
                 if (!this.isBaby()) {
                     if (!this.isLuminous()) {
                         this.setLuminous(true);
@@ -139,6 +169,8 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         }
         return super.interactMob(player, hand);
     }
+
+
 
     public void mitosis() {
         Random random = this.getRandom();
@@ -176,8 +208,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         getWorld().spawnEntity(something);
     }
 
-    // i only determines rotation and relative z position, if that doesn't matter then just enter 0
-
     public void spawnGipple(Random random) {
         GippleEntity gipple = FFEntities.GIPPLE.create(this.getWorld());
         if (gipple != null) {
@@ -189,29 +219,24 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             gipple.readNbt(nbt);
             gipple.setBaby(true);
             gipple.setLuminous(false);
-            /*
-            gipple.setCustomName(this.getCustomName());
-            gipple.setAiDisabled(this.isAiDisabled());
 
-             */
             //Randomize position and rotation
             gipple.refreshPositionAndAngles(this.getX() + random.nextDouble(), this.getY() + random.nextDouble(), this.getZ() - random.nextDouble() , 0, 0);
             getWorld().spawnEntity(gipple);
         }
 
     }
+            */
+
+    
 
     public boolean isFood(ItemStack pStack) {
         return GIPPLE_FOOD.test(pStack);
     }
 
-
-
-    /*
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
         return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
     }
-     */
 
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
@@ -296,9 +321,12 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             return event.setAndContinue(DANCING_ANIM);
         } else if (this.isEating()) {
             return event.setAndContinue(EATING_ANIM);
+        } else if (this.isOnGround()) {
+            return event.setAndContinue(ON_GROUND_ANIM);
         } else {
             return event.setAndContinue(AMBIENT_ANIM);
         }
+
     }
 
     @Override

@@ -27,9 +27,9 @@ public class FabricEntityLootTableProvider extends SimpleFabricLootTableProvider
 
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> identifierBuilderBiConsumer) {
-        identifierBuilderBiConsumer.accept(Registries.ENTITY_TYPE.getId(FFEntities.SOMETHING).withPrefixedPath("entities/"), LootTable.builder()
+        identifierBuilderBiConsumer.accept(Registries.ENTITY_TYPE.getId(FFEntities.ANEUPLOIDIAN).withPrefixedPath("entities/"), LootTable.builder()
                 .pool(LootPool.builder().with(ItemEntry.builder(FFItems.GELATIN)).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F))).apply(LootingEnchantLootFunction.builder(UniformLootNumberProvider.create(0.0F, 1.0F))).build())
-                .pool(LootPool.builder().with(ItemEntry.builder(FFItems.MUSIC_DISC_GIPPLECORE)).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.KILLER, EntityPredicate.Builder.create().type(FFEntities.SOMETHING))).build()));
+                .pool(LootPool.builder().with(ItemEntry.builder(FFItems.MUSIC_DISC_GIPPLECORE)).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.KILLER, EntityPredicate.Builder.create().type(FFEntities.ANEUPLOIDIAN))).build()));
 
         identifierBuilderBiConsumer.accept(Registries.ENTITY_TYPE.getId(FFEntities.GIPPLE).withPrefixedPath("entities/"), LootTable.builder()
                 .pool(LootPool.builder().with(ItemEntry.builder(FFItems.GELATIN)).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F))).apply(LootingEnchantLootFunction.builder(UniformLootNumberProvider.create(0.0F, 1.0F))).build()));

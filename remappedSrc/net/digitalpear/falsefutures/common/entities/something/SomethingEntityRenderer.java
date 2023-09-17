@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.common.entities.something;
+package net.digitalpear.falsefutures.common.entities.aneuploidian;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;

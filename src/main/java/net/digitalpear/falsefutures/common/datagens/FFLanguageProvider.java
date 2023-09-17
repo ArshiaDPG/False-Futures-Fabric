@@ -62,7 +62,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, FFBlocks.GIPPLEPAD);
 
         autoName(translationBuilder, FFEntities.GIPPLE);
-        autoName(translationBuilder, FFEntities.SOMETHING);
+        autoName(translationBuilder, FFEntities.ANEUPLOIDIAN);
 
         autoName(translationBuilder, FFBlocks.HIBERNATING_GIPPLE);
 
@@ -71,7 +71,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(FFItems.GIPPLE_BUCKET, "Bucket of Gipple");
 
         translationBuilder.add(FFItems.GIPPLE_SPAWN_EGG, "Gipple Spawn Egg");
-        translationBuilder.add(FFItems.SOMETHING_SPAWN_EGG, "Something Spawn Egg");
+        translationBuilder.add(FFItems.ANEUPLOIDIAN_SPAWN_EGG, "Something Spawn Egg");
 
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");

@@ -1,4 +1,4 @@
-package net.digitalpear.falsefutures.common.entities.something;
+package net.digitalpear.falsefutures.common.entities.aneuploidian;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -24,14 +24,14 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SomethingEntity extends HostileEntity implements Monster, Flutterer, GeoEntity {
+public class AneuploidianEntity extends HostileEntity implements Monster, Flutterer, GeoEntity {
     private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
-    protected static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("something.attack");
-    protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("something.ambient");
+    protected static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("aneuploidian.attack");
+    protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("aneuploidian.ambient");
     private boolean isAttacking = false;
 
 
-    public SomethingEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public AneuploidianEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.lookControl = new LookControl(this);
         this.moveControl = new FlightMoveControl(this, 20, true);
@@ -48,9 +48,9 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(1, new FlyGoal(this, 20.0D));
-        this.goalSelector.add(1, new SomethingAttackGoal(this, 1.0D, true));
-        this.targetSelector.add(1, new SomethingTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new SomethingTargetGoal<>(this, PathAwareEntity.class, false));
+        this.goalSelector.add(1, new AneuploidianAttackGoal(this, 1.0D, true));
+        this.targetSelector.add(1, new AneuploidianTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(2, new AneuploidianTargetGoal<>(this, PathAwareEntity.class, false));
     }
 
     public static DefaultAttributeContainer.Builder createSomethingAttributes() {
@@ -118,29 +118,29 @@ public class SomethingEntity extends HostileEntity implements Monster, Flutterer
         return this.age;
     }
 
-}
-class SomethingAttackGoal extends MeleeAttackGoal {
-    private final SomethingEntity gipple;
-    private int ticks;
+    static class AneuploidianAttackGoal extends MeleeAttackGoal {
+        private final AneuploidianEntity gipple;
+        private int ticks;
 
-    public SomethingAttackGoal(SomethingEntity gipple, double speed, boolean pauseWhenMobIdle) {
-        super(gipple, speed, pauseWhenMobIdle);
-        this.gipple = gipple;
-    }
+        public AneuploidianAttackGoal(AneuploidianEntity gipple, double speed, boolean pauseWhenMobIdle) {
+            super(gipple, speed, pauseWhenMobIdle);
+            this.gipple = gipple;
+        }
 
-    public void start() {
-        super.start();
-        this.ticks = 0;
-    }
+        public void start() {
+            super.start();
+            this.ticks = 0;
+        }
 
-    public void stop() {
-        super.stop();
-        this.gipple.setAttacking(false);
-    }
+        public void stop() {
+            super.stop();
+            this.gipple.setAttacking(false);
+        }
 
-    public void tick() {
-        ++this.ticks;
-        this.gipple.setAttacking(this.ticks >= 5 && this.getCooldown() < this.getMaxCooldown() / 2);
-        super.tick();
+        public void tick() {
+            ++this.ticks;
+            this.gipple.setAttacking(this.ticks >= 5 && this.getCooldown() < this.getMaxCooldown() / 2);
+            super.tick();
+        }
     }
 }

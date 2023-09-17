@@ -1,27 +1,22 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
-import net.digitalpear.falsefutures.common.entities.something.SomethingEntity;
+import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
-import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -35,8 +30,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.math.random.RandomSequence;
-import net.minecraft.util.math.random.RandomSplitter;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -48,8 +41,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.RandomAccess;
 
 public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -181,7 +172,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.discard();
     }
     public void spawnSomething(){
-        SomethingEntity something = FFEntities.SOMETHING.create(getWorld());
+        AneuploidianEntity something = FFEntities.ANEUPLOIDIAN.create(getWorld());
         if (this.isPersistent()) {
             something.setPersistent();
         }

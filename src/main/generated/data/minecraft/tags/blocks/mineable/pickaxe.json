@@ -12,16 +12,16 @@
     "falsefutures:gelatite_brick_stairs",
     "falsefutures:gelatite_brick_slab",
     "falsefutures:gelatite_brick_wall",
-    "falsefutures:brineshale",
-    "falsefutures:brineshale_stairs",
-    "falsefutures:brineshale_slab",
-    "falsefutures:brineshale_wall",
-    "falsefutures:brineshale_button",
-    "falsefutures:brineshale_pressure_plate",
-    "falsefutures:chiseled_brineshale_bricks",
-    "falsefutures:brineshale_bricks",
-    "falsefutures:brineshale_brick_stairs",
-    "falsefutures:brineshale_brick_slab",
-    "falsefutures:brineshale_brick_wall"
+    "falsefutures:amoebalith",
+    "falsefutures:amoebalith_stairs",
+    "falsefutures:amoebalith_slab",
+    "falsefutures:amoebalith_wall",
+    "falsefutures:amoebalith_button",
+    "falsefutures:amoebalith_pressure_plate",
+    "falsefutures:chiseled_amoebalith_bricks",
+    "falsefutures:amoebalith_bricks",
+    "falsefutures:amoebalith_brick_stairs",
+    "falsefutures:amoebalith_brick_slab",
+    "falsefutures:amoebalith_brick_wall"
   ]
 }

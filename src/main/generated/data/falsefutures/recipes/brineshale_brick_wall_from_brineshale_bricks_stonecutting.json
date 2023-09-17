@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "falsefutures:brineshale_bricks"
-  },
-  "result": "falsefutures:brineshale_brick_wall"
-}

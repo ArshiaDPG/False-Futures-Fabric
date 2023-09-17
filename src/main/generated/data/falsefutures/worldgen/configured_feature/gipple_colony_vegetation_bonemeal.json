@@ -10,7 +10,96 @@
           "data": {
             "Name": "falsefutures:jellyroot"
           },
+          "weight": 30
+        },
+        {
+          "data": {
+            "Name": "falsefutures:tall_jellyroot",
+            "Properties": {
+              "half": "lower"
+            }
+          },
           "weight": 10
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "1",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 8
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "2",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 7
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "3",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "4",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "5",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "6",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "7",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "falsefutures:gelatin_layer",
+            "Properties": {
+              "layers": "8",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 1
         }
       ]
     }

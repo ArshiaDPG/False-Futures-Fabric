@@ -44,7 +44,7 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
             jellies.add(jelly);
         }
 
-        getOrCreateTagBuilder(FFBlockTags.GIPPLE_SPAWNABLES).add(FFBlocks.GELATITE).add(FFBlocks.BRINESHALE);
+        getOrCreateTagBuilder(FFBlockTags.GIPPLE_SPAWNABLES).add(FFBlocks.GELATITE).add(FFBlocks.AMOEBALITH);
 
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)
@@ -56,11 +56,11 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(FFBlockTags.JELLYROOT_PLANTABLES)
                 .add(FFBlocks.GELATITE)
-                .add(FFBlocks.BRINESHALE)
+                .add(FFBlocks.AMOEBALITH)
                 .add(FFBlocks.CHISELED_GELATITE_BRICKS)
-                .add(FFBlocks.CHISELED_BRINESHALE_BRICKS)
+                .add(FFBlocks.CHISELED_AMOEBALITH_BRICKS)
                 .add(FFBlocks.GELATITE_BRICKS)
-                .add(FFBlocks.BRINESHALE_BRICKS)
+                .add(FFBlocks.AMOEBALITH_BRICKS)
                 .forceAddTag(BlockTags.DIRT)
                 .add(Blocks.FARMLAND)
                 .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
@@ -69,29 +69,29 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(BlockTags.BUTTONS)
                 .add(FFBlocks.GELATITE_BUTTON)
-                .add(FFBlocks.BRINESHALE_BUTTON);
+                .add(FFBlocks.AMOEBALITH_BUTTON);
 
         getOrCreateTagBuilder(BlockTags.WALLS)
                 .add(FFBlocks.GELATITE_WALL)
-                .add(FFBlocks.BRINESHALE_WALL)
+                .add(FFBlocks.AMOEBALITH_WALL)
                 .add(FFBlocks.GELATITE_BRICK_WALL)
-                .add(FFBlocks.BRINESHALE_BRICK_WALL);
+                .add(FFBlocks.AMOEBALITH_BRICK_WALL);
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
                 .add(FFBlocks.GELATITE_STAIRS)
                 .add(FFBlocks.GELATITE_BRICK_STAIRS)
-                .add(FFBlocks.BRINESHALE_STAIRS)
-                .add(FFBlocks.BRINESHALE_BRICK_STAIRS);
+                .add(FFBlocks.AMOEBALITH_STAIRS)
+                .add(FFBlocks.AMOEBALITH_BRICK_STAIRS);
 
         getOrCreateTagBuilder(BlockTags.SLABS)
                 .add(FFBlocks.GELATITE_SLAB)
                 .add(FFBlocks.GELATITE_BRICK_SLAB)
-                .add(FFBlocks.BRINESHALE_SLAB)
-                .add(FFBlocks.BRINESHALE_BRICK_SLAB);
+                .add(FFBlocks.AMOEBALITH_SLAB)
+                .add(FFBlocks.AMOEBALITH_BRICK_SLAB);
 
         getOrCreateTagBuilder(BlockTags.STONE_PRESSURE_PLATES)
                 .add(FFBlocks.GELATITE_PRESSURE_PLATE)
-                .add(FFBlocks.BRINESHALE_PRESSURE_PLATE);
+                .add(FFBlocks.AMOEBALITH_PRESSURE_PLATE);
 
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(FFBlocks.GELATITE)
@@ -108,18 +108,18 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
                 .add(FFBlocks.GELATITE_BRICK_SLAB)
                 .add(FFBlocks.GELATITE_BRICK_WALL)
 
-                .add(FFBlocks.BRINESHALE)
-                .add(FFBlocks.BRINESHALE_STAIRS)
-                .add(FFBlocks.BRINESHALE_SLAB)
-                .add(FFBlocks.BRINESHALE_WALL)
-                .add(FFBlocks.BRINESHALE_BUTTON)
-                .add(FFBlocks.BRINESHALE_PRESSURE_PLATE)
+                .add(FFBlocks.AMOEBALITH)
+                .add(FFBlocks.AMOEBALITH_STAIRS)
+                .add(FFBlocks.AMOEBALITH_SLAB)
+                .add(FFBlocks.AMOEBALITH_WALL)
+                .add(FFBlocks.AMOEBALITH_BUTTON)
+                .add(FFBlocks.AMOEBALITH_PRESSURE_PLATE)
 
-                .add(FFBlocks.CHISELED_BRINESHALE_BRICKS)
+                .add(FFBlocks.CHISELED_AMOEBALITH_BRICKS)
 
-                .add(FFBlocks.BRINESHALE_BRICKS)
-                .add(FFBlocks.BRINESHALE_BRICK_STAIRS)
-                .add(FFBlocks.BRINESHALE_BRICK_SLAB)
-                .add(FFBlocks.BRINESHALE_BRICK_WALL);
+                .add(FFBlocks.AMOEBALITH_BRICKS)
+                .add(FFBlocks.AMOEBALITH_BRICK_STAIRS)
+                .add(FFBlocks.AMOEBALITH_BRICK_SLAB)
+                .add(FFBlocks.AMOEBALITH_BRICK_WALL);
     }
 }

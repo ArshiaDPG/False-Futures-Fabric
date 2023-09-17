@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "falsefutures:amoebalith_bricks"
+  },
+  "result": "falsefutures:amoebalith_brick_stairs"
+}

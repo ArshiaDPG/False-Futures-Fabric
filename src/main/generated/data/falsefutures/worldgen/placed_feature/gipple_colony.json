@@ -1,9 +1,9 @@
 {
-  "feature": "minecraft:bamboo_no_podzol",
+  "feature": "falsefutures:gipple_colony",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 3
+      "type": "minecraft:rarity_filter",
+      "chance": 6
     },
     {
       "type": "minecraft:height_range",

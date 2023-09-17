@@ -81,7 +81,7 @@ public class FFBlocks {
             new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.PALE_PURPLE)));
 
     public static final Block GELATITE = createBlockWithItem("gelatite",
-            new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.STONE)
+            new GippleHivemindBlock(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
                     .sounds(BlockSoundGroup.NETHER_GOLD_ORE)));
 
@@ -101,27 +101,27 @@ public class FFBlocks {
             new Block(AbstractBlock.Settings.copy(GELATITE)));
 
 
-    public static final Block BRINESHALE = createBlockWithItem("brineshale",
-            new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+    public static final Block AMOEBALITH = createBlockWithItem("amoebalith",
+            new GippleHivemindBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
             .sounds(BlockSoundGroup.NETHERRACK)
             .mapColor(MapColor.DARK_CRIMSON)));
 
-    public static final Block BRINESHALE_STAIRS = StoneSets.stoneStairs(BRINESHALE);
-    public static final Block BRINESHALE_SLAB = StoneSets.stoneSlab(BRINESHALE);
-    public static final Block BRINESHALE_WALL = StoneSets.stoneWall(BRINESHALE);
-    public static final Block BRINESHALE_PRESSURE_PLATE = StoneSets.stonePressurePlate(BRINESHALE);
-    public static final Block BRINESHALE_BUTTON = StoneSets.stoneButton(BRINESHALE);
+    public static final Block AMOEBALITH_STAIRS = StoneSets.stoneStairs(AMOEBALITH);
+    public static final Block AMOEBALITH_SLAB = StoneSets.stoneSlab(AMOEBALITH);
+    public static final Block AMOEBALITH_WALL = StoneSets.stoneWall(AMOEBALITH);
+    public static final Block AMOEBALITH_PRESSURE_PLATE = StoneSets.stonePressurePlate(AMOEBALITH);
+    public static final Block AMOEBALITH_BUTTON = StoneSets.stoneButton(AMOEBALITH);
 
-    public static final Block CHISELED_BRINESHALE_BRICKS = createBlockWithItem("chiseled_brineshale_bricks",
-            new Block(AbstractBlock.Settings.copy(BRINESHALE)));
+    public static final Block CHISELED_AMOEBALITH_BRICKS = createBlockWithItem("chiseled_amoebalith_bricks",
+            new Block(AbstractBlock.Settings.copy(AMOEBALITH)));
 
-    public static final Block BRINESHALE_BRICKS = createBlockWithItem("brineshale_bricks",
-            new GelatiteBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+    public static final Block AMOEBALITH_BRICKS = createBlockWithItem("amoebalith_bricks",
+            new GippleHivemindBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
                     .sounds(BlockSoundGroup.NETHERRACK)
                     .mapColor(MapColor.DARK_CRIMSON)));
-    public static final Block BRINESHALE_BRICK_STAIRS = StoneSets.stoneStairs(BRINESHALE_BRICKS);
-    public static final Block BRINESHALE_BRICK_SLAB = StoneSets.stoneSlab(BRINESHALE_BRICKS);
-    public static final Block BRINESHALE_BRICK_WALL = StoneSets.stoneWall(BRINESHALE_BRICKS);
+    public static final Block AMOEBALITH_BRICK_STAIRS = StoneSets.stoneStairs(AMOEBALITH_BRICKS);
+    public static final Block AMOEBALITH_BRICK_SLAB = StoneSets.stoneSlab(AMOEBALITH_BRICKS);
+    public static final Block AMOEBALITH_BRICK_WALL = StoneSets.stoneWall(AMOEBALITH_BRICKS);
 
     public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 4)));

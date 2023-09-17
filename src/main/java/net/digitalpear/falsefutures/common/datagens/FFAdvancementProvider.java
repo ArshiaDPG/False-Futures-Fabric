@@ -44,5 +44,6 @@ public class FFAdvancementProvider extends FabricAdvancementProvider {
             jellies.criterion("collected_jelly_" + Registries.BLOCK.getId(jelly).getPath().split("_")[0], InventoryChangedCriterion.Conditions.items(jelly));
         }
         Advancement jelliesAdvancement = jellies.build(consumer, FalseFutures.MOD_ID + ":husbandry/jellies");
+
     }
 }

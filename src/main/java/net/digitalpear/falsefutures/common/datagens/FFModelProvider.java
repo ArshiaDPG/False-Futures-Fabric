@@ -39,11 +39,11 @@ public class FFModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerSimpleCubeAll(FFBlocks.CHISELED_GELATITE_BRICKS);
         registerBrickBlockSet(blockStateModelGenerator, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB,
                 FFBlocks.GELATITE_BRICK_WALL);
-        registerBlockSet(blockStateModelGenerator, FFBlocks.BRINESHALE, FFBlocks.BRINESHALE_STAIRS, FFBlocks.BRINESHALE_SLAB,
-                FFBlocks.BRINESHALE_WALL, FFBlocks.BRINESHALE_PRESSURE_PLATE, FFBlocks.BRINESHALE_BUTTON);
-        blockStateModelGenerator.registerSimpleCubeAll(FFBlocks.CHISELED_BRINESHALE_BRICKS);
-        registerBrickBlockSet(blockStateModelGenerator, FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB,
-                FFBlocks.BRINESHALE_BRICK_WALL);
+        registerBlockSet(blockStateModelGenerator, FFBlocks.AMOEBALITH, FFBlocks.AMOEBALITH_STAIRS, FFBlocks.AMOEBALITH_SLAB,
+                FFBlocks.AMOEBALITH_WALL, FFBlocks.AMOEBALITH_PRESSURE_PLATE, FFBlocks.AMOEBALITH_BUTTON);
+        blockStateModelGenerator.registerSimpleCubeAll(FFBlocks.CHISELED_AMOEBALITH_BRICKS);
+        registerBrickBlockSet(blockStateModelGenerator, FFBlocks.AMOEBALITH_BRICKS, FFBlocks.AMOEBALITH_BRICK_STAIRS, FFBlocks.AMOEBALITH_BRICK_SLAB,
+                FFBlocks.AMOEBALITH_BRICK_WALL);
 
 
         blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple")));

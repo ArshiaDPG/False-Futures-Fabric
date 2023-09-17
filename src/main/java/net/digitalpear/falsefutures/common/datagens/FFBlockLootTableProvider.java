@@ -68,13 +68,13 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        stoneSet(FFBlocks.BRINESHALE,
-                FFBlocks.BRINESHALE_STAIRS,
-                FFBlocks.BRINESHALE_SLAB,
-                FFBlocks.BRINESHALE_WALL,
-                FFBlocks.BRINESHALE_BUTTON,
-                FFBlocks.BRINESHALE_PRESSURE_PLATE);
-        drops(FFBlocks.CHISELED_BRINESHALE_BRICKS);
+        stoneSet(FFBlocks.AMOEBALITH,
+                FFBlocks.AMOEBALITH_STAIRS,
+                FFBlocks.AMOEBALITH_SLAB,
+                FFBlocks.AMOEBALITH_WALL,
+                FFBlocks.AMOEBALITH_BUTTON,
+                FFBlocks.AMOEBALITH_PRESSURE_PLATE);
+        drops(FFBlocks.CHISELED_AMOEBALITH_BRICKS);
 
         stoneSet(FFBlocks.GELATITE,
                 FFBlocks.GELATITE_STAIRS,
@@ -84,7 +84,7 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
                 FFBlocks.GELATITE_PRESSURE_PLATE);
 
         stoneSet(FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL);
-        stoneSet(FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB, FFBlocks.BRINESHALE_BRICK_WALL);
+        stoneSet(FFBlocks.AMOEBALITH_BRICKS, FFBlocks.AMOEBALITH_BRICK_STAIRS, FFBlocks.AMOEBALITH_BRICK_SLAB, FFBlocks.AMOEBALITH_BRICK_WALL);
 
 
         addDrop(FFBlocks.JELLYROOT, jellyrootDrops(FFBlocks.JELLYROOT));

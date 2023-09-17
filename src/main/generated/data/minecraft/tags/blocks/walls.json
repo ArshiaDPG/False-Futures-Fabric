@@ -2,8 +2,8 @@
   "replace": false,
   "values": [
     "falsefutures:gelatite_wall",
-    "falsefutures:brineshale_wall",
+    "falsefutures:amoebalith_wall",
     "falsefutures:gelatite_brick_wall",
-    "falsefutures:brineshale_brick_wall"
+    "falsefutures:amoebalith_brick_wall"
   ]
 }

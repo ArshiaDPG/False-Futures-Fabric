@@ -1,4 +1,29 @@
 {
   "type": "falsefutures:gipple_colony",
-  "config": {}
+  "config": {
+    "depth": 3,
+    "extra_bottom_block_chance": 0.8,
+    "extra_edge_column_chance": 0.7,
+    "ground_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "falsefutures:gelatite"
+      }
+    },
+    "replaceable": "#falsefutures:gipple_colony_replaceable",
+    "surface": "floor",
+    "vegetation_chance": 0.1,
+    "vegetation_feature": {
+      "feature": "falsefutures:gipple_colony_vegetation",
+      "placement": []
+    },
+    "vertical_range": 5,
+    "xz_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 7,
+        "min_inclusive": 4
+      }
+    }
+  }
 }

@@ -1,8 +1,6 @@
 package net.digitalpear.falsefutures.init.features;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.features.FFFeatures;
-import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registerable;
@@ -33,9 +31,9 @@ public class FFPlacedFeatures {
 
     public static void bootstrap(Registerable<PlacedFeature> featureRegisterable) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
-        RegistryEntry<ConfiguredFeature<?, ?>> registryEntry = registryEntryLookup.getOrThrow(VegetationConfiguredFeatures.BAMBOO_NO_PODZOL);
+        RegistryEntry<ConfiguredFeature<?, ?>> registryEntry = registryEntryLookup.getOrThrow(FFConfiguredFeatures.GIPPLE_COLONY);
 
-        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, CountPlacementModifier.of(3), HeightRangePlacementModifier.uniform(YOffset.aboveBottom(12), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
+        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, RarityFilterPlacementModifier.of(6), HeightRangePlacementModifier.uniform(YOffset.aboveBottom(12), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
     }
 
 

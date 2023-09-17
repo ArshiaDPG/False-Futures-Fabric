@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "falsefutures:block/brineshale",
-    "side": "falsefutures:block/brineshale",
-    "top": "falsefutures:block/brineshale"
-  }
-}

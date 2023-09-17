@@ -1,7 +1,7 @@
-// 1.20.1	2023-09-15T18:54:20.3424278	False Futures/Tags for minecraft:item
-cf36861de431b45f15fd7354481705064f08318c data\minecraft\tags\items\walls.json
-d3c980a224a11e31f1d0fe9d3c6dce8e592e3965 data\minecraft\tags\items\slabs.json
-680eef56a9d6ca2c2eb4ae4d4680c99fabaaeb82 data\minecraft\tags\items\buttons.json
+// 1.20.1	2023-09-16T17:12:48.6838902	False Futures/Tags for minecraft:item
+5536471b4df49434bddd18c078959702729e6090 data\minecraft\tags\items\walls.json
+a9bf5ffd05debbe7f4eba9598aad77d768c2494c data\minecraft\tags\items\slabs.json
+dd3fe16bb8b0001c24b37a80a3482a32bdff93f7 data\minecraft\tags\items\buttons.json
+012b32f26f4d010272ddd112eabff880ac89af4e data\minecraft\tags\items\stairs.json
 13e2961381f5aa5ffaa01ad5faf7735495bdaecf data\minecraft\tags\items\music_discs.json
-0b2d6ded833941cd2d699a0d6c59857ea9249d59 data\minecraft\tags\items\stairs.json
 cf5dcd585ec21f0c6b41661d779804da7e887d09 data\falsefutures\tags\items\gipple_food.json

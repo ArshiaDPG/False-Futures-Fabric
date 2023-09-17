@@ -41,18 +41,18 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, FFBlocks.GELATITE_BRICK_WALL);
         autoName(translationBuilder, FFBlocks.CHISELED_GELATITE_BRICKS);
 
-        autoName(translationBuilder, FFBlocks.BRINESHALE);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_STAIRS);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_SLAB);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_WALL);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_PRESSURE_PLATE);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_BUTTON);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_STAIRS);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_SLAB);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_WALL);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_PRESSURE_PLATE);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_BUTTON);
 
-        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICKS);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_STAIRS);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_SLAB);
-        autoName(translationBuilder, FFBlocks.BRINESHALE_BRICK_WALL);
-        autoName(translationBuilder, FFBlocks.CHISELED_BRINESHALE_BRICKS);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_BRICKS);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_BRICK_STAIRS);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_BRICK_SLAB);
+        autoName(translationBuilder, FFBlocks.AMOEBALITH_BRICK_WALL);
+        autoName(translationBuilder, FFBlocks.CHISELED_AMOEBALITH_BRICKS);
 
         autoName(translationBuilder, FFBlocks.GELATIN_LAYER);
         autoName(translationBuilder, FFBlocks.JELLYROOT);

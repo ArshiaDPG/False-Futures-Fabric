@@ -14,6 +14,15 @@
         },
         {
           "data": {
+            "Name": "falsefutures:tall_jellyroot",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 10
+        },
+        {
+          "data": {
             "Name": "falsefutures:gelatin_layer",
             "Properties": {
               "layers": "1",

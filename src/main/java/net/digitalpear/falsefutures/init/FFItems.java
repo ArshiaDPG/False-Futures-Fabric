@@ -69,7 +69,7 @@ public class FFItems {
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
-            entries.addAfter(Items.DEEPSLATE, FFBlocks.GELATITE, FFBlocks.BRINESHALE);
+            entries.addAfter(Items.DEEPSLATE, FFBlocks.GELATITE, FFBlocks.AMOEBALITH);
             entries.addAfter(Items.SMALL_DRIPLEAF, FFBlocks.JELLYROOT, FFBlocks.TALL_JELLYROOT);
             entries.addAfter(Items.SNOW, FFBlocks.GELATIN_LAYER);
             entries.add(FFBlocks.HIBERNATING_GIPPLE);
@@ -78,8 +78,8 @@ public class FFItems {
             entries.addAfter(Items.REINFORCED_DEEPSLATE,
                     FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_WALL, FFBlocks.GELATITE_BUTTON,
                     FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL,
-                    FFBlocks.BRINESHALE, FFBlocks.BRINESHALE_STAIRS, FFBlocks.BRINESHALE_SLAB, FFBlocks.BRINESHALE_WALL, FFBlocks.BRINESHALE_BUTTON,
-                    FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB, FFBlocks.BRINESHALE_BRICK_WALL
+                    FFBlocks.AMOEBALITH, FFBlocks.AMOEBALITH_STAIRS, FFBlocks.AMOEBALITH_SLAB, FFBlocks.AMOEBALITH_WALL, FFBlocks.AMOEBALITH_BUTTON,
+                    FFBlocks.AMOEBALITH_BRICKS, FFBlocks.AMOEBALITH_BRICK_STAIRS, FFBlocks.AMOEBALITH_BRICK_SLAB, FFBlocks.AMOEBALITH_BRICK_WALL
             );
         });
 

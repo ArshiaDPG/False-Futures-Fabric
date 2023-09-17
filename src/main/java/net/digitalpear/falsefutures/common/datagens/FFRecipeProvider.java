@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -95,7 +94,7 @@ public class FFRecipeProvider extends FabricRecipeProvider {
         FFBlocks.JELLY.forEach((jelly, ingredient) -> offerJellyRecipe(exporter, jelly, ingredient));
 
         createGelatinStoneMaking(exporter, Blocks.COBBLESTONE, FFBlocks.GELATITE);
-        createGelatinStoneMaking(exporter, Blocks.COBBLED_DEEPSLATE, FFBlocks.BRINESHALE);
+        createGelatinStoneMaking(exporter, Blocks.COBBLED_DEEPSLATE, FFBlocks.AMOEBALITH);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICKS, 4)
                 .input('X', FFBlocks.GELATITE)
@@ -111,27 +110,27 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                 .criterion("has_gelatite", conditionsFromItem(FFBlocks.GELATITE)).offerTo(exporter);
         FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICKS, FFBlocks.CHISELED_GELATITE_BRICKS);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.BRINESHALE_BRICKS, 4)
-                .input('X', FFBlocks.BRINESHALE)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICKS, 4)
+                .input('X', FFBlocks.AMOEBALITH)
                 .pattern("XX")
                 .pattern("XX")
-                .criterion("has_brineshale", conditionsFromItem(FFBlocks.BRINESHALE)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.BRINESHALE, FFBlocks.BRINESHALE_BRICKS);
+                .criterion("has_brineshale", conditionsFromItem(FFBlocks.AMOEBALITH)).offerTo(exporter);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH, FFBlocks.AMOEBALITH_BRICKS);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_BRINESHALE_BRICKS)
-                .input('X', FFBlocks.BRINESHALE_BRICK_SLAB)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_AMOEBALITH_BRICKS)
+                .input('X', FFBlocks.AMOEBALITH_BRICK_SLAB)
                 .pattern("X")
                 .pattern("X")
-                .criterion("has_brineshale", conditionsFromItem(FFBlocks.BRINESHALE)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.BRINESHALE_BRICKS, FFBlocks.CHISELED_BRINESHALE_BRICKS);
+                .criterion("has_brineshale", conditionsFromItem(FFBlocks.AMOEBALITH)).offerTo(exporter);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICKS, FFBlocks.CHISELED_AMOEBALITH_BRICKS);
 
         makeStoneRecipes(exporter, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_BUTTON,
                 FFBlocks.GELATITE_PRESSURE_PLATE, FFBlocks.GELATITE_WALL);
         makeStoneRecipes(exporter, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL);
-        makeStoneRecipes(exporter, FFBlocks.BRINESHALE, FFBlocks.BRINESHALE_STAIRS, FFBlocks.BRINESHALE_SLAB, FFBlocks.BRINESHALE_BUTTON,
-                FFBlocks.BRINESHALE_PRESSURE_PLATE, FFBlocks.BRINESHALE_WALL);
-        makeStoneRecipes(exporter, FFBlocks.BRINESHALE_BRICKS, FFBlocks.BRINESHALE_BRICK_STAIRS, FFBlocks.BRINESHALE_BRICK_SLAB,
-                FFBlocks.BRINESHALE_BRICK_WALL);
+        makeStoneRecipes(exporter, FFBlocks.AMOEBALITH, FFBlocks.AMOEBALITH_STAIRS, FFBlocks.AMOEBALITH_SLAB, FFBlocks.AMOEBALITH_BUTTON,
+                FFBlocks.AMOEBALITH_PRESSURE_PLATE, FFBlocks.AMOEBALITH_WALL);
+        makeStoneRecipes(exporter, FFBlocks.AMOEBALITH_BRICKS, FFBlocks.AMOEBALITH_BRICK_STAIRS, FFBlocks.AMOEBALITH_BRICK_SLAB,
+                FFBlocks.AMOEBALITH_BRICK_WALL);
     }
 
     public void createGelatinStoneMaking(Consumer<RecipeJsonProvider> exporter, ItemConvertible stone, ItemConvertible output){

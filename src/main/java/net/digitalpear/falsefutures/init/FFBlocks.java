@@ -3,6 +3,7 @@ package net.digitalpear.falsefutures.init;
 import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.common.blocks.*;
 import net.digitalpear.falsefutures.common.blocks.jelly.*;
+import net.digitalpear.falsefutures.init.data.FFBlockSoundGroups;
 import net.digitalpear.falsefutures.init.data.sets.StoneSets;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
@@ -83,7 +84,7 @@ public class FFBlocks {
     public static final Block GELATITE = createBlockWithItem("gelatite",
             new Block(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
-                    .sounds(BlockSoundGroup.NETHER_GOLD_ORE)));
+                    .sounds(FFBlockSoundGroups.GELATITE)));
 
     public static final Block GELATITE_STAIRS = StoneSets.stoneStairs(GELATITE);
     public static final Block GELATITE_SLAB = StoneSets.stoneSlab(GELATITE);
@@ -103,8 +104,8 @@ public class FFBlocks {
 
     public static final Block AMOEBALITH = createBlockWithItem("amoebalith",
             new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
-            .sounds(BlockSoundGroup.NETHERRACK)
-            .mapColor(MapColor.DARK_CRIMSON)));
+            .sounds(FFBlockSoundGroups.AMOEBALITH)
+            .mapColor(MapColor.PURPLE)));
 
     public static final Block AMOEBALITH_STAIRS = StoneSets.stoneStairs(AMOEBALITH);
     public static final Block AMOEBALITH_SLAB = StoneSets.stoneSlab(AMOEBALITH);
@@ -116,22 +117,21 @@ public class FFBlocks {
             new Block(AbstractBlock.Settings.copy(AMOEBALITH)));
 
     public static final Block AMOEBALITH_BRICKS = createBlockWithItem("amoebalith_bricks",
-            new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
-                    .sounds(BlockSoundGroup.NETHERRACK)
-                    .mapColor(MapColor.DARK_CRIMSON)));
+            new Block(AbstractBlock.Settings.copy(AMOEBALITH)));
     public static final Block AMOEBALITH_BRICK_STAIRS = StoneSets.stoneStairs(AMOEBALITH_BRICKS);
     public static final Block AMOEBALITH_BRICK_SLAB = StoneSets.stoneSlab(AMOEBALITH_BRICKS);
     public static final Block AMOEBALITH_BRICK_WALL = StoneSets.stoneWall(AMOEBALITH_BRICKS);
 
-    public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple", new HibernatingGippleBlock(AbstractBlock.Settings.create()
-            .sounds(BlockSoundGroup.HONEY)
-            .nonOpaque()
-            .mapColor(GELATIN_LAYER.getDefaultMapColor())
-            .hardness(0.1f)
-            .pistonBehavior(PistonBehavior.DESTROY)
-            .dropsNothing()
-            .ticksRandomly()
-    ));
+    public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple",
+            new HibernatingGippleBlock(AbstractBlock.Settings.create()
+                .sounds(BlockSoundGroup.HONEY)
+                .nonOpaque()
+                .mapColor(GELATIN_LAYER.getDefaultMapColor())
+                .hardness(0.8f)
+                .pistonBehavior(PistonBehavior.DESTROY)
+                .dropsNothing()
+                .ticksRandomly()
+            ));
 
     public static final Block GELATIN_BLOCK = createBlockWithItem("gelatin_block",
             new Block(AbstractBlock.Settings.create()

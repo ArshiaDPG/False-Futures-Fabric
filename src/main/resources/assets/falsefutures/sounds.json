@@ -1,5 +1,108 @@
 {
-  "entity.falsefutures.gipple_ambient": {
+  "block.amoebalith.place": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.amoebalith_place",
+    "sounds": [
+      "falsefutures:block/amoebalith/break1",
+  	  "falsefutures:block/amoebalith/break2",
+  	  "falsefutures:block/amoebalith/break3",
+  	  "falsefutures:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.fall": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.amoebalith_fall",
+    "sounds": [
+      "falsefutures:block/amoebalith/break1",
+  	  "falsefutures:block/amoebalith/break2",
+  	  "falsefutures:block/amoebalith/break3",
+  	  "falsefutures:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.step": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.amoebalith_step",
+    "sounds": [
+      "falsefutures:block/amoebalith/break1",
+  	  "falsefutures:block/amoebalith/break2",
+  	  "falsefutures:block/amoebalith/break3",
+  	  "falsefutures:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.hit": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.amoebalith_hit",
+    "sounds": [
+      "falsefutures:block/amoebalith/break1",
+  	  "falsefutures:block/amoebalith/break2",
+  	  "falsefutures:block/amoebalith/break3",
+  	  "falsefutures:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.break": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.amoebalith_break",
+    "sounds": [
+      "falsefutures:block/amoebalith/break1",
+  	  "falsefutures:block/amoebalith/break2",
+  	  "falsefutures:block/amoebalith/break3",
+  	  "falsefutures:block/amoebalith/break4"
+    ]
+  },
+
+
+  "block.gelatite.break": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.gelatite_break",
+    "sounds": [
+      "falsefutures:block/gelatite/break1",
+  	  "falsefutures:block/gelatite/break2",
+  	  "falsefutures:block/gelatite/break3",
+  	  "falsefutures:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.step": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.gelatite_step",
+    "sounds": [
+      "falsefutures:block/gelatite/break1",
+  	  "falsefutures:block/gelatite/break2",
+  	  "falsefutures:block/gelatite/break3",
+  	  "falsefutures:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.place": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.gelatite_place",
+    "sounds": [
+      "falsefutures:block/gelatite/break1",
+  	  "falsefutures:block/gelatite/break2",
+  	  "falsefutures:block/gelatite/break3",
+  	  "falsefutures:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.hit": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.gelatite_hit",
+    "sounds": [
+      "falsefutures:block/gelatite/break1",
+  	  "falsefutures:block/gelatite/break2",
+  	  "falsefutures:block/gelatite/break3",
+  	  "falsefutures:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.fall": {
+    "category": "block",
+  	"subtitle": "subtitles.falsefutures.gelatite_fall",
+    "sounds": [
+      "falsefutures:block/gelatite/break1",
+  	  "falsefutures:block/gelatite/break2",
+  	  "falsefutures:block/gelatite/break3",
+  	  "falsefutures:block/gelatite/break4"
+    ]
+  },
+
+  "entity.gipple.ambient": {
     "category": "neutral",
 	"subtitle": "subtitles.falsefutures.gipple_ambient",
     "sounds": [
@@ -9,14 +112,14 @@
 	  "falsefutures:entity/gipple/ambient4"
     ]
   },
-  "entity.falsefutures.gipple_burp": {
+  "entity.gipple.burp": {
     "category": "neutral",
 	"subtitle": "subtitles.falsefutures.gipple_burp",
     "sounds": [
       "falsefutures:entity/gipple/burp"
     ]
   },
-  "entity.falsefutures.gipple_hurt": {
+  "entity.gipple.hurt": {
       "category": "neutral",
   	"subtitle": "subtitles.falsefutures.gipple_hurt",
       "sounds": [
@@ -24,7 +127,7 @@
   	    "falsefutures:entity/gipple/hurt2"
     ]
   },
-     "entity.falsefutures.gipple_death": {
+     "entity.gipple.death": {
      "category": "neutral",
      "subtitle": "subtitles.falsefutures.gipple_death",
        "sounds": [

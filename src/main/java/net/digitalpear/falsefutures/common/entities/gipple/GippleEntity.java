@@ -11,6 +11,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FlyGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -49,7 +50,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity {
+public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity, Flutterer {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_LUMINOUS = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -78,32 +79,34 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.1F)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0);
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2);
+    }
+
+    public float getPathfindingFavor(BlockPos pos, WorldView world) {
+        return world.getBlockState(pos).isAir() || world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
     }
 
     @Override
     protected void initGoals() {
+        this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(0, new FlyGoal(this, 1.0));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.25D));
-        this.goalSelector.add(4, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
+        this.goalSelector.add(0, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
 
     }
 
     @Override
     protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
-            @Override
-            public boolean isValidPosition(BlockPos pos) {
-                return !this.world.getBlockState(pos.down()).isAir();
-            }
-        };
+        BirdNavigation birdNavigation = new BirdNavigation(this, world);
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(false);
         birdNavigation.setCanEnterOpenDoors(true);
         return birdNavigation;
     }
+
+
 
     @Nullable
     @Override
@@ -234,9 +237,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         return GIPPLE_FOOD.test(pStack);
     }
 
-    public float getPathfindingFavor(BlockPos pos, WorldView world) {
-        return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
-    }
+
 
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
@@ -321,7 +322,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             return event.setAndContinue(DANCING_ANIM);
         } else if (this.isEating()) {
             return event.setAndContinue(EATING_ANIM);
-        } else if (this.isOnGround()) {
+        } else if (this.isOnGround()) { //Is this working correctly?
             return event.setAndContinue(ON_GROUND_ANIM);
         } else {
             return event.setAndContinue(AMBIENT_ANIM);
@@ -350,6 +351,16 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return FFSoundEvents.ENTITY_GIPPLE_HURT;
+    }
+
+    @Override
+    public boolean isOnGround() {
+        return this.getWorld().getBlockState(this.getBlockPos().down()).hasSolidTopSurface(this.getWorld(), this.getBlockPos().down(), this);
+    }
+
+    @Override
+    public boolean isInAir() {
+        return !this.isOnGround();
     }
 
 /*Old code

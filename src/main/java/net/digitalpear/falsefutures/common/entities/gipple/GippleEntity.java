@@ -141,34 +141,28 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
 
     public void mitosis() {
-        //Chance to spawn a Mega Gipple instead of gipples
+        Random random = this.getRandom();
+        World world = this.getWorld();
         int loop = 0;
-        boolean spawnGippleNotSomething;
+        boolean spawnAneuploidianNotGipple = (0.1f + ((float) world.getDifficulty().getId() / 50)) > random.nextFloat() && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && world.getDifficulty() != Difficulty.PEACEFUL;
 
-        // If something chance passes and hostile mobs can spawn and is not peaceful
-        spawnGippleNotSomething = (0.1f + ((float) getWorld().getDifficulty().getId() / 50)) > random.nextFloat()
-                && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && getWorld().getDifficulty() != Difficulty.PEACEFUL;
-
-
-        if (spawnGippleNotSomething){
+        if (spawnAneuploidianNotGipple){
             //spawnSomething();
-        }
-
-        else {
-            //Spawn two gipples with a rare chance of a third
-            int gippleNumber = random.nextFloat() > 0.9 ? 3 : 2;
-            while (loop != gippleNumber){
-                spawnGipple(loop);
+        } else {
+            while (loop != 2) {
+                spawnGipple(random);
                 loop++;
             }
         }
-        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-        for (int particleLoop = 0; particleLoop<=loop; particleLoop++){
-            double x = this.random.nextGaussian() * 0.001D;
-            double y = this.random.nextGaussian() * 0.06D;
-            double z = this.random.nextGaussian() * 0.001D;
-            this.getWorld().addParticle(ParticleTypes.SOUL, this.getParticleX(1.0D), this.getRandomBodyY() + 0.5D, this.getParticleZ(1.0D), x, y, z);
+        //doesn't work
+        for (int particleLoop = 0; particleLoop <= 5; particleLoop++){
+            double x = random.nextGaussian() * 0.001D;
+            double y = random.nextGaussian() * 0.06D;
+            double z = random.nextGaussian() * 0.001D;
+            world.addParticle(ParticleTypes.COMPOSTER, this.getX() + 0.5D, this.getY() + 0.5D, getZ() + 0.5D, 0, 0, 0);
         }
+        world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+
         this.discard();
     }
     public void spawnSomething(){
@@ -178,35 +172,32 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         }
         something.setCustomName(this.getCustomName());
         something.setAiDisabled(this.isAiDisabled());
-        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
+        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getRandom().nextFloat() * 360.0F, 0.0F);
         getWorld().spawnEntity(something);
     }
 
     // i only determines rotation and relative z position, if that doesn't matter then just enter 0
 
-    public void spawnGipple(int i) {
+    public void spawnGipple(Random random) {
         GippleEntity gipple = FFEntities.GIPPLE.create(this.getWorld());
         if (gipple != null) {
             if (this.isPersistent()) {
                 gipple.setPersistent();
             }
+            NbtCompound nbt = this.writeNbt(new NbtCompound());
+            nbt.remove("UUID");
+            gipple.readNbt(nbt);
             gipple.setBaby(true);
             gipple.setLuminous(false);
+            /*
             gipple.setCustomName(this.getCustomName());
             gipple.setAiDisabled(this.isAiDisabled());
+
+             */
             //Randomize position and rotation
-            gipple.refreshPositionAndAngles(this.getX() + (double) i, this.getY() + 0.3D, this.getZ() + (double) i, this.random.nextFloat() * 360.0F, 0.0F);
+            gipple.refreshPositionAndAngles(this.getX() + random.nextDouble(), this.getY() + random.nextDouble(), this.getZ() - random.nextDouble() , 0, 0);
             getWorld().spawnEntity(gipple);
         }
-
-
-        /*
-
-
-         */
-
-
-
 
     }
 

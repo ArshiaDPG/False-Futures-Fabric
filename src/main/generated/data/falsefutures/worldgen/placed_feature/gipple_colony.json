@@ -3,17 +3,21 @@
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 42
+      "chance": 36
+    },
+    {
+      "type": "minecraft:count",
+      "count": 8
     },
     {
       "type": "minecraft:height_range",
       "height": {
-        "type": "minecraft:uniform",
+        "type": "minecraft:biased_to_bottom",
         "max_inclusive": {
           "absolute": 0
         },
         "min_inclusive": {
-          "above_bottom": 12
+          "above_bottom": 0
         }
       }
     },

@@ -53,7 +53,7 @@ public class FFModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
 
         blockStateModelGenerator.registerParentedItemModel(FFItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
-        blockStateModelGenerator.registerParentedItemModel(FFItems.SOMETHING_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
+        blockStateModelGenerator.registerParentedItemModel(FFItems.ANEUPLOIDIAN_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
 
         blockStateModelGenerator.registerSingleton(FFBlocks.GELATIN_BLOCK, (new TextureMap()).put(TextureKey.ALL, TextureMap.getId(FFBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL);
     }

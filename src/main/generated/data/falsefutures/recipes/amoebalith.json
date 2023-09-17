@@ -1,15 +1,20 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "building",
-  "ingredients": [
-    {
-      "item": "minecraft:cobbled_deepslate"
-    },
-    {
+  "key": {
+    "G": {
       "item": "falsefutures:gelatin"
+    },
+    "S": {
+      "item": "minecraft:cobbled_deepslate"
     }
+  },
+  "pattern": [
+    "SG",
+    "GS"
   ],
   "result": {
     "item": "falsefutures:amoebalith"
-  }
+  },
+  "show_notification": true
 }

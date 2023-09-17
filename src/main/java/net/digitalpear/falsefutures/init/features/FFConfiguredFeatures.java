@@ -54,7 +54,7 @@ public class FFConfiguredFeatures {
             GELATITE_VEGETATION_BONEMEAL.add(FFBlocks.GELATIN_LAYER.getDefaultState().with(GelatinLayerBlock.LAYERS, i), 9 - i);
         }
 
-        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY, FFFeatures.GIPPLE_COLONY, new VegetationPatchFeatureConfig(FFBlockTags.GIPPLE_COLONY_REPLACEABLE, BlockStateProvider.of(FFBlocks.GELATITE), PlacedFeatures.createEntry(registryEntryLookup.getOrThrow(GIPPLE_COLONY_VEGETATION)), VerticalSurfaceType.FLOOR, ConstantIntProvider.create(3), 0.8F, 5, 0.1F, UniformIntProvider.create(4, 7), 0.7F));
+        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY, FFFeatures.GIPPLE_COLONY, new VegetationPatchFeatureConfig(FFBlockTags.GIPPLE_COLONY_REPLACEABLE, BlockStateProvider.of(FFBlocks.GELATITE), PlacedFeatures.createEntry(registryEntryLookup.getOrThrow(GIPPLE_COLONY_VEGETATION)), VerticalSurfaceType.FLOOR, ConstantIntProvider.create(3), 0.8F, 5, 0.1F, UniformIntProvider.create(5, 7), 0.7F));
 
         ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION_BONEMEAL, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(new WeightedBlockStateProvider(GELATITE_VEGETATION_BONEMEAL_PROVIDER.build()), 3, 1));
         ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION, FFFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(new WeightedBlockStateProvider(GELATITE_VEGETATION_BONEMEAL.build()), 8, 5));

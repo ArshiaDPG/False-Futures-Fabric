@@ -53,6 +53,7 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));
 
         getOrCreateTagBuilder(FFBlockTags.JELLYROOT_PLANTABLES)
+                .add(FFBlocks.GELATIN_BLOCK)
                 .add(FFBlocks.GELATITE)
                 .add(FFBlocks.AMOEBALITH)
                 .add(FFBlocks.CHISELED_GELATITE_BRICKS)

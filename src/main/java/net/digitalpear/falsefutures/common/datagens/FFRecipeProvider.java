@@ -146,9 +146,11 @@ public class FFRecipeProvider extends FabricRecipeProvider {
     }
 
     public void createGelatinStoneMaking(Consumer<RecipeJsonProvider> exporter, ItemConvertible stone, ItemConvertible output){
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output)
                 .criterion(hasItem(FFItems.GELATIN), conditionsFromItem(FFItems.GELATIN))
-                .input(stone).input(FFItems.GELATIN)
+                .pattern("SG")
+                .pattern("GS")
+                .input('S', stone).input('G', FFItems.GELATIN)
                 .offerTo(exporter);
     }
 }

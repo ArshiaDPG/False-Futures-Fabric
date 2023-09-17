@@ -19,8 +19,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class GippleColonyPoolFeature extends VegetationPatchFeature {
-    public GippleColonyPoolFeature(Codec<VegetationPatchFeatureConfig> codec) {
+public class GippleColonyFeature extends VegetationPatchFeature {
+    public GippleColonyFeature(Codec<VegetationPatchFeatureConfig> codec) {
         super(codec);
     }
 
@@ -42,12 +42,8 @@ public class GippleColonyPoolFeature extends VegetationPatchFeature {
 
         while(var11.hasNext()) {
             blockPos = (BlockPos)var11.next();
-            if (random.nextInt(9) == 0){
-                for (int i = 0; i < random.nextBetween(6, 10); i++){
-                    if (world.getBlockState(blockPos.up(i)).isAir()){
-                        world.setBlockState(blockPos.up(i), random.nextInt(10) < 7 ? Blocks.ICE.getDefaultState() : FFBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byId(random.nextBetween(2, 5))), 2);
-                    }
-                }
+            if (random.nextInt(15) == 0){
+                generatePillars(world, random, blockPos);
             }
             else{
                 world.setBlockState(blockPos, Blocks.WATER.getDefaultState(), 2);
@@ -79,6 +75,28 @@ public class GippleColonyPoolFeature extends VegetationPatchFeature {
             return false;
         }
     }
+    public void generatePillars(StructureWorldAccess world, Random random, BlockPos pos){
+        int initialHeight = random.nextBetween(2, 3);
+        for (int i = 0; i < initialHeight; i++){
+            for (int x = 2; x < 6; x++){
+                if (world.getBlockState(pos.up(i)).isAir()){
+                    placeBlock(world, random, pos.up(i).offset(Direction.byId(x)));
+                }
+            }
+            if (world.getBlockState(pos.up(i)).isAir()){
+                placeBlock(world, random, pos.up(i));
+            }
+        }
+        for (int i = 0; i < initialHeight + random.nextBetween(2, 4); i++){
+            if (world.getBlockState(pos.up(i)).isAir()){
+                placeBlock(world, random, pos.up(i));
+            }
+        }
+    }
+    public void placeBlock(StructureWorldAccess world, Random random, BlockPos pos){
+        world.setBlockState(pos, random.nextInt(10) < 8 ? FFBlocks.GELATIN_BLOCK.getDefaultState() : FFBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byId(random.nextBetween(2, 5))), 2);
+    }
+
 
     protected boolean placeGround(StructureWorldAccess world, VegetationPatchFeatureConfig config, Predicate<BlockState> replaceable, Random random, BlockPos.Mutable pos, int depth) {
         for(int i = 0; i < depth; ++i) {

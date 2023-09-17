@@ -1,7 +1,7 @@
 {
   "block.amoebalith.place": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.amoebalith_place",
+  	"subtitle": "subtitles.block.generic.place",
     "sounds": [
       "falsefutures:block/amoebalith/break1",
   	  "falsefutures:block/amoebalith/break2",
@@ -11,7 +11,6 @@
   },
   "block.amoebalith.fall": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.amoebalith_fall",
     "sounds": [
       "falsefutures:block/amoebalith/break1",
   	  "falsefutures:block/amoebalith/break2",
@@ -21,7 +20,7 @@
   },
   "block.amoebalith.step": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.amoebalith_step",
+  	"subtitle": "subtitles.block.generic.footsteps",
     "sounds": [
       "falsefutures:block/amoebalith/break1",
   	  "falsefutures:block/amoebalith/break2",
@@ -31,7 +30,7 @@
   },
   "block.amoebalith.hit": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.amoebalith_hit",
+  	"subtitle": "subtitles.block.generic.hit",
     "sounds": [
       "falsefutures:block/amoebalith/break1",
   	  "falsefutures:block/amoebalith/break2",
@@ -41,7 +40,7 @@
   },
   "block.amoebalith.break": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.amoebalith_break",
+  	"subtitle": "subtitles.block.generic.break",
     "sounds": [
       "falsefutures:block/amoebalith/break1",
   	  "falsefutures:block/amoebalith/break2",
@@ -53,7 +52,7 @@
 
   "block.gelatite.break": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.gelatite_break",
+  	"subtitle": "subtitles.block.generic.break",
     "sounds": [
       "falsefutures:block/gelatite/break1",
   	  "falsefutures:block/gelatite/break2",
@@ -63,7 +62,7 @@
   },
   "block.gelatite.step": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.gelatite_step",
+  	"subtitle": "subtitles.block.generic.footsteps",
     "sounds": [
       "falsefutures:block/gelatite/break1",
   	  "falsefutures:block/gelatite/break2",
@@ -73,7 +72,7 @@
   },
   "block.gelatite.place": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.gelatite_place",
+  	"subtitle": "subtitles.block.generic.place",
     "sounds": [
       "falsefutures:block/gelatite/break1",
   	  "falsefutures:block/gelatite/break2",
@@ -83,7 +82,7 @@
   },
   "block.gelatite.hit": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.gelatite_hit",
+  	"subtitle": "subtitles.block.generic.hit",
     "sounds": [
       "falsefutures:block/gelatite/break1",
   	  "falsefutures:block/gelatite/break2",
@@ -93,7 +92,6 @@
   },
   "block.gelatite.fall": {
     "category": "block",
-  	"subtitle": "subtitles.falsefutures.gelatite_fall",
     "sounds": [
       "falsefutures:block/gelatite/break1",
   	  "falsefutures:block/gelatite/break2",

@@ -61,9 +61,6 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, FFBlocks.CHISELED_AMOEBALITH_BRICKS);
 
         autoName(translationBuilder, FFBlocks.GELATIN_LAYER);
-        autoName(translationBuilder, FFBlocks.JELLYROOT);
-        autoName(translationBuilder, FFBlocks.POTTED_JELLYROOT);
-        autoName(translationBuilder, FFBlocks.TALL_JELLYROOT);
 
         autoName(translationBuilder, FFBlocks.GIPPLEPAD);
 
@@ -99,7 +96,6 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         blackTag(translationBuilder, FFBlockTags.GIPPLE_COLONY_REPLACEABLE);
         blackTag(translationBuilder, FFBlockTags.GIPPLE_FOOD);
         itemTag(translationBuilder, FFItemTags.GIPPLE_FOOD);
-        blackTag(translationBuilder, FFBlockTags.JELLYROOT_PLANTABLES);
         blackTag(translationBuilder, FFBlockTags.JELLIES);
 
 

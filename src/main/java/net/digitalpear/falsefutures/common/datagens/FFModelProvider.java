@@ -49,9 +49,6 @@ public class FFModelProvider extends FabricModelProvider {
 
         blockStateModelGenerator.registerNorthDefaultHorizontalRotatable(FFBlocks.HIBERNATING_GIPPLE, TextureMap.sideEnd(FFBlocks.HIBERNATING_GIPPLE));
 
-        blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
-        blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
-
         blockStateModelGenerator.registerParentedItemModel(FFItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(FFItems.ANEUPLOIDIAN_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
 

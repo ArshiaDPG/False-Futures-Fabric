@@ -46,25 +46,10 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)
-                .add(FFBlocks.JELLYROOT)
-                .add(FFBlocks.TALL_JELLYROOT)
                 .addOptional(new Identifier("galosphere", "lichen_moss"))
                 .addOptional(new Identifier("galosphere", "lichen_roots"))
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));
 
-        getOrCreateTagBuilder(FFBlockTags.JELLYROOT_PLANTABLES)
-                .add(FFBlocks.GELATIN_BLOCK)
-                .add(FFBlocks.GELATITE)
-                .add(FFBlocks.AMOEBALITH)
-                .add(FFBlocks.CHISELED_GELATITE_BRICKS)
-                .add(FFBlocks.CHISELED_AMOEBALITH_BRICKS)
-                .add(FFBlocks.GELATITE_BRICKS)
-                .add(FFBlocks.AMOEBALITH_BRICKS)
-                .forceAddTag(BlockTags.DIRT)
-                .add(Blocks.FARMLAND)
-                .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
-                .forceAddTag(BlockTags.BASE_STONE_NETHER)
-                .add(Blocks.END_STONE);
 
         getOrCreateTagBuilder(BlockTags.BUTTONS)
                 .add(FFBlocks.GELATITE_BUTTON)

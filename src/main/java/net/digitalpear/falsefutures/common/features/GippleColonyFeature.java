@@ -3,8 +3,10 @@ package net.digitalpear.falsefutures.common.features;
 import com.mojang.serialization.Codec;
 import net.digitalpear.falsefutures.common.blocks.HibernatingGippleBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -34,6 +36,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
         while(var11.hasNext()) {
             blockPos = (BlockPos)var11.next();
             if (!isSolidBlockAroundPos(world, set, blockPos, mutable)) {
+//                generateLichen(world, random, pos);
                 set2.add(blockPos);
             }
         }
@@ -42,18 +45,13 @@ public class GippleColonyFeature extends VegetationPatchFeature {
 
         while(var11.hasNext()) {
             blockPos = (BlockPos)var11.next();
-            if (random.nextInt(15) == 0){
-                generatePillars(world, random, blockPos);
-            }
-            else{
-                world.setBlockState(blockPos, Blocks.WATER.getDefaultState(), 2);
-            }
+            world.setBlockState(blockPos, Blocks.WATER.getDefaultState(), 2);
+
         }
 
 
         return set2;
     }
-
     private static boolean isSolidBlockAroundPos(StructureWorldAccess world, Set<BlockPos> positions, BlockPos pos, BlockPos.Mutable mutablePos) {
         return isSolidBlockSide(world, pos, mutablePos, Direction.NORTH) || isSolidBlockSide(world, pos, mutablePos, Direction.EAST) || isSolidBlockSide(world, pos, mutablePos, Direction.SOUTH) || isSolidBlockSide(world, pos, mutablePos, Direction.WEST) || isSolidBlockSide(world, pos, mutablePos, Direction.DOWN);
     }
@@ -69,26 +67,30 @@ public class GippleColonyFeature extends VegetationPatchFeature {
             if (blockState.contains(Properties.WATERLOGGED) && !(Boolean)blockState.get(Properties.WATERLOGGED)) {
                 world.setBlockState(pos, blockState.with(Properties.WATERLOGGED, true), 2);
             }
+            if (random.nextInt(12) == 0){
+                generatePillar(world, random, pos);
+            }
+
 
             return true;
         } else {
             return false;
         }
     }
-    public void generatePillars(StructureWorldAccess world, Random random, BlockPos pos){
+    public void generatePillar(StructureWorldAccess world, Random random, BlockPos pos){
         int initialHeight = random.nextBetween(2, 3);
-        for (int i = 0; i < initialHeight; i++){
+        for (int i = -2; i < initialHeight; i++){
             for (int x = 2; x < 6; x++){
-                if (world.getBlockState(pos.up(i)).isAir()){
+                if (!world.getBlockState(pos.up(i)).isOpaque()){
                     placeBlock(world, random, pos.up(i).offset(Direction.byId(x)));
                 }
             }
-            if (world.getBlockState(pos.up(i)).isAir()){
+            if (!world.getBlockState(pos.up(i)).isOpaque()){
                 placeBlock(world, random, pos.up(i));
             }
         }
         for (int i = 0; i < initialHeight + random.nextBetween(2, 4); i++){
-            if (world.getBlockState(pos.up(i)).isAir()){
+            if (!world.getBlockState(pos.up(i)).isOpaque()){
                 placeBlock(world, random, pos.up(i));
             }
         }
@@ -107,7 +109,11 @@ public class GippleColonyFeature extends VegetationPatchFeature {
                     return i != 0;
                 }
 
-                world.setBlockState(pos, random.nextInt(10) == 0 ? FFBlocks.AMOEBALITH.getDefaultState() : gelatite, 2);
+
+                Block stone = world.getBlockState(pos).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES) ? FFBlocks.AMOEBALITH : FFBlocks.GELATITE;
+                world.setBlockState(pos, stone.getDefaultState(), 2);
+
+
                 pos.move(config.surface.getDirection());
             }
         }

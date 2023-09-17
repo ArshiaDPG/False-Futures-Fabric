@@ -81,7 +81,7 @@ public class FFBlocks {
             new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.PALE_PURPLE)));
 
     public static final Block GELATITE = createBlockWithItem("gelatite",
-            new GippleHivemindBlock(AbstractBlock.Settings.copy(Blocks.STONE)
+            new Block(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
                     .sounds(BlockSoundGroup.NETHER_GOLD_ORE)));
 
@@ -102,7 +102,7 @@ public class FFBlocks {
 
 
     public static final Block AMOEBALITH = createBlockWithItem("amoebalith",
-            new GippleHivemindBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+            new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
             .sounds(BlockSoundGroup.NETHERRACK)
             .mapColor(MapColor.DARK_CRIMSON)));
 
@@ -116,19 +116,12 @@ public class FFBlocks {
             new Block(AbstractBlock.Settings.copy(AMOEBALITH)));
 
     public static final Block AMOEBALITH_BRICKS = createBlockWithItem("amoebalith_bricks",
-            new GippleHivemindBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+            new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
                     .sounds(BlockSoundGroup.NETHERRACK)
                     .mapColor(MapColor.DARK_CRIMSON)));
     public static final Block AMOEBALITH_BRICK_STAIRS = StoneSets.stoneStairs(AMOEBALITH_BRICKS);
     public static final Block AMOEBALITH_BRICK_SLAB = StoneSets.stoneSlab(AMOEBALITH_BRICKS);
     public static final Block AMOEBALITH_BRICK_WALL = StoneSets.stoneWall(AMOEBALITH_BRICKS);
-
-    public static final Block JELLYROOT = createBlockWithItem("jellyroot", new JellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
-            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 4)));
-    public static final Block POTTED_JELLYROOT = makePottedPlant(JELLYROOT);
-
-    public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
-            .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)));
 
     public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple", new HibernatingGippleBlock(AbstractBlock.Settings.create()
             .sounds(BlockSoundGroup.HONEY)

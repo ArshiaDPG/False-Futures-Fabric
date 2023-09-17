@@ -70,7 +70,6 @@ public class FFItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
             entries.addAfter(Items.DEEPSLATE, FFBlocks.GELATITE, FFBlocks.AMOEBALITH);
-            entries.addAfter(Items.SMALL_DRIPLEAF, FFBlocks.JELLYROOT, FFBlocks.TALL_JELLYROOT);
             entries.addAfter(Items.SNOW, FFBlocks.GELATIN_LAYER);
             entries.add(FFBlocks.HIBERNATING_GIPPLE);
         });

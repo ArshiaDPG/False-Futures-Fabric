@@ -36,16 +36,13 @@
   "block.falsefutures.gipplepad": "Gipplepad",
   "block.falsefutures.hibernating_gipple": "Hibernating Gipple",
   "block.falsefutures.inky_jelly": "Inky Jelly",
-  "block.falsefutures.jellyroot": "Jellyroot",
   "block.falsefutures.luminescent_jelly": "Luminescent Jelly",
   "block.falsefutures.milky_jelly": "Milky Jelly",
   "block.falsefutures.muddy_jelly": "Muddy Jelly",
   "block.falsefutures.plain_jelly": "Plain Jelly",
-  "block.falsefutures.potted_jellyroot": "Potted Jellyroot",
   "block.falsefutures.prickly_jelly": "Prickly Jelly",
   "block.falsefutures.sweet_jelly": "Sweet Jelly",
   "block.falsefutures.symphonic_jelly": "Symphonic Jelly",
-  "block.falsefutures.tall_jellyroot": "Tall Jellyroot",
   "block.falsefutures.warp_jelly": "Warp Jelly",
   "block.minecraft.banner.falsefutures.gipple.black": "Black Gipple",
   "block.minecraft.banner.falsefutures.gipple.blue": "Blue Gipple",
@@ -82,6 +79,5 @@
   "tag.block.falsefutures.gipple_colony_replaceable": "Gipple Colony Replaceable",
   "tag.block.falsefutures.gipple_food": "Gipple Food",
   "tag.block.falsefutures.jellies": "Jellies",
-  "tag.block.falsefutures.jellyroot_plantables": "Jellyroot Plantables",
   "tag.item.falsefutures.gipple_food": "Gipple Food"
 }

@@ -8,18 +8,24 @@
       "entries": [
         {
           "data": {
-            "Name": "falsefutures:jellyroot"
+            "Name": "minecraft:air"
           },
           "weight": 30
         },
         {
           "data": {
-            "Name": "falsefutures:tall_jellyroot",
+            "Name": "minecraft:glow_lichen",
             "Properties": {
-              "half": "lower"
+              "down": "true",
+              "east": "false",
+              "north": "false",
+              "south": "false",
+              "up": "false",
+              "waterlogged": "false",
+              "west": "false"
             }
           },
-          "weight": 10
+          "weight": 30
         },
         {
           "data": {

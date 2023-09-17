@@ -75,6 +75,7 @@ public class FFItems {
             entries.add(FFBlocks.HIBERNATING_GIPPLE);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
+            entries.add(FFBlocks.GELATIN_BLOCK);
             entries.addAfter(Items.REINFORCED_DEEPSLATE,
                     FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_WALL, FFBlocks.GELATITE_BUTTON,
                     FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL,

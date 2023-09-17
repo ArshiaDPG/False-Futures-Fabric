@@ -28,6 +28,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib}"
+
+    modLocalRuntime "maven.modrinth:emi:${project.emi}"
 }
 
 processResources {

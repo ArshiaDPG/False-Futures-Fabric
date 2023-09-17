@@ -88,6 +88,8 @@ public class FFRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(Consumer<RecipeJsonProvider> exporter) {
+
+        offerReversibleCompactingRecipes(exporter, RecipeCategory.FOOD, FFItems.GELATIN, RecipeCategory.DECORATIONS, FFBlocks.GELATIN_BLOCK);
         /*
             This map is used to generate the recipes and English translations of all Jellys.
          */
@@ -100,30 +102,40 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                 .input('X', FFBlocks.GELATITE)
                 .pattern("XX")
                 .pattern("XX")
-                .criterion("has_gelatite", conditionsFromItem(FFBlocks.GELATITE)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE, FFBlocks.GELATITE_BRICKS);
+                .criterion(hasItem(FFBlocks.GELATITE), conditionsFromItem(FFBlocks.GELATITE)).offerTo(exporter);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_GELATITE_BRICKS, 1)
                 .input('X', FFBlocks.GELATITE_BRICK_SLAB)
                 .pattern("X")
                 .pattern("X")
-                .criterion("has_gelatite", conditionsFromItem(FFBlocks.GELATITE)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICKS, FFBlocks.CHISELED_GELATITE_BRICKS);
+                .criterion(hasItem(FFBlocks.GELATITE), conditionsFromItem(FFBlocks.GELATITE)).offerTo(exporter);
+
+
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE, 2);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.GELATITE_BRICK_WALL, FFBlocks.GELATITE);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_GELATITE_BRICKS, FFBlocks.GELATITE);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICKS, 4)
                 .input('X', FFBlocks.AMOEBALITH)
                 .pattern("XX")
                 .pattern("XX")
-                .criterion("has_brineshale", conditionsFromItem(FFBlocks.AMOEBALITH)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH, FFBlocks.AMOEBALITH_BRICKS);
+                .criterion(hasItem(FFBlocks.AMOEBALITH), conditionsFromItem(FFBlocks.AMOEBALITH)).offerTo(exporter);
+
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICKS, FFBlocks.AMOEBALITH);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICK_STAIRS, FFBlocks.AMOEBALITH);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICK_SLAB, FFBlocks.AMOEBALITH, 2);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICK_WALL, FFBlocks.AMOEBALITH);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_AMOEBALITH_BRICKS, FFBlocks.AMOEBALITH);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_AMOEBALITH_BRICKS)
                 .input('X', FFBlocks.AMOEBALITH_BRICK_SLAB)
                 .pattern("X")
                 .pattern("X")
-                .criterion("has_brineshale", conditionsFromItem(FFBlocks.AMOEBALITH)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICKS, FFBlocks.CHISELED_AMOEBALITH_BRICKS);
+                .criterion(hasItem(FFBlocks.AMOEBALITH), conditionsFromItem(FFBlocks.AMOEBALITH)).offerTo(exporter);
 
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FFBlocks.AMOEBALITH_BRICKS, FFBlocks.CHISELED_AMOEBALITH_BRICKS);
         makeStoneRecipes(exporter, FFBlocks.GELATITE, FFBlocks.GELATITE_STAIRS, FFBlocks.GELATITE_SLAB, FFBlocks.GELATITE_BUTTON,
                 FFBlocks.GELATITE_PRESSURE_PLATE, FFBlocks.GELATITE_WALL);
         makeStoneRecipes(exporter, FFBlocks.GELATITE_BRICKS, FFBlocks.GELATITE_BRICK_STAIRS, FFBlocks.GELATITE_BRICK_SLAB, FFBlocks.GELATITE_BRICK_WALL);

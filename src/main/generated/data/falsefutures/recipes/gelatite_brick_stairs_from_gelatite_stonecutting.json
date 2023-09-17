@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "falsefutures:gelatite"
+  },
+  "result": "falsefutures:gelatite_brick_stairs"
+}

@@ -4,12 +4,16 @@ import net.digitalpear.falsefutures.FalseFutures;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
+import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
+import net.digitalpear.falsefutures.init.tags.FFBlockTags;
+import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
 
 import java.nio.file.Path;
@@ -27,6 +31,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         for(Block jelly : FFBlocks.JELLY.keySet()) {
             autoName(translationBuilder, jelly);
         }
+
+        translationBuilder.add(FFBlocks.GELATIN_BLOCK, "Block of Gelatin");
 
         autoName(translationBuilder, FFBlocks.GELATITE);
         autoName(translationBuilder, FFBlocks.GELATITE_STAIRS);
@@ -86,6 +92,17 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple_burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple_death", "Gipple dies");
 
+        /*
+            Tag translations for EMI compat
+         */
+        biomeTag(translationBuilder, FFBiomeTags.GIPPLE_HABITATS);
+        blackTag(translationBuilder, FFBlockTags.GIPPLE_COLONY_REPLACEABLE);
+        blackTag(translationBuilder, FFBlockTags.GIPPLE_FOOD);
+        itemTag(translationBuilder, FFItemTags.GIPPLE_FOOD);
+        blackTag(translationBuilder, FFBlockTags.JELLYROOT_PLANTABLES);
+        blackTag(translationBuilder, FFBlockTags.JELLIES);
+
+
         translationBuilder.add("gamerule.doApplyJellyEffects", "Should apply jelly effects when eaten");
 
         try {
@@ -119,6 +136,21 @@ public class FFLanguageProvider extends FabricLanguageProvider {
     private void autoName(TranslationBuilder translationBuilder, EntityType<?> entityType) {
         translationBuilder.add(entityType, autoNameInner(Registries.ENTITY_TYPE.getId(entityType).getPath()));
     }
+
+    private void blackTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
+        nameTag(translationBuilder, tTagKey, "block");
+    }
+    private void itemTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
+        nameTag(translationBuilder, tTagKey, "item");
+    }
+    private void biomeTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
+        nameTag(translationBuilder, tTagKey, "biome");
+    }
+
+    private void nameTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey, String registry){
+        translationBuilder.add("tag." + registry + "." + tTagKey.id().getNamespace() + "." + tTagKey.id().getPath(), autoNameInner(tTagKey.id().getPath()));
+    }
+
 
     private String autoNameInner(String id) {
         StringBuilder name = new StringBuilder();

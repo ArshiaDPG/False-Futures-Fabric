@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.common.features;
 
 import com.mojang.serialization.Codec;
+import net.digitalpear.falsefutures.common.blocks.HibernatingGippleBlock;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -44,7 +45,7 @@ public class GippleColonyPoolFeature extends VegetationPatchFeature {
             if (random.nextInt(9) == 0){
                 for (int i = 0; i < random.nextBetween(6, 10); i++){
                     if (world.getBlockState(blockPos.up(i)).isAir()){
-                        world.setBlockState(blockPos.up(i), random.nextBoolean() ? Blocks.ICE.getDefaultState() : FFBlocks.HIBERNATING_GIPPLE.getDefaultState(), 2);
+                        world.setBlockState(blockPos.up(i), random.nextInt(10) < 7 ? Blocks.ICE.getDefaultState() : FFBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byId(random.nextBetween(2, 5))), 2);
                     }
                 }
             }
@@ -52,6 +53,7 @@ public class GippleColonyPoolFeature extends VegetationPatchFeature {
                 world.setBlockState(blockPos, Blocks.WATER.getDefaultState(), 2);
             }
         }
+
 
         return set2;
     }

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "falsefutures:chiseled_amoebalith_bricks"
+        "recipe": "minecraft:amoebalith_brick_slab_from_amoebalith_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "falsefutures:chiseled_amoebalith_bricks"
+      "minecraft:amoebalith_brick_slab_from_amoebalith_stonecutting"
     ]
   },
   "sends_telemetry_event": false

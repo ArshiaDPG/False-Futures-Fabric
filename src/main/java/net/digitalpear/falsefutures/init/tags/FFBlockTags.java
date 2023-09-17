@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 public class FFBlockTags {
 
     public static final TagKey<Block> JELLIES = of("jellies");
-    public static final TagKey<Block> GIPPLE_SPAWNABLES = of("gipple_spawnables");
     public static final TagKey<Block> GIPPLE_FOOD = of("gipple_food");
     public static final TagKey<Block> JELLYROOT_PLANTABLES = of("jellyroot_plantables");
     public static final TagKey<Block> GIPPLE_COLONY_REPLACEABLE = of("gipple_colony_replaceable");

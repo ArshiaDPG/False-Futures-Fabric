@@ -22,7 +22,7 @@ public class SymphonicJellyBlock extends JellyBlock {
     }
 
     @Override
-    public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public void applySpecialEffects(BlockState initialState, BlockState eatenState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             double d = player.getX();
             double e = player.getY();
@@ -30,7 +30,7 @@ public class SymphonicJellyBlock extends JellyBlock {
 
             for(int i = 0; i < 16; ++i) {
                 double g = player.getX() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
-                double h = MathHelper.clamp(player.getY() + (double)(player.getRandom().nextInt(16) - 8), (double)world.getBottomY(), (double)(world.getBottomY() + ((ServerWorld)world).getLogicalHeight() - 1));
+                double h = MathHelper.clamp(player.getY() + (double)(player.getRandom().nextInt(16) - 8), world.getBottomY(), world.getBottomY() + ((ServerWorld)world).getLogicalHeight() - 1);
                 double j = player.getZ() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
                 if (player.hasVehicle()) {
                     player.stopRiding();
@@ -49,6 +49,4 @@ public class SymphonicJellyBlock extends JellyBlock {
             player.getItemCooldownManager().set(Item.fromBlock(this), 20);
         }
     }
-
-
 }

@@ -52,7 +52,7 @@ public class JellyBlock extends Block {
     /*
         -Special effect for eating the jelly (is set in other classes.)
      */
-    public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+    public void applySpecialEffects(BlockState initialState, BlockState eatenState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
 
     }
     /*
@@ -63,6 +63,7 @@ public class JellyBlock extends Block {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
 
+            BlockState finalState;
             //Add food levels
             player.getHungerManager().add(2, 0.8f);
 
@@ -70,20 +71,24 @@ public class JellyBlock extends Block {
             player.swingHand(hand);
 
             if (state.get(HALVED)) {
-                world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+                finalState = Blocks.AIR.getDefaultState();
             }
             else{
-                world.setBlockState(pos, this.getDefaultState().with(HALVED, true).with(FACING,hit.getSide()), 2);
+                finalState = this.getDefaultState().with(HALVED, true).with(FACING,hit.getSide());
             }
+            world.setBlockState(pos, finalState, 2);
+
             if (world.getGameRules().getBoolean(FFGameRules.SHOULD_APPLY_JELLY_EFFECTS)) {
-                specialEffects(state, world, pos, player, hand, hit);
+                applySpecialEffects(state, finalState, world, pos, player, hand, hit);
             }
+
             return ActionResult.SUCCESS;
         }
         else {
             return ActionResult.PASS;
         }
     }
+
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return state.get(HALVED) ? (switch (state.get(FACING)){

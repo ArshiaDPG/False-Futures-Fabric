@@ -66,7 +66,7 @@ public class FFBlocks {
     public static final Block SWEET_JELLY = createJellyBlockWithItem("sweet_jelly", new SweetJellyBlock(jellySettings(MapColor.PINK)), Items.SWEET_BERRIES);
     public static final Block MUDDY_JELLY = createJellyBlockWithItem("muddy_jelly", new JellyBlock(jellySettings(MapColor.GRAY)), Items.MUD);
     public static final Block BLAST_JELLY = createJellyBlockWithItem("blast_jelly", new JellyBlock(jellySettings(MapColor.LIGHT_GRAY)), Items.GUNPOWDER);
-    public static final Block WARP_JELLY = createJellyBlockWithItem("warp_jelly", new JellyBlock(jellySettings(MapColor.CYAN)), Items.ENDER_PEARL);
+    public static final Block WARP_JELLY = createJellyBlockWithItem("warp_jelly", new WarpJellyBlock(jellySettings(MapColor.CYAN)), Items.ENDER_PEARL);
     public static final Block FOAMY_JELLY = createJellyBlockWithItem("foamy_jelly", new JellyBlock(jellySettings(MapColor.PURPLE)), Items.DRAGON_BREATH);
     public static final Block ENCHANTING_JELLY = createJellyBlockWithItem("enchanting_jelly", new JellyBlock(jellySettings(MapColor.BLUE)), Items.LAPIS_LAZULI);
     public static final Block COCOA_JELLY = createJellyBlockWithItem("cocoa_jelly", new SweetJellyBlock(jellySettings(MapColor.BROWN)), Items.COCOA_BEANS);
@@ -130,7 +130,20 @@ public class FFBlocks {
     public static final Block TALL_JELLYROOT = createBlockWithItem("tall_jellyroot", new TallJellyrootBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
             .mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WEEPING_VINES).luminance(state -> 8)));
 
-    public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple", new HibernatingGippleBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(GELATIN_LAYER.getDefaultMapColor()).hardness(0.1f).pistonBehavior(PistonBehavior.DESTROY).dropsNothing()));
+    public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple", new HibernatingGippleBlock(AbstractBlock.Settings.create()
+            .sounds(BlockSoundGroup.HONEY)
+            .nonOpaque()
+            .mapColor(GELATIN_LAYER.getDefaultMapColor())
+            .hardness(0.1f)
+            .pistonBehavior(PistonBehavior.DESTROY)
+            .dropsNothing()));
+
+    public static final Block GELATIN_BLOCK = createBlockWithItem("gelatin_block",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(0.4f)
+                    .mapColor(GELATIN_LAYER.getDefaultMapColor())
+                    .sounds(BlockSoundGroup.HONEY)
+            ));
 
 
     public static void init(){

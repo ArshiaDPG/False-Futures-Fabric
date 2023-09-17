@@ -33,7 +33,7 @@ public class FFPlacedFeatures {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
         RegistryEntry<ConfiguredFeature<?, ?>> registryEntry = registryEntryLookup.getOrThrow(FFConfiguredFeatures.GIPPLE_COLONY);
 
-        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, RarityFilterPlacementModifier.of(6), HeightRangePlacementModifier.uniform(YOffset.aboveBottom(12), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
+        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry, RarityFilterPlacementModifier.of(42), HeightRangePlacementModifier.uniform(YOffset.aboveBottom(12), YOffset.fixed(0)), SquarePlacementModifier.of(), BiomePlacementModifier.of());
     }
 
 

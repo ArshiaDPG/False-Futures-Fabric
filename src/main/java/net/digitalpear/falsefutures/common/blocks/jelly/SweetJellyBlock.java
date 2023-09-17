@@ -14,7 +14,7 @@ public class SweetJellyBlock extends JellyBlock{
     }
 
     @Override
-    public void specialEffects(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public void applySpecialEffects(BlockState initialState, BlockState eatenState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         player.heal(1);
     }
 }

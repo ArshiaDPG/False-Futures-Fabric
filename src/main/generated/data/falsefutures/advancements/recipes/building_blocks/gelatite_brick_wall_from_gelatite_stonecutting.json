@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_amoebalith": {
+    "has_gelatite": {
       "conditions": {
         "items": [
           {
             "items": [
-              "falsefutures:amoebalith"
+              "falsefutures:gelatite"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "falsefutures:chiseled_amoebalith_bricks"
+        "recipe": "minecraft:gelatite_brick_wall_from_gelatite_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_amoebalith",
+      "has_gelatite",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "falsefutures:chiseled_amoebalith_bricks"
+      "minecraft:gelatite_brick_wall_from_gelatite_stonecutting"
     ]
   },
   "sends_telemetry_event": false

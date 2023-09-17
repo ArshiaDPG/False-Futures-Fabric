@@ -68,6 +68,9 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
+
+        addDrop(FFBlocks.GELATIN_BLOCK);
+
         stoneSet(FFBlocks.AMOEBALITH,
                 FFBlocks.AMOEBALITH_STAIRS,
                 FFBlocks.AMOEBALITH_SLAB,

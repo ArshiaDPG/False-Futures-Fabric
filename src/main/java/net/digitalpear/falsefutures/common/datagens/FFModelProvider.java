@@ -7,6 +7,7 @@ import net.digitalpear.falsefutures.init.FFItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
@@ -46,14 +47,15 @@ public class FFModelProvider extends FabricModelProvider {
                 FFBlocks.AMOEBALITH_BRICK_WALL);
 
 
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple")));
-        blockStateModelGenerator.registerParentedItemModel(FFBlocks.HIBERNATING_GIPPLE, new Identifier(FalseFutures.MOD_ID, "block/hibernating_gipple"));
+        blockStateModelGenerator.registerNorthDefaultHorizontalRotatable(FFBlocks.HIBERNATING_GIPPLE, TextureMap.sideEnd(FFBlocks.HIBERNATING_GIPPLE));
 
         blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.JELLYROOT, FFBlocks.POTTED_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
         blockStateModelGenerator.registerDoubleBlock(FFBlocks.TALL_JELLYROOT, BlockStateModelGenerator.TintType.NOT_TINTED);
 
         blockStateModelGenerator.registerParentedItemModel(FFItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(FFItems.SOMETHING_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
+
+        blockStateModelGenerator.registerSingleton(FFBlocks.GELATIN_BLOCK, (new TextureMap()).put(TextureKey.ALL, TextureMap.getId(FFBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL);
     }
 
 

@@ -129,13 +129,16 @@ public class FFBlocks {
             .mapColor(GELATIN_LAYER.getDefaultMapColor())
             .hardness(0.1f)
             .pistonBehavior(PistonBehavior.DESTROY)
-            .dropsNothing()));
+            .dropsNothing()
+            .ticksRandomly()
+    ));
 
     public static final Block GELATIN_BLOCK = createBlockWithItem("gelatin_block",
             new Block(AbstractBlock.Settings.create()
                     .hardness(0.4f)
                     .mapColor(GELATIN_LAYER.getDefaultMapColor())
                     .sounds(BlockSoundGroup.HONEY)
+
             ));
 
 

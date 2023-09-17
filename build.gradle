@@ -16,6 +16,12 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -30,6 +36,8 @@ dependencies {
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib}"
 
     modLocalRuntime "maven.modrinth:emi:${project.emi}"
+    modLocalRuntime "curse.maven:galosphere-631098:4668863"
+    modLocalRuntime "maven.modrinth:midnightlib:${project.midnight}"
 }
 
 processResources {

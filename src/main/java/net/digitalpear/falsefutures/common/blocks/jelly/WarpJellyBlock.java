@@ -1,10 +1,13 @@
 package net.digitalpear.falsefutures.common.blocks.jelly;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -26,6 +29,15 @@ public class WarpJellyBlock extends JellyBlock{
 
             for(int i = 0; i < 1000; ++i) {
                 BlockPos blockPos = pos.add(world.random.nextInt(16) - world.random.nextInt(16), world.random.nextInt(8) - world.random.nextInt(8), world.random.nextInt(16) - world.random.nextInt(16));
+                if (FabricLoader.getInstance().isModLoaded("galosphere")){
+                    for (BlockPos pos1 : BlockPos.iterate(pos.add(-16, -16, -16), pos.add(16, 16, 16))) {
+                        if (world.getBlockState(pos1).isOf(Registries.BLOCK.get(new Identifier("galosphere", "warped_anchor")))
+                                && world.getBlockState(pos1.up()).isAir()
+                                && world.getBlockState(pos1).getLuminance() > 0) {
+                            blockPos = pos1.up();
+                        }
+                    }
+                }
                 if (world.getBlockState(blockPos).isAir() && worldBorder.contains(blockPos)) {
                     if (world.isClient) {
                         for(int j = 0; j < 128; ++j) {

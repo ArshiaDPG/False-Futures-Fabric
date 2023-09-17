@@ -67,7 +67,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
             if (blockState.contains(Properties.WATERLOGGED) && !(Boolean)blockState.get(Properties.WATERLOGGED)) {
                 world.setBlockState(pos, blockState.with(Properties.WATERLOGGED, true), 2);
             }
-            if (random.nextInt(12) == 0){
+            if (random.nextInt(2) == 0){
                 generatePillar(world, random, pos);
             }
 
@@ -77,6 +77,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
             return false;
         }
     }
+
     public void generatePillar(StructureWorldAccess world, Random random, BlockPos pos){
         int initialHeight = random.nextBetween(2, 3);
         for (int i = -2; i < initialHeight; i++){

@@ -12,7 +12,7 @@
     },
     "replaceable": "#falsefutures:gipple_colony_replaceable",
     "surface": "floor",
-    "vegetation_chance": 0.1,
+    "vegetation_chance": 0.2,
     "vegetation_feature": {
       "feature": "falsefutures:gipple_colony_vegetation",
       "placement": []
@@ -21,8 +21,8 @@
     "xz_radius": {
       "type": "minecraft:uniform",
       "value": {
-        "max_inclusive": 7,
-        "min_inclusive": 5
+        "max_inclusive": 9,
+        "min_inclusive": 6
       }
     }
   }

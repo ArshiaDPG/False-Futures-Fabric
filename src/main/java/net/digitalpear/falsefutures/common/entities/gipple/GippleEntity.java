@@ -1,18 +1,16 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
-import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEntity;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CaveVines;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FlyGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -22,22 +20,16 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -61,6 +53,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
     protected static final RawAnimation ON_GROUND_ANIM = RawAnimation.begin().thenLoop("gipple.floor");
     private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
+    private int hungryCountdown = 200;
 
 
     public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
@@ -90,10 +83,11 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(0, new FlyGoal(this, 1.0));
+        this.goalSelector.add(0, new FindAndEatFoodGoal(this, 1.2, 15, 2));
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(1, new FlyGoal(this, 1.0));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.25D));
-        this.goalSelector.add(0, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
+        this.goalSelector.add(2, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
 
     }
 
@@ -105,7 +99,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         birdNavigation.setCanEnterOpenDoors(true);
         return birdNavigation;
     }
-
 
 
     @Nullable
@@ -130,6 +123,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         nbt.putBoolean("Dancing", this.isDancing());
         nbt.putBoolean("Eating", this.isEating());
         nbt.putBoolean("Luminous", this.isLuminous());
+        nbt.putInt("hungryCountdown", this.hungryCountdown);
     }
 
     @Override
@@ -139,6 +133,16 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.setDancing(nbt.getBoolean("Dancing"));
         this.setEating(nbt.getBoolean("Eating"));
         this.setLuminous(nbt.getBoolean("Luminous"));
+        this.hungryCountdown = nbt.getInt("hungryCountdown");
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (hungryCountdown != 0) {
+            hungryCountdown--;
+        }
+        System.out.println(hungryCountdown);
     }
 
 
@@ -361,6 +365,69 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Override
     public boolean isInAir() {
         return !this.isOnGround();
+    }
+
+    public static class FindAndEatFoodGoal extends MoveToTargetPosGoal {
+        private static final int EATING_TIME = 40;
+        protected int timer;
+        public final GippleEntity mob;
+
+        public FindAndEatFoodGoal(GippleEntity mob, double speed, int range, int maxYDifference) {
+            super(mob, speed, range, maxYDifference);
+            this.mob = mob;
+        }
+
+        public boolean canStart() {
+            return mob.hungryCountdown <= 0 && !mob.isLuminous() && super.canStart();
+        }
+
+        /*
+        protected int getInterval(PathAwareEntity mob) {
+            return 0;
+        }
+
+         */
+
+        public double getDesiredDistanceToTarget() {
+            return 2.0;
+        }
+
+        public boolean shouldResetPath() {
+            return this.tryingTime % 100 == 0;
+        }
+
+        @Override
+        protected boolean isTargetPos(WorldView world, BlockPos pos) {
+            return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD);
+        }
+
+        public void tick() {
+            if (this.hasReached()) {
+                if (this.timer >= 40) {
+                    //Turn this to false after, spawn particles & make entity not move when eating!
+                    mob.setEating(true);
+                } else {
+                    ++this.timer;
+                }
+                System.out.println("YAAAY");
+            } else {
+                System.out.println("Searching...");
+            }
+            super.tick();
+        }
+
+        protected void eat() {
+            if (mob.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                BlockState blockState = mob.getWorld().getBlockState(this.targetPos);
+
+
+            }
+        }
+
+        public void start() {
+            this.timer = 0;
+            super.start();
+        }
     }
 
 /*Old code

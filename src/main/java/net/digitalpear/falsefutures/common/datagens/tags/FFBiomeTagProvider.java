@@ -34,7 +34,6 @@ public class FFBiomeTagProvider extends FabricTagProvider<Biome> {
                 .forceAddTag(BiomeTags.IS_OCEAN)
                 .forceAddTag(BiomeTags.IS_DEEP_OCEAN)
                 .forceAddTag(BiomeTags.VILLAGE_SNOWY_HAS_STRUCTURE)
-                .add(BiomeKeys.DRIPSTONE_CAVES)
                 .addOptional(new Identifier("galosphere:lichen_caves")
                 );
 

@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
-    "minecraft:dripstone_caves",
+    "#minecraft:is_ocean",
+    "#minecraft:is_deep_ocean",
+    "#minecraft:has_structure/village_snowy",
     {
       "id": "galosphere:lichen_caves",
       "required": false

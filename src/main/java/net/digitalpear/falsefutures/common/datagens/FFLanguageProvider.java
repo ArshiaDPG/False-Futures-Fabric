@@ -84,10 +84,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
 
-        translationBuilder.add("subtitles.gipple.ambient", "Gipple vibrates");
-        translationBuilder.add("subtitles.gipple.hurt", "Gipple hurts");
-        translationBuilder.add("subtitles.gipple.burp", "Gipple consumes");
-        translationBuilder.add("subtitles.gipple.death", "Gipple dies");
+        translationBuilder.add("subtitles.falsefutures.gipple.ambient", "Gipple vibrates");
+        translationBuilder.add("subtitles.falsefutures.gipple.hurt", "Gipple hurts");
+        translationBuilder.add("subtitles.falsefutures.gipple.burp", "Gipple consumes");
+        translationBuilder.add("subtitles.falsefutures.gipple.death", "Gipple dies");
 
         /*
             Tag translations for EMI compat

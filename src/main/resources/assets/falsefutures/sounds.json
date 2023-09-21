@@ -102,7 +102,7 @@
 
   "entity.gipple.ambient": {
     "category": "neutral",
-	"subtitle": "subtitles.falsefutures.gipple_ambient",
+	"subtitle": "subtitles.falsefutures.gipple.ambient",
     "sounds": [
       "falsefutures:entity/gipple/ambient1",
 	  "falsefutures:entity/gipple/ambient2",
@@ -112,14 +112,14 @@
   },
   "entity.gipple.burp": {
     "category": "neutral",
-	"subtitle": "subtitles.falsefutures.gipple_burp",
+	"subtitle": "subtitles.falsefutures.gipple.burp",
     "sounds": [
       "falsefutures:entity/gipple/burp"
     ]
   },
   "entity.gipple.hurt": {
       "category": "neutral",
-  	"subtitle": "subtitles.falsefutures.gipple_hurt",
+  	"subtitle": "subtitles.falsefutures.gipple.hurt",
       "sounds": [
         "falsefutures:entity/gipple/hurt1",
   	    "falsefutures:entity/gipple/hurt2"
@@ -127,7 +127,7 @@
   },
      "entity.gipple.death": {
      "category": "neutral",
-     "subtitle": "subtitles.falsefutures.gipple_death",
+     "subtitle": "subtitles.falsefutures.gipple.death",
        "sounds": [
         "falsefutures:entity/gipple/death1",
      	"falsefutures:entity/gipple/death2"

@@ -24,6 +24,7 @@ public class FalseFutures implements ModInitializer {
         FFBannerPatterns.init();
         FFGameRules.init();
         FFData.init();
+        FFStatusEffects.init();
 
 
         LOGGER.info("False Futures has finished registering successfully.");

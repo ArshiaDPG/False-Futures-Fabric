@@ -59,6 +59,7 @@ public class FFModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(FFItems.GELATIN, Models.GENERATED);
+        itemModelGenerator.register(FFItems.GAPPLE, Models.GENERATED);
         itemModelGenerator.register(FFItems.GIPPLE_BUCKET, Models.GENERATED);
         itemModelGenerator.register(FFItems.MUSIC_DISC_GIPPLECORE, Models.GENERATED);
         itemModelGenerator.register(FFItems.GIPPLE_BANNER_PATTERN, Models.GENERATED);

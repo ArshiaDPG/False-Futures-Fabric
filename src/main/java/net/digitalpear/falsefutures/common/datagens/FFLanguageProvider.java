@@ -71,10 +71,12 @@ public class FFLanguageProvider extends FabricLanguageProvider {
 
         autoName(translationBuilder, FFItems.GELATIN);
 
+        autoName(translationBuilder, FFItems.GAPPLE);
+
         translationBuilder.add(FFItems.GIPPLE_BUCKET, "Bucket of Gipple");
 
         translationBuilder.add(FFItems.GIPPLE_SPAWN_EGG, "Gipple Spawn Egg");
-        translationBuilder.add(FFItems.ANEUPLOIDIAN_SPAWN_EGG, "Something Spawn Egg");
+        translationBuilder.add(FFItems.ANEUPLOIDIAN_SPAWN_EGG, "Aneuploidian Spawn Egg");
 
         translationBuilder.add(FFItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
         translationBuilder.add("item.falsefutures.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
@@ -88,6 +90,10 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple.hurt", "Gipple hurts");
         translationBuilder.add("subtitles.falsefutures.gipple.burp", "Gipple consumes");
         translationBuilder.add("subtitles.falsefutures.gipple.death", "Gipple dies");
+
+        translationBuilder.add("death.attack.gippleEffect", "%s was gipplified");
+
+        translationBuilder.add("effect.falsefutures.gipple", "Gipple");
 
         /*
             Tag translations for EMI compat

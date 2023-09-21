@@ -37,6 +37,7 @@ public class FFItems {
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(FFEntities.GIPPLE, 13558777, 11642584);
     public static final Item ANEUPLOIDIAN_SPAWN_EGG = createInvisibleSpawnEgg(FFEntities.ANEUPLOIDIAN, 13558777, 9669861);
     public static final Item GELATIN = register("gelatin", new Item(new Item.Settings().food(FFFoodComponents.GELATIN)));
+    public static final Item GAPPLE = register("gapple", new Item(new Item.Settings().food(FFFoodComponents.GAPPLE)));
     public static final Item MUSIC_DISC_GIPPLECORE = createDisc("gipplecore", 13, FFSoundEvents.MUSIC_DISC_GIPPLECORE, 113);
     public static final Item GIPPLEPAD = register("gipplepad", new PlaceableOnWaterItem(FFBlocks.GIPPLEPAD, new Item.Settings()));
     public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", new BannerPatternItem(FFBannerPatternItemTags.GIPPLE_PATTERN_ITEM, new Item.Settings().maxCount(1)));

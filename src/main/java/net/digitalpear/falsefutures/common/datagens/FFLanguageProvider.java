@@ -99,7 +99,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         /*
             Tag translations for EMI compat
          */
-        biomeTag(translationBuilder, FFBiomeTags.GIPPLE_HABITATS);
+        biomeTag(translationBuilder, FFBiomeTags.EXTRA_GIPPLE_HABITATS);
         blackTag(translationBuilder, FFBlockTags.GIPPLE_COLONY_REPLACEABLE);
         blackTag(translationBuilder, FFBlockTags.GIPPLE_FOOD);
         itemTag(translationBuilder, FFItemTags.GIPPLE_FOOD);

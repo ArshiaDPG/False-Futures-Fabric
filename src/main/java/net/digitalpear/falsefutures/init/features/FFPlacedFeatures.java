@@ -1,6 +1,7 @@
 package net.digitalpear.falsefutures.init.features;
 
 import net.digitalpear.falsefutures.FalseFutures;
+import net.digitalpear.falsefutures.init.tags.FFBiomeTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registerable;
@@ -27,15 +28,22 @@ public class FFPlacedFeatures {
         return placed;
     }
     public static final RegistryKey<PlacedFeature> GIPPLE_COLONY = of("gipple_colony");
+    public static final RegistryKey<PlacedFeature> GIPPLE_COLONY_COMMON = of("gipple_colony_common");
 
 
 
     public static void bootstrap(Registerable<PlacedFeature> featureRegisterable) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
-        RegistryEntry<ConfiguredFeature<?, ?>> registryEntry = registryEntryLookup.getOrThrow(FFConfiguredFeatures.GIPPLE_COLONY);
+        RegistryEntry<ConfiguredFeature<?, ?>> gippleColony = registryEntryLookup.getOrThrow(FFConfiguredFeatures.GIPPLE_COLONY);
 
-        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, registryEntry,
-                RarityFilterPlacementModifier.of(84),
+        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, gippleColony,
+                RarityFilterPlacementModifier.of(300),
+                CountPlacementModifier.of(12),
+                HeightRangePlacementModifier.of(BiasedToBottomHeightProvider.create(YOffset.aboveBottom(10), YOffset.fixed(12), 1)),
+                SquarePlacementModifier.of(), BiomePlacementModifier.of());
+
+        PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY_COMMON, gippleColony,
+                RarityFilterPlacementModifier.of(86),
                 CountPlacementModifier.of(20),
                 HeightRangePlacementModifier.of(BiasedToBottomHeightProvider.create(YOffset.aboveBottom(10), YOffset.fixed(12), 1)),
                 SquarePlacementModifier.of(), BiomePlacementModifier.of());
@@ -44,5 +52,6 @@ public class FFPlacedFeatures {
 
     public static void init(){
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY);
+        BiomeModifications.addFeature(BiomeSelectors.tag(FFBiomeTags.EXTRA_GIPPLE_HABITATS), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY_COMMON);
     }
 }

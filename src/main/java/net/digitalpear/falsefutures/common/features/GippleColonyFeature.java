@@ -67,7 +67,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
             if (blockState.contains(Properties.WATERLOGGED) && !(Boolean)blockState.get(Properties.WATERLOGGED)) {
                 world.setBlockState(pos, blockState.with(Properties.WATERLOGGED, true), 2);
             }
-            if (random.nextInt(2) == 0){
+            if (random.nextInt(7) == 0){
                 generatePillar(world, random, pos);
             }
 

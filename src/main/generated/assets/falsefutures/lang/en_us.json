@@ -61,6 +61,7 @@
   "block.minecraft.banner.falsefutures.gipple.white": "White Gipple",
   "block.minecraft.banner.falsefutures.gipple.yellow": "Yellow Gipple",
   "death.attack.gippleEffect": "%s was gipplified",
+  "death.attack.gippleEffect.player": "%s became a Gipple to get away from %s",
   "effect.falsefutures.gipple": "Gipple",
   "entity.falsefutures.aneuploidian": "Aneuploidian",
   "entity.falsefutures.gipple": "Gipple",

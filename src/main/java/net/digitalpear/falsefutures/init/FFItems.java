@@ -46,6 +46,7 @@ public class FFItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
             entries.addAfter(Items.HONEY_BOTTLE, GELATIN);
+            entries.addAfter(Items.ENCHANTED_GOLDEN_APPLE, GAPPLE);
             entries.addAfter(GELATIN, FFBlocks.PLAIN_JELLY, FFBlocks.MILKY_JELLY, FFBlocks.BLAST_JELLY, FFBlocks.MUDDY_JELLY, FFBlocks.INKY_JELLY,
                     FFBlocks.COCOA_JELLY, FFBlocks.FRUITY_JELLY, FFBlocks.BRIGHT_JELLY, FFBlocks.FLORAL_JELLY, FFBlocks.BOUNCY_JELLY, FFBlocks.PRICKLY_JELLY,
                     FFBlocks.WARP_JELLY, FFBlocks.LUMINESCENT_JELLY, FFBlocks.ENCHANTING_JELLY, FFBlocks.FOAMY_JELLY, FFBlocks.SYMPHONIC_JELLY, FFBlocks.SWEET_JELLY

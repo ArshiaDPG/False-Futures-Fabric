@@ -92,6 +92,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.falsefutures.gipple.death", "Gipple dies");
 
         translationBuilder.add("death.attack.gippleEffect", "%s was gipplified");
+        translationBuilder.add("death.attack.gippleEffect.player", "%s became a Gipple to get away from %s");
 
         translationBuilder.add("effect.falsefutures.gipple", "Gipple");
 

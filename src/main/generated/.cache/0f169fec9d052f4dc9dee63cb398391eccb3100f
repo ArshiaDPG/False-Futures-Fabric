@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-22T10:16:01.8222708	False Futures/Block Loot Tables
+// 1.20.1	2023-09-22T10:27:09.6799901	False Futures/Block Loot Tables
 175f2b4c2371401ec039fbd13477cf8d4a47e5d3 data\falsefutures\loot_tables\blocks\gelatite_wall.json
 f62d94592b49da5d4d4488bddb86aa1d47e41d28 data\falsefutures\loot_tables\blocks\gelatite_brick_slab.json
 eb47d81adf436e135a85b808f856a7c80494b668 data\falsefutures\loot_tables\blocks\amoebalith_slab.json
@@ -13,8 +13,8 @@ dde558bbd4537c77cd511885df36622645d138cc data\falsefutures\loot_tables\blocks\am
 ce4cfc8a28dd3ade55cbdc0bc093a3cbe9c1d9cd data\falsefutures\loot_tables\blocks\amoebalith_brick_slab.json
 7bf4247d80dacb6d8ca1d1cb162c0c5fd5f506d4 data\falsefutures\loot_tables\blocks\gelatinous_growth.json
 c4465aefc8f5c3a5fcc7410911372d96a69ac848 data\falsefutures\loot_tables\blocks\gelatite_bricks.json
-1601401340c3231b43949a34f1e5e77aa111b434 data\falsefutures\loot_tables\blocks\gelatite_brick_stairs.json
 f0fcf8c4bd2fe7953e02abc31aac76a21277ad58 data\falsefutures\loot_tables\blocks\amoebalith_button.json
+1601401340c3231b43949a34f1e5e77aa111b434 data\falsefutures\loot_tables\blocks\gelatite_brick_stairs.json
 e4802ff9eb8d4c41cbd412b4dc1018df0fab8123 data\falsefutures\loot_tables\blocks\gelatite_button.json
 1d50dae44967c1273013bfbf9e20ae23ad6e4698 data\falsefutures\loot_tables\blocks\gelatite_pressure_plate.json
 6550e17537230b6c2fdf81448df8a7ebb3a836e5 data\falsefutures\loot_tables\blocks\gelatite_brick_wall.json

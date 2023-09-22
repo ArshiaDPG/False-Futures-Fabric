@@ -1,6 +1,5 @@
 package net.digitalpear.falsefutures.common.blocks;
 
-import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
@@ -14,6 +13,6 @@ public class GelatinousGrowthBlock extends PlantBlock {
 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isOf(FFBlocks.GELATIN_BLOCK) || floor.isIn(FFBlockTags.JELLIES);
+        return floor.isIn(FFBlockTags.GELATINOUS_GROWTH_SUPPORTING);
     }
 }

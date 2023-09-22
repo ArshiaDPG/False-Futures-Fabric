@@ -39,6 +39,13 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
                 .add(Blocks.POINTED_DRIPSTONE)
                 .add(Blocks.WATER);
 
+        getOrCreateTagBuilder(FFBlockTags.GELATINOUS_GROWTH_SUPPORTING)
+                .add(FFBlocks.GELATIN_BLOCK)
+                .add(FFBlocks.HIBERNATING_GIPPLE)
+                .add(FFBlocks.GELATITE)
+                .add(FFBlocks.AMOEBALITH)
+                .forceAddTag(FFBlockTags.JELLIES);
+
         var jellies = getOrCreateTagBuilder(FFBlockTags.JELLIES);
         for(Block jelly : FFBlocks.JELLY.keySet()) {
             jellies.add(jelly);

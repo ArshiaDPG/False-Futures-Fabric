@@ -8,12 +8,17 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.condition.MatchToolLootCondition;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LeafEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
@@ -73,8 +78,14 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
 
 
         addDrop(FFBlocks.GELATIN_LAYER, gelatinLayerLoot());
-    }
 
+        addDrop(FFBlocks.GELATINOUS_GROWTH, gelatinPlantDrops(FFBlocks.GELATINOUS_GROWTH));
+
+        addDrop(FFBlocks.POTTED_GELATINOUS_GROWTH, pottedPlantDrops(FFBlocks.GELATINOUS_GROWTH));
+    }
+    public LootTable.Builder gelatinPlantDrops(Block dropWithShears) {
+        return dropsWithShears(dropWithShears, (LootPoolEntry.Builder)this.applyExplosionDecay(dropWithShears, ((LeafEntry.Builder)ItemEntry.builder(FFItems.GELATIN).conditionally(RandomChanceLootCondition.builder(0.125F))).apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 1))));
+    }
 
     public LootTable.Builder gelatinLayerLoot(){
         LootTable.Builder builder = LootTable.builder();

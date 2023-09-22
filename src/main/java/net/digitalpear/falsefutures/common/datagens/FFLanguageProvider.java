@@ -33,6 +33,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         }
 
         translationBuilder.add(FFBlocks.GELATIN_BLOCK, "Block of Gelatin");
+        autoName(translationBuilder, FFBlocks.GELATINOUS_GROWTH);
 
         autoName(translationBuilder, FFBlocks.GELATITE);
         autoName(translationBuilder, FFBlocks.GELATITE_STAIRS);

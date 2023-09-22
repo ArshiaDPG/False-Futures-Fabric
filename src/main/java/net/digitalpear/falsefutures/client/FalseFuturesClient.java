@@ -19,6 +19,6 @@ public class FalseFuturesClient implements ClientModInitializer {
         EntityRendererRegistry.register(FFEntities.ANEUPLOIDIAN, AneuploidianEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), FFBlocks.GELATIN_LAYER);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), FFBlocks.GIPPLEPAD);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), FFBlocks.GIPPLEPAD, FFBlocks.GELATINOUS_GROWTH);
     }
 }

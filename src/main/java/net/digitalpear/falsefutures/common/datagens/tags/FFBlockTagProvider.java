@@ -50,6 +50,7 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
                 .addOptional(new Identifier("galosphere", "lichen_roots"))
                 .addOptional(new Identifier("galosphere", "lichen_shelf"));
 
+        getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(FFBlocks.POTTED_GELATINOUS_GROWTH);
 
         getOrCreateTagBuilder(BlockTags.BUTTONS)
                 .add(FFBlocks.GELATITE_BUTTON)
@@ -105,5 +106,7 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
                 .add(FFBlocks.AMOEBALITH_BRICK_STAIRS)
                 .add(FFBlocks.AMOEBALITH_BRICK_SLAB)
                 .add(FFBlocks.AMOEBALITH_BRICK_WALL);
+
+        getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(FFBlocks.GELATIN_BLOCK);
     }
 }

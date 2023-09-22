@@ -134,12 +134,20 @@ public class FFBlocks {
             ));
 
     public static final Block GELATIN_BLOCK = createBlockWithItem("gelatin_block",
-            new Block(AbstractBlock.Settings.create()
+            new GelatinBlock(AbstractBlock.Settings.create()
                     .hardness(0.4f)
                     .mapColor(GELATIN_LAYER.getDefaultMapColor())
                     .sounds(BlockSoundGroup.HONEY)
 
             ));
+
+    public static final Block GELATINOUS_GROWTH = createBlockWithItem("gelatinous_growth",
+            new GelatinousGrowthBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
+                    .mapColor(GELATIN_LAYER.getDefaultMapColor())
+                    .sounds(BlockSoundGroup.HONEY)
+            ));
+
+    public static final Block POTTED_GELATINOUS_GROWTH = createBlockWithoutItem("potted_gelatinous_growth",new FlowerPotBlock(GELATINOUS_GROWTH, AbstractBlock.Settings.copy(Blocks.FLOWER_POT)));
 
 
     public static void init(){

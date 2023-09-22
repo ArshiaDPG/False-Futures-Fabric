@@ -84,17 +84,29 @@ public class GippleColonyFeature extends VegetationPatchFeature {
             for (int x = 2; x < 6; x++){
                 if (!world.getBlockState(pos.up(i)).isOpaque()){
                     placeBlock(world, random, pos.up(i).offset(Direction.byId(x)));
+                    if (random.nextBoolean()){
+                        world.setBlockState(pos.up(i + 1).offset(Direction.byId(x)), FFBlocks.GELATINOUS_GROWTH.getDefaultState(), 2);
+                    }
+
                 }
             }
             if (!world.getBlockState(pos.up(i)).isOpaque()){
                 placeBlock(world, random, pos.up(i));
+                if (random.nextBoolean()){
+                    world.setBlockState(pos.up(i + 1), FFBlocks.GELATINOUS_GROWTH.getDefaultState(), 2);
+                }
             }
         }
-        for (int i = 0; i < initialHeight + random.nextBetween(2, 4); i++){
-            if (!world.getBlockState(pos.up(i)).isOpaque()){
+        int finalHeight = initialHeight + random.nextBetween(2, 4);
+        for (int i = initialHeight; i < finalHeight; i++) {
+            if (!world.getBlockState(pos.up(i)).isOpaque()) {
                 placeBlock(world, random, pos.up(i));
             }
         }
+        if (!world.getBlockState(pos.up(finalHeight)).isAir()) {
+            world.setBlockState(pos.up(finalHeight), FFBlocks.GELATINOUS_GROWTH.getDefaultState(), 2);
+        }
+
     }
     public void placeBlock(StructureWorldAccess world, Random random, BlockPos pos){
         world.setBlockState(pos, random.nextInt(10) < 8 ? FFBlocks.GELATIN_BLOCK.getDefaultState() : FFBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byId(random.nextBetween(2, 5))), 2);

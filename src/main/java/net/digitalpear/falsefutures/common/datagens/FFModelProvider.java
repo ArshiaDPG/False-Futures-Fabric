@@ -53,6 +53,8 @@ public class FFModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerParentedItemModel(FFItems.ANEUPLOIDIAN_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
 
         blockStateModelGenerator.registerSingleton(FFBlocks.GELATIN_BLOCK, (new TextureMap()).put(TextureKey.ALL, TextureMap.getId(FFBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL);
+
+        blockStateModelGenerator.registerFlowerPotPlant(FFBlocks.GELATINOUS_GROWTH, FFBlocks.POTTED_GELATINOUS_GROWTH, BlockStateModelGenerator.TintType.NOT_TINTED);
     }
 
 

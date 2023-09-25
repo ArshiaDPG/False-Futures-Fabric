@@ -18,5 +18,4 @@ public class FFBlockSoundGroups {
             FFSoundEvents.BLOCK_GELATITE_PLACE,
             FFSoundEvents.BLOCK_GELATITE_HIT,
             FFSoundEvents.BLOCK_GELATITE_FALL);
-
 }

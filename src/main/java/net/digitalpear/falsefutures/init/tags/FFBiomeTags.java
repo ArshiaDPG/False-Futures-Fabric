@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 
 public class FFBiomeTags {
-    public static final TagKey<Biome> GIPPLE_HABITATS = of("gipple_habitats");
+    public static final TagKey<Biome> EXTRA_GIPPLE_HABITATS = of("extra_gipple_habitats");
 
     private static TagKey<Biome> of(String id) {
         return TagKey.of(RegistryKeys.BIOME, new Identifier(FalseFutures.MOD_ID, id));

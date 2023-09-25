@@ -10,7 +10,7 @@
         "Name": "falsefutures:gelatite"
       }
     },
-    "replaceable": "#falsefutures:gipple_colony_replaceable",
+    "replaceable": "#falsefutures:gelatinous_growth_supporting",
     "surface": "floor",
     "vegetation_chance": 0.2,
     "vegetation_feature": {

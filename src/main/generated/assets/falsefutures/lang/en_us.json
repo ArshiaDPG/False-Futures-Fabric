@@ -23,6 +23,7 @@
   "block.falsefutures.fruity_jelly": "Fruity Jelly",
   "block.falsefutures.gelatin_block": "Block of Gelatin",
   "block.falsefutures.gelatin_layer": "Gelatin Layer",
+  "block.falsefutures.gelatinous_growth": "Gelatinous Growth",
   "block.falsefutures.gelatite": "Gelatite",
   "block.falsefutures.gelatite_brick_slab": "Gelatite Brick Slab",
   "block.falsefutures.gelatite_brick_stairs": "Gelatite Brick Stairs",
@@ -79,8 +80,8 @@
   "subtitles.falsefutures.gipple.burp": "Gipple consumes",
   "subtitles.falsefutures.gipple.death": "Gipple dies",
   "subtitles.falsefutures.gipple.hurt": "Gipple hurts",
-  "tag.biome.falsefutures.gipple_habitats": "Gipple Habitats",
-  "tag.block.falsefutures.gipple_colony_replaceable": "Gipple Colony Replaceable",
+  "tag.biome.falsefutures.extra_gipple_habitats": "Extra Gipple Habitats",
+  "tag.block.falsefutures.gelatinous_growth_supporting": "Gelatinous Growth Supporting",
   "tag.block.falsefutures.gipple_food": "Gipple Food",
   "tag.block.falsefutures.jellies": "Jellies",
   "tag.item.falsefutures.gipple_food": "Gipple Food"

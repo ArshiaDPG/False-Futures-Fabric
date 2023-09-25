@@ -33,6 +33,7 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         }
 
         translationBuilder.add(FFBlocks.GELATIN_BLOCK, "Block of Gelatin");
+        autoName(translationBuilder, FFBlocks.GELATINOUS_GROWTH);
 
         autoName(translationBuilder, FFBlocks.GELATITE);
         autoName(translationBuilder, FFBlocks.GELATITE_STAIRS);
@@ -99,8 +100,8 @@ public class FFLanguageProvider extends FabricLanguageProvider {
         /*
             Tag translations for EMI compat
          */
-        biomeTag(translationBuilder, FFBiomeTags.GIPPLE_HABITATS);
-        blackTag(translationBuilder, FFBlockTags.GIPPLE_COLONY_REPLACEABLE);
+        biomeTag(translationBuilder, FFBiomeTags.EXTRA_GIPPLE_HABITATS);
+        blackTag(translationBuilder, FFBlockTags.GELATINOUS_GROWTH_SUPPORTING);
         blackTag(translationBuilder, FFBlockTags.GIPPLE_FOOD);
         itemTag(translationBuilder, FFItemTags.GIPPLE_FOOD);
         blackTag(translationBuilder, FFBlockTags.JELLIES);

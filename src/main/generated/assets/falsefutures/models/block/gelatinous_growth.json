@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "falsefutures:block/gelatinous_growth"
+  }
+}

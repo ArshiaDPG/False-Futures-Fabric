@@ -5,6 +5,8 @@ import net.digitalpear.falsefutures.init.*;
 import net.digitalpear.falsefutures.init.data.FFData;
 import net.digitalpear.falsefutures.init.features.FFPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.structure.StructureTemplate;
+import net.minecraft.structure.StructureTemplateManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

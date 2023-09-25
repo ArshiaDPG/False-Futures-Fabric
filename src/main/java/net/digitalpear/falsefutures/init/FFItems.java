@@ -70,9 +70,11 @@ public class FFItems {
             entries.addAfter(Items.GLOW_SQUID_SPAWN_EGG, GIPPLE_SPAWN_EGG, ANEUPLOIDIAN_SPAWN_EGG);
         });
 
+
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
             entries.addAfter(Items.DEEPSLATE, FFBlocks.GELATITE, FFBlocks.AMOEBALITH);
             entries.addAfter(Items.SNOW, FFBlocks.GELATIN_LAYER);
+            entries.addAfter(Items.GLOW_LICHEN, FFBlocks.GELATINOUS_GROWTH);
             entries.add(FFBlocks.HIBERNATING_GIPPLE);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {

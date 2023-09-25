@@ -34,6 +34,9 @@ public class FFItemTagProvider extends FabricTagProvider<Item> {
 
         getOrCreateTagBuilder(FFItemTags.GIPPLE_FOOD)
                 .add(Items.GLOW_LICHEN)
+                .addOptional(new Identifier("galosphere", "lichen_roots"))
+                .addOptional(new Identifier("galosphere", "bowl_lichen"))
+                .addOptional(new Identifier("galosphere", "lichen_shelf"))
                 .addOptional(new Identifier("galosphere", "lichen_cordyceps"));
 
 

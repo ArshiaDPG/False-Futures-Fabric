@@ -53,9 +53,10 @@ public class FFBlockTagProvider extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(FFBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)
-                .addOptional(new Identifier("galosphere", "lichen_moss"))
                 .addOptional(new Identifier("galosphere", "lichen_roots"))
-                .addOptional(new Identifier("galosphere", "lichen_shelf"));
+                .addOptional(new Identifier("galosphere", "bowl_lichen"))
+                .addOptional(new Identifier("galosphere", "lichen_shelf"))
+        ;
 
         getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(FFBlocks.POTTED_GELATINOUS_GROWTH);
 

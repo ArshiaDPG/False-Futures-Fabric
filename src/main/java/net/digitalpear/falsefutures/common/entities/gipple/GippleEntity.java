@@ -1,13 +1,12 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
+import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
 import net.digitalpear.falsefutures.init.FFSoundEvents;
 import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CaveVines;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
@@ -20,8 +19,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -47,13 +44,14 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     private static final TrackedData<Boolean> IS_DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_LUMINOUS = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_EATING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Integer> HUNGRY_COUNTDOWN = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> EATING_TIMER = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
-    protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlayAndHold("gipple.eat");
+    protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlay("gipple.eat");
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
     protected static final RawAnimation ON_GROUND_ANIM = RawAnimation.begin().thenLoop("gipple.floor");
     private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
-    private int hungryCountdown = 200;
 
 
     public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
@@ -83,7 +81,8 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new FindAndEatFoodGoal(this, 1.2, 15, 2));
+        this.goalSelector.add(0, new FindAndEatFoodGoal(this, 1.2, 15, 5));
+        this.goalSelector.add(0, new FindBlockAndPlaceGelatinGoal(this, 1.2, 30, 10));
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(1, new FlyGoal(this, 1.0));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.25D));
@@ -114,6 +113,8 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.dataTracker.startTracking(IS_LUMINOUS, false);
         this.dataTracker.startTracking(FROM_BUCKET, false);
         this.dataTracker.startTracking(IS_EATING, false);
+        this.dataTracker.startTracking(HUNGRY_COUNTDOWN, 60);
+        this.dataTracker.startTracking(EATING_TIMER, 40);
     }
 
     @Override
@@ -123,7 +124,8 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         nbt.putBoolean("Dancing", this.isDancing());
         nbt.putBoolean("Eating", this.isEating());
         nbt.putBoolean("Luminous", this.isLuminous());
-        nbt.putInt("hungryCountdown", this.hungryCountdown);
+        nbt.putInt("hungryCountdown", this.getHungryCountdown());
+        nbt.putInt("eatingTimer", this.getEatingTimer());
     }
 
     @Override
@@ -133,16 +135,23 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.setDancing(nbt.getBoolean("Dancing"));
         this.setEating(nbt.getBoolean("Eating"));
         this.setLuminous(nbt.getBoolean("Luminous"));
-        this.hungryCountdown = nbt.getInt("hungryCountdown");
+        this.setHungryCountdown(nbt.getInt("hungryCountdown"));
+        this.setEatingTimer(nbt.getInt("eatingTimer"));
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (hungryCountdown != 0) {
-            hungryCountdown--;
+        if (getHungryCountdown() != 0) {
+            setHungryCountdown(getHungryCountdown() - 1);
         }
-        System.out.println(hungryCountdown);
+        if (getEatingTimer() != 0 && !this.isLuminous() && this.isEating()) {
+            setEatingTimer(getEatingTimer() - 1);
+        }
+        if (getWorld().isClient()) {
+            System.out.println("Cooldown: " + getHungryCountdown());
+            System.out.println("Eating Timer: " + getEatingTimer());
+        }
     }
 
 
@@ -282,6 +291,20 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.dataTracker.set(IS_LUMINOUS, value);
     }
 
+    public int getHungryCountdown() {
+        return this.dataTracker.get(HUNGRY_COUNTDOWN);
+    }
+    public void setHungryCountdown(int value) {
+        this.dataTracker.set(HUNGRY_COUNTDOWN, value);
+    }
+
+    public int getEatingTimer() {
+        return this.dataTracker.get(EATING_TIMER);
+    }
+    public void setEatingTimer(int value) {
+        this.dataTracker.set(EATING_TIMER, value);
+    }
+
     @Override
     public boolean isFromBucket() {
         return dataTracker.get(FROM_BUCKET);
@@ -326,7 +349,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             return event.setAndContinue(DANCING_ANIM);
         } else if (this.isEating()) {
             return event.setAndContinue(EATING_ANIM);
-        } else if (this.isOnGround()) { //Is this working correctly?
+        } else if (this.isOnGround()) {
             return event.setAndContinue(ON_GROUND_ANIM);
         } else {
             return event.setAndContinue(AMBIENT_ANIM);
@@ -368,8 +391,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
 
     public static class FindAndEatFoodGoal extends MoveToTargetPosGoal {
-        private static final int EATING_TIME = 40;
-        protected int timer;
         public final GippleEntity mob;
 
         public FindAndEatFoodGoal(GippleEntity mob, double speed, int range, int maxYDifference) {
@@ -377,23 +398,14 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             this.mob = mob;
         }
 
+        @Override
         public boolean canStart() {
-            return mob.hungryCountdown <= 0 && !mob.isLuminous() && super.canStart();
+            return mob.getHungryCountdown() <= 0 && !mob.isLuminous() && super.canStart();
         }
 
-        /*
-        protected int getInterval(PathAwareEntity mob) {
-            return 0;
-        }
-
-         */
-
-        public double getDesiredDistanceToTarget() {
-            return 2.0;
-        }
-
-        public boolean shouldResetPath() {
-            return this.tryingTime % 100 == 0;
+        @Override
+        protected BlockPos getTargetPos() {
+            return this.targetPos;
         }
 
         @Override
@@ -401,32 +413,68 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             return world.getBlockState(pos).isIn(FFBlockTags.GIPPLE_FOOD);
         }
 
+        @Override
+        public boolean shouldContinue() {
+            return !mob.isLuminous() && super.shouldContinue();
+        }
+
+        @Override
         public void tick() {
-            if (this.hasReached()) {
-                if (this.timer >= 40) {
-                    //Turn this to false after, spawn particles & make entity not move when eating!
-                    mob.setEating(true);
-                } else {
-                    ++this.timer;
+            if (this.hasReached() || mob.isEating()) {
+                mob.setEating(true);
+
+                if (mob.getEatingTimer() == 0) {
+                    if (mob.random.nextBetween(0, 4) == 0) {
+                        mob.getWorld().breakBlock(getTargetPos(), false);
+                    }
+                    mob.setEating(false);
+                    mob.setLuminous(true);
+                    //HERE activate another timer, the gelatin goals sgould only activate after this timer is done. Until then just stroll around
                 }
-                System.out.println("YAAAY");
-            } else {
-                System.out.println("Searching...");
             }
             super.tick();
         }
 
-        protected void eat() {
-            if (mob.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
-                BlockState blockState = mob.getWorld().getBlockState(this.targetPos);
+        @Override
+        public void stop() {
+            mob.setEatingTimer(40);
+            super.stop();
+        }
+    }
 
+    public static class FindBlockAndPlaceGelatinGoal extends MoveToTargetPosGoal {
+        public final GippleEntity mob;
 
-            }
+        public FindBlockAndPlaceGelatinGoal(GippleEntity mob, double speed, int range, int maxYDifference) {
+            super(mob, speed, range, maxYDifference);
+            this.mob = mob;
         }
 
-        public void start() {
-            this.timer = 0;
-            super.start();
+        @Override
+        public boolean canStart() {
+            return mob.isLuminous() && super.canStart();
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return mob.isLuminous() && super.shouldContinue();
+        }
+
+        @Override
+        protected boolean isTargetPos(WorldView world, BlockPos pos) {
+            return world.getBlockState(pos.down()).isSolidBlock(world, pos.down());
+        }
+
+        @Override
+        public void tick() {
+            if (this.hasReached()) {
+                System.out.println("YAYY");
+                mob.getWorld().setBlockState(this.targetPos.up(), FFBlocks.GELATIN_LAYER.getDefaultState());
+                mob.setLuminous(false);
+            } else {
+                System.out.println("Searching..");
+            }
+            super.tick();
         }
     }
 

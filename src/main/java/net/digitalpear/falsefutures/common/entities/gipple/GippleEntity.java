@@ -1,5 +1,6 @@
 package net.digitalpear.falsefutures.common.entities.gipple;
 
+import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEntity;
 import net.digitalpear.falsefutures.init.FFBlocks;
 import net.digitalpear.falsefutures.init.FFEntities;
 import net.digitalpear.falsefutures.init.FFItems;
@@ -19,14 +20,23 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -154,9 +164,10 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         }
     }
 
-
+    //TODO make feeding and looking for food mechanic not working if baby
     //The following 4 methods were only to test the glowing and current splitting behavior. They will be changed
-    /*
+    //TODO make collecting gipple with bucket work
+
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemInHand = player.getStackInHand(hand);
@@ -242,15 +253,10 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         }
 
     }
-            */
-
-    
 
     public boolean isFood(ItemStack pStack) {
         return GIPPLE_FOOD.test(pStack);
     }
-
-
 
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
@@ -354,7 +360,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         } else {
             return event.setAndContinue(AMBIENT_ANIM);
         }
-
     }
 
     @Override
@@ -388,6 +393,25 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Override
     public boolean isInAir() {
         return !this.isOnGround();
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        if (spawnReason.equals(SpawnReason.BUCKET)){
+            this.setPersistent();
+            this.setFromBucket(true);
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
+    }
+
+    @Override
+    public Vec3d getLeashOffset() {
+        return new Vec3d(0.0D, (double) this.getStandingEyeHeight() * 0.6D, (double) this.getWidth() * 0.1D);
     }
 
     public static class FindAndEatFoodGoal extends MoveToTargetPosGoal {
@@ -506,50 +530,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        if (spawnReason.equals(SpawnReason.BUCKET)){
-            this.setPersistent();
-            this.setFromBucket(true);
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-    protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world);
-        birdNavigation.setCanPathThroughDoors(false);
-        birdNavigation.setCanSwim(false);
-        birdNavigation.setCanEnterOpenDoors(true);
-        return birdNavigation;
-    }
-
-
-
-
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
-    }
-
-    @Override
-    public Box getBoundingBox(EntityPose pose) {
-        if (this.isBaby()){
-            return super.getBoundingBox(pose).contract(0.2);
-        }
-        else{
-            return super.getBoundingBox(pose);
-        }
-    }
-
-    @Override
-    protected Box calculateBoundingBox() {
-        if (this.isBaby()){
-            return super.calculateBoundingBox().contract(0.5);
-        }
-        return super.calculateBoundingBox();
-    }
-    public Vec3d getLeashOffset() {
-        return new Vec3d(0.0D, (double) this.getStandingEyeHeight() * 0.6D, (double) this.getWidth() * 0.1D);
-    }
-
 
     public boolean isDigesting() {
         return dataTracker.get(DIGESTING);
@@ -580,6 +560,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         super.tickMovement();
     }
+
     public void tickDigestionCooldown() {
         if (this.digestingCooldown > 0L) {
             --this.digestingCooldown;

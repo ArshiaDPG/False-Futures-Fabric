@@ -9,6 +9,8 @@ import net.digitalpear.falsefutures.init.tags.FFBlockTags;
 import net.digitalpear.falsefutures.init.tags.FFItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.AboveGroundTargeting;
+import net.minecraft.entity.ai.NoPenaltySolidTargeting;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
@@ -24,9 +26,11 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -34,9 +38,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -49,6 +52,8 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.EnumSet;
+
 public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity, Flutterer {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_DANCING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -56,13 +61,13 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     private static final TrackedData<Boolean> IS_EATING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Integer> HUNGRY_COUNTDOWN = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> EATING_TIMER = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> PLACE_GELATIN_TIMER = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
     protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlay("gipple.eat");
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
     protected static final RawAnimation ON_GROUND_ANIM = RawAnimation.begin().thenLoop("gipple.floor");
     private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(FFItemTags.GIPPLE_FOOD);
-
 
     public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
         super(entityType, world);
@@ -71,8 +76,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         /*PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
         this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
-        eatingCooldown = world.getRandom().nextBetween((int) (eatingCooldownRange * 0.8), eatingCooldownRange);
-
          */
     }
 
@@ -91,12 +94,12 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new FindAndEatFoodGoal(this, 1.2, 15, 5));
-        this.goalSelector.add(0, new FindBlockAndPlaceGelatinGoal(this, 1.2, 30, 10));
-        this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(1, new FlyGoal(this, 1.0));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 1.25D));
-        this.goalSelector.add(2, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
+        this.goalSelector.add(0, new FindAndEatFoodGoal(this, 1.2, 10, 5));
+        this.goalSelector.add(0, new FindBlockAndPlaceGelatinGoal(this, 1.2, 10, 2));
+        this.goalSelector.add(2, new GippleFlyAroundGoal());
+        this.goalSelector.add(3, new SwimGoal(this));
+        this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
+        this.goalSelector.add(1, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
 
     }
 
@@ -108,7 +111,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         birdNavigation.setCanEnterOpenDoors(true);
         return birdNavigation;
     }
-
 
     @Nullable
     @Override
@@ -125,6 +127,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.dataTracker.startTracking(IS_EATING, false);
         this.dataTracker.startTracking(HUNGRY_COUNTDOWN, 60);
         this.dataTracker.startTracking(EATING_TIMER, 40);
+        this.dataTracker.startTracking(PLACE_GELATIN_TIMER, 300);
     }
 
     @Override
@@ -136,6 +139,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         nbt.putBoolean("Luminous", this.isLuminous());
         nbt.putInt("hungryCountdown", this.getHungryCountdown());
         nbt.putInt("eatingTimer", this.getEatingTimer());
+        nbt.putInt("placeGelatinTimer", this.getPlaceGelatinTimer());
     }
 
     @Override
@@ -147,40 +151,71 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.setLuminous(nbt.getBoolean("Luminous"));
         this.setHungryCountdown(nbt.getInt("hungryCountdown"));
         this.setEatingTimer(nbt.getInt("eatingTimer"));
+        this.setPlaceGelatinTimer(nbt.getInt("placeGelatinTimer"));
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (getHungryCountdown() != 0) {
+        if (getHungryCountdown() != 0 && !this.isLuminous() && !this.isBaby()) {
             setHungryCountdown(getHungryCountdown() - 1);
         }
         if (getEatingTimer() != 0 && !this.isLuminous() && this.isEating()) {
             setEatingTimer(getEatingTimer() - 1);
         }
+        if (getPlaceGelatinTimer() != 0 && this.isLuminous()) {
+            setPlaceGelatinTimer(getPlaceGelatinTimer() - 1);
+        }
         if (getWorld().isClient()) {
             System.out.println("Cooldown: " + getHungryCountdown());
             System.out.println("Eating Timer: " + getEatingTimer());
+            System.out.println("Gelatin Timer: " + getPlaceGelatinTimer());
         }
     }
 
-    //TODO make feeding and looking for food mechanic not working if baby
-    //The following 4 methods were only to test the glowing and current splitting behavior. They will be changed
-    //TODO make collecting gipple with bucket work
-
+    //TODO For some reason gipple doesn't glow if isLuminous is set to true in here
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemInHand = player.getStackInHand(hand);
         World world = this.getWorld();
         Random random = world.getRandom();
+
+        if (itemInHand.isOf(Items.WATER_BUCKET)) {
+            player.swingHand(hand);
+            Bucketable.tryBucket(player, hand, this);
+        } else if (isFood(itemInHand)) {
+            if (!this.isBaby()) {
+                if (!this.isLuminous() && this.getHungryCountdown() == 0) {
+                    this.setLuminous(true);
+                    this.setHungryCountdown(100);
+                } else {
+                    mitosis();
+                }
+            } else {
+                this.growUp(AnimalEntity.toGrowUpAge(-getBreedingAge()), true);
+                return ActionResult.success(this.getWorld().isClient);
+            }
+
+            if (!player.getAbilities().creativeMode) {
+                itemInHand.decrement(1);
+            }
+            return ActionResult.SUCCESS;
+        }
+
+        /*
         if (isFood(itemInHand)) {
-            if (!world.isClient()) {
+            if (world.isClient()) {
                 if (!this.isBaby()) {
                     if (!this.isLuminous()) {
-                        this.setLuminous(true);
+                        if (this.getHungryCountdown() == 0) {
+                            this.setLuminous(true);
+                            this.setHungryCountdown(100);
+                        }
+
                     } else {
                         this.mitosis();
                     }
+
                 } else {
                     this.growUp(AnimalEntity.toGrowUpAge(-getBreedingAge()), true);
                     return ActionResult.success(this.getWorld().isClient);
@@ -189,15 +224,14 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
                 if (!player.getAbilities().creativeMode) {
                     itemInHand.decrement(1);
                 }
-                return ActionResult.SUCCESS;
-            } else {
                 return ActionResult.CONSUME;
+            } else {
+                return ActionResult.SUCCESS;
             }
         }
+         */
         return super.interactMob(player, hand);
     }
-
-
 
     public void mitosis() {
         Random random = this.getRandom();
@@ -206,14 +240,14 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         boolean spawnAneuploidianNotGipple = (0.1f + ((float) world.getDifficulty().getId() / 50)) > random.nextFloat() && world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING) && world.getDifficulty() != Difficulty.PEACEFUL;
 
         if (spawnAneuploidianNotGipple){
-            //spawnSomething();
+            spawnAneuploidian();
         } else {
             while (loop != 2) {
                 spawnGipple(random);
                 loop++;
             }
         }
-        //doesn't work
+        //TODO doesn't work
         for (int particleLoop = 0; particleLoop <= 5; particleLoop++){
             double x = random.nextGaussian() * 0.001D;
             double y = random.nextGaussian() * 0.06D;
@@ -224,15 +258,17 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         this.discard();
     }
-    public void spawnSomething(){
-        AneuploidianEntity something = FFEntities.ANEUPLOIDIAN.create(getWorld());
-        if (this.isPersistent()) {
-            something.setPersistent();
+    public void spawnAneuploidian(){
+        AneuploidianEntity aneuploidian = FFEntities.ANEUPLOIDIAN.create(getWorld());
+        if (aneuploidian != null) {
+            if (this.isPersistent()) {
+                aneuploidian.setPersistent();
+            }
+            aneuploidian.setCustomName(this.getCustomName());
+            aneuploidian.setAiDisabled(this.isAiDisabled());
+            aneuploidian.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getRandom().nextFloat() * 360.0F, 0.0F);
+            getWorld().spawnEntity(aneuploidian);
         }
-        something.setCustomName(this.getCustomName());
-        something.setAiDisabled(this.isAiDisabled());
-        something.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getRandom().nextFloat() * 360.0F, 0.0F);
-        getWorld().spawnEntity(something);
     }
 
     public void spawnGipple(Random random) {
@@ -247,7 +283,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             gipple.setBaby(true);
             gipple.setLuminous(false);
 
-            //Randomize position and rotation
+            //TODO Randomize position and rotation
             gipple.refreshPositionAndAngles(this.getX() + random.nextDouble(), this.getY() + random.nextDouble(), this.getZ() - random.nextDouble() , 0, 0);
             getWorld().spawnEntity(gipple);
         }
@@ -309,6 +345,13 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
     public void setEatingTimer(int value) {
         this.dataTracker.set(EATING_TIMER, value);
+    }
+
+    public int getPlaceGelatinTimer() {
+        return this.dataTracker.get(PLACE_GELATIN_TIMER);
+    }
+    public void setPlaceGelatinTimer(int value) {
+        this.dataTracker.set(PLACE_GELATIN_TIMER, value);
     }
 
     @Override
@@ -424,7 +467,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         @Override
         public boolean canStart() {
-            return mob.getHungryCountdown() <= 0 && !mob.isLuminous() && super.canStart();
+            return mob.getHungryCountdown() == 0 && !mob.isLuminous() && !this.mob.isBaby() && super.canStart();
         }
 
         @Override
@@ -444,17 +487,18 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         @Override
         public void tick() {
-            if (this.hasReached() || mob.isEating()) {
+            if (this.hasReached()) {
                 mob.setEating(true);
 
                 if (mob.getEatingTimer() == 0) {
-                    if (mob.random.nextBetween(0, 4) == 0) {
+                    if (mob.random.nextBetween(0, 3) == 0) {
                         mob.getWorld().breakBlock(getTargetPos(), false);
                     }
                     mob.setEating(false);
                     mob.setLuminous(true);
-                    //HERE activate another timer, the gelatin goals sgould only activate after this timer is done. Until then just stroll around
                 }
+            } else {
+                mob.setEating(false);
             }
             super.tick();
         }
@@ -462,9 +506,11 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         @Override
         public void stop() {
             mob.setEatingTimer(40);
+            mob.setHungryCountdown(100);
             super.stop();
         }
     }
+
 
     public static class FindBlockAndPlaceGelatinGoal extends MoveToTargetPosGoal {
         public final GippleEntity mob;
@@ -476,7 +522,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         @Override
         public boolean canStart() {
-            return mob.isLuminous() && super.canStart();
+            return mob.getPlaceGelatinTimer() == 0 && mob.isLuminous() && !this.mob.isBaby() && super.canStart();
         }
 
         @Override
@@ -486,19 +532,59 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
         @Override
         protected boolean isTargetPos(WorldView world, BlockPos pos) {
-            return world.getBlockState(pos.down()).isSolidBlock(world, pos.down());
+            return world.getBlockState(pos).isIn(BlockTags.BASE_STONE_OVERWORLD) && world.getBlockState(pos.up()).isAir();
         }
 
         @Override
         public void tick() {
             if (this.hasReached()) {
-                System.out.println("YAYY");
                 mob.getWorld().setBlockState(this.targetPos.up(), FFBlocks.GELATIN_LAYER.getDefaultState());
                 mob.setLuminous(false);
-            } else {
-                System.out.println("Searching..");
             }
             super.tick();
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            mob.setPlaceGelatinTimer(300);
+        }
+    }
+
+    class GippleFlyAroundGoal extends Goal {
+        public final GippleEntity mob;
+
+        GippleFlyAroundGoal() {
+            this.setControls(EnumSet.of(Goal.Control.MOVE));
+            this.mob = GippleEntity.this;
+        }
+
+        @Override
+        public boolean canStart() {
+            return mob.navigation.isIdle() && mob.random.nextInt(10) == 0;
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return mob.navigation.isFollowingPath();
+        }
+
+        @Override
+        public void start() {
+            Vec3d vec3d = this.getRandomLocation();
+            if (vec3d != null) {
+                mob.navigation.startMovingAlong(mob.navigation.findPathTo(BlockPos.ofFloored(vec3d), 1), 1.0);
+            }
+        }
+
+        @Nullable
+        private Vec3d getRandomLocation() {
+            Vec3d vec3d2 = mob.getRotationVec(0.0f);
+            Vec3d vec3d3 = AboveGroundTargeting.find(mob, 8, 7, vec3d2.x, vec3d2.z, 1.5707964f, 3, 1);
+            if (vec3d3 != null) {
+                return vec3d3;
+            }
+            return NoPenaltySolidTargeting.find(mob, 8, 4, -2, vec3d2.x, vec3d2.z, 1.5707963705062866);
         }
     }
 
@@ -528,6 +614,40 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.goalSelector.add(1, new GippleEntity.FlyOntoWaterGoal(this, 1.0D));
         this.goalSelector.add(2, new TemptGoal(this, 1.2D, GIPPLE_FOOD, false));
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        if (spawnReason.equals(SpawnReason.BUCKET)){
+            this.setPersistent();
+            this.setFromBucket(true);
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
+    }
+
+    @Override
+    public Box getBoundingBox(EntityPose pose) {
+        if (this.isBaby()){
+            return super.getBoundingBox(pose).contract(0.2);
+        }
+        else{
+            return super.getBoundingBox(pose);
+        }
+    }
+
+    @Override
+    protected Box calculateBoundingBox() {
+        if (this.isBaby()){
+            return super.calculateBoundingBox().contract(0.5);
+        }
+        return super.calculateBoundingBox();
+    }
+    public Vec3d getLeashOffset() {
+        return new Vec3d(0.0D, (double) this.getStandingEyeHeight() * 0.6D, (double) this.getWidth() * 0.1D);
     }
 
 

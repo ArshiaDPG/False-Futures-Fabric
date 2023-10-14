@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "gipples_galore:amoebalith"
+    }
+  ],
+  "result": {
+    "item": "gipples_galore:amoebalith_button"
+  }
+}

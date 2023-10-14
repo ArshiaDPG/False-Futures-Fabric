@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "falsefutures:block/amoebalith",
-    "side": "falsefutures:block/amoebalith",
-    "top": "falsefutures:block/amoebalith"
-  }
-}

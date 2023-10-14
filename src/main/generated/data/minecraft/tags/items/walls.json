@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "falsefutures:gelatite_wall",
-    "falsefutures:gelatite_brick_wall",
-    "falsefutures:amoebalith_wall",
-    "falsefutures:amoebalith_brick_wall"
+    "gipples_galore:gelatite_wall",
+    "gipples_galore:gelatite_brick_wall",
+    "gipples_galore:amoebalith_wall",
+    "gipples_galore:amoebalith_brick_wall"
   ]
 }

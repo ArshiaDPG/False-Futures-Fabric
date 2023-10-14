@@ -1,9 +1,0 @@
-{
-  "parent": "falsefutures:block/jelly_half_upper",
-  "textures": {
-    "bottom": "falsefutures:block/milky_jelly_bottom",
-    "inside": "falsefutures:block/milky_jelly_inside_vertical",
-    "side": "falsefutures:block/milky_jelly_side",
-    "top": "falsefutures:block/milky_jelly_top"
-  }
-}

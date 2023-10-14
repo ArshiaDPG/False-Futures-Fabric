@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:glow_lichen",
+    {
+      "id": "galosphere:lichen_roots",
+      "required": false
+    },
+    {
+      "id": "galosphere:bowl_lichen",
+      "required": false
+    },
+    {
+      "id": "galosphere:lichen_shelf",
+      "required": false
+    },
+    {
+      "id": "galosphere:lichen_cordyceps",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "gipples_galore:block/gipplepad"
+      },
+      {
+        "model": "gipples_galore:block/gipplepad",
+        "y": 90
+      },
+      {
+        "model": "gipples_galore:block/gipplepad",
+        "y": 180
+      },
+      {
+        "model": "gipples_galore:block/gipplepad",
+        "y": 270
+      }
+    ]
+  }
+}

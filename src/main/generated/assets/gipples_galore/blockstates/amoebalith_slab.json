@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "gipples_galore:block/amoebalith_slab"
+    },
+    "type=double": {
+      "model": "gipples_galore:block/amoebalith"
+    },
+    "type=top": {
+      "model": "gipples_galore:block/amoebalith_slab_top"
+    }
+  }
+}

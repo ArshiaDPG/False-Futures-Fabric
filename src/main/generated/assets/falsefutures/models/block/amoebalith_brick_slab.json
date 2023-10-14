@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "falsefutures:block/amoebalith_bricks",
-    "side": "falsefutures:block/amoebalith_bricks",
-    "top": "falsefutures:block/amoebalith_bricks"
-  }
-}

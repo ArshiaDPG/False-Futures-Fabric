@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "jellies",
+  "key": {
+    "#": {
+      "item": "gipples_galore:gelatin"
+    },
+    "X": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "gipples_galore:enchanting_jelly"
+  },
+  "show_notification": true
+}

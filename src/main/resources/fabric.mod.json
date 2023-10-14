@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "falsefutures",
+  "id": "gipples_galore",
   "version": "${version}",
 
-  "name": "False Futures",
+  "name": "Gipples Galore",
   "description": "Features that were never meant to be.",
   "authors": [
     "Rowan",
@@ -16,23 +16,23 @@
   "contact": {},
 
   "license": "Apache-2.0",
-  "icon": "assets/falsefutures/icon.png",
+  "icon": "assets/gipples_galore/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.digitalpear.falsefutures.client.FalseFuturesClient"
+      "net.digitalpear.gipples_galore.client.GipplesGaloreClient"
     ],
     "main": [
-      "net.digitalpear.falsefutures.FalseFutures"
+      "net.digitalpear.gipples_galore.GipplesGalore"
     ],
     "fabric-datagen": [
-      "net.digitalpear.falsefutures.FFDatagens"
+      "net.digitalpear.gipples_galore.GGDatagens"
     ]
   },
 
           "mixins": [
-        "falsefutures.mixins.json"
+            "gipples_galore.mixins.json"
       ],
     
   "depends": {

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "gipples_galore:block/gelatite_bricks",
+    "side": "gipples_galore:block/gelatite_bricks",
+    "top": "gipples_galore:block/gelatite_bricks"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "gipples_galore:block/amoebalith",
+    "side": "gipples_galore:block/amoebalith",
+    "top": "gipples_galore:block/amoebalith"
+  }
+}

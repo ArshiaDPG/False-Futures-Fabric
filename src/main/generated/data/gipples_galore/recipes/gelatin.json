@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "gipples_galore:gelatin_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "gipples_galore:gelatin"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "jellies",
+  "key": {
+    "#": {
+      "item": "gipples_galore:gelatin"
+    },
+    "X": {
+      "item": "minecraft:mud"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "gipples_galore:muddy_jelly"
+  },
+  "show_notification": true
+}

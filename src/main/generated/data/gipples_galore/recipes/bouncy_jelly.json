@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "jellies",
+  "key": {
+    "#": {
+      "item": "gipples_galore:gelatin"
+    },
+    "X": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "gipples_galore:bouncy_jelly"
+  },
+  "show_notification": true
+}

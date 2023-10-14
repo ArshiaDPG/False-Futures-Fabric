@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "falsefutures:gelatite_pressure_plate",
-    "falsefutures:amoebalith_pressure_plate"
+    "gipples_galore:gelatite_pressure_plate",
+    "gipples_galore:amoebalith_pressure_plate"
   ]
 }

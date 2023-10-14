@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gipples_galore:block/gelatite",
+    "side": "gipples_galore:block/gelatite",
+    "top": "gipples_galore:block/gelatite"
+  }
+}

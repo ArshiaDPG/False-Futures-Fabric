@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "gipples_galore:gelatin_block",
+    "gipples_galore:hibernating_gipple",
+    "gipples_galore:gelatite",
+    "gipples_galore:amoebalith",
+    "#gipples_galore:jellies"
+  ]
+}

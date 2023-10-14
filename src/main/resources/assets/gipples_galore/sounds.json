@@ -1,0 +1,145 @@
+{
+  "block.amoebalith.place": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      "gipples_galore:block/amoebalith/break1",
+  	  "gipples_galore:block/amoebalith/break2",
+  	  "gipples_galore:block/amoebalith/break3",
+  	  "gipples_galore:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.fall": {
+    "category": "block",
+    "sounds": [
+      "gipples_galore:block/amoebalith/break1",
+  	  "gipples_galore:block/amoebalith/break2",
+  	  "gipples_galore:block/amoebalith/break3",
+  	  "gipples_galore:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.step": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "gipples_galore:block/amoebalith/break1",
+  	  "gipples_galore:block/amoebalith/break2",
+  	  "gipples_galore:block/amoebalith/break3",
+  	  "gipples_galore:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.hit": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.hit",
+    "sounds": [
+      "gipples_galore:block/amoebalith/break1",
+  	  "gipples_galore:block/amoebalith/break2",
+  	  "gipples_galore:block/amoebalith/break3",
+  	  "gipples_galore:block/amoebalith/break4"
+    ]
+  },
+  "block.amoebalith.break": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      "gipples_galore:block/amoebalith/break1",
+  	  "gipples_galore:block/amoebalith/break2",
+  	  "gipples_galore:block/amoebalith/break3",
+  	  "gipples_galore:block/amoebalith/break4"
+    ]
+  },
+
+
+  "block.gelatite.break": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      "gipples_galore:block/gelatite/break1",
+  	  "gipples_galore:block/gelatite/break2",
+  	  "gipples_galore:block/gelatite/break3",
+  	  "gipples_galore:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.step": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "gipples_galore:block/gelatite/break1",
+  	  "gipples_galore:block/gelatite/break2",
+  	  "gipples_galore:block/gelatite/break3",
+  	  "gipples_galore:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.place": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      "gipples_galore:block/gelatite/break1",
+  	  "gipples_galore:block/gelatite/break2",
+  	  "gipples_galore:block/gelatite/break3",
+  	  "gipples_galore:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.hit": {
+    "category": "block",
+  	"subtitle": "subtitles.block.generic.hit",
+    "sounds": [
+      "gipples_galore:block/gelatite/break1",
+  	  "gipples_galore:block/gelatite/break2",
+  	  "gipples_galore:block/gelatite/break3",
+  	  "gipples_galore:block/gelatite/break4"
+    ]
+  },
+  "block.gelatite.fall": {
+    "category": "block",
+    "sounds": [
+      "gipples_galore:block/gelatite/break1",
+  	  "gipples_galore:block/gelatite/break2",
+  	  "gipples_galore:block/gelatite/break3",
+  	  "gipples_galore:block/gelatite/break4"
+    ]
+  },
+
+  "entity.gipple.ambient": {
+    "category": "neutral",
+	"subtitle": "subtitles.gipples_galore.gipple.ambient",
+    "sounds": [
+      "gipples_galore:entity/gipple/ambient1",
+	  "gipples_galore:entity/gipple/ambient2",
+	  "gipples_galore:entity/gipple/ambient3",
+	  "gipples_galore:entity/gipple/ambient4"
+    ]
+  },
+  "entity.gipple.burp": {
+    "category": "neutral",
+	"subtitle": "subtitles.gipples_galore.gipple.burp",
+    "sounds": [
+      "gipples_galore:entity/gipple/burp"
+    ]
+  },
+  "entity.gipple.hurt": {
+      "category": "neutral",
+  	"subtitle": "subtitles.gipples_galore.gipple.hurt",
+      "sounds": [
+        "gipples_galore:entity/gipple/hurt1",
+  	    "gipples_galore:entity/gipple/hurt2"
+    ]
+  },
+     "entity.gipple.death": {
+     "category": "neutral",
+     "subtitle": "subtitles.gipples_galore.gipple.death",
+       "sounds": [
+        "gipples_galore:entity/gipple/death1",
+     	"gipples_galore:entity/gipple/death2"
+     ]
+  },
+  "music.record.gipplecore": {
+      "category": "master",
+      "sounds": [
+        {
+          "name": "gipples_galore:record/gipplecore",
+          "stream": true
+      }
+    ]
+  }
+}

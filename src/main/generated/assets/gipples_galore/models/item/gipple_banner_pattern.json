@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gipples_galore:item/gipple_banner_pattern"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "gipples_galore:block/amoebalith_bricks"
+  }
+}

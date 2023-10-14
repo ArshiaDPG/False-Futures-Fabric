@@ -1,0 +1,29 @@
+{
+  "type": "gipples_galore:gipple_colony",
+  "config": {
+    "depth": 3,
+    "extra_bottom_block_chance": 0.8,
+    "extra_edge_column_chance": 0.7,
+    "ground_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "gipples_galore:gelatite"
+      }
+    },
+    "replaceable": "#gipples_galore:gelatinous_growth_supporting",
+    "surface": "floor",
+    "vegetation_chance": 0.2,
+    "vegetation_feature": {
+      "feature": "gipples_galore:gipple_colony_vegetation",
+      "placement": []
+    },
+    "vertical_range": 5,
+    "xz_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 9,
+        "min_inclusive": 6
+      }
+    }
+  }
+}

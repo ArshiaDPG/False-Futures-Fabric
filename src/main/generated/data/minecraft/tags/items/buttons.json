@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "falsefutures:gelatite_button",
-    "falsefutures:amoebalith_button"
+    "gipples_galore:gelatite_button",
+    "gipples_galore:amoebalith_button"
   ]
 }

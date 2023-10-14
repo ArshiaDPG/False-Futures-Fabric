@@ -1,0 +1,9 @@
+{
+  "parent": "gipples_galore:block/jelly_half_lower",
+  "textures": {
+    "bottom": "gipples_galore:block/luminescent_jelly_bottom",
+    "inside": "gipples_galore:block/luminescent_jelly_inside_vertical",
+    "side": "gipples_galore:block/luminescent_jelly_side",
+    "top": "gipples_galore:block/luminescent_jelly_top"
+  }
+}

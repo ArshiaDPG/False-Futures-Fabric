@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "gipples_galore:block/hibernating_gipple",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "gipples_galore:block/hibernating_gipple"
+    },
+    "facing=south": {
+      "model": "gipples_galore:block/hibernating_gipple",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gipples_galore:block/hibernating_gipple",
+      "y": 270
+    }
+  }
+}

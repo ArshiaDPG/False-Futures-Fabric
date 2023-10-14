@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "falsefutures:block/gelatite_bricks",
-    "side": "falsefutures:block/gelatite_bricks",
-    "top": "falsefutures:block/gelatite_bricks"
-  }
-}

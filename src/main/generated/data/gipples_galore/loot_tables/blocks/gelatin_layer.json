@@ -1,0 +1,239 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "0"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 0.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "1"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 1.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "2"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 2.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "3"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 3.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "4"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 4.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "5"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 5.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "6"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 6.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "7"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 7.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gipples_galore:gelatin_layer",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "layers": "8"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gipples_galore:gelatin"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 8.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

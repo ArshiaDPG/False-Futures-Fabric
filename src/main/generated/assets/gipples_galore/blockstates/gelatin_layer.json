@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "layers=1": {
+      "model": "gipples_galore:block/gelatin_layer_height2"
+    },
+    "layers=2": {
+      "model": "gipples_galore:block/gelatin_layer_height4"
+    },
+    "layers=3": {
+      "model": "gipples_galore:block/gelatin_layer_height6"
+    },
+    "layers=4": {
+      "model": "gipples_galore:block/gelatin_layer_height8"
+    },
+    "layers=5": {
+      "model": "gipples_galore:block/gelatin_layer_height10"
+    },
+    "layers=6": {
+      "model": "gipples_galore:block/gelatin_layer_height12"
+    },
+    "layers=7": {
+      "model": "gipples_galore:block/gelatin_layer_height14"
+    },
+    "layers=8": {
+      "model": "gipples_galore:block/gelatin_height16"
+    }
+  }
+}

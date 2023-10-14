@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "jellies",
+  "key": {
+    "#": {
+      "item": "gipples_galore:gelatin"
+    },
+    "X": {
+      "item": "minecraft:cactus"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "gipples_galore:prickly_jelly"
+  },
+  "show_notification": true
+}

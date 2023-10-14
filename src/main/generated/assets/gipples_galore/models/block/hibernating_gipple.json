@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "gipples_galore:block/hibernating_gipple",
+    "side": "gipples_galore:block/hibernating_gipple_side",
+    "top": "gipples_galore:block/hibernating_gipple_top"
+  }
+}

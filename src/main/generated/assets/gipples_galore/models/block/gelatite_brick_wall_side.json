@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "gipples_galore:block/gelatite_bricks"
+  }
+}

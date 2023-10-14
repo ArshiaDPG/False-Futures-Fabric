@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "falsefutures:chiseled_amoebalith_bricks"
-  },
-  "result": "falsefutures:amoebalith_bricks"
-}

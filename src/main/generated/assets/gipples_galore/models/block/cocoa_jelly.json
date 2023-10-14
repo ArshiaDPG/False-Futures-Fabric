@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "gipples_galore:block/cocoa_jelly_bottom",
+    "side": "gipples_galore:block/cocoa_jelly_side",
+    "top": "gipples_galore:block/cocoa_jelly_top"
+  }
+}

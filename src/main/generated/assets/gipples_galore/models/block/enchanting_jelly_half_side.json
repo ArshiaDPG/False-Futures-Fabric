@@ -1,0 +1,9 @@
+{
+  "parent": "gipples_galore:block/jelly_half_side",
+  "textures": {
+    "bottom": "gipples_galore:block/enchanting_jelly_bottom",
+    "inside": "gipples_galore:block/enchanting_jelly_inside",
+    "side": "gipples_galore:block/enchanting_jelly_side",
+    "top": "gipples_galore:block/enchanting_jelly_top"
+  }
+}

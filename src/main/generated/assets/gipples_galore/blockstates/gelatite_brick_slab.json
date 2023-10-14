@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "gipples_galore:block/gelatite_brick_slab"
+    },
+    "type=double": {
+      "model": "gipples_galore:block/gelatite_bricks"
+    },
+    "type=top": {
+      "model": "gipples_galore:block/gelatite_brick_slab_top"
+    }
+  }
+}

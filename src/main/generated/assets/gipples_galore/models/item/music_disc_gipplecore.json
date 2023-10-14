@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gipples_galore:item/music_disc_gipplecore"
+  }
+}

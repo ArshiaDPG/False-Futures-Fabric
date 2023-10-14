@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "gipples_galore:block/amoebalith_pressure_plate"
+    },
+    "powered=true": {
+      "model": "gipples_galore:block/amoebalith_pressure_plate_down"
+    }
+  }
+}

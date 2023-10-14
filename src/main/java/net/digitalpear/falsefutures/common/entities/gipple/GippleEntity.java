@@ -38,8 +38,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -74,9 +74,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.experiencePoints = 5;
         this.moveControl = new FlightMoveControl(this, 10, true);
 
-        /*PositionSource positionSource = new EntityPositionSource(this, this.getStandingEyeHeight());
-        this.jukeboxEventHandler = new EntityGameEventHandler(new GippleEntity.JukeboxEventListener(positionSource, GameEvent.JUKEBOX_PLAY.getRange()));
-         */
     }
 
     public static DefaultAttributeContainer.Builder createGippleAttributes() {
@@ -173,7 +170,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         }
     }
 
-    //TODO For some reason gipple doesn't glow if isLuminous is set to true in here
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemInHand = player.getStackInHand(hand);
@@ -202,34 +198,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             return ActionResult.SUCCESS;
         }
 
-        /*
-        if (isFood(itemInHand)) {
-            if (world.isClient()) {
-                if (!this.isBaby()) {
-                    if (!this.isLuminous()) {
-                        if (this.getHungryCountdown() == 0) {
-                            this.setLuminous(true);
-                            this.setHungryCountdown(100);
-                        }
-
-                    } else {
-                        this.mitosis();
-                    }
-
-                } else {
-                    this.growUp(AnimalEntity.toGrowUpAge(-getBreedingAge()), true);
-                    return ActionResult.success(this.getWorld().isClient);
-                }
-
-                if (!player.getAbilities().creativeMode) {
-                    itemInHand.decrement(1);
-                }
-                return ActionResult.CONSUME;
-            } else {
-                return ActionResult.SUCCESS;
-            }
-        }
-         */
         return super.interactMob(player, hand);
     }
 
@@ -247,12 +215,11 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
                 loop++;
             }
         }
-        //TODO doesn't work
         for (int particleLoop = 0; particleLoop <= 5; particleLoop++){
             double x = random.nextGaussian() * 0.001D;
             double y = random.nextGaussian() * 0.06D;
             double z = random.nextGaussian() * 0.001D;
-            world.addParticle(ParticleTypes.COMPOSTER, this.getX() + 0.5D, this.getY() + 0.5D, getZ() + 0.5D, 0, 0, 0);
+            world.addParticle(ParticleTypes.COMPOSTER, this.getX() + 0.5D, this.getY() + 0.5D, getZ() + 0.5D, x, y, z);
         }
         world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
 
@@ -283,7 +250,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             gipple.setBaby(true);
             gipple.setLuminous(false);
 
-            //TODO Randomize position and rotation
             gipple.refreshPositionAndAngles(this.getX() + random.nextDouble(), this.getY() + random.nextDouble(), this.getZ() - random.nextDouble() , 0, 0);
             getWorld().spawnEntity(gipple);
         }
@@ -588,7 +554,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         }
     }
 
-/*Old code
+/*Old code Keep this until all features are implemented!
     private static final TrackedData<Boolean> DIGESTING = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     private static final float GENERIC_FLYING_SPEED = 0.1f;
@@ -616,47 +582,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        if (spawnReason.equals(SpawnReason.BUCKET)){
-            this.setPersistent();
-            this.setFromBucket(true);
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * (this.isBaby() ? 0.4f : 0.8f);
-    }
-
-    @Override
-    public Box getBoundingBox(EntityPose pose) {
-        if (this.isBaby()){
-            return super.getBoundingBox(pose).contract(0.2);
-        }
-        else{
-            return super.getBoundingBox(pose);
-        }
-    }
-
-    @Override
-    protected Box calculateBoundingBox() {
-        if (this.isBaby()){
-            return super.calculateBoundingBox().contract(0.5);
-        }
-        return super.calculateBoundingBox();
-    }
-    public Vec3d getLeashOffset() {
-        return new Vec3d(0.0D, (double) this.getStandingEyeHeight() * 0.6D, (double) this.getWidth() * 0.1D);
-    }
-
-
-    public boolean isDigesting() {
-        return dataTracker.get(DIGESTING);
-    }
-    public void setDigesting(boolean value) {
-        dataTracker.set(DIGESTING, value);
-    }
 
     public void tickMovement() {
 

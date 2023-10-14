@@ -1,7 +1,10 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.blocks.*;
+import net.digitalpear.falsefutures.common.blocks.GelatinBlock;
+import net.digitalpear.falsefutures.common.blocks.GelatinLayerBlock;
+import net.digitalpear.falsefutures.common.blocks.GelatinousGrowthBlock;
+import net.digitalpear.falsefutures.common.blocks.HibernatingGippleBlock;
 import net.digitalpear.falsefutures.common.blocks.jelly.*;
 import net.digitalpear.falsefutures.init.data.FFBlockSoundGroups;
 import net.digitalpear.falsefutures.init.data.sets.StoneSets;

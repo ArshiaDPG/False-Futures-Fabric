@@ -14,9 +14,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.border.WorldBorder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class WarpJellyBlock extends JellyBlock{
     public WarpJellyBlock(Settings settings) {
         super(settings);

@@ -1,8 +1,8 @@
 package net.digitalpear.falsefutures.init;
 
 import net.digitalpear.falsefutures.FalseFutures;
-import net.digitalpear.falsefutures.common.entities.gipple.GippleEntity;
 import net.digitalpear.falsefutures.common.entities.aneuploidian.AneuploidianEntity;
+import net.digitalpear.falsefutures.common.entities.gipple.GippleEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;

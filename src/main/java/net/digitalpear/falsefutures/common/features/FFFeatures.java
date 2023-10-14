@@ -4,7 +4,10 @@ import net.digitalpear.falsefutures.FalseFutures;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.NetherForestVegetationFeatureConfig;
+import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
 
 public class FFFeatures {
 

@@ -8,7 +8,6 @@ import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
-
 import java.util.concurrent.CompletableFuture;
 
 public class FFBannerPatternTagProvider extends FabricTagProvider<BannerPattern> {

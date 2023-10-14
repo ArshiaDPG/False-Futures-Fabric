@@ -1,8 +1,5 @@
 package net.digitalpear.falsefutures.common.entities.aneuploidian;
 
-import java.util.EnumSet;
-import java.util.function.Predicate;
-
 import net.digitalpear.falsefutures.init.tags.FFEntityTypeTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -12,6 +9,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.EnumSet;
+import java.util.function.Predicate;
 
 public class AneuploidianTargetGoal<T extends LivingEntity> extends TrackTargetGoal {
     private static final int DEFAULT_RECIPROCAL_CHANCE = 10;

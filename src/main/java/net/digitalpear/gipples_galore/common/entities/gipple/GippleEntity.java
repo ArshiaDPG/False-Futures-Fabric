@@ -122,7 +122,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.dataTracker.startTracking(IS_LUMINOUS, false);
         this.dataTracker.startTracking(FROM_BUCKET, false);
         this.dataTracker.startTracking(IS_EATING, false);
-        this.dataTracker.startTracking(HUNGRY_COUNTDOWN, 60);
+        this.dataTracker.startTracking(HUNGRY_COUNTDOWN, 1600);
         this.dataTracker.startTracking(EATING_TIMER, 40);
         this.dataTracker.startTracking(PLACE_GELATIN_TIMER, 300);
     }
@@ -163,18 +163,12 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         if (getPlaceGelatinTimer() != 0 && this.isLuminous()) {
             setPlaceGelatinTimer(getPlaceGelatinTimer() - 1);
         }
-        if (getWorld().isClient()) {
-            System.out.println("Cooldown: " + getHungryCountdown());
-            System.out.println("Eating Timer: " + getEatingTimer());
-            System.out.println("Gelatin Timer: " + getPlaceGelatinTimer());
-        }
     }
 
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemInHand = player.getStackInHand(hand);
         World world = this.getWorld();
-        Random random = world.getRandom();
 
         if (itemInHand.isOf(Items.WATER_BUCKET)) {
             player.swingHand(hand);
@@ -183,7 +177,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             if (!this.isBaby()) {
                 if (!this.isLuminous() && this.getHungryCountdown() == 0) {
                     this.setLuminous(true);
-                    this.setHungryCountdown(100);
+                    this.setHungryCountdown(1600);
                 } else {
                     mitosis();
                 }
@@ -472,7 +466,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         @Override
         public void stop() {
             mob.setEatingTimer(40);
-            mob.setHungryCountdown(100);
+            mob.setHungryCountdown(1600);
             super.stop();
         }
     }

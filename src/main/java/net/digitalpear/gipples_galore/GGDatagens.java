@@ -34,7 +34,7 @@ public class GGDatagens implements DataGeneratorEntrypoint {
          */
         pack.addProvider(GGAdvancementProvider::new);
         pack.addProvider(GGBlockLootTableProvider::new);
-        pack.addProvider(FabricEntityLootTableProvider::new);
+        pack.addProvider(GGEntityLootTableProvider::new);
         pack.addProvider(GGModelProvider::new);
         pack.addProvider(GGRecipeProvider::new);
         pack.addProvider(GGLanguageProvider::new);

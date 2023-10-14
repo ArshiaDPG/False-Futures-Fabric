@@ -19,9 +19,9 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
 
-public class FabricEntityLootTableProvider extends SimpleFabricLootTableProvider {
+public class GGEntityLootTableProvider extends SimpleFabricLootTableProvider {
 
-    public FabricEntityLootTableProvider(FabricDataOutput output) {
+    public GGEntityLootTableProvider(FabricDataOutput output) {
         super(output, LootContextTypes.ENTITY);
     }
 

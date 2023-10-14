@@ -39,13 +39,13 @@ public class GGPlacedFeatures {
         RegistryEntry<ConfiguredFeature<?, ?>> gippleColony = registryEntryLookup.getOrThrow(GGConfiguredFeatures.GIPPLE_COLONY);
 
         PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY, gippleColony,
-                RarityFilterPlacementModifier.of(300),
+                RarityFilterPlacementModifier.of(110),
                 CountPlacementModifier.of(12),
                 HeightRangePlacementModifier.of(BiasedToBottomHeightProvider.create(YOffset.aboveBottom(10), YOffset.fixed(12), 1)),
                 SquarePlacementModifier.of(), BiomePlacementModifier.of());
 
         PlacedFeatures.register(featureRegisterable, GIPPLE_COLONY_COMMON, gippleColony,
-                RarityFilterPlacementModifier.of(86),
+                RarityFilterPlacementModifier.of(60),
                 CountPlacementModifier.of(20),
                 HeightRangePlacementModifier.of(BiasedToBottomHeightProvider.create(YOffset.aboveBottom(10), YOffset.fixed(12), 1)),
                 SquarePlacementModifier.of(), BiomePlacementModifier.of());

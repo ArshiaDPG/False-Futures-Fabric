@@ -67,7 +67,8 @@ public class GGItems {
             entries.addAfter(Items.PIGLIN_BANNER_PATTERN, GIPPLE_BANNER_PATTERN);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
-            entries.addAfter(Items.GLOW_SQUID_SPAWN_EGG, GIPPLE_SPAWN_EGG, ANEUPLOIDIAN_SPAWN_EGG);
+            entries.addAfter(Items.ALLAY_SPAWN_EGG, ANEUPLOIDIAN_SPAWN_EGG);
+            entries.addAfter(Items.GLOW_SQUID_SPAWN_EGG, GIPPLE_SPAWN_EGG);
         });
 
 

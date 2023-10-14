@@ -1,8 +1,8 @@
 {
     "textures": {
-        "particle": "falsefutures:block/gelatin",
-        "side": "falsefutures:block/gelatin",
-		"end": "falsefutures:block/gelatin"
+        "particle": "gipples_galore:block/gelatin",
+        "side": "gipples_galore:block/gelatin",
+		"end": "gipples_galore:block/gelatin"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

@@ -73,7 +73,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         super(entityType, world);
         this.experiencePoints = 5;
         this.moveControl = new FlightMoveControl(this, 10, true);
-
     }
 
     public static DefaultAttributeContainer.Builder createGippleAttributes() {
@@ -96,8 +95,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.goalSelector.add(2, new GippleFlyAroundGoal());
         this.goalSelector.add(3, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
-        this.goalSelector.add(1, new TemptGoal(this, 1.25, GIPPLE_FOOD, false));
-
+        this.goalSelector.add(1, new GippleTemptGoal(this, GIPPLE_FOOD));
     }
 
     @Override
@@ -122,7 +120,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.dataTracker.startTracking(IS_LUMINOUS, false);
         this.dataTracker.startTracking(FROM_BUCKET, false);
         this.dataTracker.startTracking(IS_EATING, false);
-        this.dataTracker.startTracking(HUNGRY_COUNTDOWN, 1600);
+        this.dataTracker.startTracking(HUNGRY_COUNTDOWN, genRandomHungryCountdown());
         this.dataTracker.startTracking(EATING_TIMER, 40);
         this.dataTracker.startTracking(PLACE_GELATIN_TIMER, 300);
     }
@@ -163,6 +161,11 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         if (getPlaceGelatinTimer() != 0 && this.isLuminous()) {
             setPlaceGelatinTimer(getPlaceGelatinTimer() - 1);
         }
+        System.out.println(getHungryCountdown());
+    }
+
+    public int genRandomHungryCountdown() {
+        return this.random.nextBetween(400, 1000);
     }
 
     @Override
@@ -175,9 +178,12 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             Bucketable.tryBucket(player, hand, this);
         } else if (isFood(itemInHand)) {
             if (!this.isBaby()) {
-                if (!this.isLuminous() && this.getHungryCountdown() == 0) {
-                    this.setLuminous(true);
-                    this.setHungryCountdown(1600);
+                if (!this.isLuminous()) {
+                    if (this.getHungryCountdown() == 0) {
+                        this.setLuminous(true);
+                        this.setHungryCountdown(genRandomHungryCountdown());
+                    }
+                    return ActionResult.PASS;
                 } else {
                     mitosis();
                 }
@@ -466,7 +472,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         @Override
         public void stop() {
             mob.setEatingTimer(40);
-            mob.setHungryCountdown(1600);
+            mob.setHungryCountdown(mob.genRandomHungryCountdown());
             super.stop();
         }
     }
@@ -545,6 +551,25 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
                 return vec3d3;
             }
             return NoPenaltySolidTargeting.find(mob, 8, 4, -2, vec3d2.x, vec3d2.z, 1.5707963705062866);
+        }
+    }
+
+    static class GippleTemptGoal extends TemptGoal {
+        public final GippleEntity mob;
+
+        public GippleTemptGoal(GippleEntity mob, Ingredient food) {
+            super(mob, 1.25, food, false);
+            this.mob = mob;
+        }
+
+        @Override
+        public boolean canStart() {
+            return mob.getHungryCountdown() == 0 && super.canStart();
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return mob.getHungryCountdown() == 0 && super.shouldContinue();
         }
     }
 

@@ -51,6 +51,7 @@ public class GGConfiguredFeatures {
                     .with(MultifaceGrowthBlock.getProperty(Direction.WEST), false), 30);
 
 
+
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> featureRegisterable) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 

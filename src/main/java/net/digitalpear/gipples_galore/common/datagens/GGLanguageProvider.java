@@ -97,6 +97,9 @@ public class GGLanguageProvider extends FabricLanguageProvider {
 
         translationBuilder.add("effect.gipples_galore.gipple", "Gipple");
 
+        translationBuilder.add("painting.gipples_galore.gipple.title", "Gipple");
+        translationBuilder.add("painting.gipples_galore.gipple.author", "Yapettoshen");
+
         /*
             Tag translations for EMI compat
          */

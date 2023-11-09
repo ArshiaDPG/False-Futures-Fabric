@@ -6,6 +6,7 @@ import net.digitalpear.gipples_galore.common.datagens.providers.GGDamageTypeProv
 import net.digitalpear.gipples_galore.common.datagens.providers.GGPlacedFeatureProvider;
 import net.digitalpear.gipples_galore.common.datagens.tags.*;
 import net.digitalpear.gipples_galore.init.GGDamageTypes;
+import net.digitalpear.gipples_galore.init.GGPaintings;
 import net.digitalpear.gipples_galore.init.features.GGConfiguredFeatures;
 import net.digitalpear.gipples_galore.init.features.GGPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -28,6 +29,8 @@ public class GGDatagens implements DataGeneratorEntrypoint {
         pack.addProvider(GGBannerPatternTagProvider::new);
         pack.addProvider(GGBiomeTagProvider::new);
         pack.addProvider(GGDamageTypeTagProvider::new);
+        pack.addProvider(GGPaintingTagProvider::new);
+
 
         /*
             Everything else
@@ -38,10 +41,11 @@ public class GGDatagens implements DataGeneratorEntrypoint {
         pack.addProvider(GGModelProvider::new);
         pack.addProvider(GGRecipeProvider::new);
         pack.addProvider(GGLanguageProvider::new);
+        pack.addProvider(GGDamageTypeProvider::new);
+
 
         pack.addProvider(GGConfiguredFeatureProvider::new);
         pack.addProvider(GGPlacedFeatureProvider::new);
-        pack.addProvider(GGDamageTypeProvider::new);
     }
 
     @Override

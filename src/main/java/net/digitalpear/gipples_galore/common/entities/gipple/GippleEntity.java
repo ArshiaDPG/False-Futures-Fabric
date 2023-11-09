@@ -161,7 +161,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         if (getPlaceGelatinTimer() != 0 && this.isLuminous()) {
             setPlaceGelatinTimer(getPlaceGelatinTimer() - 1);
         }
-        System.out.println(getHungryCountdown());
+//        System.out.println(getHungryCountdown());
     }
 
     public int genRandomHungryCountdown() {

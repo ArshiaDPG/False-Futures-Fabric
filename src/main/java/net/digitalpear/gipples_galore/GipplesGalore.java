@@ -25,6 +25,7 @@ public class GipplesGalore implements ModInitializer {
         GGGameRules.init();
         GGData.init();
         GGStatusEffects.init();
+        GGPaintings.init();
 
 
         LOGGER.info("False Futures has finished registering successfully.");

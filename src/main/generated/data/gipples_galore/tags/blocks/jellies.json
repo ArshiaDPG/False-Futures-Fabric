@@ -1,22 +1,22 @@
 {
   "replace": false,
   "values": [
-    "gipples_galore:muddy_jelly",
-    "gipples_galore:plain_jelly",
-    "gipples_galore:fruity_jelly",
-    "gipples_galore:blast_jelly",
-    "gipples_galore:cocoa_jelly",
-    "gipples_galore:prickly_jelly",
     "gipples_galore:milky_jelly",
-    "gipples_galore:bright_jelly",
-    "gipples_galore:symphonic_jelly",
+    "gipples_galore:luminescent_jelly",
+    "gipples_galore:cocoa_jelly",
+    "gipples_galore:warp_jelly",
     "gipples_galore:bouncy_jelly",
-    "gipples_galore:floral_jelly",
     "gipples_galore:foamy_jelly",
     "gipples_galore:inky_jelly",
-    "gipples_galore:warp_jelly",
-    "gipples_galore:sweet_jelly",
-    "gipples_galore:luminescent_jelly",
-    "gipples_galore:enchanting_jelly"
+    "gipples_galore:fruity_jelly",
+    "gipples_galore:plain_jelly",
+    "gipples_galore:enchanting_jelly",
+    "gipples_galore:blast_jelly",
+    "gipples_galore:bright_jelly",
+    "gipples_galore:floral_jelly",
+    "gipples_galore:prickly_jelly",
+    "gipples_galore:muddy_jelly",
+    "gipples_galore:symphonic_jelly",
+    "gipples_galore:sweet_jelly"
   ]
 }

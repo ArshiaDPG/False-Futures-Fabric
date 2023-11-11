@@ -1,6 +1,7 @@
 package net.digitalpear.gipples_galore.common.features;
 
 import com.mojang.serialization.Codec;
+import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.common.blocks.HibernatingGippleBlock;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.minecraft.block.Block;
@@ -15,6 +16,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.VegetationPatchFeature;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -121,7 +123,6 @@ public class GippleColonyFeature extends VegetationPatchFeature {
                 if (!replaceable.test(floor)) {
                     return i != 0;
                 }
-
 
                 Block stone = world.getBlockState(pos).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES) ? GGBlocks.AMOEBALITH : GGBlocks.GELATITE;
                 world.setBlockState(pos, stone.getDefaultState(), 2);

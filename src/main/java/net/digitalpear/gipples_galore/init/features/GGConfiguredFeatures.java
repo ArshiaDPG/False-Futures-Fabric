@@ -55,11 +55,11 @@ public class GGConfiguredFeatures {
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> featureRegisterable) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = featureRegisterable.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 
-        for (int i = 1; i< 9; i++){
+        for (int i = 1; i< 8; i++){
             GELATITE_VEGETATION_PROVIDER.add(GGBlocks.GELATIN_LAYER.getDefaultState().with(GelatinLayerBlock.LAYERS, i), 9 - i);
         }
 
-        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY, GGFeatures.GIPPLE_COLONY, new VegetationPatchFeatureConfig(GGBlockTags.GELATINOUS_GROWTH_SUPPORTING, BlockStateProvider.of(GGBlocks.GELATITE), PlacedFeatures.createEntry(registryEntryLookup.getOrThrow(GIPPLE_COLONY_VEGETATION)), VerticalSurfaceType.FLOOR, ConstantIntProvider.create(3), 0.8F, 5, 0.2F, UniformIntProvider.create(6, 9), 0.7F));
+        ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY, GGFeatures.GIPPLE_COLONY, new VegetationPatchFeatureConfig(GGBlockTags.GIPPLE_COLONY_REPLACEABLE, BlockStateProvider.of(GGBlocks.GELATITE), PlacedFeatures.createEntry(registryEntryLookup.getOrThrow(GIPPLE_COLONY_VEGETATION)), VerticalSurfaceType.FLOOR, ConstantIntProvider.create(3), 0.8F, 5, 0.2F, UniformIntProvider.create(6, 9), 0.7F));
 
         ConfiguredFeatures.register(featureRegisterable, GIPPLE_COLONY_VEGETATION, GGFeatures.GELATITE_VEGETATION, new NetherForestVegetationFeatureConfig(new WeightedBlockStateProvider(GELATITE_VEGETATION_PROVIDER.build()), 8, 5));
     }

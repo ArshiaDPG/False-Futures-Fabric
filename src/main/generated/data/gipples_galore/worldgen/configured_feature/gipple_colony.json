@@ -10,7 +10,7 @@
         "Name": "gipples_galore:gelatite"
       }
     },
-    "replaceable": "#gipples_galore:gelatinous_growth_supporting",
+    "replaceable": "#gipples_galore:gipple_colony_replaceable",
     "surface": "floor",
     "vegetation_chance": 0.2,
     "vegetation_feature": {

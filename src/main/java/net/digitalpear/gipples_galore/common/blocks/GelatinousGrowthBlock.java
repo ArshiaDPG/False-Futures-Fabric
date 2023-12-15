@@ -1,5 +1,6 @@
 package net.digitalpear.gipples_galore.common.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.digitalpear.gipples_galore.init.tags.GGBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
@@ -19,6 +20,11 @@ public class GelatinousGrowthBlock extends PlantBlock implements Waterloggable {
 
     public GelatinousGrowthBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends GelatinousGrowthBlock> getCodec() {
+        return createCodec(GelatinousGrowthBlock::new);
     }
 
     @Override

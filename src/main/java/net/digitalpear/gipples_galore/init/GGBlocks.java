@@ -145,7 +145,7 @@ public class GGBlocks {
             ));
 
     public static final Block GELATINOUS_GROWTH = createBlockWithItem("gelatinous_growth",
-            new GelatinousGrowthBlock(AbstractBlock.Settings.copy(Blocks.GRASS)
+            new GelatinousGrowthBlock(AbstractBlock.Settings.copy(Blocks.SHORT_GRASS)
                     .mapColor(GELATIN_LAYER.getDefaultMapColor())
                     .sounds(BlockSoundGroup.HONEY)
             ));

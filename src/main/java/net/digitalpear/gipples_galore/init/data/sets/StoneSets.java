@@ -49,11 +49,11 @@ public class StoneSets {
     }
     public static Block stonePressurePlate(Block baseBlock){
         return createBlockWithItem(getName(baseBlock) + "_pressure_plate",
-                new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, AbstractBlock.Settings.copy(baseBlock), BlockSetType.STONE));
+                new PressurePlateBlock(BlockSetType.STONE, AbstractBlock.Settings.copy(baseBlock)));
     }
     public static Block stoneButton(Block baseBlock){
         return createBlockWithItem(getName(baseBlock) + "_button",
-                new ButtonBlock(AbstractBlock.Settings.create().noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY), BlockSetType.STONE, 20, false));
+                new ButtonBlock(BlockSetType.STONE, 20, AbstractBlock.Settings.create().noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY)));
     }
 
     //If name ends with "Bricks" then shorten to "Brick" for use

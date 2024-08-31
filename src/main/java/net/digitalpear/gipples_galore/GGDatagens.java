@@ -1,12 +1,12 @@
 package net.digitalpear.gipples_galore;
 
 import net.digitalpear.gipples_galore.common.datagens.*;
-import net.digitalpear.gipples_galore.common.datagens.providers.GGConfiguredFeatureProvider;
-import net.digitalpear.gipples_galore.common.datagens.providers.GGDamageTypeProvider;
-import net.digitalpear.gipples_galore.common.datagens.providers.GGPlacedFeatureProvider;
+import net.digitalpear.gipples_galore.common.datagens.providers.*;
 import net.digitalpear.gipples_galore.common.datagens.tags.*;
+import net.digitalpear.gipples_galore.init.GGBannerPatterns;
 import net.digitalpear.gipples_galore.init.GGDamageTypes;
-import net.digitalpear.gipples_galore.init.GGPaintings;
+import net.digitalpear.gipples_galore.init.GGJukeboxSongs;
+import net.digitalpear.gipples_galore.init.GGPaintingVariants;
 import net.digitalpear.gipples_galore.init.features.GGConfiguredFeatures;
 import net.digitalpear.gipples_galore.init.features.GGPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -46,6 +46,10 @@ public class GGDatagens implements DataGeneratorEntrypoint {
 
         pack.addProvider(GGConfiguredFeatureProvider::new);
         pack.addProvider(GGPlacedFeatureProvider::new);
+
+        pack.addProvider(GGJukeboxSongProvider::new);
+        pack.addProvider(GGBannerPatternProvider::new);
+        pack.addProvider(GGPaintingVariantProvider::new);
     }
 
     @Override
@@ -53,5 +57,8 @@ public class GGDatagens implements DataGeneratorEntrypoint {
         registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, GGConfiguredFeatures::bootstrap);
         registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, GGPlacedFeatures::bootstrap);
         registryBuilder.addRegistry(RegistryKeys.DAMAGE_TYPE, GGDamageTypes::bootstrap);
+        registryBuilder.addRegistry(RegistryKeys.JUKEBOX_SONG, GGJukeboxSongs::bootstrap);
+        registryBuilder.addRegistry(RegistryKeys.BANNER_PATTERN, GGBannerPatterns::bootstrap);
+        registryBuilder.addRegistry(RegistryKeys.PAINTING_VARIANT, GGPaintingVariants::bootstrap);
     }
 }

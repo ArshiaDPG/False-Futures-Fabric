@@ -59,9 +59,11 @@ public class JellyBlock extends Block {
         -If the player is able to eat, eat half the block (Changes outline shape and piston behavior).
         -If half the block has already been eaten, then remove the block.
     */
+
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
+            Hand hand = player.getActiveHand();
 
             BlockState finalState;
             //Add food levels

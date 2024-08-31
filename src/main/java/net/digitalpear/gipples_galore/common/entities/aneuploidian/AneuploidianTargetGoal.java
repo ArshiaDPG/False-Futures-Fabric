@@ -22,15 +22,15 @@ public class AneuploidianTargetGoal<T extends LivingEntity> extends TrackTargetG
     protected TargetPredicate targetPredicate;
 
     public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility) {
-        this(mob, targetClass, 10, checkVisibility, false, null);
+        this(mob, targetClass, DEFAULT_RECIPROCAL_CHANCE, checkVisibility, false, null);
     }
 
     public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, Predicate<LivingEntity> targetPredicate) {
-        this(mob, targetClass, 10, checkVisibility, false, targetPredicate);
+        this(mob, targetClass, DEFAULT_RECIPROCAL_CHANCE, checkVisibility, false, targetPredicate);
     }
 
     public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, boolean checkCanNavigate) {
-        this(mob, targetClass, 10, checkVisibility, checkCanNavigate, null);
+        this(mob, targetClass, DEFAULT_RECIPROCAL_CHANCE, checkVisibility, checkCanNavigate, null);
     }
 
     public AneuploidianTargetGoal(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> targetPredicate) {

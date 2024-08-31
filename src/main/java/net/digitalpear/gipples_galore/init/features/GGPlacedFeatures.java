@@ -25,13 +25,12 @@ public class GGPlacedFeatures {
 
     public static List<RegistryKey<PlacedFeature>> placedFeatures = new ArrayList<>();
     public static RegistryKey<PlacedFeature> of(String id) {
-        RegistryKey<PlacedFeature> placed = RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(GipplesGalore.MOD_ID, id));
+        RegistryKey<PlacedFeature> placed = RegistryKey.of(RegistryKeys.PLACED_FEATURE, GipplesGalore.id(id));
         placedFeatures.add(placed);
         return placed;
     }
     public static final RegistryKey<PlacedFeature> GIPPLE_COLONY = of("gipple_colony");
     public static final RegistryKey<PlacedFeature> GIPPLE_COLONY_COMMON = of("gipple_colony_common");
-
 
 
     public static void bootstrap(Registerable<PlacedFeature> featureRegisterable) {

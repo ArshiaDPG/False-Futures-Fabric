@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gelatin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "gipples_galore:gelatin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "gipples_galore:blast_jelly"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gelatin"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "gipples_galore:blast_jelly"
+    ]
+  }
+}

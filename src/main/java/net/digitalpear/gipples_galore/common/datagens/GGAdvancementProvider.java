@@ -12,21 +12,23 @@ import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class GGAdvancementProvider extends FabricAdvancementProvider {
-    public GGAdvancementProvider(FabricDataOutput output) {
-        super(output);
+
+
+    public GGAdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        super(output, registryLookup);
     }
 
     @Override
-    public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
-
-
-        AdvancementEntry dummy = Advancement.Builder.create().display(Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), new Identifier("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
+    public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
+        AdvancementEntry dummy = Advancement.Builder.create().display(Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), Identifier.ofVanilla("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
         var jellies = Advancement.Builder.create()
                 .display(
                         GGBlocks.PLAIN_JELLY, // The display icon
@@ -46,5 +48,4 @@ public class GGAdvancementProvider extends FabricAdvancementProvider {
         Advancement jelliesAdvancement = jellies.build(consumer, GipplesGalore.MOD_ID + ":husbandry/jellies").value();
 
     }
-
 }

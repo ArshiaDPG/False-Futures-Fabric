@@ -1,0 +1,8 @@
+{
+  "comparator_output": 13,
+  "description": {
+    "translate": "jukebox_song.gipples_galore.gipplecore"
+  },
+  "length_in_seconds": 113.0,
+  "sound_event": "gipples_galore:music.record.gipplecore"
+}

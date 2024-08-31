@@ -60,7 +60,6 @@ public class GelatiteVegetationFeature extends Feature<NetherForestVegetationFea
                     ++j;
                 }
             }
-
             return j > 0;
         } else {
             return false;

@@ -1,5 +1,5 @@
 {
-  "type": "gipples_galore:gelatite_vegetation",
+  "type": "minecraft:gelatite_vegetation",
   "config": {
     "spread_height": 5,
     "spread_width": 8,
@@ -96,16 +96,6 @@
             }
           },
           "weight": 2
-        },
-        {
-          "data": {
-            "Name": "gipples_galore:gelatin_layer",
-            "Properties": {
-              "layers": "8",
-              "waterlogged": "false"
-            }
-          },
-          "weight": 1
         }
       ]
     }

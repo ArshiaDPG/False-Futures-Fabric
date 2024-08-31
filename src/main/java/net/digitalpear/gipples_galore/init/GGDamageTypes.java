@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class GGDamageTypes {
-    public static final RegistryKey<DamageType> GIPPLE_EFFECT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(GipplesGalore.MOD_ID, "gipple_effect"));
+    public static final RegistryKey<DamageType> GIPPLE_EFFECT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, GipplesGalore.id("gipple_effect"));
 
     public static void bootstrap(Registerable<DamageType> damageTypeRegisterable) {
         damageTypeRegisterable.register(GIPPLE_EFFECT, new DamageType("gippleEffect", DamageScaling.NEVER, 0.0F));

@@ -34,13 +34,10 @@ public class GGItemTagProvider extends FabricTagProvider<Item> {
 
         getOrCreateTagBuilder(GGItemTags.GIPPLE_FOOD)
                 .add(Items.GLOW_LICHEN)
-                .addOptional(new Identifier("galosphere", "lichen_roots"))
-                .addOptional(new Identifier("galosphere", "bowl_lichen"))
-                .addOptional(new Identifier("galosphere", "lichen_shelf"))
-                .addOptional(new Identifier("galosphere", "lichen_cordyceps"));
-
-
-        getOrCreateTagBuilder(ItemTags.MUSIC_DISCS).add(GGItems.MUSIC_DISC_GIPPLECORE);
+                .addOptional(Identifier.of("galosphere", "lichen_roots"))
+                .addOptional(Identifier.of("galosphere", "bowl_lichen"))
+                .addOptional(Identifier.of("galosphere", "lichen_shelf"))
+                .addOptional(Identifier.of("galosphere", "lichen_cordyceps"));
 
         getOrCreateTagBuilder(ItemTags.WALLS)
                 .add(GGBlocks.GELATITE_WALL.asItem())

@@ -53,9 +53,9 @@ public class GGBlockTagProvider extends FabricTagProvider<Block> {
 
         getOrCreateTagBuilder(GGBlockTags.GIPPLE_FOOD)
                 .add(Blocks.GLOW_LICHEN)
-                .addOptional(new Identifier("galosphere", "lichen_roots"))
-                .addOptional(new Identifier("galosphere", "bowl_lichen"))
-                .addOptional(new Identifier("galosphere", "lichen_shelf"))
+                .addOptional(Identifier.of("galosphere", "lichen_roots"))
+                .addOptional(Identifier.of("galosphere", "bowl_lichen"))
+                .addOptional(Identifier.of("galosphere", "lichen_shelf"))
         ;
 
         getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(GGBlocks.POTTED_GELATINOUS_GROWTH);

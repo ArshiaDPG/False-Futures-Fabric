@@ -1,0 +1,26 @@
+{
+  "values": [
+    "gipples_galore:gelatite",
+    "gipples_galore:gelatite_stairs",
+    "gipples_galore:gelatite_slab",
+    "gipples_galore:gelatite_wall",
+    "gipples_galore:gelatite_button",
+    "gipples_galore:gelatite_pressure_plate",
+    "gipples_galore:chiseled_gelatite_bricks",
+    "gipples_galore:gelatite_bricks",
+    "gipples_galore:gelatite_brick_stairs",
+    "gipples_galore:gelatite_brick_slab",
+    "gipples_galore:gelatite_brick_wall",
+    "gipples_galore:amoebalith",
+    "gipples_galore:amoebalith_stairs",
+    "gipples_galore:amoebalith_slab",
+    "gipples_galore:amoebalith_wall",
+    "gipples_galore:amoebalith_button",
+    "gipples_galore:amoebalith_pressure_plate",
+    "gipples_galore:chiseled_amoebalith_bricks",
+    "gipples_galore:amoebalith_bricks",
+    "gipples_galore:amoebalith_brick_stairs",
+    "gipples_galore:amoebalith_brick_slab",
+    "gipples_galore:amoebalith_brick_wall"
+  ]
+}

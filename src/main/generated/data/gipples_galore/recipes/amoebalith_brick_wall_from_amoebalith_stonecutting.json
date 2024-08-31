@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "gipples_galore:amoebalith"
-  },
-  "result": "gipples_galore:amoebalith_brick_wall"
-}

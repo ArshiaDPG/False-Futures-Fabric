@@ -10,6 +10,6 @@ public class GGBiomeTags {
     public static final TagKey<Biome> EXTRA_GIPPLE_HABITATS = of("extra_gipple_habitats");
 
     private static TagKey<Biome> of(String id) {
-        return TagKey.of(RegistryKeys.BIOME, new Identifier(GipplesGalore.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BIOME, GipplesGalore.id(id));
     }
 }

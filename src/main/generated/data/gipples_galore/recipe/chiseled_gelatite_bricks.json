@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "gipples_galore:gelatite_brick_slab"
+    }
+  },
+  "pattern": [
+    "X",
+    "X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "gipples_galore:chiseled_gelatite_bricks"
+  }
+}

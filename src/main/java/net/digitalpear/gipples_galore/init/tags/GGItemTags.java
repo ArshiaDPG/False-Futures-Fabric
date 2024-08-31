@@ -10,7 +10,6 @@ public class GGItemTags {
     public static final TagKey<Item> GIPPLE_FOOD = of("gipple_food");
 
     private static TagKey<Item> of(String id) {
-        return TagKey.of(RegistryKeys.ITEM, new Identifier(GipplesGalore.MOD_ID, id));
+        return TagKey.of(RegistryKeys.ITEM, GipplesGalore.id(id));
     }
-
 }

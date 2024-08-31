@@ -2,31 +2,34 @@ package net.digitalpear.gipples_galore.common.datagens;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.init.GGBlocks;
-import net.digitalpear.gipples_galore.init.GGEntities;
+import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.digitalpear.gipples_galore.init.GGItems;
+import net.digitalpear.gipples_galore.init.GGJukeboxSongs;
 import net.digitalpear.gipples_galore.init.tags.GGBiomeTags;
 import net.digitalpear.gipples_galore.init.tags.GGBlockTags;
 import net.digitalpear.gipples_galore.init.tags.GGItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.jukebox.JukeboxSong;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
 
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 public class GGLanguageProvider extends FabricLanguageProvider {
-
-
-    public GGLanguageProvider(FabricDataOutput dataOutput) {
-        super(dataOutput);
+    public GGLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        super(dataOutput, registryLookup);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder translationBuilder) {
+    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
 
         for(Block jelly : GGBlocks.JELLY.keySet()) {
             autoName(translationBuilder, jelly);
@@ -65,8 +68,8 @@ public class GGLanguageProvider extends FabricLanguageProvider {
 
         autoName(translationBuilder, GGBlocks.GIPPLEPAD);
 
-        autoName(translationBuilder, GGEntities.GIPPLE);
-        autoName(translationBuilder, GGEntities.ANEUPLOIDIAN);
+        autoName(translationBuilder, GGEntityTypes.GIPPLE);
+        autoName(translationBuilder, GGEntityTypes.ANEUPLOIDIAN);
 
         autoName(translationBuilder, GGBlocks.HIBERNATING_GIPPLE);
 
@@ -80,22 +83,30 @@ public class GGLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(GGItems.ANEUPLOIDIAN_SPAWN_EGG, "Aneuploidian Spawn Egg");
 
         translationBuilder.add(GGItems.MUSIC_DISC_GIPPLECORE, "Music Disc");
-        translationBuilder.add("item.gipples_galore.music_disc_gipplecore.desc", "Axoladdy - gipplecore");
+        jukeboxSongTranslation(translationBuilder, GGJukeboxSongs.GIPPLECORE, "Axoladdy - gipplecore");
 
-        makeBannerStuff(translationBuilder, GGItems.GIPPLE_BANNER_PATTERN, "Gipple");
+        makeBannerTranslation(translationBuilder, GGItems.GIPPLE_BANNER_PATTERN, "Gipple");
 
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
+
 
         translationBuilder.add("subtitles.gipples_galore.gipple.ambient", "Gipple vibrates");
         translationBuilder.add("subtitles.gipples_galore.gipple.hurt", "Gipple hurts");
         translationBuilder.add("subtitles.gipples_galore.gipple.burp", "Gipple consumes");
         translationBuilder.add("subtitles.gipples_galore.gipple.death", "Gipple dies");
 
+        translationBuilder.add("subtitles.gipples_galore.aneuploidian.ambient", "Aneuploidian vibrates");
+        translationBuilder.add("subtitles.gipples_galore.aneuploidian.hurt", "Aneuploidian hurts");
+        translationBuilder.add("subtitles.gipples_galore.aneuploidian.death", "Aneuploidian dies");
+
+
         translationBuilder.add("death.attack.gippleEffect", "%s was gipplified");
         translationBuilder.add("death.attack.gippleEffect.player", "%s became a Gipple to get away from %s");
 
+
         translationBuilder.add("effect.gipples_galore.gipple", "Gipple");
+
 
         translationBuilder.add("painting.gipples_galore.gipple.title", "Gipple");
         translationBuilder.add("painting.gipples_galore.gipple.author", "Yapettoshen");
@@ -103,14 +114,15 @@ public class GGLanguageProvider extends FabricLanguageProvider {
         /*
             Tag translations for EMI compat
          */
-        biomeTag(translationBuilder, GGBiomeTags.EXTRA_GIPPLE_HABITATS);
-        blackTag(translationBuilder, GGBlockTags.GELATINOUS_GROWTH_SUPPORTING);
-        blackTag(translationBuilder, GGBlockTags.GIPPLE_FOOD);
-        itemTag(translationBuilder, GGItemTags.GIPPLE_FOOD);
-        blackTag(translationBuilder, GGBlockTags.JELLIES);
+        nameTag(translationBuilder, GGBiomeTags.EXTRA_GIPPLE_HABITATS);
+        nameTag(translationBuilder, GGBlockTags.GELATINOUS_GROWTH_SUPPORTING);
+        nameTag(translationBuilder, GGBlockTags.GIPPLE_FOOD);
+        nameTag(translationBuilder, GGItemTags.GIPPLE_FOOD);
+        nameTag(translationBuilder, GGBlockTags.JELLIES);
 
 
-        translationBuilder.add("gamerule.doApplyJellyEffects", "Should apply jelly effects when eaten");
+        translationBuilder.add("gamerule.doApplyJellyEffects", "Should apply jelly effects when eaten.");
+        translationBuilder.add("gamerule.gippleMutationPercentage", "Percentage chance for gipples to mutate when splitting.");
 
         try {
             Path existingFilePath = dataOutput.getModContainer().findPath("assets/" + GipplesGalore.MOD_ID + "/lang/en_us.existing.json").get();
@@ -120,7 +132,7 @@ public class GGLanguageProvider extends FabricLanguageProvider {
         }
     }
 
-    private void makeBannerStuff(TranslationBuilder translationBuilder, Item item, String name){
+    private void makeBannerTranslation(TranslationBuilder translationBuilder, Item item, String name){
         translationBuilder.add(item, "Banner Pattern");
         translationBuilder.add(item.getTranslationKey() + ".desc", name);
         makeColoredBannerPatterns(translationBuilder, name);
@@ -133,7 +145,9 @@ public class GGLanguageProvider extends FabricLanguageProvider {
                     autoNameInner(DyeColor.byId(i).getName()) + " " + name);
         }
     }
-
+    private static void jukeboxSongTranslation(TranslationBuilder translationBuilder, RegistryKey<JukeboxSong> song, String value){
+        translationBuilder.add("jukebox_song." + song.getValue().toTranslationKey(), value);
+    }
     private void autoName(TranslationBuilder translationBuilder, Block block) {
         translationBuilder.add(block, autoNameInner(Registries.BLOCK.getId(block).getPath()));
     }
@@ -144,18 +158,8 @@ public class GGLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(entityType, autoNameInner(Registries.ENTITY_TYPE.getId(entityType).getPath()));
     }
 
-    private void blackTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
-        nameTag(translationBuilder, tTagKey, "block");
-    }
-    private void itemTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
-        nameTag(translationBuilder, tTagKey, "item");
-    }
-    private void biomeTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
-        nameTag(translationBuilder, tTagKey, "biome");
-    }
-
-    private void nameTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey, String registry){
-        translationBuilder.add("tag." + registry + "." + tTagKey.id().getNamespace() + "." + tTagKey.id().getPath(), autoNameInner(tTagKey.id().getPath()));
+    private void nameTag(TranslationBuilder translationBuilder, TagKey<?> tTagKey){
+        translationBuilder.add(tTagKey, autoNameInner(tTagKey.id().getPath()));
     }
 
 

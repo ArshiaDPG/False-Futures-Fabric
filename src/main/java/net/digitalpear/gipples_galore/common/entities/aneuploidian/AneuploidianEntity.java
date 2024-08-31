@@ -1,8 +1,8 @@
 package net.digitalpear.gipples_galore.common.entities.aneuploidian;
 
+import net.digitalpear.gipples_galore.init.GGEntityTypes;
+import net.digitalpear.gipples_galore.init.GGSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Flutterer;
 import net.minecraft.entity.ai.control.FlightMoveControl;
@@ -21,20 +21,18 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AneuploidianEntity extends HostileEntity implements Monster, Flutterer, GeoEntity {
-    private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("aneuploidian.attack");
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("aneuploidian.ambient");
     private boolean isAttacking = false;
@@ -45,6 +43,8 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
         this.lookControl = new LookControl(this);
         this.moveControl = new FlightMoveControl(this, 20, true);
         this.experiencePoints = 20;
+
+
     }
 
     @Override
@@ -71,9 +71,6 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5);
     }
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.8F;
-    }
 
 
     /*
@@ -95,6 +92,22 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
         return birdNavigation;
     }
 
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return GGSoundEvents.ENTITY_ANEUPLOIDIAN_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return GGSoundEvents.ENTITY_ANEUPLOIDIAN_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return GGSoundEvents.ENTITY_ANEUPLOIDIAN_DEATH;
+    }
+
     @Override
     public boolean isInAir() {
         return !this.isOnGround();
@@ -104,14 +117,18 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
             Geckolib
          */
 
+
+
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
     }
+
+
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return instanceCache;
+        return cache;
     }
 
     public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {

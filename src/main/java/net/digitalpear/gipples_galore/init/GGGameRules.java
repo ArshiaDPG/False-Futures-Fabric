@@ -9,6 +9,8 @@ public class GGGameRules {
 
     public static final GameRules.Key<GameRules.BooleanRule> SHOULD_APPLY_JELLY_EFFECTS =
             GameRuleRegistry.register("doJellyEffects", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
+    public static final GameRules.Key<GameRules.IntRule> GIPPLE_MUTATION =
+            GameRuleRegistry.register("gippleMutationPercentage", GameRules.Category.MOBS, GameRuleFactory.createIntRule(10));
 
     public static void init(){}
 

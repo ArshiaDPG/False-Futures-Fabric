@@ -3,6 +3,7 @@ package net.digitalpear.gipples_galore.init;
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -11,7 +12,12 @@ public class GGSoundEvents {
     public static final SoundEvent ENTITY_GIPPLE_HURT = register("entity.gipple.hurt");
     public static final SoundEvent ENTITY_GIPPLE_DEATH = register("entity.gipple.death");
     public static final SoundEvent ENTITY_GIPPLE_BURP = register("entity.gipple.burp");
-    public static final SoundEvent MUSIC_DISC_GIPPLECORE = register("music.record.gipplecore");
+
+    public static final SoundEvent ENTITY_ANEUPLOIDIAN_AMBIENT = register("entity.aneuploidian.ambient");
+    public static final SoundEvent ENTITY_ANEUPLOIDIAN_HURT = register("entity.aneuploidian.hurt");
+    public static final SoundEvent ENTITY_ANEUPLOIDIAN_DEATH = register("entity.aneuploidian.death");
+
+    public static final RegistryEntry.Reference<SoundEvent> MUSIC_DISC_GIPPLECORE = registerReference("music.record.gipplecore");
 
     public static final SoundEvent BLOCK_GELATITE_BREAK = register("block.gelatite.break");
     public static final SoundEvent BLOCK_GELATITE_STEP = register("block.gelatite.step");
@@ -26,7 +32,15 @@ public class GGSoundEvents {
     public static final SoundEvent BLOCK_AMOEBALITH_FALL = register("block.amoebalith.fall");
 
     private static SoundEvent register(String id) {
-        return Registry.register(Registries.SOUND_EVENT, new Identifier(GipplesGalore.MOD_ID + ":" + id), SoundEvent.of(new Identifier(GipplesGalore.MOD_ID + ":" + id)));
+        return Registry.register(Registries.SOUND_EVENT, GipplesGalore.id(id), SoundEvent.of(GipplesGalore.id(id)));
+    }
+
+    private static RegistryEntry.Reference<SoundEvent> registerReference(String id) {
+        return registerReference(GipplesGalore.id(id), GipplesGalore.id(id));
+    }
+
+    private static RegistryEntry.Reference<SoundEvent> registerReference(Identifier id, Identifier soundId) {
+        return Registry.registerReference(Registries.SOUND_EVENT, id, SoundEvent.of(soundId));
     }
 
     public static void init(){

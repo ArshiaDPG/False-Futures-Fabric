@@ -10,6 +10,6 @@ public class GGEntityTypeTags {
     public static final TagKey<EntityType<?>> ANEUPLOIDIAN_TARGET_BLACKLIST = of("aneuploidian_target_blacklist");
 
     private static TagKey<EntityType<?>> of(String id) {
-        return TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(GipplesGalore.MOD_ID, id));
+        return TagKey.of(RegistryKeys.ENTITY_TYPE, GipplesGalore.id(id));
     }
 }

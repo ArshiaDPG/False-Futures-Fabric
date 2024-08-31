@@ -7,5 +7,4 @@ public class AneuploidianEntityRenderer extends GeoEntityRenderer<AneuploidianEn
     public AneuploidianEntityRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new AneuploidianEntityModel());
     }
-
 }

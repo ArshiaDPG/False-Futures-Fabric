@@ -7,7 +7,7 @@ import net.digitalpear.gipples_galore.common.blocks.GelatinousGrowthBlock;
 import net.digitalpear.gipples_galore.common.blocks.HibernatingGippleBlock;
 import net.digitalpear.gipples_galore.common.blocks.jelly.*;
 import net.digitalpear.gipples_galore.init.data.GGBlockSoundGroups;
-import net.digitalpear.gipples_galore.init.data.sets.StoneSets;
+import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
@@ -16,7 +16,6 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,24 +26,25 @@ public class GGBlocks {
 
     public static final Map<Block, Item> JELLY = new HashMap<>();
 
+    public static BlockItem createBlockItem(String blockID, Block block){
+        return Registry.register(Registries.ITEM, GipplesGalore.id(blockID), new BlockItem(block, new Item.Settings()));
+    }
+    public static Block createBlockWithoutItem(String blockID, Block block){
+        return Registry.register(Registries.BLOCK, GipplesGalore.id(blockID), block);
+    }
     public static Block createBlockWithItem(String blockID, Block block){
         createBlockItem(blockID, block);
-        return Registry.register(Registries.BLOCK, new Identifier(GipplesGalore.MOD_ID, blockID), block);
+        return createBlockWithoutItem(blockID, block);
     }
-    public static BlockItem createBlockItem(String blockID, Block block){
-        return Registry.register(Registries.ITEM, new Identifier(GipplesGalore.MOD_ID, blockID), new BlockItem(block, new Item.Settings()));
-    }
+
     public static Block createJellyBlockWithItem(String blockID, Block block, Item ingredient){
         createBlockItem(blockID, block);
-        Block jelly = Registry.register(Registries.BLOCK, new Identifier(GipplesGalore.MOD_ID, blockID), block);
+        Block jelly = createBlockWithoutItem(blockID, block);
         JELLY.put(jelly,ingredient);
         return jelly;
     }
 
 
-    public static Block createBlockWithoutItem(String blockID, Block block){
-        return Registry.register(Registries.BLOCK, new Identifier(GipplesGalore.MOD_ID, blockID), block);
-    }
 
     public static AbstractBlock.Settings jellySettings(MapColor color){
         return AbstractBlock.Settings.create().mapColor(color).strength(0.1f, 0.2f).sounds(BlockSoundGroup.SLIME).pistonBehavior(PistonBehavior.DESTROY).nonOpaque();
@@ -84,46 +84,58 @@ public class GGBlocks {
     public static final Block GELATIN_LAYER = createBlockWithItem("gelatin_layer",
             new GelatinLayerBlock(AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.PALE_PURPLE)));
 
-    public static final Block GELATITE = createBlockWithItem("gelatite",
+    public static final StoneSet GELATITE_SET = new StoneSet(GipplesGalore.id("gelatite"),
             new Block(AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
-                    .sounds(GGBlockSoundGroups.GELATITE)));
+                    .sounds(GGBlockSoundGroups.GELATITE))).stairs().slab().wall().pressurePlate().button();
 
-    public static final Block GELATITE_STAIRS = StoneSets.stoneStairs(GELATITE);
-    public static final Block GELATITE_SLAB = StoneSets.stoneSlab(GELATITE);
-    public static final Block GELATITE_WALL = StoneSets.stoneWall(GELATITE);
-    public static final Block GELATITE_PRESSURE_PLATE = StoneSets.stonePressurePlate(GELATITE);
-    public static final Block GELATITE_BUTTON = StoneSets.stoneButton(GELATITE);
-
-    public static final Block GELATITE_BRICKS = createBlockWithItem("gelatite_bricks",
-            new Block(AbstractBlock.Settings.copy(GELATITE)));
-    public static final Block GELATITE_BRICK_STAIRS = StoneSets.stoneStairs(GELATITE_BRICKS);
-    public static final Block GELATITE_BRICK_SLAB = StoneSets.stoneSlab(GELATITE_BRICKS);
-    public static final Block GELATITE_BRICK_WALL = StoneSets.stoneWall(GELATITE_BRICKS);
-
-    public static final Block CHISELED_GELATITE_BRICKS = createBlockWithItem("chiseled_gelatite_bricks",
-            new Block(AbstractBlock.Settings.copy(GELATITE)));
+    public static final Block GELATITE = GELATITE_SET.getBase();
+    public static final Block GELATITE_STAIRS = GELATITE_SET.getStairs();
+    public static final Block GELATITE_SLAB = GELATITE_SET.getSlab();
+    public static final Block GELATITE_WALL = GELATITE_SET.getWall();
+    public static final Block GELATITE_PRESSURE_PLATE = GELATITE_SET.getPressurePlate();
+    public static final Block GELATITE_BUTTON = GELATITE_SET.getButton();
 
 
-    public static final Block AMOEBALITH = createBlockWithItem("amoebalith",
+
+    public static final StoneSet GELATITE_BRICK_SET = new StoneSet("gelatite_brick",
+            new Block(AbstractBlock.Settings.copy(GELATITE))).stairs().slab().wall().chiseled();
+
+    public static final Block GELATITE_BRICKS = GELATITE_BRICK_SET.getBase();
+    public static final Block GELATITE_BRICK_STAIRS = GELATITE_BRICK_SET.getStairs();
+    public static final Block GELATITE_BRICK_SLAB = GELATITE_BRICK_SET.getSlab();
+    public static final Block GELATITE_BRICK_WALL = GELATITE_BRICK_SET.getWall();
+    public static final Block CHISELED_GELATITE_BRICKS = GELATITE_BRICK_SET.getChiseled();
+
+
+
+    public static final StoneSet AMOEBALITH_SET = new StoneSet("amoebalith",
             new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
-            .sounds(GGBlockSoundGroups.AMOEBALITH)
-            .mapColor(MapColor.PURPLE)));
+                    .sounds(GGBlockSoundGroups.AMOEBALITH)
+                    .mapColor(MapColor.PURPLE))).stairs().slab().wall().pressurePlate().button();
 
-    public static final Block AMOEBALITH_STAIRS = StoneSets.stoneStairs(AMOEBALITH);
-    public static final Block AMOEBALITH_SLAB = StoneSets.stoneSlab(AMOEBALITH);
-    public static final Block AMOEBALITH_WALL = StoneSets.stoneWall(AMOEBALITH);
-    public static final Block AMOEBALITH_PRESSURE_PLATE = StoneSets.stonePressurePlate(AMOEBALITH);
-    public static final Block AMOEBALITH_BUTTON = StoneSets.stoneButton(AMOEBALITH);
+    public static final Block AMOEBALITH = AMOEBALITH_SET.getBase();
 
-    public static final Block CHISELED_AMOEBALITH_BRICKS = createBlockWithItem("chiseled_amoebalith_bricks",
-            new Block(AbstractBlock.Settings.copy(AMOEBALITH)));
+    public static final Block AMOEBALITH_STAIRS = AMOEBALITH_SET.getStairs();
+    public static final Block AMOEBALITH_SLAB = AMOEBALITH_SET.getSlab();
+    public static final Block AMOEBALITH_WALL = AMOEBALITH_SET.getWall();
+    public static final Block AMOEBALITH_PRESSURE_PLATE = AMOEBALITH_SET.getPressurePlate();
+    public static final Block AMOEBALITH_BUTTON = AMOEBALITH_SET.getButton();
 
-    public static final Block AMOEBALITH_BRICKS = createBlockWithItem("amoebalith_bricks",
-            new Block(AbstractBlock.Settings.copy(AMOEBALITH)));
-    public static final Block AMOEBALITH_BRICK_STAIRS = StoneSets.stoneStairs(AMOEBALITH_BRICKS);
-    public static final Block AMOEBALITH_BRICK_SLAB = StoneSets.stoneSlab(AMOEBALITH_BRICKS);
-    public static final Block AMOEBALITH_BRICK_WALL = StoneSets.stoneWall(AMOEBALITH_BRICKS);
+
+
+    public static final StoneSet AMOEBALITH_BRICK_SET = new StoneSet("amoebalith_brick",
+            new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
+                    .sounds(GGBlockSoundGroups.AMOEBALITH)
+                    .mapColor(MapColor.PURPLE))).stairs().slab().wall().chiseled();
+
+    public static final Block AMOEBALITH_BRICKS = AMOEBALITH_BRICK_SET.getBase();
+    public static final Block AMOEBALITH_BRICK_STAIRS = AMOEBALITH_BRICK_SET.getStairs();
+    public static final Block AMOEBALITH_BRICK_SLAB = AMOEBALITH_BRICK_SET.getSlab();
+    public static final Block AMOEBALITH_BRICK_WALL = AMOEBALITH_BRICK_SET.getWall();
+    public static final Block CHISELED_AMOEBALITH_BRICKS = AMOEBALITH_BRICK_SET.getChiseled();
+
+
 
     public static final Block HIBERNATING_GIPPLE = createBlockWithItem("hibernating_gipple",
             new HibernatingGippleBlock(AbstractBlock.Settings.create()

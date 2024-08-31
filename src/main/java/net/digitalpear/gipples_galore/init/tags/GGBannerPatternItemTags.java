@@ -11,6 +11,6 @@ public class GGBannerPatternItemTags {
 
 
     private static TagKey<BannerPattern> of(String id) {
-        return TagKey.of(RegistryKeys.BANNER_PATTERN, new Identifier(GipplesGalore.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BANNER_PATTERN, GipplesGalore.id(id));
     }
 }

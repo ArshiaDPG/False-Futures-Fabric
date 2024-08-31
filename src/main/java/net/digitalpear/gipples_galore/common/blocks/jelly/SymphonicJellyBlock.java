@@ -36,7 +36,7 @@ public class SymphonicJellyBlock extends JellyBlock {
                 double j = player.getZ() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
                 if (FabricLoader.getInstance().isModLoaded("galosphere")){
                     for (BlockPos pos1 : BlockPos.iterate(pos.add(-16, -16, -16), pos.add(16, 16, 16))) {
-                        if (world.getBlockState(pos1).isOf(Registries.BLOCK.get(new Identifier("galosphere", "warped_anchor")))
+                        if (world.getBlockState(pos1).isOf(Registries.BLOCK.get(Identifier.of("galosphere", "warped_anchor")))
                                 && world.getBlockState(pos1.up()).isAir()
                                 && world.getBlockState(pos1).getLuminance() > 0) {
                             g = pos1.getX() + 0.5f;

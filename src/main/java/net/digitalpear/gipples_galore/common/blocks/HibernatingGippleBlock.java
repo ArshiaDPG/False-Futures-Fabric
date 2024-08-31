@@ -1,7 +1,7 @@
 package net.digitalpear.gipples_galore.common.blocks;
 
 import net.digitalpear.gipples_galore.common.entities.gipple.GippleEntity;
-import net.digitalpear.gipples_galore.init.GGEntities;
+import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -32,7 +32,7 @@ public class HibernatingGippleBlock extends Block {
     }
 
     private void spawnGipple(ServerWorld world, BlockPos pos) {
-        GippleEntity gipple = GGEntities.GIPPLE.create(world);
+        GippleEntity gipple = GGEntityTypes.GIPPLE.create(world);
         gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.25D, (double) pos.getZ() + 0.5D, 0.0F, 0.0f);
         world.spawnEntity(gipple);
     }

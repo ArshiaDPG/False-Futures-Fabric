@@ -33,8 +33,7 @@ public class GGBiomeTagProvider extends FabricTagProvider<Biome> {
                 .forceAddTag(BiomeTags.IS_OCEAN)
                 .forceAddTag(BiomeTags.IS_DEEP_OCEAN)
                 .forceAddTag(BiomeTags.VILLAGE_SNOWY_HAS_STRUCTURE)
-                .addOptional(new Identifier("galosphere:lichen_caves")
-                );
+                .addOptional(Identifier.tryParse("galosphere:lichen_caves"));
 
     }
 }

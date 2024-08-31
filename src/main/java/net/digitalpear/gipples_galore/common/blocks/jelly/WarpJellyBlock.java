@@ -28,7 +28,7 @@ public class WarpJellyBlock extends JellyBlock{
                 BlockPos blockPos = pos.add(world.random.nextInt(16) - world.random.nextInt(16), world.random.nextInt(8) - world.random.nextInt(8), world.random.nextInt(16) - world.random.nextInt(16));
                 if (FabricLoader.getInstance().isModLoaded("galosphere")){
                     for (BlockPos pos1 : BlockPos.iterate(pos.add(-16, -16, -16), pos.add(16, 16, 16))) {
-                        if (world.getBlockState(pos1).isOf(Registries.BLOCK.get(new Identifier("galosphere", "warped_anchor")))
+                        if (world.getBlockState(pos1).isOf(Registries.BLOCK.get(Identifier.of("galosphere", "warped_anchor")))
                                 && world.getBlockState(pos1.up()).isAir()
                                 && world.getBlockState(pos1).getLuminance() > 0) {
                             blockPos = pos1.up();

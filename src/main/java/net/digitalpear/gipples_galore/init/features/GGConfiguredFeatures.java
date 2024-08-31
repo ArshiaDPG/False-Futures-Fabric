@@ -29,7 +29,7 @@ public class GGConfiguredFeatures {
 
     public static List<RegistryKey<ConfiguredFeature<?, ?>>> configuredFeatures = new ArrayList<>();
     public static RegistryKey<ConfiguredFeature<?, ?>> of(String id) {
-        RegistryKey<ConfiguredFeature<?, ?>> placed = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, new Identifier(GipplesGalore.MOD_ID, id));
+        RegistryKey<ConfiguredFeature<?, ?>> placed = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, GipplesGalore.id(id));
         configuredFeatures.add(placed);
         return placed;
     }

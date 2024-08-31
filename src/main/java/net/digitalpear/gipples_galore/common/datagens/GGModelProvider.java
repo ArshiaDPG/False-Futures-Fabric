@@ -4,11 +4,11 @@ import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.common.blocks.jelly.JellyBlock;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.digitalpear.gipples_galore.init.GGItems;
+import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
-import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -18,11 +18,9 @@ import java.util.Optional;
 
 public class GGModelProvider extends FabricModelProvider {
 
-
-    public static final Model JELLY_HALF_SIDE = new Model(Optional.of(new Identifier(GipplesGalore.MOD_ID, "block/" + "jelly_half_side")), Optional.of("_half_side"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
-    public static final Model JELLY_HALF_UPPER = new Model(Optional.of(new Identifier(GipplesGalore.MOD_ID, "block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
-    public static final Model JELLY_HALF_LOWER = new Model(Optional.of(new Identifier(GipplesGalore.MOD_ID, "block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
-
+    public static final Model JELLY_HALF_SIDE = new Model(Optional.of(GipplesGalore.id("block/" + "jelly_half_side")), Optional.of("_half_side"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
+    public static final Model JELLY_HALF_UPPER = new Model(Optional.of(GipplesGalore.id("block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
+    public static final Model JELLY_HALF_LOWER = new Model(Optional.of(GipplesGalore.id("block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
 
     public GGModelProvider(FabricDataOutput output) {
         super(output);
@@ -34,22 +32,15 @@ public class GGModelProvider extends FabricModelProvider {
         registerGelatinLayers(blockStateModelGenerator);
         registerAllJellies(blockStateModelGenerator);
 
-        registerBlockSet(blockStateModelGenerator, GGBlocks.GELATITE, GGBlocks.GELATITE_STAIRS, GGBlocks.GELATITE_SLAB,
-                GGBlocks.GELATITE_WALL, GGBlocks.GELATITE_PRESSURE_PLATE, GGBlocks.GELATITE_BUTTON);
-        blockStateModelGenerator.registerSimpleCubeAll(GGBlocks.CHISELED_GELATITE_BRICKS);
-        registerBrickBlockSet(blockStateModelGenerator, GGBlocks.GELATITE_BRICKS, GGBlocks.GELATITE_BRICK_STAIRS, GGBlocks.GELATITE_BRICK_SLAB,
-                GGBlocks.GELATITE_BRICK_WALL);
-        registerBlockSet(blockStateModelGenerator, GGBlocks.AMOEBALITH, GGBlocks.AMOEBALITH_STAIRS, GGBlocks.AMOEBALITH_SLAB,
-                GGBlocks.AMOEBALITH_WALL, GGBlocks.AMOEBALITH_PRESSURE_PLATE, GGBlocks.AMOEBALITH_BUTTON);
-        blockStateModelGenerator.registerSimpleCubeAll(GGBlocks.CHISELED_AMOEBALITH_BRICKS);
-        registerBrickBlockSet(blockStateModelGenerator, GGBlocks.AMOEBALITH_BRICKS, GGBlocks.AMOEBALITH_BRICK_STAIRS, GGBlocks.AMOEBALITH_BRICK_SLAB,
-                GGBlocks.AMOEBALITH_BRICK_WALL);
-
+        registerStoneSet(blockStateModelGenerator, GGBlocks.GELATITE_SET);
+        registerStoneSet(blockStateModelGenerator, GGBlocks.GELATITE_BRICK_SET);
+        registerStoneSet(blockStateModelGenerator, GGBlocks.AMOEBALITH_SET);
+        registerStoneSet(blockStateModelGenerator, GGBlocks.AMOEBALITH_BRICK_SET);
 
         blockStateModelGenerator.registerNorthDefaultHorizontalRotatable(GGBlocks.HIBERNATING_GIPPLE, TextureMap.sideEnd(GGBlocks.HIBERNATING_GIPPLE));
 
-        blockStateModelGenerator.registerParentedItemModel(GGItems.GIPPLE_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
-        blockStateModelGenerator.registerParentedItemModel(GGItems.ANEUPLOIDIAN_SPAWN_EGG, new Identifier("item/template_spawn_egg"));
+        blockStateModelGenerator.registerParentedItemModel(GGItems.GIPPLE_SPAWN_EGG, Identifier.ofVanilla("item/template_spawn_egg"));
+        blockStateModelGenerator.registerParentedItemModel(GGItems.ANEUPLOIDIAN_SPAWN_EGG, Identifier.ofVanilla("item/template_spawn_egg"));
 
         blockStateModelGenerator.registerSingleton(GGBlocks.GELATIN_BLOCK, (new TextureMap()).put(TextureKey.ALL, TextureMap.getId(GGBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL);
 
@@ -107,10 +98,10 @@ public class GGModelProvider extends FabricModelProvider {
     }
 
     private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
-        Identifier identifier = Models.CUBE_ALL.upload(new Identifier(GipplesGalore.MOD_ID, "block/gelatin_height16"), TextureMap.all(new Identifier(GipplesGalore.MOD_ID, "block/gelatin")), blockStateModelGenerator.modelCollector);
+        Identifier identifier = Models.CUBE_ALL.upload(GipplesGalore.id("block/gelatin_height16"), TextureMap.all(GipplesGalore.id("block/gelatin")), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(GGBlocks.GELATIN_LAYER).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register((height) -> {
             BlockStateVariant blockStateVariant = BlockStateVariant.create();
-            VariantSetting variantSettings = VariantSettings.MODEL;
+            VariantSetting<Identifier> variantSettings = VariantSettings.MODEL;
             Identifier stateName;
             if (height < 8) {
                 Block block = GGBlocks.GELATIN_LAYER;
@@ -130,61 +121,7 @@ public class GGModelProvider extends FabricModelProvider {
                 ModelIds.getBlockModelId(GGBlocks.GIPPLEPAD)));
     }
 
-    public static void registerBrickBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall){
-        blockStateModelGenerator.registerSimpleCubeAll(base);
-        createStairs(blockStateModelGenerator, base, stairs);
-        createSlab(blockStateModelGenerator, base, slab);
-        createWall(blockStateModelGenerator, base, wall);
+    public static void registerStoneSet(BlockStateModelGenerator blockStateModelGenerator, StoneSet stoneSet){
+        blockStateModelGenerator.registerCubeAllModelTexturePool(stoneSet.getBase()).family(stoneSet.getBlockFamily());
     }
-
-    public static void registerBlockSet(BlockStateModelGenerator blockStateModelGenerator, Block base, Block stairs, Block slab, Block wall, Block pressurePlate, Block button){
-        blockStateModelGenerator.registerSimpleCubeAll(base);
-        createStairs(blockStateModelGenerator, base, stairs);
-        createSlab(blockStateModelGenerator, base, slab);
-        createWall(blockStateModelGenerator, base, wall);
-        makePressurePlate(blockStateModelGenerator, base, pressurePlate);
-        makeButton(blockStateModelGenerator, base, button);
-    }
-
-    public static void createStairs(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block stairs){
-        Identifier STAIRS = Models.STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier INNER_STAIRS = Models.INNER_STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier OUTER_STAIRS = Models.OUTER_STAIRS.upload(stairs, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairs,
-                INNER_STAIRS, STAIRS, OUTER_STAIRS));
-    }
-
-    public static void createSlab(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block slab){
-        Identifier SLAB = Models.SLAB.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier SLAB_TOP = Models.SLAB_TOP.upload(slab, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(slab,
-                SLAB, SLAB_TOP, new Identifier(GipplesGalore.MOD_ID, "block/" + Registries.BLOCK.getId(textureBase).getPath())));
-    }
-
-    public static void createWall(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block wall){
-        Identifier WALL_INVENTORY = Models.WALL_INVENTORY.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier TEMPLATE_WALL_POST = Models.TEMPLATE_WALL_POST.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier TEMPLATE_WALL_SIDE = Models.TEMPLATE_WALL_SIDE.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier TEMPLATE_WALL_SIDE_TALL = Models.TEMPLATE_WALL_SIDE_TALL.upload(wall, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createWallBlockState(wall,
-                TEMPLATE_WALL_POST, TEMPLATE_WALL_SIDE, TEMPLATE_WALL_SIDE_TALL));
-        blockStateModelGenerator.registerParentedItemModel(wall.asItem(), WALL_INVENTORY);
-    }
-    public static void makeButton(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block button){
-        Identifier BUTTON = Models.BUTTON.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier BUTTON_PRESSED = Models.BUTTON_PRESSED.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier BUTTON_INVENTORY = Models.BUTTON_INVENTORY.upload(button, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createButtonBlockState(button,
-                BUTTON, BUTTON_PRESSED));
-        blockStateModelGenerator.registerParentedItemModel(button.asItem(), BUTTON_INVENTORY);
-    }
-
-    public static void makePressurePlate(BlockStateModelGenerator blockStateModelGenerator, Block textureBase, Block plate){
-        Identifier PRESSURE_PLATE_DOWN = Models.PRESSURE_PLATE_DOWN.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        Identifier PRESSURE_PLATE_UP = Models.PRESSURE_PLATE_UP.upload(plate, TextureMap.all(textureBase), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createPressurePlateBlockState(plate,
-                PRESSURE_PLATE_UP, PRESSURE_PLATE_DOWN));
-    }
-
-
 }

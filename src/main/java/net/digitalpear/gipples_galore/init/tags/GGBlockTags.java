@@ -14,7 +14,7 @@ public class GGBlockTags {
     public static final TagKey<Block> GELATINOUS_GROWTH_SUPPORTING = of("gelatinous_growth_supporting");
 
     private static TagKey<Block> of(String id) {
-        return TagKey.of(RegistryKeys.BLOCK, new Identifier(GipplesGalore.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BLOCK, GipplesGalore.id(id));
     }
 
 

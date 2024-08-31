@@ -133,6 +133,32 @@
      	"gipples_galore:entity/gipple/death2"
      ]
   },
+  "entity.aneuploidian.ambient": {
+      "category": "neutral",
+  	"subtitle": "subtitles.gipples_galore.aneuploidian.ambient",
+      "sounds": [
+        "gipples_galore:entity/aneuploidian/ambient1",
+  	  "gipples_galore:entity/aneuploidian/ambient2",
+  	  "gipples_galore:entity/aneuploidian/ambient3",
+  	  "gipples_galore:entity/aneuploidian/ambient4"
+      ]
+    },
+    "entity.aneuploidian.hurt": {
+        "category": "neutral",
+        "subtitle": "subtitles.gipples_galore.aneuploidian.hurt",
+        "sounds": [
+          "gipples_galore:entity/aneuploidian/hurt1",
+            "gipples_galore:entity/aneuploidian/hurt2"
+      ]
+    },
+       "entity.aneuploidian.death": {
+       "category": "neutral",
+       "subtitle": "subtitles.gipples_galore.aneuploidian.death",
+         "sounds": [
+          "gipples_galore:entity/aneuploidian/death1",
+       	"gipples_galore:entity/aneuploidian/death2"
+       ]
+    },
   "music.record.gipplecore": {
       "category": "master",
       "sounds": [

@@ -14,14 +14,16 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class GGRecipeProvider extends FabricRecipeProvider {
 
 
-    public GGRecipeProvider(FabricDataOutput output) {
-        super(output);
+    public GGRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, registriesFuture);
     }
 
     @Override
@@ -73,6 +75,7 @@ public class GGRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(GGBlocks.AMOEBALITH), conditionsFromItem(GGBlocks.AMOEBALITH)).offerTo(exporter);
 
         FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, GGBlocks.AMOEBALITH_BRICKS, GGBlocks.CHISELED_AMOEBALITH_BRICKS);
+
         makeStoneRecipes(exporter, GGBlocks.GELATITE, GGBlocks.GELATITE_STAIRS, GGBlocks.GELATITE_SLAB, GGBlocks.GELATITE_BUTTON,
                 GGBlocks.GELATITE_PRESSURE_PLATE, GGBlocks.GELATITE_WALL);
         makeStoneRecipes(exporter, GGBlocks.GELATITE_BRICKS, GGBlocks.GELATITE_BRICK_STAIRS, GGBlocks.GELATITE_BRICK_SLAB, GGBlocks.GELATITE_BRICK_WALL);
@@ -92,7 +95,6 @@ public class GGRecipeProvider extends FabricRecipeProvider {
     }
 
 
-
     public static void offerJellyRecipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input) {
         ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, output, 2)
                 .input('X', input)
@@ -103,55 +105,35 @@ public class GGRecipeProvider extends FabricRecipeProvider {
                 .group("jellies")
                 .criterion("has_gelatin", conditionsFromItem(GGItems.GELATIN)).offerTo(exporter);
     }
-    public static void makeStairs(RecipeExporter exporter, Block input, Block output, String criterion){
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
-                .input('C', input)
-                .pattern("C  ")
-                .pattern("CC ")
-                .pattern("CCC")
-                .criterion(criterion, conditionsFromItem(input)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, output, input);
-    }
-    public static void makeSlab(RecipeExporter exporter, Block input, Block output, String criterion){
-        FabricRecipeProvider.createSlabRecipe(RecipeCategory.BUILDING_BLOCKS, output, Ingredient.ofItems(input)).criterion(criterion, conditionsFromItem(input)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter,RecipeCategory.BUILDING_BLOCKS, output, input, 2);
-    }
-    public static void makeWall(RecipeExporter exporter, Block input, Block output, String criterion){
-        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, output, 6)
-                .input('C', input)
-                .pattern("CCC")
-                .pattern("CCC")
-                .criterion(criterion, conditionsFromItem(input)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.DECORATIONS, output, input);
-    }
 
-    public static void makeButton(RecipeExporter exporter, Block input, Block output, String criterion){
+    public static void makeButton(RecipeExporter exporter, ItemConvertible input, ItemConvertible output, String criterion){
         ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE,output)
                 .input(input)
                 .criterion(criterion, conditionsFromItem(input)).offerTo(exporter);
         FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.REDSTONE, output, input);
     }
-    public static void makePressurePlate(RecipeExporter exporter, Block input, Block output, String criterion){
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE,output)
-                .input('C', input)
-                .pattern("CC")
-                .criterion(criterion, conditionsFromItem(input)).offerTo(exporter);
-        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.REDSTONE, output, input);
-    }
 
-    public static void makeStoneRecipes(RecipeExporter exporter, Block input, Block stairs, Block slab, Block button, Block pressurePlate, Block wall){
-        String criteria = "has_" + Registries.BLOCK.getId(input).getPath();
-        makeStairs(exporter, input, stairs, criteria);
-        makeSlab(exporter, input, slab, criteria);
+
+    public static void makeStoneRecipes(RecipeExporter exporter, ItemConvertible input, ItemConvertible stairs, ItemConvertible slab, ItemConvertible button, ItemConvertible pressurePlate, ItemConvertible wall){
+        String criteria = "has_" + Registries.ITEM.getId(input.asItem()).getPath();
+
+        makeStoneRecipes(exporter, input, stairs, slab, wall);
+
         makeButton(exporter, input, button, criteria);
-        makePressurePlate(exporter, input, pressurePlate, criteria);
-        makeWall(exporter, input, wall, criteria);
-    }
-    public static void makeStoneRecipes(RecipeExporter exporter, Block input, Block stairs, Block slab, Block wall){
-        String criteria = "has_" + Registries.BLOCK.getId(input).getPath();
-        makeStairs(exporter, input, stairs, criteria);
-        makeSlab(exporter, input, slab, criteria);
-        makeWall(exporter, input, wall, criteria);
-    }
 
+        FabricRecipeProvider.offerPressurePlateRecipe(exporter, pressurePlate, input);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.REDSTONE, pressurePlate, input);
+    }
+    public static void makeStoneRecipes(RecipeExporter exporter, ItemConvertible input, ItemConvertible stairs, ItemConvertible slab, ItemConvertible wall){
+        String criteria = "has_" + Registries.ITEM.getId(input.asItem()).getPath();
+
+        FabricRecipeProvider.createStairsRecipe(stairs, Ingredient.ofItems(input)).criterion(criteria, conditionsFromItem(input)).offerTo(exporter);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, stairs, input);
+
+        FabricRecipeProvider.offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, slab, input);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter,RecipeCategory.BUILDING_BLOCKS, slab, input, 2);
+
+        FabricRecipeProvider.offerWallRecipe(exporter, RecipeCategory.DECORATIONS, wall, input);
+        FabricRecipeProvider.offerStonecuttingRecipe(exporter, RecipeCategory.DECORATIONS, wall, input);
+    }
 }

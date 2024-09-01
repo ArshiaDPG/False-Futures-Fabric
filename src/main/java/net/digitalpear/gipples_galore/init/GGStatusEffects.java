@@ -9,10 +9,10 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class GGStatusEffects {
-    public static final RegistryEntry<StatusEffect> GIPPLE = register("gipple", new GippleStatusEffect());
+    public static final RegistryEntry<StatusEffect> GIPPLE = register(GipplesGalore.gippleID(), new GippleStatusEffect());
 
-    private static RegistryEntry<StatusEffect> register(String name, StatusEffect effect){
-        return Registry.registerReference(Registries.STATUS_EFFECT, GipplesGalore.id(name), effect);
+    private static RegistryEntry<StatusEffect> register(Identifier name, StatusEffect effect){
+        return Registry.registerReference(Registries.STATUS_EFFECT, name, effect);
     }
     public static void init() {
 

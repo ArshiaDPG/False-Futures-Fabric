@@ -1,0 +1,39 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "has_effects": {
+      "conditions": {
+        "effects": {
+          "gipples_galore:gipple": {},
+          "minecraft:infested": {},
+          "minecraft:oozing": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.husbandry.affordable_housing.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:oozing"
+        }
+      },
+      "count": 1,
+      "id": "minecraft:lingering_potion"
+    },
+    "title": {
+      "translate": "advancements.husbandry.affordable_housing.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_effects"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

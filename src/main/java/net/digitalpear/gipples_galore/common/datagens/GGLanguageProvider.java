@@ -90,6 +90,9 @@ public class GGLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("advancements.husbandry.jellies.title", "Sing a rainbow!");
         translationBuilder.add("advancements.husbandry.jellies.description", "Have one of all jelly flavours in your inventory.");
 
+        translationBuilder.add("advancements.husbandry.affordable_housing.title", "Affordable Housing!");
+        translationBuilder.add("advancements.husbandry.affordable_housing.description", "Have the Infested, Oozing and Gipple status effects applied at the same time.");
+
 
         translationBuilder.add("subtitles.gipples_galore.gipple.ambient", "Gipple vibrates");
         translationBuilder.add("subtitles.gipples_galore.gipple.hurt", "Gipple hurts");

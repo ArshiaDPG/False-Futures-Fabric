@@ -1,21 +1,32 @@
 package net.digitalpear.gipples_galore.common.datagens;
 
+import com.google.common.collect.ImmutableMap;
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.init.GGBlocks;
+import net.digitalpear.gipples_galore.init.GGStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.*;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
+import net.minecraft.advancement.criterion.Criterion;
+import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.potion.Potions;
+import net.minecraft.predicate.entity.EntityEffectPredicate;
+import net.minecraft.registry.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -29,6 +40,8 @@ public class GGAdvancementProvider extends FabricAdvancementProvider {
     @Override
     public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
         AdvancementEntry dummy = Advancement.Builder.create().display(Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), Identifier.ofVanilla("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
+
+
         var jellies = Advancement.Builder.create()
                 .display(
                         GGBlocks.PLAIN_JELLY, // The display icon
@@ -41,11 +54,25 @@ public class GGAdvancementProvider extends FabricAdvancementProvider {
                         false // Hidden in the advancement tab
                 )
                 .parent(dummy);
-
         for(Block jelly : GGBlocks.JELLY.keySet()) {
             jellies.criterion("collected_jelly_" + Registries.BLOCK.getId(jelly).getPath().split("_")[0], InventoryChangedCriterion.Conditions.items(jelly));
         }
         Advancement jelliesAdvancement = jellies.build(consumer, GipplesGalore.MOD_ID + ":husbandry/jellies").value();
 
+
+        var affordableHousing = Advancement.Builder.create()
+                .criterion("has_effects", EffectsChangedCriterion.Conditions.create(new EntityEffectPredicate.Builder().addEffect(GGStatusEffects.GIPPLE).addEffect(StatusEffects.INFESTED).addEffect(StatusEffects.OOZING)))
+                .display(
+                        PotionContentsComponent.createStack(Items.LINGERING_POTION, Potions.OOZING), // The display icon
+                        Text.translatable("advancements.husbandry.affordable_housing.title"), // The title
+                        Text.translatable("advancements.husbandry.affordable_housing.description"), // The description
+                        null,
+                        AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                        true, // Show toast top right
+                        true, // Announce to chat
+                        false // Hidden in the advancement tab
+                )
+                .parent(dummy);
+        Advancement affordableHousingAdvancement = affordableHousing.build(consumer, GipplesGalore.MOD_ID + ":husbandry/affordable_housing").value();
     }
 }

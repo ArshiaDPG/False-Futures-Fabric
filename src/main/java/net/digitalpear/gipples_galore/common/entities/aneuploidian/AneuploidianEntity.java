@@ -2,6 +2,7 @@ package net.digitalpear.gipples_galore.common.entities.aneuploidian;
 
 import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.digitalpear.gipples_galore.init.GGSoundEvents;
+import net.digitalpear.gipples_galore.init.GGStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Flutterer;
@@ -16,6 +17,7 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
@@ -106,6 +108,11 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
     @Override
     protected SoundEvent getDeathSound() {
         return GGSoundEvents.ENTITY_ANEUPLOIDIAN_DEATH;
+    }
+
+    @Override
+    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
+        return effect.getEffectType() != GGStatusEffects.GIPPLE;
     }
 
     @Override

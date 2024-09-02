@@ -31,15 +31,13 @@
       "net.digitalpear.gipples_galore.GGDatagens"
     ]
   },
-
-          "mixins": [
-            "gipples_galore.mixins.json"
-      ],
-    
+  "mixins": [
+    "gipples_galore.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.15.0",
     "fabric": "*",
     "minecraft": ">=1.21",
-    "geckolib": ">=4.6.2"
+    "geckolib": ">=4.5.8"
   }
 }

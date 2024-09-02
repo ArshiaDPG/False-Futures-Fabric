@@ -72,6 +72,7 @@ public class GGLanguageProvider extends FabricLanguageProvider {
         autoName(translationBuilder, GGEntityTypes.ANEUPLOIDIAN);
 
         autoName(translationBuilder, GGBlocks.HIBERNATING_GIPPLE);
+        translationBuilder.add(GGBlocks.HIBERNATING_GIPPLE.getTranslationKey() + ".description", "Contains a hibernating gipple which can be woken up by breaking the block.");
 
         autoName(translationBuilder, GGItems.GELATIN);
 
@@ -109,6 +110,7 @@ public class GGLanguageProvider extends FabricLanguageProvider {
 
 
         translationBuilder.add("effect.gipples_galore.gipple", "Gipple");
+        translationBuilder.add("effect.gipples_galore.gipple.description", "Will slowly turn the host into a gipple. Side effects may include auditory hallucinations.");
 
 
         translationBuilder.add("painting.gipples_galore.gipple.title", "Gipple");

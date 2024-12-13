@@ -5,10 +5,10 @@ import net.digitalpear.gipples_galore.common.blocks.jelly.JellyBlock;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.digitalpear.gipples_galore.init.GGItems;
 import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.*;
+import net.minecraft.client.data.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -39,17 +39,18 @@ public class GGModelProvider extends FabricModelProvider {
 
         blockStateModelGenerator.registerNorthDefaultHorizontalRotatable(GGBlocks.HIBERNATING_GIPPLE, TextureMap.sideEnd(GGBlocks.HIBERNATING_GIPPLE));
 
-        blockStateModelGenerator.registerParentedItemModel(GGItems.GIPPLE_SPAWN_EGG, Identifier.ofVanilla("item/template_spawn_egg"));
-        blockStateModelGenerator.registerParentedItemModel(GGItems.ANEUPLOIDIAN_SPAWN_EGG, Identifier.ofVanilla("item/template_spawn_egg"));
+        blockStateModelGenerator.registerSingleton(GGBlocks.GELATIN_BLOCK, TexturedModel.makeFactory(block -> new TextureMap().put(TextureKey.ALL, TextureMap.getId(GGBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL));
 
-        blockStateModelGenerator.registerSingleton(GGBlocks.GELATIN_BLOCK, (new TextureMap()).put(TextureKey.ALL, TextureMap.getId(GGBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL);
-
-        blockStateModelGenerator.registerFlowerPotPlant(GGBlocks.GELATINOUS_GROWTH, GGBlocks.POTTED_GELATINOUS_GROWTH, BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerFlowerPotPlant(GGBlocks.GELATINOUS_GROWTH, GGBlocks.POTTED_GELATINOUS_GROWTH, BlockStateModelGenerator.CrossType.NOT_TINTED);
     }
 
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        GGItems.eggColorMap.forEach((item, integerIntegerPair) -> {
+            itemModelGenerator.registerSpawnEgg(item, integerIntegerPair.getLeft(), integerIntegerPair.getRight());
+        });
+
         itemModelGenerator.register(GGItems.GELATIN, Models.GENERATED);
         itemModelGenerator.register(GGItems.GAPPLE, Models.GENERATED);
         itemModelGenerator.register(GGItems.GIPPLE_BUCKET, Models.GENERATED);

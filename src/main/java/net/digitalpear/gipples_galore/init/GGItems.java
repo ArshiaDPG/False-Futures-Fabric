@@ -16,13 +16,18 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.Rarity;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public class GGItems {
+
+    public static Map<Item, Pair<Integer, Integer>> eggColorMap = new HashMap<>();
     private static RegistryKey<Item> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.ITEM, GipplesGalore.id(id));
     }
@@ -35,13 +40,15 @@ public class GGItems {
     public static Item register(String itemID, Item.Settings settings){
         return Items.register(keyOf(itemID), Item::new, settings);
     }
-    public static Item createSpawnEgg(EntityType<? extends MobEntity> type, int PrimaryColor, int SecondaryColor){
-        return register(Registries.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", settings -> new SpawnEggItem(type, PrimaryColor, SecondaryColor, settings));
+    public static Item createSpawnEgg(EntityType<? extends MobEntity> type, Integer PrimaryColor, Integer secondaryColor){
+        Item egg = register(Registries.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", settings -> new SpawnEggItem(type, settings));
+        eggColorMap.put(egg, new Pair<>(PrimaryColor, secondaryColor));
+        return egg;
     }
     public static Item createDisc(String name, RegistryKey<JukeboxSong> song){
         return register("music_disc_" + name, new Item.Settings().rarity(Rarity.RARE).maxCount(1).jukeboxPlayable(song));
     }
-    public static Item createBucketedMob(EntityType<?> type){
+    public static Item createBucketedMob(EntityType<? extends MobEntity> type){
         return register(Registries.ENTITY_TYPE.getId(type).getPath() + "_bucket", settings -> new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, settings), new Item.Settings().recipeRemainder(Items.WATER_BUCKET).maxCount(1));
     }
 

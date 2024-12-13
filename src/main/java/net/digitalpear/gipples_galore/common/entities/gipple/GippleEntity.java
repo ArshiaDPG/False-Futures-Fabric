@@ -98,7 +98,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         BirdNavigation birdNavigation = new BirdNavigation(this, world);
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(false);
-        birdNavigation.setCanEnterOpenDoors(true);
         return birdNavigation;
     }
 

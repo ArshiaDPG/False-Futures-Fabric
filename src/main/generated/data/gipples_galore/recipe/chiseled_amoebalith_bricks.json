@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "X": {
-      "item": "gipples_galore:amoebalith_brick_slab"
-    }
+    "X": "gipples_galore:amoebalith_brick_slab"
   },
   "pattern": [
     "X",

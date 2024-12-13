@@ -22,8 +22,8 @@ public class GipplesGalore implements ModInitializer {
     }
     @Override
     public void onInitialize() {
-        GGItems.init();
         GGBlocks.init();
+        GGItems.init();
         GGEntityTypes.init();
         GGSoundEvents.init();
         GGFeatures.init();

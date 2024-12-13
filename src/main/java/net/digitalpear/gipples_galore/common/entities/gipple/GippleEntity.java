@@ -23,12 +23,13 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -43,11 +44,8 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.animation.PlayState;
-import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
@@ -65,7 +63,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlay("gipple.eat");
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
     protected static final RawAnimation ON_GROUND_ANIM = RawAnimation.begin().thenLoop("gipple.floor");
-    private static final Ingredient GIPPLE_FOOD = Ingredient.fromTag(GGItemTags.GIPPLE_FOOD);
 
     public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
         super(entityType, world);
@@ -74,12 +71,12 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
 
     public static DefaultAttributeContainer.Builder createGippleAttributes() {
-
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2);
+                .add(EntityAttributes.TEMPT_RANGE, 10)
+                .add(EntityAttributes.MAX_HEALTH, 6.0D)
+                .add(EntityAttributes.FLYING_SPEED, 0.4)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.2)
+                .add(EntityAttributes.KNOCKBACK_RESISTANCE, 0.2);
     }
 
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
@@ -93,7 +90,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.goalSelector.add(2, new GippleFlyAroundGoal());
         this.goalSelector.add(3, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.25D));
-        this.goalSelector.add(1, new GippleTemptGoal(this, GIPPLE_FOOD));
+        this.goalSelector.add(1, new GippleTemptGoal(this, GGItemTags.GIPPLE_FOOD));
     }
 
     @Override
@@ -108,8 +105,9 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return GGEntityTypes.GIPPLE.create(world);
+        return GGEntityTypes.GIPPLE.create(world, SpawnReason.BREEDING);
     }
+
 
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
@@ -174,7 +172,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         if (itemInHand.isOf(Items.WATER_BUCKET)) {
             player.swingHand(hand);
             Bucketable.tryBucket(player, hand, this);
-        } else if (isFood(itemInHand)) {
+        } else if (itemInHand.isIn(GGItemTags.GIPPLE_FOOD)) {
             if (!this.isBaby()) {
                 if (!this.isLuminous()) {
                     if (this.getHungryCountdown() == 0) {
@@ -187,7 +185,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
                 }
             } else {
                 this.growUp(AnimalEntity.toGrowUpAge(-getBreedingAge()), true);
-                return ActionResult.success(this.getWorld().isClient);
+                return ActionResult.SUCCESS_SERVER.noIncrementStat();
             }
 
             if (!player.getAbilities().creativeMode) {
@@ -203,7 +201,8 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         Random random = this.getRandom();
         World world = this.getWorld();
 
-        boolean spawnAneuploidianNotGipple = ((world.getGameRules().getInt(GGGameRules.GIPPLE_MUTATION) * 0.01) + ((float) world.getDifficulty().getId() / 50)) > random.nextFloat() && world.getDifficulty() != Difficulty.PEACEFUL;
+
+        boolean spawnAneuploidianNotGipple = ((world.getServer().getGameRules().getInt(GGGameRules.GIPPLE_MUTATION) * 0.01) + ((float) world.getDifficulty().getId() / 50)) > random.nextFloat() && world.getDifficulty() != Difficulty.PEACEFUL;
 
         if (spawnAneuploidianNotGipple){
             spawnAneuploidian();
@@ -227,7 +226,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.discard();
     }
     public void spawnAneuploidian(){
-        AneuploidianEntity aneuploidian = GGEntityTypes.ANEUPLOIDIAN.create(getWorld());
+        AneuploidianEntity aneuploidian = GGEntityTypes.ANEUPLOIDIAN.create(getWorld(), SpawnReason.CONVERSION);
         if (aneuploidian != null) {
             if (this.isPersistent()) {
                 aneuploidian.setPersistent();
@@ -240,7 +239,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
 
     public void spawnGipple(Random random) {
-        GippleEntity gipple = GGEntityTypes.GIPPLE.create(this.getWorld());
+        GippleEntity gipple = GGEntityTypes.GIPPLE.create(this.getWorld(), SpawnReason.CONVERSION);
         if (gipple != null) {
             if (this.isPersistent()) {
                 gipple.setPersistent();
@@ -257,9 +256,9 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
     }
 
-    public boolean isFood(ItemStack pStack) {
-        return GIPPLE_FOOD.test(pStack);
-    }
+//    public boolean isFood(ItemStack pStack) {
+//        return GIPPLE_FOOD.test(pStack);
+//    }
 
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
@@ -563,8 +562,8 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     static class GippleTemptGoal extends TemptGoal {
         public final GippleEntity mob;
 
-        public GippleTemptGoal(GippleEntity mob, Ingredient food) {
-            super(mob, 1.25, food, false);
+        public GippleTemptGoal(GippleEntity mob, TagKey<Item> tagKey) {
+            super(mob, 1.25, stack -> stack.isIn(tagKey), false);
             this.mob = mob;
         }
 

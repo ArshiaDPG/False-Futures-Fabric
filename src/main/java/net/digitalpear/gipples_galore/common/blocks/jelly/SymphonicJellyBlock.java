@@ -59,7 +59,7 @@ public class SymphonicJellyBlock extends JellyBlock {
                 }
             }
 
-            player.getItemCooldownManager().set(Item.fromBlock(this), 20);
+            player.getItemCooldownManager().set(Item.fromBlock(this).getDefaultStack(), 20);
         }
     }
 }

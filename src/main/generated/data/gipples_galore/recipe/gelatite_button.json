@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "gipples_galore:gelatite"
-    }
+    "gipples_galore:gelatite"
   ],
   "result": {
     "count": 1,

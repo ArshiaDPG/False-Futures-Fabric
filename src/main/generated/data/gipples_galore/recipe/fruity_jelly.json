@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "jellies",
   "key": {
-    "#": {
-      "item": "gipples_galore:gelatin"
-    },
-    "X": {
-      "item": "minecraft:melon_slice"
-    }
+    "#": "gipples_galore:gelatin",
+    "X": "minecraft:melon_slice"
   },
   "pattern": [
     "###",

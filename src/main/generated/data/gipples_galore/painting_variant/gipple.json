@@ -1,5 +1,13 @@
 {
   "asset_id": "gipples_galore:gipple",
+  "author": {
+    "color": "gray",
+    "translate": "painting.gipples_galore.gipple.author"
+  },
   "height": 2,
+  "title": {
+    "color": "yellow",
+    "translate": "painting.gipples_galore.gipple.title"
+  },
   "width": 2
 }

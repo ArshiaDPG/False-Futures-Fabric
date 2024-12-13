@@ -22,7 +22,7 @@ public class GGPlacedFeatureProvider extends FabricDynamicRegistryProvider {
 
 
     private void add(RegistryWrapper.WrapperLookup registries, Entries entries, RegistryKey<PlacedFeature> resourceKey) {
-        RegistryWrapper.Impl<PlacedFeature> configuredFeatureRegistryLookup = registries.getWrapperOrThrow(RegistryKeys.PLACED_FEATURE);
+        RegistryWrapper.Impl<PlacedFeature> configuredFeatureRegistryLookup = registries.getOrThrow(RegistryKeys.PLACED_FEATURE);
         entries.add(resourceKey, configuredFeatureRegistryLookup.getOrThrow(resourceKey).value());
     }
 

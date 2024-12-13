@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "G": {
-      "item": "gipples_galore:gelatin"
-    },
-    "S": {
-      "item": "minecraft:cobblestone"
-    }
+    "G": "gipples_galore:gelatin",
+    "S": "minecraft:cobblestone"
   },
   "pattern": [
     "SG",

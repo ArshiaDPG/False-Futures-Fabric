@@ -1,10 +1,12 @@
 package net.digitalpear.gipples_galore.common.entities.gipple;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
+import net.digitalpear.gipples_galore.common.entities.aneuploidian.AneuploidianEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
+import software.bernie.geckolib.renderer.GeoRenderer;
 
 public class GippleEntityModel<T extends GippleEntity> extends DefaultedEntityGeoModel<T> {
     public static float BLOATED_SCALE = 1.3f;
@@ -20,12 +22,12 @@ public class GippleEntityModel<T extends GippleEntity> extends DefaultedEntityGe
     }
 
     @Override
-    public Identifier getModelResource(T entity) {
+    public Identifier getModelResource(T entity, GeoRenderer<T> renderer) {
         return GipplesGalore.id("geo/gipple.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(T entity) {
+    public Identifier getTextureResource(T entity, GeoRenderer<T> renderer) {
         return GipplesGalore.id("textures/entity/gipple.png");
     }
 

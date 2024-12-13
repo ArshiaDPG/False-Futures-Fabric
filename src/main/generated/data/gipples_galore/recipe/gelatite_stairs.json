@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "gipples_galore:gelatite"
-    }
+    "#": "gipples_galore:gelatite"
   },
   "pattern": [
     "#  ",

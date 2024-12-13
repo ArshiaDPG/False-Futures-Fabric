@@ -22,7 +22,7 @@ public class GGPaintingVariantProvider extends FabricDynamicRegistryProvider {
 
 
     private void add(RegistryWrapper.WrapperLookup registries, Entries entries, RegistryKey<PaintingVariant> resourceKey) {
-        RegistryWrapper.Impl<PaintingVariant> configuredFeatureRegistryLookup = registries.getWrapperOrThrow(RegistryKeys.PAINTING_VARIANT);
+        RegistryWrapper.Impl<PaintingVariant> configuredFeatureRegistryLookup = registries.getOrThrow(RegistryKeys.PAINTING_VARIANT);
         entries.add(resourceKey, configuredFeatureRegistryLookup.getOrThrow(resourceKey).value());
     }
 

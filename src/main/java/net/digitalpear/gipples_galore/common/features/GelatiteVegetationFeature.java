@@ -25,7 +25,7 @@ public class GelatiteVegetationFeature extends Feature<NetherForestVegetationFea
         Random random = context.getRandom();
 
         int i = blockPos.getY();
-        if (i >= structureWorldAccess.getBottomY() + 1 && i + 1 < structureWorldAccess.getTopY()) {
+        if (i >= structureWorldAccess.getBottomY() + 1 && i + 1 < structureWorldAccess.getTopYInclusive()) {
             int j = 0;
 
             for(int spreadLoop = 0; spreadLoop < netherForestVegetationFeatureConfig.spreadWidth * netherForestVegetationFeatureConfig.spreadWidth; ++spreadLoop) {

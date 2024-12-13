@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "gipples_galore:chiseled_amoebalith_bricks"
-  },
+  "ingredient": "gipples_galore:chiseled_amoebalith_bricks",
   "result": {
     "count": 1,
     "id": "gipples_galore:amoebalith_bricks"

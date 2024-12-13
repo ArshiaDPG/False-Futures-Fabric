@@ -22,7 +22,7 @@ public class GGDamageTypeProvider extends FabricDynamicRegistryProvider {
 
 
     private void add(RegistryWrapper.WrapperLookup registries, Entries entries, RegistryKey<DamageType> resourceKey) {
-        RegistryWrapper.Impl<DamageType> configuredFeatureRegistryLookup = registries.getWrapperOrThrow(RegistryKeys.DAMAGE_TYPE);
+        RegistryWrapper.Impl<DamageType> configuredFeatureRegistryLookup = registries.getOrThrow(RegistryKeys.DAMAGE_TYPE);
         entries.add(resourceKey, configuredFeatureRegistryLookup.getOrThrow(resourceKey).value());
     }
 

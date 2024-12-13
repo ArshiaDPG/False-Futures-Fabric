@@ -12,7 +12,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -25,7 +25,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class JellyBlock extends Block {
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final EnumProperty<Direction> FACING = Properties.FACING;
     public static final BooleanProperty HALVED = BooleanProperty.of("halved");
     protected static final VoxelShape FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
@@ -69,7 +69,7 @@ public class JellyBlock extends Block {
             //Add food levels
             player.getHungerManager().add(2, 0.8f);
 
-            world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK.value(), SoundCategory.BLOCKS, 1.0f, 1.0f);
             player.swingHand(hand);
 
             if (state.get(HALVED)) {
@@ -80,7 +80,7 @@ public class JellyBlock extends Block {
             }
             world.setBlockState(pos, finalState, 2);
 
-            if (world.getGameRules().getBoolean(GGGameRules.SHOULD_APPLY_JELLY_EFFECTS)) {
+            if (world.getServer().getGameRules().getBoolean(GGGameRules.SHOULD_APPLY_JELLY_EFFECTS)) {
                 applySpecialEffects(state, finalState, world, pos, player, hand, hit);
             }
 

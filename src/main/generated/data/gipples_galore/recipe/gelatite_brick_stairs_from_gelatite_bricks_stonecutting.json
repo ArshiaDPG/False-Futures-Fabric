@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "gipples_galore:gelatite_bricks"
-  },
+  "ingredient": "gipples_galore:gelatite_bricks",
   "result": {
     "count": 1,
     "id": "gipples_galore:gelatite_brick_stairs"

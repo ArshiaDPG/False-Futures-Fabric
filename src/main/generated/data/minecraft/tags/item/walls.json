@@ -1,8 +1,8 @@
 {
   "values": [
-    "gipples_galore:gelatite_wall",
-    "gipples_galore:gelatite_brick_wall",
-    "gipples_galore:amoebalith_wall",
-    "gipples_galore:amoebalith_brick_wall"
+    "minecraft:air",
+    "minecraft:air",
+    "minecraft:air",
+    "minecraft:air"
   ]
 }

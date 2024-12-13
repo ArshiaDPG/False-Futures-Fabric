@@ -23,7 +23,7 @@ public class GGConfiguredFeatureProvider extends FabricDynamicRegistryProvider {
 
 
     private void add(RegistryWrapper.WrapperLookup registries, Entries entries, RegistryKey<ConfiguredFeature<?, ?>> resourceKey) {
-        RegistryWrapper.Impl<ConfiguredFeature<?, ?>> configuredFeatureRegistryLookup = registries.getWrapperOrThrow(RegistryKeys.CONFIGURED_FEATURE);
+        RegistryWrapper.Impl<ConfiguredFeature<?, ?>> configuredFeatureRegistryLookup = registries.getOrThrow(RegistryKeys.CONFIGURED_FEATURE);
 
         entries.add(resourceKey, configuredFeatureRegistryLookup.getOrThrow(resourceKey).value());
     }

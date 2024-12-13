@@ -1,6 +1,5 @@
 package net.digitalpear.gipples_galore.common.entities.aneuploidian;
 
-import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.digitalpear.gipples_galore.init.GGSoundEvents;
 import net.digitalpear.gipples_galore.init.GGStatusEffects;
 import net.minecraft.block.BlockState;
@@ -45,8 +44,6 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
         this.lookControl = new LookControl(this);
         this.moveControl = new FlightMoveControl(this, 20, true);
         this.experiencePoints = 20;
-
-
     }
 
     @Override
@@ -66,12 +63,12 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
 
     public static DefaultAttributeContainer.Builder createSomethingAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.5D)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.4)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5);
+                .add(EntityAttributes.MAX_HEALTH, 36.0D)
+                .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
+                .add(EntityAttributes.FLYING_SPEED, 0.5D)
+                .add(EntityAttributes.KNOCKBACK_RESISTANCE, 0.4)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0)
+                .add(EntityAttributes.ATTACK_DAMAGE, 5);
     }
 
 

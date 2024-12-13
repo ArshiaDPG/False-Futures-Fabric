@@ -22,7 +22,7 @@ public class GGJukeboxSongProvider extends FabricDynamicRegistryProvider {
 
 
     private void add(RegistryWrapper.WrapperLookup registries, Entries entries, RegistryKey<JukeboxSong> resourceKey) {
-        RegistryWrapper.Impl<JukeboxSong> configuredFeatureRegistryLookup = registries.getWrapperOrThrow(RegistryKeys.JUKEBOX_SONG);
+        RegistryWrapper.Impl<JukeboxSong> configuredFeatureRegistryLookup = registries.getOrThrow(RegistryKeys.JUKEBOX_SONG);
         entries.add(resourceKey, configuredFeatureRegistryLookup.getOrThrow(resourceKey).value());
     }
 

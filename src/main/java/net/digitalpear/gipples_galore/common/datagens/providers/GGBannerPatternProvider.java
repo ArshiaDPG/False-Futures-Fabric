@@ -24,7 +24,7 @@ public class GGBannerPatternProvider extends FabricDynamicRegistryProvider {
 
 
     private void add(RegistryWrapper.WrapperLookup registries, Entries entries, RegistryKey<BannerPattern> resourceKey) {
-        RegistryWrapper.Impl<BannerPattern> configuredFeatureRegistryLookup = registries.getWrapperOrThrow(RegistryKeys.BANNER_PATTERN);
+        RegistryWrapper.Impl<BannerPattern> configuredFeatureRegistryLookup = registries.getOrThrow(RegistryKeys.BANNER_PATTERN);
         entries.add(resourceKey, configuredFeatureRegistryLookup.getOrThrow(resourceKey).value());
     }
 

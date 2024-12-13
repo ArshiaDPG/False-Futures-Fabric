@@ -3,6 +3,7 @@ package net.digitalpear.gipples_galore.init;
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.init.tags.GGBannerPatternItemTags;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.block.Block;
 import net.minecraft.block.jukebox.JukeboxSong;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
@@ -12,33 +13,46 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public class GGItems {
-
-    public static Item register(String itemID, Item item){
-        return Registry.register(Registries.ITEM, GipplesGalore.id(itemID), item);
+    private static RegistryKey<Item> keyOf(String id) {
+        return RegistryKey.of(RegistryKeys.ITEM, GipplesGalore.id(id));
+    }
+    public static Item register(String itemID, Function<Item.Settings, Item> factory, Item.Settings settings){
+        return Items.register(keyOf(itemID), factory, settings);
+    }
+    public static Item register(String itemID, Function<Item.Settings, Item> factory){
+        return Items.register(keyOf(itemID), factory);
+    }
+    public static Item register(String itemID, Item.Settings settings){
+        return Items.register(keyOf(itemID), Item::new, settings);
     }
     public static Item createSpawnEgg(EntityType<? extends MobEntity> type, int PrimaryColor, int SecondaryColor){
-        return register(Registries.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", new SpawnEggItem(type, PrimaryColor, SecondaryColor, new Item.Settings()));
+        return register(Registries.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", settings -> new SpawnEggItem(type, PrimaryColor, SecondaryColor, settings));
     }
     public static Item createDisc(String name, RegistryKey<JukeboxSong> song){
-        return register("music_disc_" + name, new Item(new Item.Settings().rarity(Rarity.RARE).maxCount(1).jukeboxPlayable(song)));
+        return register("music_disc_" + name, new Item.Settings().rarity(Rarity.RARE).maxCount(1).jukeboxPlayable(song));
     }
     public static Item createBucketedMob(EntityType<?> type){
-        return register(Registries.ENTITY_TYPE.getId(type).getPath() + "_bucket", new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).recipeRemainder(Items.WATER_BUCKET).maxCount(1)));
+        return register(Registries.ENTITY_TYPE.getId(type).getPath() + "_bucket", settings -> new EntityBucketItem(type, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, settings), new Item.Settings().recipeRemainder(Items.WATER_BUCKET).maxCount(1));
     }
 
     public static final Item GIPPLE_BUCKET = createBucketedMob(GGEntityTypes.GIPPLE);
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(GGEntityTypes.GIPPLE, 13558777, 11642584);
     public static final Item ANEUPLOIDIAN_SPAWN_EGG = createSpawnEgg(GGEntityTypes.ANEUPLOIDIAN, 13558777, 9669861);
-    public static final Item GELATIN = register("gelatin", new Item(new Item.Settings().component(DataComponentTypes.FOOD, GGFoodComponents.GELATIN)));
-    public static final Item GAPPLE = register("gapple", new Item(new Item.Settings().component(DataComponentTypes.FOOD, GGFoodComponents.GAPPLE)));
+    public static final Item GELATIN = register("gelatin", new Item.Settings().food(GGFoodComponents.GELATIN, GGFoodComponents.GGConsumableComponents.GELATIN));
+    public static final Item GAPPLE = register("gapple", new Item.Settings().food(GGFoodComponents.GAPPLE, GGFoodComponents.GGConsumableComponents.GAPPLE));
     public static final Item MUSIC_DISC_GIPPLECORE = createDisc("gipplecore", GGJukeboxSongs.GIPPLECORE);
-    public static final Item GIPPLEPAD = register("gipplepad", new PlaceableOnWaterItem(GGBlocks.GIPPLEPAD, new Item.Settings()));
-    public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", new BannerPatternItem(GGBannerPatternItemTags.GIPPLE_PATTERN_ITEM, new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
+    public static final Item GIPPLEPAD = Items.register(GGBlocks.GIPPLEPAD, PlaceableOnWaterItem::new);
+    public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", settings -> new BannerPatternItem(GGBannerPatternItemTags.GIPPLE_PATTERN_ITEM, settings), new Item.Settings().maxCount(1).rarity(Rarity.RARE));
 
     public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {

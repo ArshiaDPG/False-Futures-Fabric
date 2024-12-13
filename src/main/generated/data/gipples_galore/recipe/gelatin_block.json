@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "gipples_galore:gelatin"
-    }
+    "#": "gipples_galore:gelatin"
   },
   "pattern": [
     "###",

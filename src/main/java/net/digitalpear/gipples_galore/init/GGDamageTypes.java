@@ -19,6 +19,6 @@ public class GGDamageTypes {
 
 
     public static DamageSource gippleEffect(World world) {
-        return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(GIPPLE_EFFECT));
+        return new DamageSource(world.getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getEntry(GIPPLE_EFFECT.getValue()).get());
     }
 }

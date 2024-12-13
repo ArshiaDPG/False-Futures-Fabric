@@ -89,7 +89,7 @@ public class GGBlockLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(GGBlocks.POTTED_GELATINOUS_GROWTH, pottedPlantDrops(GGBlocks.GELATINOUS_GROWTH));
     }
     public LootTable.Builder gelatinPlantDrops(Block dropWithShears) {
-        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getOrThrow(RegistryKeys.ENCHANTMENT);
         return dropsWithShears(dropWithShears, (LootPoolEntry.Builder)this.applyExplosionDecay(dropWithShears, ((LeafEntry.Builder)ItemEntry.builder(GGItems.GELATIN).conditionally(RandomChanceLootCondition.builder(0.125F))).apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))));
     }
 

@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.9.+'
     id 'maven-publish'
 }
 
@@ -34,6 +34,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib}"
+
+    //modLocalRuntime "maven.modrinth:UaizcMKP:h0ecjjpi" //Item Descriptions Mod
 
 //    modLocalRuntime "maven.modrinth:emi:${project.emi}"
 //    modLocalRuntime "curse.maven:galosphere-631098:4668863"

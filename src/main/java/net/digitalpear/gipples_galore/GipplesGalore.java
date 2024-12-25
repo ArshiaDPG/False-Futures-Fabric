@@ -17,9 +17,7 @@ public class GipplesGalore implements ModInitializer {
     public static Identifier id(String name){
         return Identifier.of(MOD_ID, name);
     }
-    public static Identifier gippleID() {
-        return id("gipple");
-    }
+
     @Override
     public void onInitialize() {
         GGBlocks.init();

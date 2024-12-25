@@ -129,15 +129,14 @@ public class GGLanguageProvider extends FabricLanguageProvider {
     }
 
     private void makeBannerTranslation(TranslationBuilder translationBuilder, Item item, String name){
-        translationBuilder.add(item, "Banner Pattern");
-        translationBuilder.add(item.getTranslationKey() + ".desc", name);
+        translationBuilder.add(item, name + " Banner Pattern");
         makeColoredBannerPatterns(translationBuilder, name);
     }
 
 
     private void makeColoredBannerPatterns(TranslationBuilder translationBuilder, String name){
         for (int i = 0; i < 16; i++){
-            translationBuilder.add("block.minecraft.banner."  + GipplesGalore.MOD_ID +  "." + name.toLowerCase() + "." + DyeColor.byId(i),
+            translationBuilder.add("block." + GipplesGalore.MOD_ID + ".banner."  + GipplesGalore.MOD_ID +  "." + name.toLowerCase() + "." + DyeColor.byId(i),
                     autoNameInner(DyeColor.byId(i).getName()) + " " + name);
         }
     }

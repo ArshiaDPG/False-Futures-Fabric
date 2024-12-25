@@ -9,7 +9,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class GGStatusEffects {
-    public static final RegistryEntry<StatusEffect> GIPPLE = register(GipplesGalore.gippleID(), new GippleStatusEffect());
+    public static final RegistryEntry<StatusEffect> GIPPLE = register(GipplesGalore.id("gipple"), new GippleStatusEffect());
 
     private static RegistryEntry<StatusEffect> register(Identifier name, StatusEffect effect){
         return Registry.registerReference(Registries.STATUS_EFFECT, name, effect);

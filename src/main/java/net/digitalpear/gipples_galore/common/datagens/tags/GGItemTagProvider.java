@@ -17,8 +17,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class GGItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
-    public GGItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture, @Nullable FabricTagProvider.BlockTagProvider blockTagProvider) {
-        super(output, completableFuture, blockTagProvider);
+    public GGItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        super(output, completableFuture);
     }
 
     @Override

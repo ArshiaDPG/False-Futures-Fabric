@@ -42,6 +42,7 @@ public class GGModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerSingleton(GGBlocks.GELATIN_BLOCK, TexturedModel.makeFactory(block -> new TextureMap().put(TextureKey.ALL, TextureMap.getId(GGBlocks.HIBERNATING_GIPPLE).withSuffixedPath("_top")), Models.CUBE_ALL));
 
         blockStateModelGenerator.registerFlowerPotPlant(GGBlocks.GELATINOUS_GROWTH, GGBlocks.POTTED_GELATINOUS_GROWTH, BlockStateModelGenerator.CrossType.NOT_TINTED);
+        blockStateModelGenerator.registerItemModel(GGBlocks.GELATINOUS_GROWTH);
     }
 
 

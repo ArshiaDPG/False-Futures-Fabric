@@ -1,9 +1,7 @@
 {
   "values": [
-    "minecraft:creeper",
-    "minecraft:cod",
-    "minecraft:squid",
-    "minecraft:glow_squid",
-    "minecraft:axolotl"
+    "minecraft:creaking",
+    "#minecraft:can_breathe_under_water",
+    "minecraft:creeper"
   ]
 }

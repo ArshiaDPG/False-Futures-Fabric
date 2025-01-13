@@ -199,21 +199,24 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     public void mitosis() {
         Random random = this.getRandom();
         World world = this.getWorld();
+        if (world instanceof ServerWorld serverWorld){
+            boolean spawnAneuploidianNotGipple = (serverWorld.getGameRules().getInt(GGGameRules.GIPPLE_MUTATION) * 0.01) + ((float) world.getDifficulty().getId() / 50) > random.nextFloat() && world.getDifficulty() != Difficulty.PEACEFUL;
 
-
-        boolean spawnAneuploidianNotGipple = ((world.getServer().getGameRules().getInt(GGGameRules.GIPPLE_MUTATION) * 0.01) + ((float) world.getDifficulty().getId() / 50)) > random.nextFloat() && world.getDifficulty() != Difficulty.PEACEFUL;
-
-        if (spawnAneuploidianNotGipple){
-            spawnAneuploidian();
-        } else {
-            int gippleNumber = 2;
-            if (random.nextFloat() > 0.9){
-                gippleNumber++;
-            }
-            for (int i = 0; i < gippleNumber; i++){
-                spawnGipple(random);
+            if (spawnAneuploidianNotGipple){
+                spawnAneuploidian();
+            } else {
+                int gippleNumber = 2;
+                if (random.nextFloat() > 0.9){
+                    gippleNumber++;
+                }
+                for (int i = 0; i < gippleNumber; i++){
+                    spawnGipple(random);
+                }
             }
         }
+
+
+
         for (int particleLoop = 0; particleLoop <= 5; particleLoop++){
             double x = random.nextGaussian() * 0.001D;
             double y = random.nextGaussian() * 0.06D;

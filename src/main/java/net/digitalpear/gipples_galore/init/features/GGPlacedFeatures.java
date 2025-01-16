@@ -9,6 +9,7 @@ import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.YOffset;
@@ -52,7 +53,7 @@ public class GGPlacedFeatures {
 
 
     public static void init(){
-        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY);
-        BiomeModifications.addFeature(BiomeSelectors.tag(GGBiomeTags.EXTRA_GIPPLE_HABITATS), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY_COMMON);
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(BiomeSelectors.tag(GGBiomeTags.NO_GIPPLE_HABITATS).negate()), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY);
+        BiomeModifications.addFeature(BiomeSelectors.tag(GGBiomeTags.EXTRA_GIPPLE_HABITATS).and(BiomeSelectors.tag(GGBiomeTags.NO_GIPPLE_HABITATS).negate()), GenerationStep.Feature.FLUID_SPRINGS, GIPPLE_COLONY_COMMON);
     }
 }

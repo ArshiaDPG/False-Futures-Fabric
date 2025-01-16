@@ -160,7 +160,6 @@ public class GGBlocks {
                     .hardness(0.4f)
                     .mapColor(GELATIN_LAYER.getDefaultMapColor())
                     .sounds(BlockSoundGroup.HONEY)
-
             );
 
     public static final Block GELATINOUS_GROWTH = createBlockWithItem("gelatinous_growth",

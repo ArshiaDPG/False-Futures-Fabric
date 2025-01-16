@@ -42,10 +42,8 @@ public class HibernatingGippleBlock extends Block {
         return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
-
-
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (random.nextInt(200) == 0) {
             world.playSound(pos.getX(), pos.getY(), pos.getZ(), GGSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
         }

@@ -16,8 +16,8 @@ import java.util.function.Function;
 
 
 public class StoneSet {
-    private BlockFamily.Builder family;
-    private Block base;
+    private final BlockFamily.Builder family;
+    private final Block base;
     private Block stairs;
     private Block slab;
     private Block wall;
@@ -25,9 +25,9 @@ public class StoneSet {
     private Block pressurePlate;
     private Block chiseled;
 
-    private Identifier setName;
+    private final Identifier setName;
 
-    private AbstractBlock.Settings properties;
+    private final AbstractBlock.Settings properties;
 
     public StoneSet(String name, AbstractBlock.Settings baseProperties){
         setName = GipplesGalore.id(name);

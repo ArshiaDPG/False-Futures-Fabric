@@ -1,5 +1,6 @@
 package net.digitalpear.gipples_galore.init.data;
 
+import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.digitalpear.gipples_galore.init.GGItems;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -14,16 +15,19 @@ public class GGData {
 
     public static void init(){
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-            if (key.equals(LootTables.ANCIENT_CITY_CHEST)){
-                tableBuilder.pool(LootPool.builder()
-                        .with(ItemEntry.builder(GGItems.GELATIN).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0f, 4.0f))))
-                        .with(ItemEntry.builder(GGItems.GIPPLE_BANNER_PATTERN).weight(1))
-                        .build());
-            }
-            else if (key.equals(LootTables.ANCIENT_CITY_ICE_BOX_CHEST)){
-                tableBuilder.pool(LootPool.builder()
-                        .with(ItemEntry.builder(GGItems.GAPPLE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0f, 3f)).conditionally(RandomChanceLootCondition.builder(0.75f))))
-                        .build());
+            if (source.isBuiltin()){
+                if (key.equals(LootTables.ANCIENT_CITY_CHEST)){
+                    tableBuilder.pool(LootPool.builder()
+                            .with(ItemEntry.builder(GGBlocks.AMOEBALITH).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4, 7))))
+                            .with(ItemEntry.builder(GGItems.GELATIN).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0f, 4.0f))))
+                            .with(ItemEntry.builder(GGItems.GIPPLE_BANNER_PATTERN).weight(1))
+                            .build());
+                }
+                else if (key.equals(LootTables.ANCIENT_CITY_ICE_BOX_CHEST)){
+                    tableBuilder.pool(LootPool.builder()
+                            .with(ItemEntry.builder(GGItems.GAPPLE).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0f, 3f)).conditionally(RandomChanceLootCondition.builder(0.75f))))
+                            .build());
+                }
             }
         });
     }

@@ -2,6 +2,7 @@ package net.digitalpear.gipples_galore.common.blocks;
 
 import net.digitalpear.gipples_galore.common.entities.gipple.GippleEntity;
 import net.digitalpear.gipples_galore.init.GGEntityTypes;
+import net.digitalpear.gipples_galore.init.GGSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -46,7 +47,7 @@ public class HibernatingGippleBlock extends Block {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(200) == 0) {
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ZOMBIE_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(), GGSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
         }
     }
 

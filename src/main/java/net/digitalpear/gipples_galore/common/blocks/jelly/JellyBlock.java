@@ -8,6 +8,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -60,30 +61,39 @@ public class JellyBlock extends Block {
         -If half the block has already been eaten, then remove the block.
     */
 
+    public int hungerValue(){
+        return 2;
+    }
+    public float saturationValue(){
+        return 0.8f;
+    }
+
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (player.getHungerManager().isNotFull() || player.isCreative()) {
             Hand hand = player.getActiveHand();
+            if (world instanceof ServerWorld serverWorld){
+                BlockState finalState;
+                //Add food levels
+                player.getHungerManager().add(hungerValue(), saturationValue());
 
-            BlockState finalState;
-            //Add food levels
-            player.getHungerManager().add(2, 0.8f);
 
+
+                if (state.get(HALVED)) {
+                    finalState = Blocks.AIR.getDefaultState();
+                }
+                else{
+                    finalState = this.getDefaultState().with(HALVED, true).with(FACING,hit.getSide());
+                }
+                world.setBlockState(pos, finalState, 2);
+
+                if (serverWorld.getGameRules().getBoolean(GGGameRules.SHOULD_APPLY_JELLY_EFFECTS)) {
+                    applySpecialEffects(state, finalState, world, pos, player, hand, hit);
+                }
+
+            }
             world.playSound(player, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK.value(), SoundCategory.BLOCKS, 1.0f, 1.0f);
             player.swingHand(hand);
-
-            if (state.get(HALVED)) {
-                finalState = Blocks.AIR.getDefaultState();
-            }
-            else{
-                finalState = this.getDefaultState().with(HALVED, true).with(FACING,hit.getSide());
-            }
-            world.setBlockState(pos, finalState, 2);
-
-            if (world.getServer().getGameRules().getBoolean(GGGameRules.SHOULD_APPLY_JELLY_EFFECTS)) {
-                applySpecialEffects(state, finalState, world, pos, player, hand, hit);
-            }
-
             return ActionResult.SUCCESS;
         }
         else {
@@ -110,8 +120,6 @@ public class JellyBlock extends Block {
             entity.handleFallDamage(fallDistance, 0.0F, entity.getDamageSources().fall());
         }
     }
-
-
 
     /*
         Methods brought in from the slime block code

@@ -8,7 +8,9 @@ import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
+import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -119,8 +121,7 @@ public class GGModelProvider extends FabricModelProvider {
 
     private void registerGipplePad(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerItemModel(GGBlocks.GIPPLEPAD);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(GGBlocks.GIPPLEPAD,
-                ModelIds.getBlockModelId(GGBlocks.GIPPLEPAD)));
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(GGBlocks.GIPPLEPAD, ModelIds.getBlockModelId(GGBlocks.GIPPLEPAD)));
     }
 
     public static void registerStoneSet(BlockStateModelGenerator blockStateModelGenerator, StoneSet stoneSet){

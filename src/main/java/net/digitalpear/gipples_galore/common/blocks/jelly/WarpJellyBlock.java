@@ -55,7 +55,6 @@ public class WarpJellyBlock extends JellyBlock{
                     return;
                 }
             }
-
         }
     }
 }

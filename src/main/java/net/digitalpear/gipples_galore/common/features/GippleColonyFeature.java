@@ -1,7 +1,6 @@
 package net.digitalpear.gipples_galore.common.features;
 
 import com.mojang.serialization.Codec;
-import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.common.blocks.HibernatingGippleBlock;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.minecraft.block.Block;
@@ -16,7 +15,6 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.VegetationPatchFeature;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
-import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,11 +30,11 @@ public class GippleColonyFeature extends VegetationPatchFeature {
         Set<BlockPos> set = super.placeGroundAndGetPositions(world, config, random, pos, replaceable, radiusX, radiusZ);
         Set<BlockPos> set2 = new HashSet();
         BlockPos.Mutable mutable = new BlockPos.Mutable();
-        Iterator var11 = set.iterator();
+        Iterator<BlockPos> var11 = set.iterator();
 
         BlockPos blockPos;
         while(var11.hasNext()) {
-            blockPos = (BlockPos)var11.next();
+            blockPos = var11.next();
             if (!isSolidBlockAroundPos(world, set, blockPos, mutable)) {
 //                generateLichen(world, random, pos);
                 set2.add(blockPos);
@@ -46,7 +44,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
         var11 = set2.iterator();
 
         while(var11.hasNext()) {
-            blockPos = (BlockPos)var11.next();
+            blockPos = var11.next();
             world.setBlockState(blockPos, Blocks.WATER.getDefaultState(), 2);
 
         }

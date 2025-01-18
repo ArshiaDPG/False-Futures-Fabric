@@ -5,6 +5,8 @@ import net.digitalpear.gipples_galore.init.*;
 import net.digitalpear.gipples_galore.init.tags.GGBlockTags;
 import net.digitalpear.gipples_galore.init.tags.GGItemTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.AboveGroundTargeting;
 import net.minecraft.entity.ai.NoPenaltySolidTargeting;
@@ -334,10 +336,55 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
+        NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, stack, nbtCompound -> {
+            if (this.isAiDisabled()) {
+                nbtCompound.putBoolean("NoAI", this.isAiDisabled());
+            }
+
+            if (this.isSilent()) {
+                nbtCompound.putBoolean("Silent", this.isSilent());
+            }
+
+            if (this.hasNoGravity()) {
+                nbtCompound.putBoolean("NoGravity", this.hasNoGravity());
+            }
+
+            if (this.isGlowingLocal()) {
+                nbtCompound.putBoolean("Glowing", this.isGlowingLocal());
+            }
+
+            if (this.isInvulnerable()) {
+                nbtCompound.putBoolean("Invulnerable", this.isInvulnerable());
+            }
+            nbtCompound.putFloat("Health", this.getHealth());
+
+            /*
+                Custom values
+             */
+            nbtCompound.putInt("Age", this.getBreedingAge());
+            if (this.isLuminous()){
+                nbtCompound.putBoolean("Luminous", this.isLuminous());
+            }
+            nbtCompound.putInt("HungryCountdown", this.getHungryCountdown());
+            nbtCompound.putInt("EatingTimer", this.getEatingTimer());
+            nbtCompound.putInt("PlaceGelatinTimer", this.getPlaceGelatinTimer());
+            this.setFromBucket(nbtCompound.getBoolean("FromBucket"));
+
+        });
     }
+
 
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
+        this.setBreedingAge(nbt.getInt("Age"));
+        this.setHungryCountdown(nbt.getInt("HungryCountdown"));
+        this.setPlaceGelatinTimer(nbt.getInt("PlaceGelatinTimer"));
+        this.setEatingTimer(nbt.getInt("EatingTimer"));
+
+        if (nbt.contains("Luminous")) {
+            this.setLuminous(nbt.getBoolean("Luminous"));
+        }
+        this.setFromBucket(true);
         Bucketable.copyDataFromNbt(this, nbt);
     }
 

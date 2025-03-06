@@ -3,10 +3,10 @@ package net.digitalpear.gipples_galore;
 import net.digitalpear.gipples_galore.common.datagens.*;
 import net.digitalpear.gipples_galore.common.datagens.providers.*;
 import net.digitalpear.gipples_galore.common.datagens.tags.*;
-import net.digitalpear.gipples_galore.init.GGBannerPatterns;
-import net.digitalpear.gipples_galore.init.GGDamageTypes;
-import net.digitalpear.gipples_galore.init.GGJukeboxSongs;
-import net.digitalpear.gipples_galore.init.GGPaintingVariants;
+import net.digitalpear.gipples_galore.init.*;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGBannerPatterns;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGJukeboxSongs;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGPaintingVariants;
 import net.digitalpear.gipples_galore.init.features.GGConfiguredFeatures;
 import net.digitalpear.gipples_galore.init.features.GGPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -32,9 +32,6 @@ public class GGDatagens implements DataGeneratorEntrypoint {
         pack.addProvider(GGPaintingTagProvider::new);
 
 
-        /*
-            Everything else
-         */
         pack.addProvider(GGAdvancementProvider::new);
         pack.addProvider(GGBlockLootTableProvider::new);
         pack.addProvider(GGEntityLootTableProvider::new);
@@ -43,10 +40,15 @@ public class GGDatagens implements DataGeneratorEntrypoint {
         pack.addProvider(GGLanguageProvider::new);
         pack.addProvider(GGDamageTypeProvider::new);
 
-
+        /*
+            Worldgen
+         */
         pack.addProvider(GGConfiguredFeatureProvider::new);
         pack.addProvider(GGPlacedFeatureProvider::new);
 
+        /*
+            Artsy Stuff
+         */
         pack.addProvider(GGJukeboxSongProvider::new);
         pack.addProvider(GGBannerPatternProvider::new);
         pack.addProvider(GGPaintingVariantProvider::new);

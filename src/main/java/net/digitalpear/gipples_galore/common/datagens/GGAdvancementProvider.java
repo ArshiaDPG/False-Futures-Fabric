@@ -14,6 +14,7 @@ import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.data.advancement.AdvancementTabGenerator;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -39,9 +40,6 @@ public class GGAdvancementProvider extends FabricAdvancementProvider {
 
     @Override
     public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
-        AdvancementEntry dummy = Advancement.Builder.create().display(Blocks.HAY_BLOCK, Text.translatable("advancements.husbandry.root.title"), Text.translatable("advancements.husbandry.root.description"), Identifier.ofVanilla("textures/gui/advancements/backgrounds/husbandry.png"), AdvancementFrame.TASK, false, false, false).criterion("consumed_item", ConsumeItemCriterion.Conditions.any()).build(consumer, "husbandry/root");
-
-
         var jellies = Advancement.Builder.create()
                 .display(
                         GGBlocks.PLAIN_JELLY, // The display icon
@@ -53,7 +51,7 @@ public class GGAdvancementProvider extends FabricAdvancementProvider {
                         true, // Announce to chat
                         false // Hidden in the advancement tab
                 )
-                .parent(dummy);
+                .parent(AdvancementTabGenerator.reference("husbandry/root"));
         for(Block jelly : GGBlocks.JELLY.keySet()) {
             jellies.criterion("collected_jelly_" + Registries.BLOCK.getId(jelly).getPath().split("_")[0], InventoryChangedCriterion.Conditions.items(jelly));
         }
@@ -72,7 +70,7 @@ public class GGAdvancementProvider extends FabricAdvancementProvider {
                         true, // Announce to chat
                         false // Hidden in the advancement tab
                 )
-                .parent(dummy);
+                .parent(AdvancementTabGenerator.reference("husbandry/root"));
         Advancement affordableHousingAdvancement = affordableHousing.build(consumer, GipplesGalore.MOD_ID + ":husbandry/affordable_housing").value();
     }
 }

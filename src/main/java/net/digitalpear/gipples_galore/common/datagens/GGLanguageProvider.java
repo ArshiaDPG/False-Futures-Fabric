@@ -4,7 +4,7 @@ import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.digitalpear.gipples_galore.init.GGItems;
-import net.digitalpear.gipples_galore.init.GGJukeboxSongs;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGJukeboxSongs;
 import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.digitalpear.gipples_galore.init.tags.GGBiomeTags;
 import net.digitalpear.gipples_galore.init.tags.GGBlockTags;
@@ -21,9 +21,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 
-import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 public class GGLanguageProvider extends FabricLanguageProvider {

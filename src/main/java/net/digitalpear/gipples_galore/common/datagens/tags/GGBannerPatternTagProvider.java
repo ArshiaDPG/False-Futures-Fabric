@@ -1,6 +1,6 @@
 package net.digitalpear.gipples_galore.common.datagens.tags;
 
-import net.digitalpear.gipples_galore.init.GGBannerPatterns;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGBannerPatterns;
 import net.digitalpear.gipples_galore.init.tags.GGBannerPatternItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;

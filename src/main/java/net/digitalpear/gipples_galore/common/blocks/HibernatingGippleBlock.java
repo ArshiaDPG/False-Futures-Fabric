@@ -1,5 +1,6 @@
 package net.digitalpear.gipples_galore.common.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.digitalpear.gipples_galore.common.entities.gipple.GippleEntity;
 import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.digitalpear.gipples_galore.init.GGSoundEvents;
@@ -11,20 +12,21 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
 
-public class HibernatingGippleBlock extends Block {
-
-    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+public class HibernatingGippleBlock extends HorizontalFacingBlock {
+    public static final MapCodec<HibernatingGippleBlock> CODEC = createCodec(HibernatingGippleBlock::new);
     public HibernatingGippleBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalFacingBlock> getCodec() {
+        return CODEC;
     }
 
 
@@ -35,8 +37,10 @@ public class HibernatingGippleBlock extends Block {
 
     private void spawnGipple(ServerWorld world, BlockPos pos) {
         GippleEntity gipple = GGEntityTypes.GIPPLE.create(world, SpawnReason.MOB_SUMMONED);
-        gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.25D, (double) pos.getZ() + 0.5D, 0.0F, 0.0f);
-        world.spawnEntity(gipple);
+        if (gipple != null){
+            gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.25D, (double) pos.getZ() + 0.5D, 0.0F, 0.0f);
+            world.spawnEntity(gipple);
+        }
     }
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());

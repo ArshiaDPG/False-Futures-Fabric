@@ -29,6 +29,6 @@ public class GGConfiguredFeatureProvider extends FabricDynamicRegistryProvider {
     }
     @Override
     public String getName() {
-        return "worldgen/configured_feature";
+        return "Worldgen/Configured Features";
     }
 }

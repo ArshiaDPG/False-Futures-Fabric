@@ -1,6 +1,6 @@
 package net.digitalpear.gipples_galore.common.datagens.providers;
 
-import net.digitalpear.gipples_galore.init.GGJukeboxSongs;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGJukeboxSongs;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.block.jukebox.JukeboxSong;
@@ -28,6 +28,6 @@ public class GGJukeboxSongProvider extends FabricDynamicRegistryProvider {
 
     @Override
     public String getName() {
-        return "jukebox_song";
+        return "Jukebox Songs";
     }
 }

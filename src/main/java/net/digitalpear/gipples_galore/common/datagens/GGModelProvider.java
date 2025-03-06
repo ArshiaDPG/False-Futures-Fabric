@@ -8,9 +8,7 @@ import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
-import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -50,7 +48,7 @@ public class GGModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        GGItems.eggColorMap.forEach((item, integerIntegerPair) -> {
+        GGItems.EGG_COLORS.forEach((item, integerIntegerPair) -> {
             itemModelGenerator.registerSpawnEgg(item, integerIntegerPair.getLeft(), integerIntegerPair.getRight());
         });
 

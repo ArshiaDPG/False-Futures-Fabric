@@ -66,6 +66,9 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     protected static final RawAnimation AMBIENT_ANIM = RawAnimation.begin().thenLoop("gipple.ambient");
     protected static final RawAnimation ON_GROUND_ANIM = RawAnimation.begin().thenLoop("gipple.floor");
 
+    public static float INFLATED_SCALE = 1.3f;
+    public static float BABY_SCALE = 0.6f;
+
     public GippleEntity(EntityType<? extends GippleEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
@@ -80,6 +83,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.2)
                 .add(EntityAttributes.KNOCKBACK_RESISTANCE, 0.2);
     }
+
 
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
         return world.getBlockState(pos).isAir() || world.getBlockState(pos).isIn(GGBlockTags.GIPPLE_FOOD) ? 10.0F : 0.0F;
@@ -121,7 +125,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         builder.add(EATING_TIMER, 40);
         builder.add(PLACE_GELATIN_TIMER, 300);
     }
-
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -368,11 +371,16 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             nbtCompound.putInt("HungryCountdown", this.getHungryCountdown());
             nbtCompound.putInt("EatingTimer", this.getEatingTimer());
             nbtCompound.putInt("PlaceGelatinTimer", this.getPlaceGelatinTimer());
-            this.setFromBucket(nbtCompound.getBoolean("FromBucket"));
-
         });
     }
 
+    @Override
+    public float getScaleFactor() {
+        if (isLuminous()){
+            return INFLATED_SCALE;
+        }
+        return this.isBaby() ? BABY_SCALE : super.getScaleFactor();
+    }
 
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {

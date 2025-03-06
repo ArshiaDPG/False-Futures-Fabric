@@ -28,6 +28,6 @@ public class GGDamageTypeProvider extends FabricDynamicRegistryProvider {
 
     @Override
     public String getName() {
-        return "damage_type";
+        return "Damage Types";
     }
 }

@@ -1,33 +1,31 @@
 package net.digitalpear.gipples_galore.init;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGJukeboxSongs;
+import net.digitalpear.gipples_galore.init.data.foods.GGConsumableComponents;
+import net.digitalpear.gipples_galore.init.data.foods.GGFoodComponents;
 import net.digitalpear.gipples_galore.init.tags.GGBannerPatternItemTags;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.Block;
 import net.minecraft.block.jukebox.JukeboxSong;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.Rarity;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public class GGItems {
 
-    public static Map<Item, Pair<Integer, Integer>> eggColorMap = new HashMap<>();
+    public static Map<Item, Pair<Integer, Integer>> EGG_COLORS = new HashMap<>();
     private static RegistryKey<Item> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.ITEM, GipplesGalore.id(id));
     }
@@ -42,7 +40,7 @@ public class GGItems {
     }
     public static Item createSpawnEgg(EntityType<? extends MobEntity> type, Integer PrimaryColor, Integer secondaryColor){
         Item egg = register(Registries.ENTITY_TYPE.getId(type).getPath() + "_spawn_egg", settings -> new SpawnEggItem(type, settings));
-        eggColorMap.put(egg, new Pair<>(PrimaryColor, secondaryColor));
+        EGG_COLORS.put(egg, new Pair<>(PrimaryColor, secondaryColor));
         return egg;
     }
     public static Item createDisc(String name, RegistryKey<JukeboxSong> song){
@@ -55,8 +53,8 @@ public class GGItems {
     public static final Item GIPPLE_BUCKET = createBucketedMob(GGEntityTypes.GIPPLE);
     public static final Item GIPPLE_SPAWN_EGG = createSpawnEgg(GGEntityTypes.GIPPLE, 13558777, 11642584);
     public static final Item ANEUPLOIDIAN_SPAWN_EGG = createSpawnEgg(GGEntityTypes.ANEUPLOIDIAN, 13558777, 9669861);
-    public static final Item GELATIN = register("gelatin", new Item.Settings().food(GGFoodComponents.GELATIN, GGFoodComponents.GGConsumableComponents.GELATIN));
-    public static final Item GAPPLE = register("gapple", new Item.Settings().food(GGFoodComponents.GAPPLE, GGFoodComponents.GGConsumableComponents.GAPPLE));
+    public static final Item GELATIN = register("gelatin", new Item.Settings().food(GGFoodComponents.GELATIN, GGConsumableComponents.GELATIN));
+    public static final Item GAPPLE = register("gapple", new Item.Settings().food(GGFoodComponents.GAPPLE, GGConsumableComponents.GAPPLE));
     public static final Item MUSIC_DISC_GIPPLECORE = createDisc("gipplecore", GGJukeboxSongs.GIPPLECORE);
     public static final Item GIPPLEPAD = Items.register(GGBlocks.GIPPLEPAD, PlaceableOnWaterItem::new);
     public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", settings -> new BannerPatternItem(GGBannerPatternItemTags.GIPPLE_PATTERN_ITEM, settings), new Item.Settings().maxCount(1).rarity(Rarity.RARE));

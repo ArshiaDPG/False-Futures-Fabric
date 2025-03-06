@@ -1,6 +1,6 @@
 package net.digitalpear.gipples_galore.common.datagens.providers;
 
-import net.digitalpear.gipples_galore.init.GGPaintingVariants;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGPaintingVariants;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.entity.decoration.painting.PaintingVariant;
@@ -28,6 +28,6 @@ public class GGPaintingVariantProvider extends FabricDynamicRegistryProvider {
 
     @Override
     public String getName() {
-        return "painting_Variant";
+        return "Painting Variants";
     }
 }

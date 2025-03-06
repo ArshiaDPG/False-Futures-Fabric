@@ -1,6 +1,6 @@
 package net.digitalpear.gipples_galore.common.datagens.tags;
 
-import net.digitalpear.gipples_galore.init.GGPaintingVariants;
+import net.digitalpear.gipples_galore.init.artsy_stuff.GGPaintingVariants;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.entity.decoration.painting.PaintingVariant;

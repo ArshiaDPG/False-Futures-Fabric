@@ -12,6 +12,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class GippleEntityRenderer<T extends GippleEntity> extends GeoEntityRenderer<T> {
 
+
+
     public GippleEntityRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new GippleEntityModel<>());
     }
@@ -19,14 +21,8 @@ public class GippleEntityRenderer<T extends GippleEntity> extends GeoEntityRende
     @Override
     public void preRender(MatrixStack poseStack, T animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
-        if (animatable.isBaby()) {
-            poseStack.scale(0.6F, 0.6F, 0.6F);
-            this.shadowRadius *= 0.6F;
-
-        } else if (animatable.isLuminous()) {
-            poseStack.scale(1.3F, 1.3F, 1.3F);
-            this.shadowRadius *= 1.3F;
-        }
+        poseStack.scale(animatable.getScaleFactor(), animatable.getScaleFactor(), animatable.getScaleFactor());
+        this.shadowRadius *= animatable.getScaleFactor();
     }
 
 

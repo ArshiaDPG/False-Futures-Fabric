@@ -28,6 +28,6 @@ public class GGPlacedFeatureProvider extends FabricDynamicRegistryProvider {
 
     @Override
     public String getName() {
-        return "worldgen/placed_feature";
+        return "Worldgen/Placed Features";
     }
 }

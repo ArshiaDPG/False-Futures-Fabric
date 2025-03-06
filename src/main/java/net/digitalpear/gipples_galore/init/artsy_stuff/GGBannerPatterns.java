@@ -1,4 +1,4 @@
-package net.digitalpear.gipples_galore.init;
+package net.digitalpear.gipples_galore.init.artsy_stuff;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.minecraft.block.entity.BannerPattern;

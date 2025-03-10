@@ -20,10 +20,6 @@ public class GipplesGalore implements ModInitializer {
 
     /*
         Changelog:
-        Improvements to gipple scaling.
-        Gelatinous Growths will now emit gipple particles when placed on blocks which are in the "gelatinous_growth_supporting".
-        Fixed Gelatinous Growth having broken waterlogging.
-        Fixed issue where Gipple effect would not play hallucinations.
      */
     @Override
     public void onInitialize() {

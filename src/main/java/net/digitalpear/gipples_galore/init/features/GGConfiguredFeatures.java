@@ -41,7 +41,7 @@ public class GGConfiguredFeatures {
 
 
     public static final DataPool.Builder GELATITE_VEGETATION_PROVIDER = DataPool.<BlockState>builder()
-            .add(Blocks.AIR.getDefaultState(), 30)
+            .add(Blocks.SEAGRASS.getDefaultState(), 30)
             .add(Blocks.GLOW_LICHEN.getDefaultState()
                     .with(MultifaceGrowthBlock.getProperty(Direction.DOWN), true)
                     .with(MultifaceGrowthBlock.getProperty(Direction.UP), false)
@@ -49,7 +49,6 @@ public class GGConfiguredFeatures {
                     .with(MultifaceGrowthBlock.getProperty(Direction.SOUTH), false)
                     .with(MultifaceGrowthBlock.getProperty(Direction.EAST), false)
                     .with(MultifaceGrowthBlock.getProperty(Direction.WEST), false), 30);
-
 
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> featureRegisterable) {

@@ -5,7 +5,11 @@ import net.digitalpear.gipples_galore.common.blocks.GelatinLayerBlock;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SeagrassBlock;
 import net.minecraft.block.TallPlantBlock;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
@@ -19,44 +23,44 @@ public class GelatiteVegetationFeature extends Feature<NetherForestVegetationFea
     }
 
     public boolean generate(FeatureContext<NetherForestVegetationFeatureConfig> context) {
-        StructureWorldAccess structureWorldAccess = context.getWorld();
+        StructureWorldAccess world = context.getWorld();
         BlockPos blockPos = context.getOrigin();
-        NetherForestVegetationFeatureConfig netherForestVegetationFeatureConfig = context.getConfig();
+        NetherForestVegetationFeatureConfig config = context.getConfig();
         Random random = context.getRandom();
 
         int i = blockPos.getY();
-        if (i >= structureWorldAccess.getBottomY() + 1 && i + 1 < structureWorldAccess.getTopYInclusive()) {
+        if (i >= world.getBottomY() + 1 && i + 1 < world.getTopYInclusive()) {
             int j = 0;
 
-            for(int spreadLoop = 0; spreadLoop < netherForestVegetationFeatureConfig.spreadWidth * netherForestVegetationFeatureConfig.spreadWidth; ++spreadLoop) {
-                BlockPos blockPos2 = blockPos.add(random.nextInt(netherForestVegetationFeatureConfig.spreadWidth) - random.nextInt(netherForestVegetationFeatureConfig.spreadWidth), random.nextInt(netherForestVegetationFeatureConfig.spreadHeight) - random.nextInt(netherForestVegetationFeatureConfig.spreadHeight), random.nextInt(netherForestVegetationFeatureConfig.spreadWidth) - random.nextInt(netherForestVegetationFeatureConfig.spreadWidth));
-                BlockState blockState2 = netherForestVegetationFeatureConfig.stateProvider.get(random, blockPos2);
-                if (structureWorldAccess.isAir(blockPos2) && blockPos2.getY() > structureWorldAccess.getBottomY() && blockState2.canPlaceAt(structureWorldAccess, blockPos2)) {
+            for(int spreadLoop = 0; spreadLoop < config.spreadWidth * config.spreadWidth; ++spreadLoop) {
+                BlockPos currentPos = blockPos.add(random.nextInt(config.spreadWidth) - random.nextInt(config.spreadWidth), random.nextInt(config.spreadHeight) - random.nextInt(config.spreadHeight), random.nextInt(config.spreadWidth) - random.nextInt(config.spreadWidth));
+                BlockState blockState2 = config.stateProvider.get(random, currentPos);
+                if (world.isAir(currentPos) && !blockState2.isIn(BlockTags.UNDERWATER_BONEMEALS) && currentPos.getY() > world.getBottomY() && blockState2.canPlaceAt(world, currentPos)) {
                     if (blockState2.getBlock() instanceof TallPlantBlock){
-                        if (structureWorldAccess.isAir(blockPos2.up())){
-                            TallPlantBlock.placeAt(structureWorldAccess, blockState2, blockPos2, 2);
+                        if (world.isAir(currentPos.up())){
+                            TallPlantBlock.placeAt(world, blockState2, currentPos, 2);
                             ++j;
                         }
                     }
                     else{
-                        structureWorldAccess.setBlockState(blockPos2, blockState2, 2);
+                        world.setBlockState(currentPos, blockState2, 2);
                         ++j;
                     }
 
                 }
-                else if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER)
-                        && blockPos2.getY() > structureWorldAccess.getBottomY()
-                        && blockState2.canPlaceAt(structureWorldAccess, blockPos2)){
-                    structureWorldAccess.setBlockState(blockPos2, Blocks.SEAGRASS.getDefaultState(), 2);
+                else if (world.isWater(currentPos)
+                        && currentPos.getY() > world.getBottomY()
+                        && blockState2.canPlaceAt(world, currentPos)){
+                    world.setBlockState(currentPos, blockState2.withIfExists(Properties.WATERLOGGED, world.getFluidState(currentPos).isOf(Fluids.WATER)), 2);
                     ++j;
                 }
-                else if(structureWorldAccess.getBlockState(blockPos2).isOf(GGBlocks.GELATIN_LAYER)
-                        && (structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.LAYERS) < 8)
-                        && blockPos2.getY() > structureWorldAccess.getBottomY()
-                        && blockState2.canPlaceAt(structureWorldAccess, blockPos2)){
-                    structureWorldAccess.setBlockState(blockPos2, GGBlocks.GELATIN_LAYER.getDefaultState()
-                            .with(GelatinLayerBlock.LAYERS, structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.LAYERS) + 1)
-                            .with(GelatinLayerBlock.WATERLOGGED, structureWorldAccess.getBlockState(blockPos2).get(GelatinLayerBlock.WATERLOGGED)), 2);
+                else if(world.getBlockState(currentPos).isOf(GGBlocks.GELATIN_LAYER)
+                        && (world.getBlockState(currentPos).get(GelatinLayerBlock.LAYERS) < 8)
+                        && currentPos.getY() > world.getBottomY()
+                        && blockState2.canPlaceAt(world, currentPos)){
+                    world.setBlockState(currentPos, GGBlocks.GELATIN_LAYER.getDefaultState()
+                            .with(GelatinLayerBlock.LAYERS, world.getBlockState(currentPos).get(GelatinLayerBlock.LAYERS) + 1)
+                            .with(GelatinLayerBlock.WATERLOGGED, world.getBlockState(currentPos).get(GelatinLayerBlock.WATERLOGGED)), 2);
                     ++j;
                 }
             }

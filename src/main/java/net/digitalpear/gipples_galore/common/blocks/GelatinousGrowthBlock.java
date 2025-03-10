@@ -31,6 +31,7 @@ public class GelatinousGrowthBlock extends PlantBlock implements Waterloggable {
 
     public GelatinousGrowthBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false));
     }
 
     @Override

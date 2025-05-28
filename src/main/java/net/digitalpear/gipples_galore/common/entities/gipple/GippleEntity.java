@@ -45,17 +45,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.manager.AnimatableManager;
 import software.bernie.geckolib.animatable.processing.AnimationController;
-import software.bernie.geckolib.animatable.processing.AnimationTest;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
-import java.util.Optional;
 
 public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity, Flutterer {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -177,9 +175,9 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemInHand = player.getStackInHand(hand);
-
         if (itemInHand.isOf(Items.WATER_BUCKET)) {
             player.swingHand(hand);
+            detachLeash();
             Bucketable.tryBucket(player, hand, this);
         } else if (itemInHand.isIn(GGItemTags.GIPPLE_FOOD)) {
             if (!this.isBaby()) {
@@ -347,10 +345,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
             if (this.hasNoGravity()) {
                 nbtCompound.putBoolean("NoGravity", this.hasNoGravity());
-            }
-
-            if (this.isGlowingLocal()) {
-                nbtCompound.putBoolean("Glowing", this.isGlowingLocal());
             }
 
             if (this.isInvulnerable()) {

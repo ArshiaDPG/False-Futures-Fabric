@@ -18,11 +18,6 @@ public class GipplesGalore implements ModInitializer {
         return Identifier.of(MOD_ID, name);
     }
 
-    /*
-        Changelog:
-        -Changed banner pattern rarity to match other similar patterns.
-        -
-     */
     @Override
     public void onInitialize() {
         GGBlocks.init();

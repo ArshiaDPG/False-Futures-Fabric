@@ -7,7 +7,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.Registries;
@@ -60,15 +59,15 @@ public class ParasiteStatusEffect<T extends MobEntity> extends StatusEffect {
         return super.applyUpdateEffect(world, entity, amplifier);
     }
     public void spawnCreature(ServerWorld serverWorld, LivingEntity entity, int amplifier){
-        T gipple = entityType.create(serverWorld, SpawnReason.BREEDING);
-        if (gipple != null) {
-            gipple.setPosition(entity.getPos());
-            gipple.setCustomName(entity.getName());
-            gipple.setPitch(entity.getPitch());
-            gipple.setYaw(entity.getYaw());
-            gipple.setHeadYaw(entity.getHeadYaw());
-            gipple.setPersistent();
-            serverWorld.spawnEntity(gipple);
+        T burster = entityType.create(serverWorld, SpawnReason.BREEDING);
+        if (burster != null) {
+            burster.setPosition(entity.getPos());
+            burster.setCustomName(entity.getName());
+            burster.setPitch(entity.getPitch());
+            burster.setYaw(entity.getYaw());
+            burster.setHeadYaw(entity.getHeadYaw());
+            burster.setPersistent();
+            serverWorld.spawnEntity(burster);
         }
     }
 

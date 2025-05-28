@@ -40,7 +40,7 @@ public class GGConfiguredFeatures {
 
 
 
-    public static final DataPool.Builder GELATITE_VEGETATION_PROVIDER = DataPool.<BlockState>builder()
+    public static final DataPool.Builder<BlockState> GELATITE_VEGETATION_PROVIDER = DataPool.<BlockState>builder()
             .add(Blocks.SEAGRASS.getDefaultState(), 30)
             .add(Blocks.GLOW_LICHEN.getDefaultState()
                     .with(MultifaceGrowthBlock.getProperty(Direction.DOWN), true)

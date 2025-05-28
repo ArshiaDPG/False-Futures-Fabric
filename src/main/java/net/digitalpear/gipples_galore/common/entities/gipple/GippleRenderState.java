@@ -1,0 +1,45 @@
+package net.digitalpear.gipples_galore.common.entities.gipple;
+
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.constant.dataticket.DataTicket;
+import software.bernie.geckolib.renderer.base.GeoRenderState;
+
+import java.util.Map;
+
+public class GippleRenderState extends LivingEntityRenderState implements GeoRenderState {
+
+    private boolean luminous;
+
+    public GippleRenderState(){
+        this.luminous = false;
+    }
+
+    public void setLuminous(boolean value){
+        this.luminous = value;
+    }
+
+    public boolean isLuminous() {
+        return luminous;
+    }
+
+    @Override
+    public <D> void addGeckolibData(DataTicket<D> dataTicket, @Nullable D d) {
+
+    }
+
+    @Override
+    public boolean hasGeckolibData(DataTicket<?> dataTicket) {
+        return false;
+    }
+
+    @Override
+    public <D> @Nullable D getGeckolibData(DataTicket<D> dataTicket) {
+        return null;
+    }
+
+    @Override
+    public Map<DataTicket<?>, Object> getDataMap() {
+        return null;
+    }
+}

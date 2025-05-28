@@ -5,36 +5,42 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class GippleEntityRenderer<T extends GippleEntity> extends GeoEntityRenderer<T> {
-
-
+public class GippleEntityRenderer<T extends GippleEntity> extends GeoEntityRenderer<T, GippleRenderState> {
 
     public GippleEntityRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new GippleEntityModel<>());
     }
 
     @Override
-    public void preRender(MatrixStack poseStack, T animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
-        poseStack.scale(animatable.getScaleFactor(), animatable.getScaleFactor(), animatable.getScaleFactor());
-        this.shadowRadius *= animatable.getScaleFactor();
+    public void preRender(GippleRenderState renderState, MatrixStack poseStack, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, int packedLight, int packedOverlay, int renderColor) {
+        super.preRender(renderState, poseStack, model, bufferSource, buffer, isReRender, packedLight, packedOverlay, renderColor);
+        poseStack.scale(renderState.baseScale, renderState.baseScale, renderState.baseScale);
+        this.shadowRadius *= renderState.baseScale;
     }
 
+    @Override
+    public void updateRenderState(T entity, EntityRenderState entityRenderState, float partialTick) {
+        super.updateRenderState(entity, entityRenderState, partialTick);
+        if (entityRenderState instanceof GippleRenderState gippleRenderState){
+            gippleRenderState.setLuminous(entity.isLuminous());
+        }
+    }
 
     @Override
-    public void actuallyRender(MatrixStack poseStack, T animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void actuallyRender(GippleRenderState renderState, MatrixStack poseStack, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, int packedLight, int packedOverlay, int renderColor) {
         poseStack.push();
-        if (animatable.isLuminous()) {
+        if (renderState.isLuminous()) {
             packedLight = 255;
             packedOverlay = OverlayTexture.DEFAULT_UV;
-            colour = 16777215;
+            renderColor = 16777215;
         }
-        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
+        super.actuallyRender(renderState, poseStack, model, renderType, bufferSource, buffer, isReRender, packedLight, packedOverlay, renderColor);
         poseStack.pop();
     }
 }

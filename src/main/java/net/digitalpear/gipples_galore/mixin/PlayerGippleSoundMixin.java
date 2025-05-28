@@ -8,7 +8,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -23,15 +22,13 @@ import java.util.List;
 public abstract class PlayerGippleSoundMixin {
     @Shadow public abstract Collection<StatusEffectInstance> getStatusEffects();
 
-    @Shadow @Final public float randomLargeSeed;
-
     @Shadow public abstract void playSound(@Nullable SoundEvent sound);
 
     @Inject(method = "tickStatusEffects", at = @At("HEAD"), cancellable = true)
     private void playEffectSound(CallbackInfo ci){
         List<StatusEffectInstance> statusEffectInstanceList = getStatusEffects().stream().filter(statusEffectInstance -> statusEffectInstance.getEffectType().value() instanceof ParasiteStatusEffect<?>).toList();
         if (!statusEffectInstanceList.isEmpty()){
-            Random random = Random.create((long) randomLargeSeed);
+            Random random = Random.create();
             StatusEffectInstance effect = Util.getRandom(statusEffectInstanceList, random);
             int duration = effect.getDuration();
             if (validDuration(duration) && effect.getEffectType().value() instanceof ParasiteStatusEffect<?> parasiteStatusEffect && !effect.isInfinite()){

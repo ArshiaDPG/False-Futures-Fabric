@@ -75,7 +75,8 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
     /*
         Flying code.
      */
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    @Override
+    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
         return false;
     }
 
@@ -124,7 +125,7 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
+        controllers.add(new AnimationController(this, "Walking", 3, this::setAnimations));
     }
 
 

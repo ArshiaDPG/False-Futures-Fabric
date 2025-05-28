@@ -2,8 +2,9 @@ package net.digitalpear.gipples_galore.init.artsy_stuff;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.registry.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.Registerable;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 
 public class GGBannerPatterns {
 

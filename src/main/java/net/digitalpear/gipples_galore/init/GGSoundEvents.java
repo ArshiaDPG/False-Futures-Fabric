@@ -8,7 +8,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class GGSoundEvents {
-    public static final SoundEvent ENTITY_GIPPLE_AMBIENT = register("entity.gipple.ambient");
+    public static final RegistryEntry.Reference<SoundEvent> ENTITY_GIPPLE_AMBIENT = registerReference("entity.gipple.ambient");
     public static final SoundEvent ENTITY_GIPPLE_HURT = register("entity.gipple.hurt");
     public static final SoundEvent ENTITY_GIPPLE_DEATH = register("entity.gipple.death");
     public static final SoundEvent ENTITY_GIPPLE_BURP = register("entity.gipple.burp");

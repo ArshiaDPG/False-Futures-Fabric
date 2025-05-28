@@ -22,6 +22,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 public class GGLanguageProvider extends FabricLanguageProvider {
@@ -133,10 +134,11 @@ public class GGLanguageProvider extends FabricLanguageProvider {
 
 
     private void makeColoredBannerPatterns(TranslationBuilder translationBuilder, String name){
-        for (int i = 0; i < 16; i++){
-            translationBuilder.add("block." + GipplesGalore.MOD_ID + ".banner."  + GipplesGalore.MOD_ID +  "." + name.toLowerCase() + "." + DyeColor.byId(i),
-                    autoNameInner(DyeColor.byId(i).getName()) + " " + name);
-        }
+        Arrays.stream(DyeColor.values()).toList().forEach(color -> {
+            translationBuilder.add("block." + GipplesGalore.MOD_ID + ".banner."  + GipplesGalore.MOD_ID +  "." + name.toLowerCase() + "." + color.getId(),
+                    autoNameInner(color.getId()) + " " + name);
+        });
+
     }
     private static void jukeboxSongTranslation(TranslationBuilder translationBuilder, RegistryKey<JukeboxSong> song, String value){
         translationBuilder.add("jukebox_song." + song.getValue().toTranslationKey(), value);

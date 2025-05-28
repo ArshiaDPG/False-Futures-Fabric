@@ -1,33 +1,26 @@
 package net.digitalpear.gipples_galore.common.datagens;
 
-import com.google.common.collect.ImmutableMap;
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.digitalpear.gipples_galore.init.GGStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.minecraft.advancement.*;
-import net.minecraft.advancement.criterion.ConsumeItemCriterion;
-import net.minecraft.advancement.criterion.Criterion;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.data.advancement.AdvancementTabGenerator;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityEffectPredicate;
-import net.minecraft.registry.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 

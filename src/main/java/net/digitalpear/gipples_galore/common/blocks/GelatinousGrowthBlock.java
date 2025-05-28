@@ -17,8 +17,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.event.Vibrations;
-import net.minecraft.world.event.listener.VibrationSelector;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -55,7 +53,7 @@ public class GelatinousGrowthBlock extends PlantBlock implements Waterloggable {
         if (world.getBlockState(pos.down()).isIn(GGBlockTags.GELATINOUS_GROWTH_SUPPORTING)){
             if (random.nextFloat() < 0.3f){
                 for (int i = 0; i < random.nextInt(4); i++){
-                    world.addParticle(GGParticleTypes.GIPPLE, (double)pos.getX() + 0.5f, (double)pos.getY() + (random.nextFloat() * 0.7f), (double)pos.getZ() + 0.5f, random.nextFloat() / 2.0F, 5.0E-5, random.nextFloat() / 2.0F);
+                    world.addParticleClient(GGParticleTypes.GIPPLE, (double)pos.getX() + 0.5f, (double)pos.getY() + (random.nextFloat() * 0.7f), (double)pos.getZ() + 0.5f, random.nextFloat() / 2.0F, 5.0E-5, random.nextFloat() / 2.0F);
                 }
             }
         }
@@ -69,10 +67,10 @@ public class GelatinousGrowthBlock extends PlantBlock implements Waterloggable {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        if (super.getPlacementState(ctx) == null){
-            return null;
+        if (super.getPlacementState(ctx) != null){
+            return Objects.requireNonNull(super.getPlacementState(ctx)).withIfExists(WATERLOGGED, ctx.getWorld().isWater(ctx.getBlockPos()));
         }
-        return super.getPlacementState(ctx).with(WATERLOGGED, ctx.getWorld().isWater(ctx.getBlockPos()));
+        return null;
     }
 
     @Override

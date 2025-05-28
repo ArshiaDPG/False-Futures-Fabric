@@ -5,6 +5,8 @@ import net.digitalpear.gipples_galore.init.*;
 import net.digitalpear.gipples_galore.init.tags.GGBlockTags;
 import net.digitalpear.gipples_galore.init.tags.GGItemTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
@@ -46,11 +48,11 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity, Flutterer {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -138,16 +140,17 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         nbt.putInt("placeGelatinTimer", this.getPlaceGelatinTimer());
     }
 
+
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setFromBucket(nbt.getBoolean("FromBucket"));
-        this.setDancing(nbt.getBoolean("Dancing"));
-        this.setEating(nbt.getBoolean("Eating"));
-        this.setLuminous(nbt.getBoolean("Luminous"));
-        this.setHungryCountdown(nbt.getInt("hungryCountdown"));
-        this.setEatingTimer(nbt.getInt("eatingTimer"));
-        this.setPlaceGelatinTimer(nbt.getInt("placeGelatinTimer"));
+        this.setFromBucket(nbt.getBoolean("FromBucket", false));
+        this.setDancing(nbt.getBoolean("Dancing", false));
+        this.setEating(nbt.getBoolean("Eating", false));
+        this.setLuminous(nbt.getBoolean("Luminous", false));
+        this.setHungryCountdown(nbt.getInt("hungryCountdown", 0));
+        this.setEatingTimer(nbt.getInt("eatingTimer", 0));
+        this.setPlaceGelatinTimer(nbt.getInt("placeGelatinTimer", 0));
     }
 
     @Override
@@ -226,7 +229,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             double x = random.nextGaussian() * 0.001D;
             double y = random.nextGaussian() * 0.06D;
             double z = random.nextGaussian() * 0.001D;
-            world.addParticle(ParticleTypes.COMPOSTER, this.getX() + 0.5D, this.getY() + 0.5D, getZ() + 0.5D, x, y, z);
+            world.addParticleClient(ParticleTypes.COMPOSTER, this.getX() + 0.5D, this.getY() + 0.5D, getZ() + 0.5D, x, y, z);
         }
         world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
 
@@ -268,7 +271,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 //    }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
         return false;
     }
 
@@ -384,16 +387,34 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
 
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
-        this.setBreedingAge(nbt.getInt("Age"));
-        this.setHungryCountdown(nbt.getInt("HungryCountdown"));
-        this.setPlaceGelatinTimer(nbt.getInt("PlaceGelatinTimer"));
-        this.setEatingTimer(nbt.getInt("EatingTimer"));
-
-        if (nbt.contains("Luminous")) {
-            this.setLuminous(nbt.getBoolean("Luminous"));
-        }
+        nbt.getInt("Age").ifPresent(this::setBreedingAge);
+        nbt.getInt("HungryCountdown").ifPresent(this::setHungryCountdown);
+        nbt.getInt("PlaceGelatinTimer").ifPresent(this::setPlaceGelatinTimer);
+        nbt.getInt("EatingTimer").ifPresent(this::setEatingTimer);
+        nbt.getBoolean("Luminous").ifPresent(this::setLuminous);
         this.setFromBucket(true);
         Bucketable.copyDataFromNbt(this, nbt);
+    }
+
+    @Override
+    protected void copyComponentsFrom(ComponentsAccess from) {
+        super.copyComponentsFrom(from);
+        this.copyComponentFrom(from, GGDataComponentTypes.LUMINOUS);
+    }
+
+    @Override
+    protected <T> boolean setApplicableComponent(ComponentType<T> type, T value) {
+        if (type == GGDataComponentTypes.LUMINOUS){
+            this.setLuminous(castComponentValue(GGDataComponentTypes.LUMINOUS,value));
+            return true;
+        }
+        return super.setApplicableComponent(type, value);
+    }
+
+    @Nullable
+    @Override
+    public <T> T get(ComponentType<? extends T> type) {
+        return type == GGDataComponentTypes.LUMINOUS ? castComponentValue(type, this.isLuminous()) : super.get(type);
     }
 
     @Override

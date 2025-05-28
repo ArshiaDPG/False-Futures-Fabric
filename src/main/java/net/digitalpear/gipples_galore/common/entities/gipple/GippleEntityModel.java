@@ -3,7 +3,7 @@ package net.digitalpear.gipples_galore.common.entities.gipple;
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
-import software.bernie.geckolib.renderer.GeoRenderer;
+import software.bernie.geckolib.renderer.base.GeoRenderState;
 
 public class GippleEntityModel<T extends GippleEntity> extends DefaultedEntityGeoModel<T> {
     public GippleEntityModel() {
@@ -12,16 +12,16 @@ public class GippleEntityModel<T extends GippleEntity> extends DefaultedEntityGe
 
     @Override
     public Identifier getAnimationResource(T entity) {
-        return GipplesGalore.id("animations/gipple.animation.json");
+        return GipplesGalore.id("geckolib/animations/gipple.animation.json");
     }
 
     @Override
-    public Identifier getModelResource(T entity, GeoRenderer<T> renderer) {
-        return GipplesGalore.id("geo/gipple.geo.json");
+    public Identifier getModelResource(GeoRenderState renderState) {
+        return GipplesGalore.id("geckolib/models/gipple.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(T entity, GeoRenderer<T> renderer) {
+    public Identifier getTextureResource(GeoRenderState renderState) {
         return GipplesGalore.id("textures/entity/gipple/blue.png");
     }
 }

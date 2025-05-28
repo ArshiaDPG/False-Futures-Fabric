@@ -7,6 +7,7 @@ import net.digitalpear.gipples_galore.init.data.foods.GGFoodComponents;
 import net.digitalpear.gipples_galore.init.tags.GGBannerPatternItemTags;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.jukebox.JukeboxSong;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.Fluids;
@@ -57,7 +58,7 @@ public class GGItems {
     public static final Item GAPPLE = register("gapple", new Item.Settings().food(GGFoodComponents.GAPPLE, GGConsumableComponents.GAPPLE));
     public static final Item MUSIC_DISC_GIPPLECORE = createDisc("gipplecore", GGJukeboxSongs.GIPPLECORE);
     public static final Item GIPPLEPAD = Items.register(GGBlocks.GIPPLEPAD, PlaceableOnWaterItem::new);
-    public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", settings -> new BannerPatternItem(GGBannerPatternItemTags.GIPPLE_PATTERN_ITEM, settings), new Item.Settings().maxCount(1).rarity(Rarity.RARE));
+    public static final Item GIPPLE_BANNER_PATTERN = register("gipple_banner_pattern", new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON).component(DataComponentTypes.PROVIDES_BANNER_PATTERNS, GGBannerPatternItemTags.GIPPLE_PATTERN_ITEM));
 
     public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {

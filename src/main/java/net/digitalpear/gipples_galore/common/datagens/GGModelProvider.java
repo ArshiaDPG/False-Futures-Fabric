@@ -8,9 +8,15 @@ import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
+import net.minecraft.client.render.model.json.ModelVariant;
+import net.minecraft.client.render.model.json.ModelVariantOperator;
+import net.minecraft.client.render.model.json.WeightedVariant;
+import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.AxisRotation;
 import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
@@ -29,7 +35,7 @@ public class GGModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         registerGipplePad(blockStateModelGenerator);
-        registerGelatinLayers(blockStateModelGenerator);
+        registerGelatinLayers(blockStateModelGenerator, GGBlocks.GELATIN_LAYER);
         registerAllJellies(blockStateModelGenerator);
 
         registerStoneSet(blockStateModelGenerator, GGBlocks.GELATITE_SET);
@@ -49,7 +55,7 @@ public class GGModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         GGItems.EGG_COLORS.forEach((item, integerIntegerPair) -> {
-            itemModelGenerator.registerSpawnEgg(item, integerIntegerPair.getLeft(), integerIntegerPair.getRight());
+            itemModelGenerator.register(item, Models.GENERATED);
         });
 
         itemModelGenerator.register(GGItems.GELATIN, Models.GENERATED);
@@ -65,61 +71,60 @@ public class GGModelProvider extends FabricModelProvider {
         }
     }
 
-    private VariantSettings.Rotation rotationOf(Direction d) {
+    private AxisRotation rotationOf(Direction d) {
         return switch (d) {
-            case EAST -> VariantSettings.Rotation.R90;
-            case SOUTH -> VariantSettings.Rotation.R180;
-            case WEST -> VariantSettings.Rotation.R270;
-            default -> VariantSettings.Rotation.R0;
+            case EAST -> AxisRotation.R90;
+            case SOUTH -> AxisRotation.R180;
+            case WEST -> AxisRotation.R270;
+            default -> AxisRotation.R0;
         };
     }
 
     private void registerJelly(BlockStateModelGenerator blockStateModelGenerator, Block block) {
         TextureMap horizontalMap = new TextureMap().put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
         TextureMap verticalMap = new TextureMap().put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside_vertical")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
-        Identifier half_side = JELLY_HALF_SIDE.upload(block,horizontalMap, blockStateModelGenerator.modelCollector);
-        Identifier half_upper = JELLY_HALF_UPPER.upload(block,verticalMap, blockStateModelGenerator.modelCollector);
-        Identifier half_lower = JELLY_HALF_LOWER.upload(block,verticalMap, blockStateModelGenerator.modelCollector);
-        Identifier full = Models.CUBE_BOTTOM_TOP.upload(block,horizontalMap,blockStateModelGenerator.modelCollector);
-        var stateMap = BlockStateVariantMap.create(Properties.FACING,JellyBlock.HALVED);
-        for(Direction d : Direction.values()) {
+        WeightedVariant half_side = BlockStateModelGenerator.createWeightedVariant(JELLY_HALF_SIDE.upload(block,horizontalMap, blockStateModelGenerator.modelCollector));
+        WeightedVariant half_upper = BlockStateModelGenerator.createWeightedVariant(JELLY_HALF_UPPER.upload(block,verticalMap, blockStateModelGenerator.modelCollector));
+        WeightedVariant half_lower = BlockStateModelGenerator.createWeightedVariant(JELLY_HALF_LOWER.upload(block,verticalMap, blockStateModelGenerator.modelCollector));
+        WeightedVariant full = BlockStateModelGenerator.createWeightedVariant(Models.CUBE_BOTTOM_TOP.upload(block,horizontalMap,blockStateModelGenerator.modelCollector));
+        var stateMap = BlockStateVariantMap.models(Properties.FACING,JellyBlock.HALVED);
+        for(Direction direction : Direction.values()) {
+            stateMap.register(direction, Boolean.FALSE, full);
 
-            stateMap.register(d, Boolean.FALSE, BlockStateVariant.create().put(VariantSettings.MODEL, full));
-
-            if (d == Direction.DOWN) {
-                stateMap.register(d, Boolean.TRUE, BlockStateVariant.create().put(VariantSettings.MODEL, half_upper));
+            if (direction == Direction.DOWN) {
+                stateMap.register(direction, Boolean.TRUE, half_upper);
             }
-            else if (d == Direction.UP) {
-                stateMap.register(d, Boolean.TRUE, BlockStateVariant.create().put(VariantSettings.MODEL, half_lower));
+            else if (direction == Direction.UP) {
+                stateMap.register(direction, Boolean.TRUE, half_lower);
             }
             else {
-                stateMap.register(d, Boolean.TRUE, BlockStateVariant.create().put(VariantSettings.MODEL, half_side).put(VariantSettings.Y, rotationOf(d)));
+                stateMap.register(direction, Boolean.TRUE, half_side.apply(ModelVariantOperator.ROTATION_Y.withValue(rotationOf(direction))));
             }
         }
-        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block, BlockStateVariant.create().put(VariantSettings.MODEL, full)).coordinate(stateMap));
+        blockStateModelGenerator.blockStateCollector.accept(
+                VariantsBlockModelDefinitionCreator.of(block, full).apply(stateMap)
+        );
     }
 
-    private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator) {
-        Identifier identifier = Models.CUBE_ALL.upload(GipplesGalore.id("block/gelatin_height16"), TextureMap.all(GipplesGalore.id("block/gelatin")), blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(GGBlocks.GELATIN_LAYER).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register((height) -> {
-            BlockStateVariant blockStateVariant = BlockStateVariant.create();
-            VariantSetting<Identifier> variantSettings = VariantSettings.MODEL;
-            Identifier stateName;
-            if (height < 8) {
-                Block block = GGBlocks.GELATIN_LAYER;
-                int currentHeight = height;
-                stateName = ModelIds.getBlockSubModelId(block, "_height" + currentHeight * 2);
+
+    private void registerGelatinLayers(BlockStateModelGenerator blockStateModelGenerator, Block layerBlock) {
+        WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.CUBE_ALL.upload(ModelIds.getBlockSubModelId(layerBlock, "_height16"), TextureMap.all(GipplesGalore.id("block/gelatin")), blockStateModelGenerator.modelCollector));
+        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockModelDefinitionCreator.of(layerBlock).with(BlockStateVariantMap.models(Properties.LAYERS).generate((integer) -> {
+            WeightedVariant var2;
+            if (integer < 8) {
+                var2 = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(layerBlock, "_height" + integer * 2));
             } else {
-                stateName = identifier;
+                var2 = weightedVariant;
             }
-            return blockStateVariant.put(variantSettings, stateName);
+            return var2;
         })));
-        blockStateModelGenerator.registerParentedItemModel(GGBlocks.GELATIN_LAYER, ModelIds.getBlockSubModelId(GGBlocks.GELATIN_LAYER, "_height2"));
+        blockStateModelGenerator.registerParentedItemModel(layerBlock, ModelIds.getBlockSubModelId(layerBlock, "_height2"));
     }
 
     private void registerGipplePad(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerItemModel(GGBlocks.GIPPLEPAD);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(GGBlocks.GIPPLEPAD, ModelIds.getBlockModelId(GGBlocks.GIPPLEPAD)));
+        ModelVariant modelVariant = BlockStateModelGenerator.createModelVariant(ModelIds.getBlockModelId(Blocks.LILY_PAD));
+        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockModelDefinitionCreator.of(GGBlocks.GIPPLEPAD, BlockStateModelGenerator.modelWithYRotation(modelVariant)));
     }
 
     public static void registerStoneSet(BlockStateModelGenerator blockStateModelGenerator, StoneSet stoneSet){

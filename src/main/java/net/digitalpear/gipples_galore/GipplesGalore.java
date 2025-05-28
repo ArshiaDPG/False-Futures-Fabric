@@ -20,11 +20,14 @@ public class GipplesGalore implements ModInitializer {
 
     /*
         Changelog:
+        -Changed banner pattern rarity to match other similar patterns.
+        -
      */
     @Override
     public void onInitialize() {
         GGBlocks.init();
         GGItems.init();
+        GGDataComponentTypes.init();
         GGEntityTypes.init();
         GGSoundEvents.init();
         GGFeatures.init();

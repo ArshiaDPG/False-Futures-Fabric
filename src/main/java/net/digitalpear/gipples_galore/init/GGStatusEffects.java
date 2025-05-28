@@ -2,14 +2,10 @@ package net.digitalpear.gipples_galore.init;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
 import net.digitalpear.gipples_galore.common.status.ParasiteStatusEffect;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 public class GGStatusEffects {

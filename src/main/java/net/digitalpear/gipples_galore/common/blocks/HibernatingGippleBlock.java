@@ -16,6 +16,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 public class HibernatingGippleBlock extends HorizontalFacingBlock {
     public static final MapCodec<HibernatingGippleBlock> CODEC = createCodec(HibernatingGippleBlock::new);
@@ -46,10 +47,12 @@ public class HibernatingGippleBlock extends HorizontalFacingBlock {
         return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
+
+
     @Override
-    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(200) == 0) {
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(), GGSoundEvents.ENTITY_GIPPLE_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
+            world.playSoundAtBlockCenterClient(pos, GGSoundEvents.ENTITY_GIPPLE_AMBIENT.value(), SoundCategory.BLOCKS, 1f, 1f, false);
         }
     }
 

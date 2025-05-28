@@ -7,7 +7,7 @@ import software.bernie.geckolib.renderer.base.GeoRenderState;
 
 import java.util.Map;
 
-public class AneuploidianRenderState extends LivingEntityRenderState implements GeoRenderState {
+public class AneuploidianEntityRenderState extends LivingEntityRenderState implements GeoRenderState {
     @Override
     public <D> void addGeckolibData(DataTicket<D> dataTicket, @Nullable D d) {
 

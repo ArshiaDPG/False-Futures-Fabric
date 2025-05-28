@@ -7,11 +7,11 @@ import software.bernie.geckolib.renderer.base.GeoRenderState;
 
 import java.util.Map;
 
-public class GippleRenderState extends LivingEntityRenderState implements GeoRenderState {
+public class GippleEntityRenderState extends LivingEntityRenderState implements GeoRenderState {
 
     private boolean luminous;
 
-    public GippleRenderState(){
+    public GippleEntityRenderState(){
         this.luminous = false;
     }
 

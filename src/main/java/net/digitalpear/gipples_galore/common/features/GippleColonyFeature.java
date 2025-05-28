@@ -28,7 +28,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
 
     protected Set<BlockPos> placeGroundAndGetPositions(StructureWorldAccess world, VegetationPatchFeatureConfig config, Random random, BlockPos pos, Predicate<BlockState> replaceable, int radiusX, int radiusZ) {
         Set<BlockPos> set = super.placeGroundAndGetPositions(world, config, random, pos, replaceable, radiusX, radiusZ);
-        Set<BlockPos> set2 = new HashSet();
+        Set<BlockPos> set2 = new HashSet<>();
         BlockPos.Mutable mutable = new BlockPos.Mutable();
         Iterator<BlockPos> var11 = set.iterator();
 
@@ -36,7 +36,6 @@ public class GippleColonyFeature extends VegetationPatchFeature {
         while(var11.hasNext()) {
             blockPos = var11.next();
             if (!isSolidBlockAroundPos(world, set, blockPos, mutable)) {
-//                generateLichen(world, random, pos);
                 set2.add(blockPos);
             }
         }
@@ -105,7 +104,6 @@ public class GippleColonyFeature extends VegetationPatchFeature {
         if (!world.getBlockState(pos.up(finalHeight)).isAir()) {
             world.setBlockState(pos.up(finalHeight), GGBlocks.GELATINOUS_GROWTH.getDefaultState(), 2);
         }
-
     }
     public void placeBlock(StructureWorldAccess world, Random random, BlockPos pos){
         world.setBlockState(pos, random.nextInt(10) < 8 ? GGBlocks.GELATIN_BLOCK.getDefaultState() : GGBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byIndex(random.nextBetween(2, 5))), 2);
@@ -128,7 +126,6 @@ public class GippleColonyFeature extends VegetationPatchFeature {
                 pos.move(config.surface.getDirection());
             }
         }
-
         return true;
     }
 }

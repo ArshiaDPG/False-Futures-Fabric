@@ -12,8 +12,7 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.VerticalSurfaceType;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
@@ -40,7 +39,7 @@ public class GGConfiguredFeatures {
 
 
 
-    public static final DataPool.Builder<BlockState> GELATITE_VEGETATION_PROVIDER = DataPool.<BlockState>builder()
+    public static final Pool.Builder<BlockState> GELATITE_VEGETATION_PROVIDER = Pool.<BlockState>builder()
             .add(Blocks.SEAGRASS.getDefaultState(), 30)
             .add(Blocks.GLOW_LICHEN.getDefaultState()
                     .with(MultifaceGrowthBlock.getProperty(Direction.DOWN), true)

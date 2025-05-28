@@ -83,11 +83,10 @@ public class GippleColonyFeature extends VegetationPatchFeature {
         for (int i = -2; i < initialHeight; i++){
             for (int x = 2; x < 6; x++){
                 if (!world.getBlockState(pos.up(i)).isOpaque()){
-                    placeBlock(world, random, pos.up(i).offset(Direction.byId(x)));
+                    placeBlock(world, random, pos.up(i).offset(Direction.byIndex(x)));
                     if (random.nextBoolean()){
-                        world.setBlockState(pos.up(i + 1).offset(Direction.byId(x)), GGBlocks.GELATINOUS_GROWTH.getDefaultState(), 2);
+                        world.setBlockState(pos.up(i + 1).offset(Direction.byIndex(x)), GGBlocks.GELATINOUS_GROWTH.getDefaultState(), 2);
                     }
-
                 }
             }
             if (!world.getBlockState(pos.up(i)).isOpaque()){
@@ -109,7 +108,7 @@ public class GippleColonyFeature extends VegetationPatchFeature {
 
     }
     public void placeBlock(StructureWorldAccess world, Random random, BlockPos pos){
-        world.setBlockState(pos, random.nextInt(10) < 8 ? GGBlocks.GELATIN_BLOCK.getDefaultState() : GGBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byId(random.nextBetween(2, 5))), 2);
+        world.setBlockState(pos, random.nextInt(10) < 8 ? GGBlocks.GELATIN_BLOCK.getDefaultState() : GGBlocks.HIBERNATING_GIPPLE.getDefaultState().with(HibernatingGippleBlock.FACING, Direction.byIndex(random.nextBetween(2, 5))), 2);
     }
 
 

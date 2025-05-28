@@ -13,9 +13,7 @@ import net.minecraft.client.data.*;
 import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.client.render.model.json.ModelVariantOperator;
 import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.AxisRotation;
 import net.minecraft.util.math.Direction;
 
@@ -87,10 +85,9 @@ public class GGModelProvider extends FabricModelProvider {
         WeightedVariant half_upper = BlockStateModelGenerator.createWeightedVariant(JELLY_HALF_UPPER.upload(block,verticalMap, blockStateModelGenerator.modelCollector));
         WeightedVariant half_lower = BlockStateModelGenerator.createWeightedVariant(JELLY_HALF_LOWER.upload(block,verticalMap, blockStateModelGenerator.modelCollector));
         WeightedVariant full = BlockStateModelGenerator.createWeightedVariant(Models.CUBE_BOTTOM_TOP.upload(block,horizontalMap,blockStateModelGenerator.modelCollector));
-        var stateMap = BlockStateVariantMap.models(Properties.FACING,JellyBlock.HALVED);
+        BlockStateVariantMap.DoubleProperty<WeightedVariant, Direction, Boolean> stateMap = BlockStateVariantMap.models(Properties.FACING, JellyBlock.HALVED);
         for(Direction direction : Direction.values()) {
             stateMap.register(direction, Boolean.FALSE, full);
-
             if (direction == Direction.DOWN) {
                 stateMap.register(direction, Boolean.TRUE, half_upper);
             }
@@ -101,8 +98,9 @@ public class GGModelProvider extends FabricModelProvider {
                 stateMap.register(direction, Boolean.TRUE, half_side.apply(ModelVariantOperator.ROTATION_Y.withValue(rotationOf(direction))));
             }
         }
+
         blockStateModelGenerator.blockStateCollector.accept(
-                VariantsBlockModelDefinitionCreator.of(block, full).apply(stateMap)
+                VariantsBlockModelDefinitionCreator.of(block).with(stateMap)
         );
     }
 

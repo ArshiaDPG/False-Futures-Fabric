@@ -12,7 +12,6 @@ public class AneuploidianRenderState extends LivingEntityRenderState implements 
     public <D> void addGeckolibData(DataTicket<D> dataTicket, @Nullable D d) {
 
     }
-
     @Override
     public boolean hasGeckolibData(DataTicket<?> dataTicket) {
         return false;

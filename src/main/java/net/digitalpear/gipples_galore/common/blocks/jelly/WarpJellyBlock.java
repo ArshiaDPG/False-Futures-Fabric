@@ -45,7 +45,7 @@ public class WarpJellyBlock extends JellyBlock{
                             double e = MathHelper.lerp(d, blockPos.getX(), pos.getX()) + (world.random.nextDouble() - 0.5) + 0.5;
                             double k = MathHelper.lerp(d, blockPos.getY(), pos.getY()) + world.random.nextDouble() - 0.5;
                             double l = MathHelper.lerp(d, blockPos.getZ(), pos.getZ()) + (world.random.nextDouble() - 0.5) + 0.5;
-                            world.addParticle(ParticleTypes.PORTAL, e, k, l, x, y, z);
+                            world.addParticleClient(ParticleTypes.PORTAL, e, k, l, x, y, z);
                         }
                     } else {
                         world.setBlockState(blockPos, eatenState, 2);

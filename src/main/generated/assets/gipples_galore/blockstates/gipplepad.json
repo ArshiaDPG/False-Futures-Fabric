@@ -2,18 +2,18 @@
   "variants": {
     "": [
       {
-        "model": "gipples_galore:block/gipplepad"
+        "model": "minecraft:block/lily_pad"
       },
       {
-        "model": "gipples_galore:block/gipplepad",
+        "model": "minecraft:block/lily_pad",
         "y": 90
       },
       {
-        "model": "gipples_galore:block/gipplepad",
+        "model": "minecraft:block/lily_pad",
         "y": 180
       },
       {
-        "model": "gipples_galore:block/gipplepad",
+        "model": "minecraft:block/lily_pad",
         "y": 270
       }
     ]

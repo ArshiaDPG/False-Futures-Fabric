@@ -22,7 +22,7 @@
       "model": "gipples_galore:block/gelatin_layer_height14"
     },
     "layers=8": {
-      "model": "gipples_galore:block/gelatin_height16"
+      "model": "gipples_galore:block/gelatin_layer_height16"
     }
   }
 }

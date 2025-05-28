@@ -48,6 +48,9 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
 import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -433,9 +436,25 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     }
 
 
+//    @Override
+//    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+//        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "GippleAnimations", 3, this::setAnimations));
+//    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "GippleAnimations", 3, this::setAnimations));
+        controllerRegistrar.add(new AnimationController<GippleEntity>(animationTest -> {
+            if (animationTest.animatable().isDancing()){
+                animationTest.setAndContinue(DANCING_ANIM);
+            }else if (this.isEating()) {
+                return animationTest.setAndContinue(EATING_ANIM);
+            } else if (this.isOnGround()) {
+                return animationTest.setAndContinue(ON_GROUND_ANIM);
+            } else {
+                return animationTest.setAndContinue(AMBIENT_ANIM);
+            }
+            return PlayState.CONTINUE;
+        }));
     }
 
     @Override
@@ -443,18 +462,6 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         return instanceCache;
     }
 
-
-    public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {
-        if (this.isDancing()) {
-            return event.setAndContinue(DANCING_ANIM);
-        } else if (this.isEating()) {
-            return event.setAndContinue(EATING_ANIM);
-        } else if (this.isOnGround()) {
-            return event.setAndContinue(ON_GROUND_ANIM);
-        } else {
-            return event.setAndContinue(AMBIENT_ANIM);
-        }
-    }
 
     @Override
     public double getTick(Object object) {
@@ -470,7 +477,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return GGSoundEvents.ENTITY_GIPPLE_AMBIENT;
+        return GGSoundEvents.ENTITY_GIPPLE_AMBIENT.value();
     }
 
     @Nullable

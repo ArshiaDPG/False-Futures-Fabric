@@ -26,10 +26,12 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AneuploidianEntity extends HostileEntity implements Monster, Flutterer, GeoEntity {
@@ -125,7 +127,15 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "Walking", 3, this::setAnimations));
+        controllers.add(new AnimationController<AneuploidianEntity>(animationTest -> {
+            if (animationTest.animatable().isAttacking){
+                animationTest.setAndContinue(ATTACK_ANIM);
+            }
+            else {
+                return animationTest.setAndContinue(AMBIENT_ANIM);
+            }
+            return PlayState.CONTINUE;
+        }));
     }
 
 
@@ -133,14 +143,6 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-    public <E extends GeoAnimatable> PlayState setAnimations(final AnimationState<E> event) {
-        if (isAttacking) {
-            return event.setAndContinue(ATTACK_ANIM);
-        } else {
-            return event.setAndContinue(AMBIENT_ANIM);
-        }
     }
 
     @Override

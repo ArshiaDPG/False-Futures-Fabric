@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -3218439
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -5134632
-      }
-    ]
+    "model": "gipples_galore:item/gipple_spawn_egg"
   }
 }

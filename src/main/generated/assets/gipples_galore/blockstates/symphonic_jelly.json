@@ -17,8 +17,7 @@
       "model": "gipples_galore:block/symphonic_jelly"
     },
     "facing=north,halved=true": {
-      "model": "gipples_galore:block/symphonic_jelly_half_side",
-      "y": 0
+      "model": "gipples_galore:block/symphonic_jelly_half_side"
     },
     "facing=south,halved=false": {
       "model": "gipples_galore:block/symphonic_jelly"

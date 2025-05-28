@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.base.GeoRenderState;
 
@@ -27,17 +28,16 @@ public class GippleEntityRenderer<T extends LivingEntityRenderState & GeoRenderS
     }
 
     @Override
-    public void updateRenderState(GippleEntity entity, T entityRenderState, float partialTick) {
-        super.updateRenderState(entity, entityRenderState, partialTick);
-        if (entityRenderState instanceof GippleEntityRenderState gippleRenderState){
-            gippleRenderState.setLuminous(entity.isLuminous());
-        }
+    public void addRenderData(GippleEntity animatable, Void relatedObject, T renderState) {
+        super.addRenderData(animatable, relatedObject, renderState);
+        renderState.addGeckolibData(DataTickets.IS_GLOWING, animatable.isLuminous());
+        renderState.baseScale = animatable.getScaleFactor();
     }
 
     @Override
     public void actuallyRender(T renderState, MatrixStack poseStack, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, int packedLight, int packedOverlay, int renderColor) {
         poseStack.push();
-        if (renderState instanceof GippleEntityRenderState gippleRenderState && gippleRenderState.isLuminous()) {
+        if (renderState.getOrDefaultGeckolibData(DataTickets.IS_GLOWING, false).booleanValue()){
             packedLight = 255;
             packedOverlay = OverlayTexture.DEFAULT_UV;
             renderColor = 16777215;

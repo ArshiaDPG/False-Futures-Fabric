@@ -38,6 +38,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -105,7 +107,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     @Override
     protected EntityNavigation createNavigation(World world) {
         BirdNavigation birdNavigation = new BirdNavigation(this, world);
-        birdNavigation.setCanPathThroughDoors(false);
+        birdNavigation.setCanOpenDoors(false);
         birdNavigation.setCanSwim(false);
         return birdNavigation;
     }
@@ -129,9 +131,10 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         builder.add(PLACE_GELATIN_TIMER, 300);
     }
 
+
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    public void writeCustomData(WriteView nbt) {
+        super.writeCustomData(nbt);
         nbt.putBoolean("FromBucket", this.isFromBucket());
         nbt.putBoolean("Dancing", this.isDancing());
         nbt.putBoolean("Eating", this.isEating());
@@ -141,10 +144,9 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         nbt.putInt("placeGelatinTimer", this.getPlaceGelatinTimer());
     }
 
-
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
+    public void readCustomData(ReadView nbt) {
+        super.readCustomData(nbt);
         this.setFromBucket(nbt.getBoolean("FromBucket", false));
         this.setDancing(nbt.getBoolean("Dancing", false));
         this.setEating(nbt.getBoolean("Eating", false));

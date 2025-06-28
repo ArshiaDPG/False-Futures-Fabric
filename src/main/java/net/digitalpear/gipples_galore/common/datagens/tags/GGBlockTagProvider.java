@@ -1,120 +1,91 @@
 package net.digitalpear.gipples_galore.common.datagens.tags;
 
 import net.digitalpear.gipples_galore.init.GGBlocks;
+import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
 import net.digitalpear.gipples_galore.init.tags.GGBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.data.family.BlockFamily;
+import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class GGBlockTagProvider extends FabricTagProvider<Block> {
+public class GGBlockTagProvider extends FabricTagProvider.BlockTagProvider {
+    public static final Map<BlockFamily.Variant, TagKey<Block>> TAG_KEY_MAP = Map.of(
+            BlockFamily.Variant.WALL, BlockTags.WALLS,
+            BlockFamily.Variant.BUTTON, BlockTags.STONE_BUTTONS,
+            BlockFamily.Variant.PRESSURE_PLATE, BlockTags.STONE_PRESSURE_PLATES,
+            BlockFamily.Variant.STAIRS, BlockTags.STAIRS,
+            BlockFamily.Variant.SLAB, BlockTags.SLABS);
 
-    /**
-     * Constructs a new {@link FabricTagProvider} with the default computed path.
-     *
-     * <p>Common implementations of this class are provided.
-     *
-     * @param output           the {@link FabricDataOutput} instance
-
-     * @param registriesFuture the backing registry for the tag type
-     */
     public GGBlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(output, RegistryKeys.BLOCK, registriesFuture);
+        super(output, registriesFuture);
     }
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
+        getTagBuilder(GGBlockTags.GIPPLE_COLONY_REPLACEABLE)
+                .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD.id())
+                .addOptionalTag(BlockTags.BASE_STONE_NETHER.id())
+                .addOptionalTag(BlockTags.DIRT.id())
+                .add(getId(Blocks.DRIPSTONE_BLOCK))
+                .add(getId(Blocks.POINTED_DRIPSTONE))
+                .add(getId(Blocks.WATER));
 
-        getOrCreateTagBuilder(GGBlockTags.GIPPLE_COLONY_REPLACEABLE)
-                .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
-                .forceAddTag(BlockTags.BASE_STONE_NETHER)
-                .forceAddTag(BlockTags.DIRT)
-                .add(Blocks.DRIPSTONE_BLOCK)
-                .add(Blocks.POINTED_DRIPSTONE)
-                .add(Blocks.WATER);
+        getTagBuilder(GGBlockTags.GELATINOUS_GROWTH_SUPPORTING)
+                .add(getId(GGBlocks.GELATIN_BLOCK))
+                .add(getId(GGBlocks.HIBERNATING_GIPPLE))
+                .add(getId(GGBlocks.GELATITE))
+                .add(getId(GGBlocks.AMOEBALITH))
+                .addTag(GGBlockTags.JELLIES.id());
 
-        getOrCreateTagBuilder(GGBlockTags.GELATINOUS_GROWTH_SUPPORTING)
-                .add(GGBlocks.GELATIN_BLOCK)
-                .add(GGBlocks.HIBERNATING_GIPPLE)
-                .add(GGBlocks.GELATITE)
-                .add(GGBlocks.AMOEBALITH)
-                .forceAddTag(GGBlockTags.JELLIES);
+        getTagBuilder(BlockTags.STONE_BRICKS)
+                .add(getId(GGBlocks.AMOEBALITH_BRICKS))
+                .add(getId(GGBlocks.GELATITE_BRICKS));
 
-        var jellies = getOrCreateTagBuilder(GGBlockTags.JELLIES);
+        getTagBuilder(ConventionalBlockTags.STONES)
+                .add(getId(GGBlocks.AMOEBALITH))
+                .add(getId(GGBlocks.GELATITE));
+
+        var jellies = getTagBuilder(GGBlockTags.JELLIES);
         for(Block jelly : GGBlocks.JELLY.keySet()) {
-            jellies.add(jelly);
+            jellies.add(getId(jelly));
         }
 
-        getOrCreateTagBuilder(GGBlockTags.GIPPLE_FOOD)
-                .add(Blocks.GLOW_LICHEN)
+        getTagBuilder(GGBlockTags.GIPPLE_FOOD)
+                .add(getId(Blocks.GLOW_LICHEN))
                 .addOptional(Identifier.of("galosphere", "lichen_roots"))
                 .addOptional(Identifier.of("galosphere", "bowl_lichen"))
                 .addOptional(Identifier.of("galosphere", "lichen_shelf"))
         ;
 
-        getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(GGBlocks.POTTED_GELATINOUS_GROWTH);
+        getTagBuilder(BlockTags.FLOWER_POTS).add(getId(GGBlocks.POTTED_GELATINOUS_GROWTH));
 
-        getOrCreateTagBuilder(BlockTags.BUTTONS)
-                .add(GGBlocks.GELATITE_BUTTON)
-                .add(GGBlocks.AMOEBALITH_BUTTON);
+        StoneSet.ALL_SETS.forEach(stoneSet -> {
+            stoneSet.getBlockFamily().getVariants().forEach((variant, block) -> {
+                getTagBuilder(BlockTags.PICKAXE_MINEABLE).add(getId(block));
+            });
+            TAG_KEY_MAP.forEach((variant, tagKey) -> {
+                if (stoneSet.getBlockFamily().getVariants().containsKey(variant)){
+                    getTagBuilder(tagKey).add(getId(stoneSet.getBlockFamily().getVariants().get(variant)));
+                }
+            });
+        });
 
-        getOrCreateTagBuilder(BlockTags.WALLS)
-                .add(GGBlocks.GELATITE_WALL)
-                .add(GGBlocks.AMOEBALITH_WALL)
-                .add(GGBlocks.GELATITE_BRICK_WALL)
-                .add(GGBlocks.AMOEBALITH_BRICK_WALL);
+        getTagBuilder(BlockTags.HOE_MINEABLE).add(getId(GGBlocks.GELATIN_BLOCK));
+    }
 
-        getOrCreateTagBuilder(BlockTags.STAIRS)
-                .add(GGBlocks.GELATITE_STAIRS)
-                .add(GGBlocks.GELATITE_BRICK_STAIRS)
-                .add(GGBlocks.AMOEBALITH_STAIRS)
-                .add(GGBlocks.AMOEBALITH_BRICK_STAIRS);
-
-        getOrCreateTagBuilder(BlockTags.SLABS)
-                .add(GGBlocks.GELATITE_SLAB)
-                .add(GGBlocks.GELATITE_BRICK_SLAB)
-                .add(GGBlocks.AMOEBALITH_SLAB)
-                .add(GGBlocks.AMOEBALITH_BRICK_SLAB);
-
-        getOrCreateTagBuilder(BlockTags.STONE_PRESSURE_PLATES)
-                .add(GGBlocks.GELATITE_PRESSURE_PLATE)
-                .add(GGBlocks.AMOEBALITH_PRESSURE_PLATE);
-
-        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(GGBlocks.GELATITE)
-                .add(GGBlocks.GELATITE_STAIRS)
-                .add(GGBlocks.GELATITE_SLAB)
-                .add(GGBlocks.GELATITE_WALL)
-                .add(GGBlocks.GELATITE_BUTTON)
-                .add(GGBlocks.GELATITE_PRESSURE_PLATE)
-
-                .add(GGBlocks.CHISELED_GELATITE_BRICKS)
-
-                .add(GGBlocks.GELATITE_BRICKS)
-                .add(GGBlocks.GELATITE_BRICK_STAIRS)
-                .add(GGBlocks.GELATITE_BRICK_SLAB)
-                .add(GGBlocks.GELATITE_BRICK_WALL)
-
-                .add(GGBlocks.AMOEBALITH)
-                .add(GGBlocks.AMOEBALITH_STAIRS)
-                .add(GGBlocks.AMOEBALITH_SLAB)
-                .add(GGBlocks.AMOEBALITH_WALL)
-                .add(GGBlocks.AMOEBALITH_BUTTON)
-                .add(GGBlocks.AMOEBALITH_PRESSURE_PLATE)
-
-                .add(GGBlocks.CHISELED_AMOEBALITH_BRICKS)
-
-                .add(GGBlocks.AMOEBALITH_BRICKS)
-                .add(GGBlocks.AMOEBALITH_BRICK_STAIRS)
-                .add(GGBlocks.AMOEBALITH_BRICK_SLAB)
-                .add(GGBlocks.AMOEBALITH_BRICK_WALL);
-
-        getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(GGBlocks.GELATIN_BLOCK);
+    public static Identifier getId(Block block){
+        return Registries.BLOCK.getId(block);
     }
 }

@@ -18,6 +18,11 @@ public class GipplesGalore implements ModInitializer {
         return Identifier.of(MOD_ID, name);
     }
 
+    /*
+        1.21.6 changelog:
+            -Gipple Colonies no longer use snowy village's biome tag for their own generation.
+            -Pressure plates are now included in the correct tag.
+     */
     @Override
     public void onInitialize() {
         GGBlocks.init();

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:amoebalith_stairs_from_amoebalith_stonecutting"
+        "recipe": "gipples_galore:amoebalith_stairs_from_amoebalith_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:amoebalith_stairs_from_amoebalith_stonecutting"
+      "gipples_galore:amoebalith_stairs_from_amoebalith_stonecutting"
     ]
   }
 }

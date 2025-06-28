@@ -1,7 +1,10 @@
 {
   "values": [
     "minecraft:creaking",
-    "#minecraft:can_breathe_under_water",
+    {
+      "id": "#minecraft:can_breathe_under_water",
+      "required": false
+    },
     "minecraft:creeper"
   ]
 }

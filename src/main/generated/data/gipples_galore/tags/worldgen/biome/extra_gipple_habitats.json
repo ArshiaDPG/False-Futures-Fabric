@@ -1,8 +1,17 @@
 {
   "values": [
-    "#minecraft:is_ocean",
-    "#minecraft:is_deep_ocean",
-    "#minecraft:has_structure/village_snowy",
+    {
+      "id": "#minecraft:is_ocean",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_deep_ocean",
+      "required": false
+    },
+    {
+      "id": "#c:is_snowy",
+      "required": false
+    },
     {
       "id": "galosphere:lichen_caves",
       "required": false

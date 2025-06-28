@@ -1,0 +1,6 @@
+{
+  "parent": "gipples_galore:block/gipple_stack_1",
+  "textures": {
+    "all": "gipples_galore:block/gipple_stack"
+  }
+}

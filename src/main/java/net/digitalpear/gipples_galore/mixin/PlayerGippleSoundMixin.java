@@ -32,7 +32,6 @@ public abstract class PlayerGippleSoundMixin {
             StatusEffectInstance effect = Util.getRandom(statusEffectInstanceList, random);
             int duration = effect.getDuration();
             if (validDuration(duration) && effect.getEffectType().value() instanceof ParasiteStatusEffect<?> parasiteStatusEffect && !effect.isInfinite()){
-                GipplesGalore.LOGGER.info("Duration left: " + duration);
                 if(random.nextInt((duration/4)+1) < 6 || random.nextInt(10) == 1) {
                     this.playSound(parasiteStatusEffect.getHallucination());
                 }

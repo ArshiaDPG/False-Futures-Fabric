@@ -88,7 +88,7 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
 
     protected EntityNavigation createNavigation(World world) {
         BirdNavigation birdNavigation = new BirdNavigation(this, world);
-        birdNavigation.setCanPathThroughDoors(false);
+        birdNavigation.setCanOpenDoors(false);
         birdNavigation.setCanSwim(true);
         return birdNavigation;
     }

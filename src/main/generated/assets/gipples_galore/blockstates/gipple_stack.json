@@ -1,0 +1,320 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_1"
+      },
+      "when": {
+        "OR": [
+          {
+            "first_facing": "north",
+            "height": "4"
+          },
+          {
+            "first_facing": "north",
+            "height": "3"
+          },
+          {
+            "first_facing": "north",
+            "height": "2"
+          },
+          {
+            "first_facing": "north",
+            "height": "1"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_1",
+        "y": 90
+      },
+      "when": {
+        "OR": [
+          {
+            "first_facing": "east",
+            "height": "4"
+          },
+          {
+            "first_facing": "east",
+            "height": "3"
+          },
+          {
+            "first_facing": "east",
+            "height": "2"
+          },
+          {
+            "first_facing": "east",
+            "height": "1"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_1",
+        "y": 180
+      },
+      "when": {
+        "OR": [
+          {
+            "first_facing": "south",
+            "height": "4"
+          },
+          {
+            "first_facing": "south",
+            "height": "3"
+          },
+          {
+            "first_facing": "south",
+            "height": "2"
+          },
+          {
+            "first_facing": "south",
+            "height": "1"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_1",
+        "y": 270
+      },
+      "when": {
+        "OR": [
+          {
+            "first_facing": "west",
+            "height": "4"
+          },
+          {
+            "first_facing": "west",
+            "height": "3"
+          },
+          {
+            "first_facing": "west",
+            "height": "2"
+          },
+          {
+            "first_facing": "west",
+            "height": "1"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_2"
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "second_facing": "north"
+          },
+          {
+            "height": "3",
+            "second_facing": "north"
+          },
+          {
+            "height": "2",
+            "second_facing": "north"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_2",
+        "y": 90
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "second_facing": "east"
+          },
+          {
+            "height": "3",
+            "second_facing": "east"
+          },
+          {
+            "height": "2",
+            "second_facing": "east"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_2",
+        "y": 180
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "second_facing": "south"
+          },
+          {
+            "height": "3",
+            "second_facing": "south"
+          },
+          {
+            "height": "2",
+            "second_facing": "south"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_2",
+        "y": 270
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "second_facing": "west"
+          },
+          {
+            "height": "3",
+            "second_facing": "west"
+          },
+          {
+            "height": "2",
+            "second_facing": "west"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_3"
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "third_facing": "north"
+          },
+          {
+            "height": "3",
+            "third_facing": "north"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_3",
+        "y": 90
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "third_facing": "east"
+          },
+          {
+            "height": "3",
+            "third_facing": "east"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_3",
+        "y": 180
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "third_facing": "south"
+          },
+          {
+            "height": "3",
+            "third_facing": "south"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_3",
+        "y": 270
+      },
+      "when": {
+        "OR": [
+          {
+            "height": "4",
+            "third_facing": "west"
+          },
+          {
+            "height": "3",
+            "third_facing": "west"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_4"
+      },
+      "when": {
+        "OR": [
+          {
+            "fourth_facing": "north",
+            "height": "4"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_4",
+        "y": 90
+      },
+      "when": {
+        "OR": [
+          {
+            "fourth_facing": "east",
+            "height": "4"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_4",
+        "y": 180
+      },
+      "when": {
+        "OR": [
+          {
+            "fourth_facing": "south",
+            "height": "4"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "gipples_galore:block/gipple_stack_layer_4",
+        "y": 270
+      },
+      "when": {
+        "OR": [
+          {
+            "fourth_facing": "west",
+            "height": "4"
+          }
+        ]
+      }
+    }
+  ]
+}

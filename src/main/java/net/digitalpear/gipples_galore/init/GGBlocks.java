@@ -1,10 +1,7 @@
 package net.digitalpear.gipples_galore.init;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
-import net.digitalpear.gipples_galore.common.blocks.GelatinBlock;
-import net.digitalpear.gipples_galore.common.blocks.GelatinLayerBlock;
-import net.digitalpear.gipples_galore.common.blocks.GelatinousGrowthBlock;
-import net.digitalpear.gipples_galore.common.blocks.HibernatingGippleBlock;
+import net.digitalpear.gipples_galore.common.blocks.*;
 import net.digitalpear.gipples_galore.common.blocks.jelly.*;
 import net.digitalpear.gipples_galore.init.data.GGBlockSoundGroups;
 import net.digitalpear.gipples_galore.init.data.sets.StoneSet;
@@ -88,10 +85,10 @@ public class GGBlocks {
 
     public static final Block GELATIN_LAYER = createBlockWithItem("gelatin_layer", GelatinLayerBlock::new, AbstractBlock.Settings.copy(Blocks.SLIME_BLOCK).mapColor(MapColor.PALE_PURPLE));
 
-    public static final StoneSet GELATITE_SET = new StoneSet(GipplesGalore.id("gelatite"),
+    public static final StoneSet GELATITE_SET = new StoneSet.Builder(GipplesGalore.id("gelatite"),
             AbstractBlock.Settings.copy(Blocks.STONE)
                     .mapColor(MapColor.CYAN)
-                    .sounds(GGBlockSoundGroups.GELATITE)).stairs().slab().wall().pressurePlate().button();
+                    .sounds(GGBlockSoundGroups.GELATITE)).stairs().slab().wall().pressurePlate().button().build();
 
     public static final Block GELATITE = GELATITE_SET.getBase();
     public static final Block GELATITE_STAIRS = GELATITE_SET.getStairs();
@@ -102,8 +99,8 @@ public class GGBlocks {
 
 
 
-    public static final StoneSet GELATITE_BRICK_SET = new StoneSet("gelatite_brick",
-            AbstractBlock.Settings.copy(GELATITE)).stairs().slab().wall().chiseled();
+    public static final StoneSet GELATITE_BRICK_SET = new StoneSet.Builder("gelatite_brick",
+            AbstractBlock.Settings.copy(GELATITE)).stairs().slab().wall().chiseled().build();
 
     public static final Block GELATITE_BRICKS = GELATITE_BRICK_SET.getBase();
     public static final Block GELATITE_BRICK_STAIRS = GELATITE_BRICK_SET.getStairs();
@@ -113,10 +110,10 @@ public class GGBlocks {
 
 
 
-    public static final StoneSet AMOEBALITH_SET = new StoneSet("amoebalith",
+    public static final StoneSet AMOEBALITH_SET = new StoneSet.Builder("amoebalith",
             AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
                     .sounds(GGBlockSoundGroups.AMOEBALITH)
-                    .mapColor(MapColor.PURPLE)).stairs().slab().wall().pressurePlate().button();
+                    .mapColor(MapColor.PURPLE)).stairs().slab().wall().pressurePlate().button().build();
 
     public static final Block AMOEBALITH = AMOEBALITH_SET.getBase();
 
@@ -128,10 +125,10 @@ public class GGBlocks {
 
 
 
-    public static final StoneSet AMOEBALITH_BRICK_SET = new StoneSet("amoebalith_brick",
+    public static final StoneSet AMOEBALITH_BRICK_SET = new StoneSet.Builder("amoebalith_brick",
             AbstractBlock.Settings.copy(Blocks.DEEPSLATE)
                     .sounds(GGBlockSoundGroups.AMOEBALITH)
-                    .mapColor(MapColor.PURPLE)).stairs().slab().wall().chiseled();
+                    .mapColor(MapColor.PURPLE)).stairs().slab().wall().chiseled().build();
 
     public static final Block AMOEBALITH_BRICKS = AMOEBALITH_BRICK_SET.getBase();
     public static final Block AMOEBALITH_BRICK_STAIRS = AMOEBALITH_BRICK_SET.getStairs();
@@ -169,6 +166,8 @@ public class GGBlocks {
             );
 
     public static final Block POTTED_GELATINOUS_GROWTH = createBlockWithoutItem("potted_gelatinous_growth",settings -> new FlowerPotBlock(GELATINOUS_GROWTH,settings), AbstractBlock.Settings.copy(Blocks.FLOWER_POT));
+
+    public static final Block GIPPLE_STACK = createBlockWithItem("gipple_stack", GippleStackBlock::new, AbstractBlock.Settings.copy(AMOEBALITH).nonOpaque());
 
 
     public static void init(){

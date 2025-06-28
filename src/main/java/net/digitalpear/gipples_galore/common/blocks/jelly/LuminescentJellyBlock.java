@@ -16,6 +16,6 @@ public class LuminescentJellyBlock extends JellyBlock{
 
     @Override
     public void applySpecialEffects(BlockState initialState, BlockState eatenState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 200, 1));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 200));
     }
 }

@@ -8,10 +8,14 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 
 public class StoneSet {
+    public static List<StoneSet> ALL_SETS = new ArrayList<>();
+
     private final BlockFamily.Builder family;
     private final Block base;
     private Block stairs;
@@ -25,84 +29,19 @@ public class StoneSet {
 
     private final AbstractBlock.Settings properties;
 
-    public StoneSet(String name, AbstractBlock.Settings baseProperties){
-        setName = GipplesGalore.id(name);
-        properties = baseProperties;
-        base = baseBlock();
-        family = new BlockFamily.Builder(base);
+    private StoneSet(String name, AbstractBlock.Settings baseProperties){
+        this(GipplesGalore.id(name), baseProperties);
     }
-    public StoneSet(Identifier name, AbstractBlock.Settings baseProperties){
+    private StoneSet(Identifier name, AbstractBlock.Settings baseProperties){
         setName = name;
         properties = baseProperties;
         base = baseBlock();
         family = new BlockFamily.Builder(base);
     }
-    private static RegistryKey<Block> keyOf(String id) {
-        return keyOf(GipplesGalore.id(id));
-    }
-    private static RegistryKey<Block> keyOf(Identifier id) {
-        return RegistryKey.of(RegistryKeys.BLOCK, id);
-    }
     private Block baseBlock(){
-        Block block = Blocks.register(keyOf(formatName(setName)), properties);
+        Block block = Blocks.register(Builder.keyOf(formatName(setName)), properties);
         Items.register(block);
         return block;
-    }
-
-    public StoneSet stairs(){
-        return stairs(settings -> new StairsBlock(base.getDefaultState(), settings));
-    }
-    public StoneSet stairs(Function<AbstractBlock.Settings, Block> factory){
-        stairs = Blocks.register(keyOf(setName.withSuffixedPath("_stairs")), factory, properties);
-        Items.register(stairs);
-        family.stairs(stairs);
-        return this;
-    }
-
-    public StoneSet slab(){
-        return slab(SlabBlock::new);
-    }
-    public StoneSet slab(Function<AbstractBlock.Settings, Block> factory){
-        slab = Blocks.register(keyOf(setName.withSuffixedPath("_slab")), factory, properties);
-        Items.register(slab);
-        family.slab(slab);
-        return this;
-    }
-
-    public StoneSet wall(){
-        return wall(WallBlock::new);
-    }
-    public StoneSet wall(Function<AbstractBlock.Settings, Block> factory){
-        wall = Blocks.register(keyOf(setName.withSuffixedPath("_wall")), factory, properties);
-        Items.register(wall);
-        family.wall(wall);
-        return this;
-    }
-
-    public StoneSet button(){
-        return button(settings -> new ButtonBlock(BlockSetType.STONE, 20, settings));
-    }
-    public StoneSet button(Function<AbstractBlock.Settings, Block> factory){
-        button = Blocks.register(keyOf(setName.withSuffixedPath("_button")), factory, properties);
-        Items.register(button);
-        family.button(button);
-        return this;
-    }
-    public StoneSet pressurePlate(){
-        return pressurePlate(settings -> new PressurePlateBlock(BlockSetType.STONE, settings));
-    }
-    public StoneSet pressurePlate(Function<AbstractBlock.Settings, Block> factory){
-        pressurePlate = Blocks.register(keyOf(setName.withSuffixedPath("_pressure_plate")), factory, properties);
-        Items.register(pressurePlate);
-        family.pressurePlate(pressurePlate);
-        return this;
-    }
-
-    public StoneSet chiseled(){
-        chiseled = Blocks.register(keyOf(formatName(setName).withPrefixedPath("chiseled_")), properties);
-        Items.register(chiseled);
-        family.chiseled(chiseled);
-        return this;
     }
 
     public Block getBase() {
@@ -142,5 +81,83 @@ public class StoneSet {
             return id.withSuffixedPath("s");
         }
         return id;
+    }
+    public static class Builder{
+        private final StoneSet stoneSet;
+        public Builder(String name, AbstractBlock.Settings baseProperties){
+            this(GipplesGalore.id(name), baseProperties);
+        }
+        public Builder(Identifier name, AbstractBlock.Settings baseProperties){
+            this.stoneSet = new StoneSet(name, baseProperties);
+        }
+
+        private static RegistryKey<Block> keyOf(String id) {
+            return keyOf(GipplesGalore.id(id));
+        }
+        private static RegistryKey<Block> keyOf(Identifier id) {
+            return RegistryKey.of(RegistryKeys.BLOCK, id);
+        }
+
+
+        public Builder stairs(){
+            return stairs(settings -> new StairsBlock(stoneSet.base.getDefaultState(), settings));
+        }
+        public Builder stairs(Function<AbstractBlock.Settings, Block> factory){
+            stoneSet.stairs = Blocks.register(keyOf(stoneSet.setName.withSuffixedPath("_stairs")), factory, stoneSet.properties);
+            Items.register(stoneSet.stairs);
+            stoneSet.family.stairs(stoneSet.stairs);
+            return this;
+        }
+
+        public Builder slab(){
+            return slab(SlabBlock::new);
+        }
+        public Builder slab(Function<AbstractBlock.Settings, Block> factory){
+            stoneSet.slab = Blocks.register(keyOf(stoneSet.setName.withSuffixedPath("_slab")), factory, stoneSet.properties);
+            Items.register(stoneSet.slab);
+            stoneSet.family.slab(stoneSet.slab);
+            return this;
+        }
+
+        public Builder wall(){
+            return wall(WallBlock::new);
+        }
+        public Builder wall(Function<AbstractBlock.Settings, Block> factory){
+            stoneSet.wall = Blocks.register(keyOf(stoneSet.setName.withSuffixedPath("_wall")), factory, stoneSet.properties);
+            Items.register(stoneSet.wall);
+            stoneSet.family.wall(stoneSet.wall);
+            return this;
+        }
+
+        public Builder button(){
+            return button(settings -> new ButtonBlock(BlockSetType.STONE, 20, settings));
+        }
+        public Builder button(Function<AbstractBlock.Settings, Block> factory){
+            stoneSet.button = Blocks.register(keyOf(stoneSet.setName.withSuffixedPath("_button")), factory, stoneSet.properties);
+            Items.register(stoneSet.button);
+            stoneSet.family.button(stoneSet.button);
+            return this;
+        }
+        public Builder pressurePlate(){
+            return pressurePlate(settings -> new PressurePlateBlock(BlockSetType.STONE, settings));
+        }
+        public Builder pressurePlate(Function<AbstractBlock.Settings, Block> factory){
+            stoneSet.pressurePlate = Blocks.register(keyOf(stoneSet.setName.withSuffixedPath("_pressure_plate")), factory, stoneSet.properties);
+            Items.register(stoneSet.pressurePlate);
+            stoneSet.family.pressurePlate(stoneSet.pressurePlate);
+            return this;
+        }
+
+        public Builder chiseled(){
+            stoneSet.chiseled = Blocks.register(keyOf(stoneSet.formatName(stoneSet.setName).withPrefixedPath("chiseled_")), stoneSet.properties);
+            Items.register(stoneSet.chiseled);
+            stoneSet.family.chiseled(stoneSet.chiseled);
+            return this;
+        }
+
+        public StoneSet build(){
+            ALL_SETS.add(stoneSet);
+            return stoneSet;
+        }
     }
 }

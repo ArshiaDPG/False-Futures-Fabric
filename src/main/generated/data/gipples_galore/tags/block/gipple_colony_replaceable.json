@@ -1,8 +1,17 @@
 {
   "values": [
-    "#minecraft:base_stone_overworld",
-    "#minecraft:base_stone_nether",
-    "#minecraft:dirt",
+    {
+      "id": "#minecraft:base_stone_overworld",
+      "required": false
+    },
+    {
+      "id": "#minecraft:base_stone_nether",
+      "required": false
+    },
+    {
+      "id": "#minecraft:dirt",
+      "required": false
+    },
     "minecraft:dripstone_block",
     "minecraft:pointed_dripstone",
     "minecraft:water"

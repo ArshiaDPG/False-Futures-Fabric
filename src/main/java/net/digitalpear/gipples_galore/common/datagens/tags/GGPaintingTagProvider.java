@@ -25,6 +25,6 @@ public class GGPaintingTagProvider extends FabricTagProvider<PaintingVariant> {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
-        getOrCreateTagBuilder(PaintingVariantTags.PLACEABLE).add(GGPaintingVariants.GIPPLE);
+        getTagBuilder(PaintingVariantTags.PLACEABLE).add(GGPaintingVariants.GIPPLE.getValue());
     }
 }

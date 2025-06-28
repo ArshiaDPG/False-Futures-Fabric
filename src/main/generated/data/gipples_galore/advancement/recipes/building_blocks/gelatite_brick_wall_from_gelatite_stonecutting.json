@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:gelatite_brick_wall_from_gelatite_stonecutting"
+        "recipe": "gipples_galore:gelatite_brick_wall_from_gelatite_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:gelatite_brick_wall_from_gelatite_stonecutting"
+      "gipples_galore:gelatite_brick_wall_from_gelatite_stonecutting"
     ]
   }
 }

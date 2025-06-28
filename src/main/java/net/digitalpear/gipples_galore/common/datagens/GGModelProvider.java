@@ -1,6 +1,7 @@
 package net.digitalpear.gipples_galore.common.datagens;
 
 import net.digitalpear.gipples_galore.GipplesGalore;
+import net.digitalpear.gipples_galore.common.blocks.GippleStackBlock;
 import net.digitalpear.gipples_galore.common.blocks.jelly.JellyBlock;
 import net.digitalpear.gipples_galore.init.GGBlocks;
 import net.digitalpear.gipples_galore.init.GGItems;
@@ -10,13 +11,13 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
-import net.minecraft.client.render.model.json.ModelVariant;
-import net.minecraft.client.render.model.json.ModelVariantOperator;
-import net.minecraft.client.render.model.json.WeightedVariant;
+import net.minecraft.client.render.model.json.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.AxisRotation;
 import net.minecraft.util.math.Direction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -25,7 +26,6 @@ public class GGModelProvider extends FabricModelProvider {
     public static final Model JELLY_HALF_SIDE = new Model(Optional.of(GipplesGalore.id("block/" + "jelly_half_side")), Optional.of("_half_side"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_UPPER = new Model(Optional.of(GipplesGalore.id("block/" + "jelly_half_upper")), Optional.of("_half_upper"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
     public static final Model JELLY_HALF_LOWER = new Model(Optional.of(GipplesGalore.id("block/" + "jelly_half_lower")), Optional.of("_half_lower"), TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE, TextureKey.INSIDE);
-
     public GGModelProvider(FabricDataOutput output) {
         super(output);
     }
@@ -47,6 +47,8 @@ public class GGModelProvider extends FabricModelProvider {
 
         blockStateModelGenerator.registerFlowerPotPlant(GGBlocks.GELATINOUS_GROWTH, GGBlocks.POTTED_GELATINOUS_GROWTH, BlockStateModelGenerator.CrossType.NOT_TINTED);
         blockStateModelGenerator.registerItemModel(GGBlocks.GELATINOUS_GROWTH);
+
+        registerGippleStack(blockStateModelGenerator, GGBlocks.GIPPLE_STACK);
     }
 
 
@@ -61,6 +63,36 @@ public class GGModelProvider extends FabricModelProvider {
         itemModelGenerator.register(GGItems.GIPPLE_BUCKET, Models.GENERATED);
         itemModelGenerator.register(GGItems.MUSIC_DISC_GIPPLECORE, Models.GENERATED);
         itemModelGenerator.register(GGItems.GIPPLE_BANNER_PATTERN, Models.GENERATED);
+    }
+
+    private Model getStackModel(Block block, Integer height){
+        return new Model(Optional.of(TextureMap.getSubId(block, "_" + height)), Optional.empty(), TextureKey.ALL);
+    }
+    public void registerGippleStack(BlockStateModelGenerator blockStateModelGenerator, Block block){
+        MultipartBlockModelDefinitionCreator multipart = MultipartBlockModelDefinitionCreator.create(block);
+        for (int i = 1; i<5; i++){
+            WeightedVariant model = BlockStateModelGenerator.createWeightedVariant(getStackModel(block, i).upload(block, "_layer_" + i, TextureMap.all(block), blockStateModelGenerator.modelCollector));
+            for (Direction direction : Direction.Type.HORIZONTAL.stream().toList()){
+                multipart.with(new MultipartModelCombinedCondition(MultipartModelCombinedCondition.LogicalOperator.OR, isAtHeightOrHigher(direction, i)),
+                        model.apply(modelVariant -> modelVariant.with(ModelVariantOperator.ROTATION_Y.withValue(rotationOf(direction)))));
+                if (i == 1 && direction == Direction.NORTH){
+                    blockStateModelGenerator.registerItemModel(block.asItem(), TextureMap.getSubId(block, "_layer_" + i));
+                }
+            }
+
+        }
+        blockStateModelGenerator.blockStateCollector.accept(multipart);
+    }
+
+    private List<MultipartModelCondition> isAtHeightOrHigher(Direction direction,int value){
+        List<MultipartModelCondition> builders = new ArrayList<>();
+        for (int i = 4; i>= value; i--){
+            builders.add(
+                    new MultipartModelConditionBuilder().put(GippleStackBlock.HEIGHT, i)
+                    .put(GippleStackBlock.DIRECTIONS.get(value-1), direction).build()
+            );
+        }
+        return builders;
     }
 
     private void registerAllJellies(BlockStateModelGenerator blockStateModelGenerator) {
@@ -78,7 +110,7 @@ public class GGModelProvider extends FabricModelProvider {
         };
     }
 
-    private void registerJelly(BlockStateModelGenerator blockStateModelGenerator, Block block) {
+    public void registerJelly(BlockStateModelGenerator blockStateModelGenerator, Block block) {
         TextureMap horizontalMap = new TextureMap().put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
         TextureMap verticalMap = new TextureMap().put(TextureKey.SIDE, TextureMap.getSubId(block, "_side")).put(TextureKey.INSIDE, TextureMap.getSubId(block, "_inside_vertical")).put(TextureKey.TOP, TextureMap.getSubId(block, "_top")).put(TextureKey.BOTTOM, TextureMap.getSubId(block, "_bottom"));
         WeightedVariant half_side = BlockStateModelGenerator.createWeightedVariant(JELLY_HALF_SIDE.upload(block,horizontalMap, blockStateModelGenerator.modelCollector));

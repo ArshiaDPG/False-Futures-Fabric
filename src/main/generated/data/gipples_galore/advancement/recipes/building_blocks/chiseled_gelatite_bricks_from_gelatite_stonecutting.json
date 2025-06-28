@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chiseled_gelatite_bricks_from_gelatite_stonecutting"
+        "recipe": "gipples_galore:chiseled_gelatite_bricks_from_gelatite_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chiseled_gelatite_bricks_from_gelatite_stonecutting"
+      "gipples_galore:chiseled_gelatite_bricks_from_gelatite_stonecutting"
     ]
   }
 }

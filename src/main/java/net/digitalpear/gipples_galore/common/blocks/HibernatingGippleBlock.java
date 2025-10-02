@@ -39,6 +39,7 @@ public class HibernatingGippleBlock extends HorizontalFacingBlock {
     private void spawnGipple(ServerWorld world, BlockPos pos) {
         GippleEntity gipple = GGEntityTypes.GIPPLE.create(world, SpawnReason.MOB_SUMMONED);
         if (gipple != null){
+            gipple.setPersistent();
             gipple.refreshPositionAndAngles((double) pos.getX() + 0.5D, pos.getY() + 0.25D, (double) pos.getZ() + 0.5D, 0.0F, 0.0f);
             world.spawnEntity(gipple);
         }

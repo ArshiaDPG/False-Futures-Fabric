@@ -18,6 +18,8 @@ import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.conversion.EntityConversionContext;
+import net.minecraft.entity.conversion.EntityConversionType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -239,16 +241,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.discard();
     }
     public void spawnAneuploidian(){
-        AneuploidianEntity aneuploidian = GGEntityTypes.ANEUPLOIDIAN.create(getWorld(), SpawnReason.CONVERSION);
-        if (aneuploidian != null) {
-            if (this.isPersistent()) {
-                aneuploidian.setPersistent();
-            }
-            aneuploidian.setCustomName(this.getCustomName());
-            aneuploidian.setAiDisabled(this.isAiDisabled());
-            aneuploidian.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getRandom().nextFloat() * 360.0F, 0.0F);
-            getWorld().spawnEntity(aneuploidian);
-        }
+        this.convertTo(GGEntityTypes.ANEUPLOIDIAN, EntityConversionContext.create(this, false, true), MobEntity::setPersistent);
     }
 
     public void spawnGipple(Random random) {

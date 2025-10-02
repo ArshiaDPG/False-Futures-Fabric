@@ -60,6 +60,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
     private static final TrackedData<Integer> HUNGRY_COUNTDOWN = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> EATING_TIMER = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> PLACE_GELATIN_TIMER = DataTracker.registerData(GippleEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
     private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation DANCING_ANIM = RawAnimation.begin().thenLoop("gipple.dance");
     protected static final RawAnimation EATING_ANIM = RawAnimation.begin().thenPlay("gipple.eat");
@@ -227,16 +228,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
         this.discard();
     }
     public void spawnAneuploidian(){
-        AneuploidianEntity aneuploidian = GGEntityTypes.ANEUPLOIDIAN.create(getWorld());
-        if (aneuploidian != null) {
-            if (this.isPersistent()) {
-                aneuploidian.setPersistent();
-            }
-            aneuploidian.setCustomName(this.getCustomName());
-            aneuploidian.setAiDisabled(this.isAiDisabled());
-            aneuploidian.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getRandom().nextFloat() * 360.0F, 0.0F);
-            getWorld().spawnEntity(aneuploidian);
-        }
+        this.convertTo(GGEntityTypes.ANEUPLOIDIAN, false);
     }
 
     public void spawnGipple(Random random) {
@@ -250,6 +242,7 @@ public class GippleEntity extends PassiveEntity implements Bucketable, GeoEntity
             gipple.readNbt(nbt);
             gipple.setBaby(true);
             gipple.setLuminous(false);
+            gipple.setCustomName(this.getCustomName());
 
             gipple.refreshPositionAndAngles(this.getX() + random.nextDouble(), this.getY() + random.nextDouble(), this.getZ() - random.nextDouble() , 0, 0);
             getWorld().spawnEntity(gipple);

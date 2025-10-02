@@ -1,6 +1,5 @@
 package net.digitalpear.gipples_galore.common.entities.aneuploidian;
 
-import net.digitalpear.gipples_galore.init.GGEntityTypes;
 import net.digitalpear.gipples_galore.init.GGSoundEvents;
 import net.digitalpear.gipples_galore.init.GGStatusEffects;
 import net.minecraft.block.BlockState;
@@ -23,6 +22,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -130,7 +130,6 @@ public class AneuploidianEntity extends HostileEntity implements Monster, Flutte
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<GeoAnimatable>(this, "Walking", 3, this::setAnimations));
     }
-
 
 
     @Override
